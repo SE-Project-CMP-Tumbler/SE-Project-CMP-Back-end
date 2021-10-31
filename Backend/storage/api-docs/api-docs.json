@@ -14,11 +14,284 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000/api/v1",
+            "url": "localhost:8000",
             "description": "Demo API Server"
         }
     ],
     "paths": {
+        "/follow_blog/{id}": {
+            "post": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "follow blog",
+                "description": " Primary blog follow another blog",
+                "operationId": "followblog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "ID of Following Blog ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "type": "object",
+                                            "example": {
+                                                "follower_id": "1",
+                                                "msg": "You Follow Ahmed Successfully"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/unfollow_blog/{id}": {
+            "delete": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "unfollow blog",
+                "description": " Primary blog unfollow another blog",
+                "operationId": "unfollowblog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "ID of Unfollowing Blog ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/followers": {
+            "get": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "follower's blog",
+                "description": " Primary blog  get all followers",
+                "operationId": "followersblog",
+                "responses": {
+                    "200": {
+                        "description": "Successful credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "type": "object",
+                                            "example": {
+                                                "followers": [
+                                                    {
+                                                        "blog_id": 1,
+                                                        "blog_name": "Radwa"
+                                                    },
+                                                    {
+                                                        "blog_id": 2,
+                                                        "blog_name": "Noran"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/followings": {
+            "get": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "following's blog",
+                "description": " Primary blog  get all followings",
+                "operationId": "followingblog",
+                "responses": {
+                    "200": {
+                        "description": "Successful credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "type": "object",
+                                            "example": {
+                                                "followings": [
+                                                    {
+                                                        "blog_id": 1,
+                                                        "blog_name": "Radwa"
+                                                    },
+                                                    {
+                                                        "blog_id": 2,
+                                                        "blog_name": "Noran"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/projects": {
             "get": {
                 "tags": [
