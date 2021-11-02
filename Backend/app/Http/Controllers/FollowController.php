@@ -9,23 +9,12 @@ class FollowController extends Controller
  
  /**
  * @OA\Post(
- * path="/follow_blog/{id}",
+ * path="/follow_blog/{blog_id}",
  * summary="follow blog",
  * description=" Primary blog follow another blog",
  * operationId="followblog",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *    description="ID of Following Blog ",
- *    in="path",
- *    name="blog_id",
- *    required=true,
- *    example="1",
- *    @OA\Schema(
- *       type="integer",
- *       format="int"
- *    )
- * ),
  * @OA\Response(
  *    response=200,
  *    description="Successful credentials response",
@@ -45,23 +34,12 @@ class FollowController extends Controller
  */
 /**
  * @OA\Delete(
- * path="/unfollow_blog/{id}",
+ * path="/unfollow_blog/{blog_id}",
  * summary="unfollow blog",
  * description=" Primary blog unfollow another blog",
  * operationId="unfollowblog",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *    description="ID of Unfollowing Blog ",
- *    in="path",
- *    name="blog_id",
- *    required=true,
- *    example="1",
- *    @OA\Schema(
- *       type="integer",
- *       format="int"
- *    )
- * ),
  * @OA\Response(
  *    response=200,
  *    description="Successful credentials response",
@@ -149,7 +127,7 @@ class FollowController extends Controller
  */
 /**
  * @OA\Get(
- * path="/followed_by/{id}",
+ * path="/followed_by/{blog_id}",
  * summary="followed_by blog",
  * description=" Check if followed by blog",
  * operationId="followingblog",

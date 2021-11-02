@@ -19,7 +19,7 @@
         }
     ],
     "paths": {
-        "/follow_blog/{id}": {
+        "/follow_blog/{blog_id}": {
             "post": {
                 "tags": [
                     "Follow Blogs"
@@ -27,19 +27,6 @@
                 "summary": "follow blog",
                 "description": " Primary blog follow another blog",
                 "operationId": "followblog",
-                "parameters": [
-                    {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "ID of Following Blog ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int"
-                        },
-                        "example": "1"
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Successful credentials response",
@@ -94,7 +81,7 @@
                 ]
             }
         },
-        "/unfollow_blog/{id}": {
+        "/unfollow_blog/{blog_id}": {
             "delete": {
                 "tags": [
                     "Follow Blogs"
@@ -102,19 +89,6 @@
                 "summary": "unfollow blog",
                 "description": " Primary blog unfollow another blog",
                 "operationId": "unfollowblog",
-                "parameters": [
-                    {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "ID of Unfollowing Blog ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int"
-                        },
-                        "example": "1"
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Successful credentials response",
@@ -168,7 +142,7 @@
                     "Follow Blogs"
                 ],
                 "summary": "follower's blog",
-                "description": " Primary blog  get all followers",
+                "description": " Primary blog  get all his/her followers",
                 "operationId": "followersblog",
                 "responses": {
                     "200": {
@@ -185,19 +159,33 @@
                                             }
                                         },
                                         "response": {
-                                            "type": "object",
-                                            "example": {
-                                                "followers": [
-                                                    {
-                                                        "blog_id": 1,
-                                                        "blog_name": "Radwa"
-                                                    },
-                                                    {
-                                                        "blog_id": 2,
-                                                        "blog_name": "Noran"
+                                            "properties": {
+                                                "followers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.extension"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 1032
+                                                            }
+                                                        },
+                                                        "type": "object"
                                                     }
-                                                ]
-                                            }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -224,7 +212,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/followings": {
@@ -232,8 +225,8 @@
                 "tags": [
                     "Follow Blogs"
                 ],
-                "summary": "following's blog",
-                "description": " Primary blog  get all followings",
+                "summary": "followings's blog",
+                "description": " Primary blog  get all his/her followings",
                 "operationId": "followingblog",
                 "responses": {
                     "200": {
@@ -250,18 +243,93 @@
                                             }
                                         },
                                         "response": {
+                                            "properties": {
+                                                "followings": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.extension"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 1032
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
                                             "type": "object",
                                             "example": {
-                                                "followings": [
-                                                    {
-                                                        "blog_id": 1,
-                                                        "blog_name": "Radwa"
-                                                    },
-                                                    {
-                                                        "blog_id": 2,
-                                                        "blog_name": "Noran"
-                                                    }
-                                                ]
+                                                "status": "404",
+                                                "msg": "error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/followed_by/{blog_id}": {
+            "get": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "followed_by blog",
+                "description": " Check if followed by blog",
+                "operationId": "followingblog",
+                "responses": {
+                    "200": {
+                        "description": "Successful credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "type": "obeject",
+                                            "example": {
+                                                "followed": true
                                             }
                                         }
                                     },
@@ -289,26 +357,735 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
-        "/projects": {
-            "get": {
+        "/post": {
+            "post": {
                 "tags": [
-                    "Projects"
+                    "Posts"
                 ],
-                "summary": "Get list of projects",
-                "description": "Returns list of projects",
-                "operationId": "getProjectsList",
+                "summary": "create new post",
+                "description": " A blog can create new post",
+                "operationId": "createpost",
+                "requestBody": {
+                    "description": "Post Request has different types depeneds on post type :\n *    in text type :description or title are required, at least one of them ,keep reading is optinal\n *    in image type : at least one uplaoded image , \n *    in chat type : chat_body is required ,chat_title is optional\n *    in quote type:  quote_text is required , quote_body is optinal \n *    in video type:  video is required , url_videos are optinal\n *    in audio type: audio is required\n *    is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "new post"
+                                    },
+                                    "chat_title": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "chat_body": {
+                                        "type": "string",
+                                        "example": "My post"
+                                    },
+                                    "quote_text": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "quote_resouce": {
+                                        "type": "string",
+                                        "example": "My post"
+                                    },
+                                    "keep_reading": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "images ": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "0": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "/storage/imgname2.extension"
+                                                },
+                                                "1": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "/storage/imgname2.extension"
+                                                },
+                                                "2": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "/storage/imgname2.extension"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "video ": {
+                                        "type": "string",
+                                        "format": "byte",
+                                        "example": ""
+                                    },
+                                    "audio ": {
+                                        "type": "string",
+                                        "format": "byte",
+                                        "example": ""
+                                    },
+                                    "post_type ": {
+                                        "type": "string",
+                                        "example": "text"
+                                    },
+                                    "url_videos ": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "0": {
+                                                    "type": "string",
+                                                    "example": "facebook.com"
+                                                },
+                                                "1": {
+                                                    "type": "string",
+                                                    "example": "google.com"
+                                                },
+                                                "2": {
+                                                    "type": "string",
+                                                    "example": "yahoo.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Successful text post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "new post"
+                                        },
+                                        "chat_title": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        },
+                                        "chat_body": {
+                                            "type": "string",
+                                            "example": "My post"
+                                        },
+                                        "quote_text": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        },
+                                        "quote_resouce": {
+                                            "type": "string",
+                                            "example": "My post"
+                                        },
+                                        "keep_reading": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "images ": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "0": {
+                                                        "type": "string",
+                                                        "format": "byte",
+                                                        "example": "/storage/imgname2.extension"
+                                                    },
+                                                    "1": {
+                                                        "type": "string",
+                                                        "format": "byte",
+                                                        "example": "/storage/imgname2.extension"
+                                                    },
+                                                    "2": {
+                                                        "type": "string",
+                                                        "format": "byte",
+                                                        "example": "/storage/imgname2.extension"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "video ": {
+                                            "type": "string",
+                                            "format": "byte",
+                                            "example": ""
+                                        },
+                                        "audio ": {
+                                            "type": "string",
+                                            "format": "byte",
+                                            "example": ""
+                                        },
+                                        "post_type ": {
+                                            "type": "string",
+                                            "example": "text"
+                                        },
+                                        "url_videos ": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "0": {
+                                                        "type": "string",
+                                                        "example": "facebook.com"
+                                                    },
+                                                    "1": {
+                                                        "type": "string",
+                                                        "example": "google.com"
+                                                    },
+                                                    "2": {
+                                                        "type": "string",
+                                                        "example": "yahoo.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/post/{post_id}": {
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "create new post",
+                "description": " A blog can edit post",
+                "operationId": "createpost",
+                "requestBody": {
+                    "description": "Post Request has different types depeneds on post type :\n *    in text type :description or title are required, at least one of them ,keep reading is optinal\n *    in image type : at least one uplaoded image , \n *    in chat type : chat_body is required ,chat_title is optional\n *    in quote type:  quote_text is required , quote_body is optinal \n *    in video type:  video is required , url_videos are optinal\n *    in audio type: audio is required\n *    is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "new post"
+                                    },
+                                    "chat_title": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "chat_body": {
+                                        "type": "string",
+                                        "example": "My post"
+                                    },
+                                    "quote_text": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "quote_resouce": {
+                                        "type": "string",
+                                        "example": "My post"
+                                    },
+                                    "keep_reading": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "images ": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "0": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "/storage/imgname2.extension"
+                                                },
+                                                "1": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "/storage/imgname2.extension"
+                                                },
+                                                "2": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "/storage/imgname2.extension"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "video ": {
+                                        "type": "string",
+                                        "format": "byte",
+                                        "example": ""
+                                    },
+                                    "audio ": {
+                                        "type": "string",
+                                        "format": "byte",
+                                        "example": ""
+                                    },
+                                    "post_type ": {
+                                        "type": "string",
+                                        "example": "text"
+                                    },
+                                    "url_videos ": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "0": {
+                                                    "type": "string",
+                                                    "example": "facebook.com"
+                                                },
+                                                "1": {
+                                                    "type": "string",
+                                                    "example": "google.com"
+                                                },
+                                                "2": {
+                                                    "type": "string",
+                                                    "example": "yahoo.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful text post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "new post"
+                                        },
+                                        "chat_title": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        },
+                                        "chat_body": {
+                                            "type": "string",
+                                            "example": "My post"
+                                        },
+                                        "quote_text": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        },
+                                        "quote_resouce": {
+                                            "type": "string",
+                                            "example": "My post"
+                                        },
+                                        "keep_reading": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "images ": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "0": {
+                                                        "type": "string",
+                                                        "format": "byte",
+                                                        "example": "/storage/imgname2.extension"
+                                                    },
+                                                    "1": {
+                                                        "type": "string",
+                                                        "format": "byte",
+                                                        "example": "/storage/imgname2.extension"
+                                                    },
+                                                    "2": {
+                                                        "type": "string",
+                                                        "format": "byte",
+                                                        "example": "/storage/imgname2.extension"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "video ": {
+                                            "type": "string",
+                                            "format": "byte",
+                                            "example": ""
+                                        },
+                                        "audio ": {
+                                            "type": "string",
+                                            "format": "byte",
+                                            "example": ""
+                                        },
+                                        "post_type ": {
+                                            "type": "string",
+                                            "example": "text"
+                                        },
+                                        "url_videos ": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "0": {
+                                                        "type": "string",
+                                                        "example": "facebook.com"
+                                                    },
+                                                    "1": {
+                                                        "type": "string",
+                                                        "example": "google.com"
+                                                    },
+                                                    "2": {
+                                                        "type": "string",
+                                                        "example": "yahoo.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Unauthenticated"
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Delete post",
+                "description": " A blog delete his/her post",
+                "operationId": "post",
+                "responses": {
+                    "200": {
+                        "description": "Successful credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
-                    "403": {
-                        "description": "Forbidden"
+                    "401": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/post_notes/{post_id}": {
+            "get": {
+                "tags": [
+                    "Post Notes"
+                ],
+                "summary": "Gets all notes for a specific post by post id",
+                "description": "Returns a list of all notes attached to a specific post",
+                "operationId": "getPostNotesByPostId",
+                "responses": {
+                    "200": {
+                        "description": "list of notes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "likes": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.extension"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": "Positive Quotes"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 1032
+                                                            },
+                                                            "blog_url": {
+                                                                "type": "string",
+                                                                "example": "https://www.tumblr.com/blog/view/radwa-ahmed213"
+                                                            },
+                                                            "followed": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "replies": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.extension"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "blog_url": {
+                                                                "type": "string",
+                                                                "example": "https://www.tumblr.com/blog/view/radwa-ahmed213"
+                                                            },
+                                                            "reply_content": {
+                                                                "type": "string",
+                                                                "example": "What an amazing post!"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "reblogs": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.extension"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "blog_url": {
+                                                                "type": "string",
+                                                                "example": "https://www.tumblr.com/blog/view/radwa-ahmed213"
+                                                            },
+                                                            "reblog_content": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "reblog_tags": {
+                                                                "type": "string",
+                                                                "example": "[]"
+                                                            },
+                                                            "reblog_type": {
+                                                                "type": "string",
+                                                                "example": "video"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A post with the specified ID was not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "A post with the specified ID was not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "404": {
+                "description": "Wrong credentials response",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "meta": {
+                                    "type": "object",
+                                    "example": {
+                                        "status": "404",
+                                        "msg": "error"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 }
             }

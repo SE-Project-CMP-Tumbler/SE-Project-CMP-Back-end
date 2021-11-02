@@ -9,23 +9,12 @@ class PostNoteController extends Controller
  
  /**
  * @OA\Get(
- * path="/post_notes/{id}",
+ * path="/post_notes/{post_id}",
  * summary="Gets all notes for a specific post by post id",
  * description="Returns a list of all notes attached to a specific post",
  * operationId="getPostNotesByPostId",
  * tags={"Post Notes"},
  * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *    description="ID of the post",
- *    in="path",
- *    name="post_id",
- *    required=true,
- *    example="1",
- *    @OA\Schema(
- *       type="integer",
- *       format="int"
- *    )
- * ),
  * @OA\Response(
  *    response=200,
  *    description="list of notes",
