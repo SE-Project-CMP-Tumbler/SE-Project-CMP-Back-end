@@ -20,7 +20,6 @@ class FollowController extends Controller
  *    description="Successful credentials response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", example={"follower_id": "1", "msg":"You Follow Ahmed Successfully"})
  *        )
  *     ),
  *  @OA\Response(
@@ -34,7 +33,7 @@ class FollowController extends Controller
  */
 /**
  * @OA\Delete(
- * path="/unfollow_blog/{blog_id}",
+ * path="/follow_blog/{blog_id}",
  * summary="unfollow blog",
  * description=" Primary blog unfollow another blog",
  * operationId="unfollowblog",
