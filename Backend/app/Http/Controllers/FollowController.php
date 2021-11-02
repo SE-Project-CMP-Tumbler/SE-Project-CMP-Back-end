@@ -24,16 +24,6 @@ class FollowController extends Controller
  *    @OA\Schema(
  *       type="integer",
  *       format="int"
- *    ),
- *  @OA\Parameter(
- *    description="ID of Following Blog ",
- *    in="path",
- *    name="blog_id",
- *    required=true,
- *    example="1",
- *    @OA\Schema(
- *       type="integer",
- *       format="int"
  *    )
  * ),
  * @OA\Response(
@@ -41,16 +31,14 @@ class FollowController extends Controller
  *    description="Successful credentials response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response", type="object", example={"follower_id": "1", "msg":"You Follow Ahmed Successfully"})
  *        )
  *     ),
  *  @OA\Response(
  *    response=404,
  *    description="Wrong credentials response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"}),
- *       @OA\Property(property="response", type="object", example={"blog_avatar":"/storage/imgname2.extension",
- *        "blog_avatar_shape":"circle","blog_username":"radwa-ahmed213","blog_id":1032})
- *       
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
  *        )
  *     )
  * )
