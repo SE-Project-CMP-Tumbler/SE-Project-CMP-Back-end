@@ -119,7 +119,7 @@ class PostActionsController extends Controller
  *  ),
  * @OA\Response(
  *    response=200,
- *    description="Successful Post Deletion",
+ *    description="Successful Post Reply Deletion",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *    ),
@@ -141,6 +141,47 @@ class PostActionsController extends Controller
  * )
  */
 
+
+ /**
+ * @OA\Delete(
+ * path="/post/delete_like",
+ * description="delete a specific like from a post",
+ * operationId="deletePostLike",
+ * tags={"Post Notes"},
+ * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *    in="query",
+ *    name="post_id",
+ *    description="for the post to delete that like from",
+ *    required=true,
+ *    example="666746885177049088",
+ *    @OA\Schema(
+ *       type="int",
+ *    )
+ *  ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful Like Deletion",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *    ),
+ *  ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized"}),
+ *     ),
+ *  ),
+ *  @OA\Response(
+ *   response=404,
+ *   description="Not Found",
+ *   @OA\JsonContent(
+ *      @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not Found"}),
+ *   ),
+ *  ),
+ * )
+ */
 
 
 
