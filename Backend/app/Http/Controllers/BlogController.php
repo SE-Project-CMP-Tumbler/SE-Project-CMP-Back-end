@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-        //
 /**
  * @OA\Post(
  * path="/new/blog",
