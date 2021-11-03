@@ -25,11 +25,11 @@ class AskController extends Controller
  *              type="integer")),
  * @OA\RequestBody(
  *    required=true,
- *    description="Question Asked body , flag show if anonymous or not ,true for anonymous ",
+ *    description="Question Asked body , flag show if anonymous or not ,true for anonymous and in case of anonymous , blog values will appear in response ",
  *     @OA\JsonContent(
  *         required={"question_body","flag"},
  *       @OA\Property(property="question_body", type="string", example="How are you?"),
- *       @OA\Property(property="flag", type="bool", example=false)
+ *       @OA\Property(property="flag", type="boolean", example=false)
  *    )
  *  ),
  * @OA\Response(
@@ -43,7 +43,7 @@ class AskController extends Controller
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=1032), 
  *                      @OA\Property(property="question_body", type="string", example="How are you?"),
- *                      @OA\Property(property="flag", type="bool", example=false)
+ *                      @OA\Property(property="flag", type="boolean", example=false)
  *         
  *       ),
  *        )

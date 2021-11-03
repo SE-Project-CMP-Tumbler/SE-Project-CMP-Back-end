@@ -21,7 +21,7 @@ class PostActionsController extends Controller
  *    required=true,
  *    example="666746885177049088",
  *    @OA\Schema(
- *       type="int",
+ *       type="intger",
  *    )
  *  ),
  *  @OA\RequestBody(
@@ -30,7 +30,6 @@ class PostActionsController extends Controller
  *   reblog_key: random key for each post",
  *   @OA\JsonContent(
  *       @OA\Property(property="reply_text", type="string", example="Good Work"),
- *       @OA\Property(property="reblog_key", type="string", example="GbcifwPi"),
  *     ),
  *  ),
  * @OA\Response(
@@ -46,7 +45,6 @@ class PostActionsController extends Controller
  *            @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *            @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
  *            @OA\Property(property="blog_id", type="integer", example=1032),
- *            @OA\Property(property="blog_url", type="string", example="https://www.tumblr.com/blog/view/radwa-ahmed213"),
  *            @OA\Property(property="followed", type="boolean", example=false),
  *            @OA\Property(property="reply_text", type="string", example="this is my last reply"),
  *          )
@@ -101,14 +99,14 @@ class PostActionsController extends Controller
 
  /**
  * @OA\Delete(
- * path="/post/delete_reply",
+ * path="/post/delete_reply/{reply_id}",
  * summary="delete a specific note/repy from a post",
  * description="each blog can delete any note/repy from their posts, using this api route",
  * operationId="deletePostNote",
  * tags={"Post Notes"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
- *    in="query",
+ *    in="path",
  *    name="reply_id",
  *    description="for the reply to be deleted",
  *    required=true,
@@ -144,19 +142,19 @@ class PostActionsController extends Controller
 
  /**
  * @OA\Delete(
- * path="/post/delete_like",
+ * path="/post/delete_like/{post_id}",
  * description="delete a specific like from a post",
  * operationId="deletePostLike",
  * tags={"Post Notes"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
- *    in="query",
+ *    in="path",
  *    name="post_id",
  *    description="for the post to delete that like from",
  *    required=true,
  *    example="666746885177049088",
  *    @OA\Schema(
- *       type="int",
+ *       type="integer",
  *    )
  *  ),
  * @OA\Response(
