@@ -92,7 +92,7 @@ class FollowTagController extends Controller
  *       @OA\Property(property="response",type="object",
  *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="#books"),
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
  * 
  * 

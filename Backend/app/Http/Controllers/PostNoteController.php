@@ -36,7 +36,6 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
  *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="blog_url", type="string", example="https://www.tumblr.com/blog/view/radwa-ahmed213"),
  *                      @OA\Property(property="followed", type="boolean", example=false))),
  *              
  *              @OA\Property(property="replies", type="array",
@@ -45,7 +44,6 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=2),
- *                      @OA\Property(property="blog_url", type="string", example="https://www.tumblr.com/blog/view/radwa-ahmed213"),
  *                      @OA\Property(property="reply_content", type="string", example="What an amazing post!"))),
  * 
  *              @OA\Property(property="reblogs", type="array",
@@ -54,7 +52,6 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=2),
- *                      @OA\Property(property="blog_url", type="string", example="https://www.tumblr.com/blog/view/radwa-ahmed213"),
  *                      @OA\Property(property="reblog_content", type="string", example=""),
  *                      @OA\Property(property="reblog_tags", type="string", example="[]"), 
  *                      @OA\Property(property="reblog_type", type="string", example="video")))))),

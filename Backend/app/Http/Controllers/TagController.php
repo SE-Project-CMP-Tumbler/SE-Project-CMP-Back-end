@@ -57,7 +57,7 @@ class TagController extends Controller
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *          @OA\Property(property="tag_description",type="string",example="#books"),
+ *          @OA\Property(property="tag_description",type="string",example="books"),
  *          @OA\Property(property="tag_image",type="string", format="byte", example=""),
  *          @OA\Property(property="followed",type="bool", example=false),
  *          @OA\Property(property="followers_number",type="integer", example=1026),)),),
@@ -99,7 +99,7 @@ class TagController extends Controller
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *          @OA\Property(property="tag_description",type="string",example="#books"),
+ *          @OA\Property(property="tag_description",type="string",example="books"),
  *          @OA\Property(property="posts",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="post_status", type="string", example="published"),
