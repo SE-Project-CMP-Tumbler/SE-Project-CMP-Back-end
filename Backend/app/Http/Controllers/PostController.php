@@ -42,73 +42,105 @@ class PostController extends Controller
  *    in audio type: audio is required
  *    is genral : all fields can be given , to be genarl at least two different field of types should given" ,
  *    @OA\JsonContent(
- *         required={"post_status","post_type"},
- *       @OA\Property(property="post_status", type="string", example="published"),
- *       @OA\Property(property="title", type="string", example="New post"),
- *        @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
+ *      required={"post_status","post_type"},
+ *      @OA\Property(property="post_status", type="string", example="published"),
+ *      @OA\Property(property="title", type="string", example="New post"),
+ *      @OA\Property(property="tags",type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="tag_description",type="string",example="books"),
+ *              @OA\Property(property="tag_image",type="string",format="byte",example=""))),
+ *      @OA\Property(property="description", type="string", example="new post"),
+ *      @OA\Property(property="chat_title", type="string", example="New post"),
+ *      @OA\Property(property="chat_body", type="string", example="My post"),
+ *      @OA\Property(property="quote_text", type="string", example="New post"),
+ *      @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *      @OA\Property(property="keep_reading", type="integer", example=1),
+ *      @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
+ *      @OA\Property(property="images ", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *              @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *              @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),        
  *                  )
  *           ),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
+ *      @OA\Property(property="video ", type="string", format="byte", example=""),
+ *      @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *      @OA\Property(property="post_type ", type="string", example="text"),
  *      @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
- *                      @OA\Property(property="0", type="string", example="facebook.com"),
- *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),)))),
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="facebook.com"),
+ *              @OA\Property(property="1", type="string", example="google.com"),
+ *              @OA\Property(property="2", type="string", example="yahoo.com"),)))),
  * 
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object",example={"status":"200","msg":"OK"}),
- *       
  *       @OA\Property(property="response",type="object",
- *      @OA\Property(property="post_id", type="integer", example=5),
- *     @OA\Property(property="blog_id", type="integer", example=5),
+ *       @OA\Property(property="post_id", type="integer", example=5),
+ *       @OA\Property(property="blog_id", type="integer", example=5),
  *       @OA\Property(property="title", type="string", example="New post"),
  *       @OA\Property(property="description", type="string", example="new post"),
  *       @OA\Property(property="chat_title", type="string", example="New post"),
  *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
+ *       @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
  *       @OA\Property(property="quote_text", type="string", example="New post"),
  *       @OA\Property(property="quote_resouce", type="string", example="My post"),
  *       @OA\Property(property="keep_reading", type="integer", example=1),
  *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *              @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *              @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),        
  *                  )
  *           ),
  *       @OA\Property(property="video ", type="string", format="byte", example=""),
  *       @OA\Property(property="audio ", type="string", format="byte", example=""),
  *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
+ *       @OA\Property(property="url_videos ", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="facebook.com"),
+ *              @OA\Property(property="1", type="string", example="google.com"),
+ *              @OA\Property(property="2", type="string", example="yahoo.com"),),),
+ *       @OA\Property(property="traced_back_posts", type="array", 
+ *          @OA\Items(
+ *              @OA\Property(property="post_id", type="integer", example=5),
+ *              @OA\Property(property="blog_id", type="integer", example=5),
+ *              @OA\Property(property="title", type="string", example="New post"),
+ *              @OA\Property(property="description", type="string", example="new post"),
+ *              @OA\Property(property="chat_title", type="string", example="New post"),
+ *              @OA\Property(property="chat_body", type="string", example="My post"),
+ *              @OA\Property(property="post_tags", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="books"),
+ *                      @OA\Property(property="1", type="string", example="reading"),
+ *                      @OA\Property(property="2", type="string", example="stay positive"),)),
+ *              @OA\Property(property="quote_text", type="string", example="New post"),
+ *              @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *              @OA\Property(property="keep_reading", type="integer", example=1),
+ *              @OA\Property(property="images ", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *              @OA\Property(property="video ", type="string", format="byte", example=""),
+ *              @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *              @OA\Property(property="post_type ", type="string", example="text"),
+ *              @OA\Property(property="url_videos ", type="array",
+ *                  @OA\Items(
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),),),
- * ),
+ *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))),),),
+ * 
  *@OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -203,40 +235,67 @@ class PostController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
- *     @OA\JsonContent(
- *       @OA\Property(property="post_status", type="string", example="published"),
+ *    @OA\JsonContent(
+ *      @OA\Property(property="post_status", type="string", example="published"),
  *      @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *        @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *   @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
+ *      @OA\Property(property="blog_id", type="integer", example=5),
+ *      @OA\Property(property="title", type="string", example="New post"),
+ *      @OA\Property(property="description", type="string", example="new post"),
+ *      @OA\Property(property="chat_title", type="string", example="New post"),
+ *      @OA\Property(property="chat_body", type="string", example="My post"),
+ *      @OA\Property(property="quote_text", type="string", example="New post"),
+ *      @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *      @OA\Property(property="keep_reading", type="integer", example=1),
+ *      @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
+ *      @OA\Property(property="images ", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *              @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *              @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),        
  *                  )
  *           ),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
+ *      @OA\Property(property="video ", type="string", format="byte", example=""),
+ *      @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *      @OA\Property(property="post_type ", type="string", example="text"),
  *      @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="facebook.com"),
+ *              @OA\Property(property="1", type="string", example="google.com"),
+ *              @OA\Property(property="2", type="string", example="yahoo.com"),),
+ *      ),
+ *      @OA\Property(property="traced_back_posts", type="array", 
+ *          @OA\Items(
+ *              @OA\Property(property="post_id", type="integer", example=5),
+ *              @OA\Property(property="blog_id", type="integer", example=5),
+ *              @OA\Property(property="title", type="string", example="New post"),
+ *              @OA\Property(property="description", type="string", example="new post"),
+ *              @OA\Property(property="chat_title", type="string", example="New post"),
+ *              @OA\Property(property="chat_body", type="string", example="My post"),
+ *              @OA\Property(property="post_tags", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="books"),
+ *                      @OA\Property(property="1", type="string", example="reading"),
+ *                      @OA\Property(property="2", type="string", example="stay positive"),)),
+ *              @OA\Property(property="quote_text", type="string", example="New post"),
+ *              @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *              @OA\Property(property="keep_reading", type="integer", example=1),
+ *              @OA\Property(property="images ", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *              @OA\Property(property="video ", type="string", format="byte", example=""),
+ *              @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *              @OA\Property(property="post_type ", type="string", example="text"),
+ *              @OA\Property(property="url_videos ", type="array",
+ *                  @OA\Items(
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  ),
- *       ),
+ *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *     ),
  * )
  *   ,
@@ -281,7 +340,7 @@ class PostController extends Controller
  *    in quote type:  quote_text is required , quote_body is optinal 
  *    in video type:  video is required , url_videos are optinal
  *    in audio type: audio is required
- *    is genral : all fields can be given , to be genarl at least two different field of types should given" ,
+ *    is general : all fields can be given , to be general at least two different field of types should given" ,
  *    @OA\JsonContent(
  *       required={"post_status","post_type"},
  *       @OA\Property(property="post_status", type="string", example="published"),
@@ -292,8 +351,13 @@ class PostController extends Controller
  *       @OA\Property(property="quote_text", type="string", example="New post"),
  *       @OA\Property(property="quote_resouce", type="string", example="My post"),
  *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
+ *       @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
+ *      @OA\Property(property="images ", type="array",
+ *          @OA\Items(
  *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
  *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
@@ -303,7 +367,7 @@ class PostController extends Controller
  *       @OA\Property(property="video ", type="string", format="byte", example=""),
  *       @OA\Property(property="audio ", type="string", format="byte", example=""),
  *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
+ *       @OA\Property(property="url_videos ", type="array",
  *            @OA\Items(
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
@@ -336,14 +400,15 @@ class PostController extends Controller
  *    description="Successful response",
  *    @OA\JsonContent(
  *     @OA\Property(property="meta", type="object", example={ "status":"200","msg":"OK"}),
- *        @OA\Property(property="response", type="object",
+ *       @OA\Property(property="response", type="object",
  *       @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *        @OA\Property(property="title", type="string", example="New post"),
- *   @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
+ *       @OA\Property(property="blog_id", type="integer", example=5),
+ *       @OA\Property(property="title", type="string", example="New post"),
+ *       @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
  *       @OA\Property(property="description", type="string", example="new post"),
  *       @OA\Property(property="chat_title", type="string", example="New post"),
  *       @OA\Property(property="chat_body", type="string", example="My post"),
@@ -351,32 +416,52 @@ class PostController extends Controller
  *       @OA\Property(property="quote_resouce", type="string", example="My post"),
  *       @OA\Property(property="keep_reading", type="integer", example=1),
  *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
- *                  )
- *           ),
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *              @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *              @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
  *       @OA\Property(property="video ", type="string", format="byte", example=""),
  *       @OA\Property(property="audio ", type="string", format="byte", example=""),
  *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
+ *       @OA\Property(property="url_videos ", type="array",
  *            @OA\Items(
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  ),
- *       ),
+ *                      @OA\Property(property="2", type="string", example="yahoo.com"))),
+ *       @OA\Property(property="traced_back_posts", type="array", 
+ *          @OA\Items(
+ *              @OA\Property(property="post_id", type="integer", example=5),
+ *              @OA\Property(property="blog_id", type="integer", example=5),
+ *              @OA\Property(property="title", type="string", example="New post"),
+ *              @OA\Property(property="description", type="string", example="new post"),
+ *              @OA\Property(property="chat_title", type="string", example="New post"),
+ *              @OA\Property(property="chat_body", type="string", example="My post"),
+ *              @OA\Property(property="post_tags", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="books"),
+ *                      @OA\Property(property="1", type="string", example="reading"),
+ *                      @OA\Property(property="2", type="string", example="stay positive"),)),
+ *              @OA\Property(property="quote_text", type="string", example="New post"),
+ *              @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *              @OA\Property(property="keep_reading", type="integer", example=1),
+ *              @OA\Property(property="images ", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *              @OA\Property(property="video ", type="string", format="byte", example=""),
+ *              @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *              @OA\Property(property="post_type ", type="string", example="text"),
+ *              @OA\Property(property="url_videos ", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="facebook.com"),
+ *                      @OA\Property(property="1", type="string", example="google.com"),
+ *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *     ),
  *  ),
  * ),
  *  
  * ),
- * 
- * 
- * 
  */
 /**
  * @OA\Get(
@@ -396,45 +481,71 @@ class PostController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful credentials response",
- *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *    @OA\JsonContent(
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
- *        @OA\Items(
- *       @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *       @OA\Property(property="post_status", type="string", example="submission"),
- *      @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *        @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
+ *      @OA\Property(property="posts",type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="post_id", type="integer", example=5),
+ *              @OA\Property(property="blog_id", type="integer", example=5),
+ *              @OA\Property(property="post_status", type="string", example="submission"),
+ *              @OA\Property(property="post_tags", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="books"),
+ *                      @OA\Property(property="1", type="string", example="reading"),
+ *                      @OA\Property(property="2", type="string", example="stay positive"),)),
+ *              @OA\Property(property="title", type="string", example="New post"),
+ *              @OA\Property(property="description", type="string", example="new post"),
+ *              @OA\Property(property="chat_title", type="string", example="New post"),
+ *              @OA\Property(property="chat_body", type="string", example="My post"),
+ *              @OA\Property(property="quote_text", type="string", example="New post"),
+ *              @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *              @OA\Property(property="keep_reading", type="integer", example=1),
+ *              @OA\Property(property="images ", type="array",
+ *                  @OA\Items(
  *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
  *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
  *                      
  *                  )
  *           ),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
+ *              @OA\Property(property="video ", type="string", format="byte", example=""),
+ *              @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *              @OA\Property(property="post_type ", type="string", example="text"),
+ *              @OA\Property(property="url_videos ", type="array",
+ *                  @OA\Items(
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),
- * 
- * 
- * 
- * 
+ *              @OA\Property(property="traced_back_posts", type="array", 
+ *                  @OA\Items(
+ *                      @OA\Property(property="post_id", type="integer", example=5),
+ *                      @OA\Property(property="blog_id", type="integer", example=5),
+ *                      @OA\Property(property="title", type="string", example="New post"),
+ *                      @OA\Property(property="description", type="string", example="new post"),
+ *                      @OA\Property(property="chat_title", type="string", example="New post"),
+ *                      @OA\Property(property="chat_body", type="string", example="My post"),
+ *                      @OA\Property(property="post_tags", type="array",
+ *                          @OA\Items(
+ *                              @OA\Property(property="0", type="string", example="books"),
+ *                              @OA\Property(property="1", type="string", example="reading"),
+ *                              @OA\Property(property="2", type="string", example="stay positive"),)),
+ *                      @OA\Property(property="quote_text", type="string", example="New post"),
+ *                      @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *                      @OA\Property(property="keep_reading", type="integer", example=1),
+ *                      @OA\Property(property="images ", type="array",
+ *                          @OA\Items(
+ *                              @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                              @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                              @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *                      @OA\Property(property="video ", type="string", format="byte", example=""),
+ *                      @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                      @OA\Property(property="post_type ", type="string", example="text"),
+ *                      @OA\Property(property="url_videos ", type="array",
+ *                          @OA\Items(
+ *                              @OA\Property(property="0", type="string", example="facebook.com"),
+ *                              @OA\Property(property="1", type="string", example="google.com"),
+ *                              @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *          ),
  *   
  *       ),
@@ -479,18 +590,19 @@ class PostController extends Controller
  *    response=200,
  *    description="Successful response",
  *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *      @OA\Property(property="post_id", type="integer", example=5),
- *      @OA\Property(property="blog_id", type="integer", example=5),
- *         @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
+ *          @OA\Property(property="post_id", type="integer", example=5),
+ *          @OA\Property(property="blog_id", type="integer", example=5),
+ *          @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
  *       @OA\Property(property="post_status", type="string", example="queue"),
- *        @OA\Property(property="title", type="string", example="New post"),
+ *       @OA\Property(property="title", type="string", example="New post"),
  *       @OA\Property(property="description", type="string", example="new post"),
  *       @OA\Property(property="chat_title", type="string", example="New post"),
  *       @OA\Property(property="chat_body", type="string", example="My post"),
@@ -502,30 +614,50 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
  *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
  *                  )
  *           ),
  *       @OA\Property(property="video ", type="string", format="byte", example=""),
  *       @OA\Property(property="audio ", type="string", format="byte", example=""),
  *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
+ *       @OA\Property(property="url_videos ", type="array",
  *            @OA\Items(
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  ),
- *       ),
- * 
- * 
- * 
- * 
- *          ),
+ *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),
+ *       @OA\Property(property="traced_back_posts", type="array", 
+ *          @OA\Items(
+ *              @OA\Property(property="post_id", type="integer", example=5),
+ *              @OA\Property(property="blog_id", type="integer", example=5),
+ *              @OA\Property(property="title", type="string", example="New post"),
+ *              @OA\Property(property="description", type="string", example="new post"),
+ *              @OA\Property(property="chat_title", type="string", example="New post"),
+ *              @OA\Property(property="chat_body", type="string", example="My post"),
+ *              @OA\Property(property="post_tags", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="books"),
+ *                      @OA\Property(property="1", type="string", example="reading"),
+ *                      @OA\Property(property="2", type="string", example="stay positive"),)),
+ *              @OA\Property(property="quote_text", type="string", example="New post"),
+ *              @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *              @OA\Property(property="keep_reading", type="integer", example=1),
+ *              @OA\Property(property="images ", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *              @OA\Property(property="video ", type="string", format="byte", example=""),
+ *              @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *              @OA\Property(property="post_type ", type="string", example="text"),
+ *              @OA\Property(property="url_videos ", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="facebook.com"),
+ *                      @OA\Property(property="1", type="string", example="google.com"),
+ *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))
+ *  ),
  *   
- *       ),
- *        
+ *       ),     
  * ),
- *     ),
+ *     ),      
  * )
  *   ,
  *  @OA\Response(
@@ -565,51 +697,71 @@ class PostController extends Controller
  *    response=200,
  *    description="Successful  response",
  *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *       @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *       @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="post_id", type="integer", example=5),
+ *          @OA\Property(property="blog_id", type="integer", example=5),
+ *          @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
+ *          @OA\Property(property="post_status", type="string", example="scheduling"),
+ *          @OA\Property(property="title", type="string", example="New post"),
+ *          @OA\Property(property="description", type="string", example="new post"),
+ *          @OA\Property(property="chat_title", type="string", example="New post"),
+ *          @OA\Property(property="chat_body", type="string", example="My post"),
+ *          @OA\Property(property="quote_text", type="string", example="New post"),
+ *          @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *          @OA\Property(property="keep_reading", type="integer", example=1),
+ *          @OA\Property(property="images ", type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="post_status", type="string", example="scheduling"),
- *        @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
+ *                  @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                  @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                  @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),     
  *                  )
  *           ),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
+ *          @OA\Property(property="video ", type="string", format="byte", example=""),
+ *          @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *          @OA\Property(property="post_type ", type="string", example="text"),
+ *          @OA\Property(property="url_videos ", type="array",
  *            @OA\Items(
- *                      @OA\Property(property="0", type="string", example="facebook.com"),
- *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  ),
- *       ),
- * 
- * 
- * 
- * 
+ *              @OA\Property(property="0", type="string", example="facebook.com"),
+ *              @OA\Property(property="1", type="string", example="google.com"),
+ *              @OA\Property(property="2", type="string", example="yahoo.com"),),),
+ *          @OA\Property(property="traced_back_posts", type="array", 
+ *              @OA\Items(
+ *                  @OA\Property(property="post_id", type="integer", example=5),
+ *                  @OA\Property(property="blog_id", type="integer", example=5),
+ *                  @OA\Property(property="title", type="string", example="New post"),
+ *                  @OA\Property(property="description", type="string", example="new post"),
+ *                  @OA\Property(property="chat_title", type="string", example="New post"),
+ *                  @OA\Property(property="chat_body", type="string", example="My post"),
+ *                  @OA\Property(property="post_tags", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", example="books"),
+ *                          @OA\Property(property="1", type="string", example="reading"),
+ *                          @OA\Property(property="2", type="string", example="stay positive"),)),
+ *                  @OA\Property(property="quote_text", type="string", example="New post"),
+ *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *                  @OA\Property(property="keep_reading", type="integer", example=1),
+ *                  @OA\Property(property="images ", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                          @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                          @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *                  @OA\Property(property="video ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="post_type ", type="string", example="text"),
+ *                  @OA\Property(property="url_videos ", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", example="facebook.com"),
+ *                          @OA\Property(property="1", type="string", example="google.com"),
+ *                          @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *          ),
- *   
  *       ),
- *        
  * ),
  *     ),
  * )
@@ -650,52 +802,72 @@ class PostController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful  response",
- *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *    @OA\JsonContent(
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
- *        @OA\Items(
- *        @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *         @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="posts",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="post_status", type="string", example="published"),
- *        @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
+ *                  @OA\Property(property="post_id", type="integer", example=5),
+ *                  @OA\Property(property="blog_id", type="integer", example=5),
+ *                  @OA\Property(property="post_tags", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", example="books"),
+ *                          @OA\Property(property="1", type="string", example="reading"),
+ *                          @OA\Property(property="2", type="string", example="stay positive"),)),
+ *                  @OA\Property(property="post_status", type="string", example="published"),
+ *                  @OA\Property(property="title", type="string", example="New post"),
+ *                  @OA\Property(property="description", type="string", example="new post"),
+ *                  @OA\Property(property="chat_title", type="string", example="New post"),
+ *                  @OA\Property(property="chat_body", type="string", example="My post"),
+ *                  @OA\Property(property="quote_text", type="string", example="New post"),
+ *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *                  @OA\Property(property="keep_reading", type="integer", example=1),
+ *                  @OA\Property(property="images ", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                          @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                          @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"), 
  *                  )
  *           ),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
- *                      @OA\Property(property="0", type="string", example="facebook.com"),
- *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  ),
- *       ),
- * 
- * 
- * 
- * 
+ *                  @OA\Property(property="video ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="post_type ", type="string", example="text"),
+ *                  @OA\Property(property="url_videos ", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", example="facebook.com"),
+ *                          @OA\Property(property="1", type="string", example="google.com"),
+ *                          @OA\Property(property="2", type="string", example="yahoo.com"),),),
+ *                  @OA\Property(property="traced_back_posts", type="array", 
+ *                  @OA\Items(
+ *                      @OA\Property(property="post_id", type="integer", example=5),
+ *                      @OA\Property(property="blog_id", type="integer", example=5),
+ *                      @OA\Property(property="title", type="string", example="New post"),
+ *                      @OA\Property(property="description", type="string", example="new post"),
+ *                      @OA\Property(property="chat_title", type="string", example="New post"),
+ *                      @OA\Property(property="chat_body", type="string", example="My post"),
+ *                      @OA\Property(property="post_tags", type="array",
+ *                          @OA\Items(
+ *                              @OA\Property(property="0", type="string", example="books"),
+ *                              @OA\Property(property="1", type="string", example="reading"),
+ *                              @OA\Property(property="2", type="string", example="stay positive"),)),
+ *                      @OA\Property(property="quote_text", type="string", example="New post"),
+ *                      @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *                      @OA\Property(property="keep_reading", type="integer", example=1),
+ *                      @OA\Property(property="images ", type="array",
+ *                          @OA\Items(
+ *                              @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                              @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                              @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *                      @OA\Property(property="video ", type="string", format="byte", example=""),
+ *                      @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                      @OA\Property(property="post_type ", type="string", example="text"),
+ *                      @OA\Property(property="url_videos ", type="array",
+ *                          @OA\Items(
+ *                              @OA\Property(property="0", type="string", example="facebook.com"),
+ *                              @OA\Property(property="1", type="string", example="google.com"),
+ *                              @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *          ),
- *   
  *       ),
- *        
  * ),
  *     ),
  * )
@@ -736,52 +908,72 @@ class PostController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful  response",
- *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *    @OA\JsonContent(
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
- *        @OA\Items(
- *       @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *      @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="posts",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="post_status", type="string", example="draft"),
- *        @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
+ *                  @OA\Property(property="post_id", type="integer", example=5),
+ *                  @OA\Property(property="blog_id", type="integer", example=5),
+ *                  @OA\Property(property="post_tags", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", example="books"),
+ *                          @OA\Property(property="1", type="string", example="reading"),
+ *                          @OA\Property(property="2", type="string", example="stay positive"),)),
+ *                  @OA\Property(property="post_status", type="string", example="draft"),
+ *                  @OA\Property(property="title", type="string", example="New post"),
+ *                  @OA\Property(property="description", type="string", example="new post"),
+ *                  @OA\Property(property="chat_title", type="string", example="New post"),
+ *                  @OA\Property(property="chat_body", type="string", example="My post"),
+ *                  @OA\Property(property="quote_text", type="string", example="New post"),
+ *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *                  @OA\Property(property="keep_reading", type="integer", example=1),
+ *                  @OA\Property(property="images ", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                          @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                          @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
  *                  )
  *           ),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
- *      @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
- *                      @OA\Property(property="0", type="string", example="facebook.com"),
- *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  ),
- *       ),
- * 
- * 
- * 
- * 
+ *                  @OA\Property(property="video ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="post_type ", type="string", example="text"),
+ *                  @OA\Property(property="url_videos ", type="array",
+ *                      @OA\Items(
+ *                          @OA\Property(property="0", type="string", example="facebook.com"),
+ *                          @OA\Property(property="1", type="string", example="google.com"),
+ *                          @OA\Property(property="2", type="string", example="yahoo.com"),),),
+ *                  @OA\Property(property="traced_back_posts", type="array", 
+ *                      @OA\Items(
+ *                          @OA\Property(property="post_id", type="integer", example=5),
+ *                          @OA\Property(property="blog_id", type="integer", example=5),
+ *                          @OA\Property(property="title", type="string", example="New post"),
+ *                          @OA\Property(property="description", type="string", example="new post"),
+ *                          @OA\Property(property="chat_title", type="string", example="New post"),
+ *                          @OA\Property(property="chat_body", type="string", example="My post"),
+ *                          @OA\Property(property="post_tags", type="array",
+ *                              @OA\Items(
+ *                                  @OA\Property(property="0", type="string", example="books"),
+ *                                  @OA\Property(property="1", type="string", example="reading"),
+ *                                  @OA\Property(property="2", type="string", example="stay positive"),)),
+ *                          @OA\Property(property="quote_text", type="string", example="New post"),
+ *                          @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *                          @OA\Property(property="keep_reading", type="integer", example=1),
+ *                          @OA\Property(property="images ", type="array",
+ *                              @OA\Items(
+ *                                  @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
+ *                                  @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                                  @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
+ *                          @OA\Property(property="video ", type="string", format="byte", example=""),
+ *                          @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                          @OA\Property(property="post_type ", type="string", example="text"),
+ *                          @OA\Property(property="url_videos ", type="array",
+ *                              @OA\Items(
+ *                                  @OA\Property(property="0", type="string", example="facebook.com"),
+ *                                  @OA\Property(property="1", type="string", example="google.com"),
+ *                                  @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *          ),
- *   
  *       ),
- *        
  * ),
  *     ),
  * )

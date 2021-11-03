@@ -25,7 +25,7 @@ class PostNoteController extends Controller
  * 
  * @OA\Response(
  *    response=200,
- *    description="list of notes",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
@@ -36,10 +36,7 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
  *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="blog_url", type="string", example="https://www.tumblr.com/blog/view/radwa-ahmed213"),
- *                      @OA\Property(property="followed", type="boolean", example=false)
- *                  )
- *              ),
+ *                      @OA\Property(property="followed", type="boolean", example=false))),
  *              
  *              @OA\Property(property="replies", type="array",
  *                  @OA\Items(
@@ -47,10 +44,7 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=2),
- *                      @OA\Property(property="blog_url", type="string", example="https://www.tumblr.com/blog/view/radwa-ahmed213"),
- *                      @OA\Property(property="reply_content", type="string", example="What an amazing post!")
- *                  )
- *              ),
+ *                      @OA\Property(property="reply_content", type="string", example="What an amazing post!"))),
  * 
  *              @OA\Property(property="reblogs", type="array",
  *                  @OA\Items(
@@ -58,22 +52,14 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=2),
- *                      @OA\Property(property="blog_url", type="string", example="https://www.tumblr.com/blog/view/radwa-ahmed213"),
  *                      @OA\Property(property="reblog_content", type="string", example=""),
  *                      @OA\Property(property="reblog_tags", type="string", example="[]"), 
- *                      @OA\Property(property="reblog_type", type="string", example="video")          
- *                  )
- *              )
- *          )
- *        )
- *     ),
+ *                      @OA\Property(property="reblog_type", type="string", example="video")))))),
  *  @OA\Response(
  *    response=404,
- *    description="A post with the specified ID was not found",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A post with the specified ID was not found"})
- *        )
- *     )
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A post with the specified ID was not found"})))
  * )
  */
 }

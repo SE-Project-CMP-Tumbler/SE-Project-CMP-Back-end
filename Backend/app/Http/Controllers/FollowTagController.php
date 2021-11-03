@@ -13,6 +13,7 @@ class FollowTagController extends Controller
  * description="Add a new follow relation between the blog and the tag",
  * operationId="followTag",
  * tags={"Tags"},
+ * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="tag_description",
  *          description="Tag Description",
@@ -23,13 +24,13 @@ class FollowTagController extends Controller
  * 
  *  @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),),),
  * 
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified id was not found"})))
  * )
@@ -41,6 +42,7 @@ class FollowTagController extends Controller
  * description="Remove the follow relation between the blog and the tag",
  * operationId="unfollowTag",
  * tags={"Tags"},
+ * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="tag_description",
  *          description="Tag Description",
@@ -51,19 +53,19 @@ class FollowTagController extends Controller
  * 
  *  @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}))),
  * 
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified id was not found"}))),
  * 
  *  @OA\Response(
  *    response=401,
- *    description="Wrong credentials response",
+ *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * 
@@ -81,15 +83,16 @@ class FollowTagController extends Controller
  * description="Returns list of all tags the blog follow",
  * operationId="getfollowingTags",
  * tags={"Tags"},
+ * security={ {"bearer": {} }},
  *  @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *       @OA\Property(property="response",type="object",
  *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="#books"),
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
  * 
  * 
