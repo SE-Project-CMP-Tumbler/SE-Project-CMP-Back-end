@@ -20,9 +20,9 @@ class NotificationController extends Controller
  *    name="blog_id",
  *    description="Any blog identifier.",
  *    required=true,
- *    example="mycoolblogname",
+ *    example="123456789",
  *    @OA\Schema(
- *       type="string",
+ *       type="int",
  *    )
  *  ),
  *  @OA\RequestBody(
@@ -38,7 +38,6 @@ class NotificationController extends Controller
  *   answer: an answered ask that you had sent
  *   all: to get all type of notifications",
  *   @OA\JsonContent(
- *     @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
  *         @OA\Property(property="type", type="string", example="like|reply")
  *       ),
@@ -46,7 +45,7 @@ class NotificationController extends Controller
  *  ),
  *  @OA\Response(
  *    response=200,
- *    description="ok",
+ *    description="Successful Operation",
  *    @OA\JsonContent(
  *     @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
@@ -86,7 +85,7 @@ class NotificationController extends Controller
  *    response=401,
  *    description="Unauthorized",
  *    @OA\JsonContent(
- *     @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *     @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized"}),
  *     @OA\Property(property="response", type="array",@OA\Items()),
  *     @OA\Property(property="errors", type="array",
  *       @OA\Items(
