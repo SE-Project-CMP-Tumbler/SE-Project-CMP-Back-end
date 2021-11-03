@@ -20,9 +20,9 @@ class NotificationController extends Controller
  *    name="blog_id",
  *    description="Any blog identifier.",
  *    required=true,
- *    example="mycoolblogname",
+ *    example="123456789",
  *    @OA\Schema(
- *       type="string",
+ *       type="int",
  *    )
  *  ),
  *  @OA\RequestBody(
@@ -45,7 +45,7 @@ class NotificationController extends Controller
  *  ),
  *  @OA\Response(
  *    response=200,
- *    description="ok",
+ *    description="Successful Operation",
  *    @OA\JsonContent(
  *     @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
