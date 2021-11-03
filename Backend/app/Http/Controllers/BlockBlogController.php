@@ -69,7 +69,7 @@ class BlockBlogController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
- *        @OA\Property(property="blocked blog", type="array",
+ *       @OA\Property(property="blocked blog", type="array",
  *                  @OA\Items(
  *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),

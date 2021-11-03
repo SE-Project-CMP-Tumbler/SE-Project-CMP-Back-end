@@ -18,20 +18,19 @@ class PostFilterController extends Controller
  *    response=200,
  *    description="Successful response",
  *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
+ *      @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *      @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *    @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="post_id", type="integer", example=5),
+ *          @OA\Property(property="blog_id", type="integer", example=5),
+ *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="post_type", type="string", example="text"),
+ *                  @OA\Property(property="tag_description",type="string",example="books"))),
+ *        @OA\Property(property="post_type", type="string", example="text"),
  *        @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *      @OA\Property(property="keep_reading", type="integer", example=5)
+ *        @OA\Property(property="description", type="string", example="new post"),
+ *        @OA\Property(property="keep_reading", type="integer", example=5)
  *          ),
  *   
  *       ),
@@ -68,20 +67,18 @@ class PostFilterController extends Controller
  *    response=200,
  *    description="Successful response",
  *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
+ *      @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *      @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *  
- *     @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="post_id", type="integer", example=5),
+ *          @OA\Property(property="blog_id", type="integer", example=5),
+ *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="post_type", type="string", example="chat"),
- *        @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="new post"),
+ *                  @OA\Property(property="tag_description",type="string",example="books"))),
+ *           @OA\Property(property="post_type", type="string", example="chat"),
+ *           @OA\Property(property="chat_title", type="string", example="New post"),
+ *          @OA\Property(property="chat_body", type="string", example="new post"),
  *          ),
  *   
  *       ),
@@ -119,15 +116,14 @@ class PostFilterController extends Controller
  *    description="Successful response",
  *     @OA\JsonContent(
  *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
- *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
+ *    @OA\Property(property="response",type="object",
+ *    @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *       @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- * @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="post_id", type="integer", example=5),
+ *          @OA\Property(property="blog_id", type="integer", example=5),
+ *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
+ *                  @OA\Property(property="tag_description",type="string",example="books"))),
  *        @OA\Property(property="post_type", type="string", example="quote"),
  *        @OA\Property(property="quote_title", type="string", example="New post"),
  *        @OA\Property(property="quote_resouce", type="string", example="new post"),
@@ -168,16 +164,15 @@ class PostFilterController extends Controller
  *    response=200,
  *    description="Successful credentials response",
  *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
+ *      @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *        @OA\Property(property="post_id", type="integer", example=5),
- *   @OA\Property(property="blog_id", type="integer", example=5),
- *         @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="post_id", type="integer", example=5),
+ *          @OA\Property(property="blog_id", type="integer", example=5),
+ *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
+ *                  @OA\Property(property="tag_description",type="string",example="books"))),
  *        @OA\Property(property="post_type", type="string", example="image"),
  *        @OA\Property(property="images ", type="array",
  *        @OA\Items(
@@ -223,19 +218,18 @@ class PostFilterController extends Controller
  *    response=200,
  *    description="Successful credentials response",
  *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
+ *      @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *      @OA\Property(property="post_id", type="integer",  example=5),
- *       @OA\Property(property="blog_id", type="integer", example=5),
- * @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
+ *              @OA\Property(property="post_id", type="integer",  example=5),
+ *              @OA\Property(property="blog_id", type="integer", example=5),
+ *              @OA\Property(property="tags",type="array",
+ *                 @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"))),
+ *        @OA\Property(property="video ", type="string", format="byte", example=""),
  *        @OA\Property(property="post_type", type="string", example="video"),
- *       @OA\Property(property="url_videos ", type="array",
+ *        @OA\Property(property="url_videos ", type="array",
  *            @OA\Items(
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
@@ -279,18 +273,17 @@ class PostFilterController extends Controller
  *    response=200,
  *    description="Successful  response",
  *     @OA\JsonContent(
- *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *       @OA\Property(property="posts",type="array",
+ *      @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *       @OA\Property(property="post_id", type="integer", example=5),
- *       @OA\Property(property="blog_id", type="integer", example=5),
- * @OA\Property(property="tags",type="array",
+ *          @OA\Property(property="post_id", type="integer", example=5),
+ *          @OA\Property(property="blog_id", type="integer", example=5),
+ *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *        @OA\Property(property="post_type", type="string", example="aduio"),
+ *                  @OA\Property(property="tag_description",type="string",example="books"))),
+ *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="post_type", type="string", example="aduio"),
  *          ),
  *   
  *       ),

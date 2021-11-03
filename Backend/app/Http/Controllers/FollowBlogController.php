@@ -15,18 +15,32 @@ class FollowBlogController extends Controller
  * operationId="followblog",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id of followed blog ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful  response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *        )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found blog"})
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
  *        )
  *     )
  * )
@@ -41,23 +55,30 @@ class FollowBlogController extends Controller
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
  *          name="blog_id",
- *          description="Blog_id ",
+ *          description="Blog_id of unfollowed blog ",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
  *              type="integer")),
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
  *       )
  *     ),
  *  @OA\Response(
- *    response=404,
- *    description="Wrong credentials response",
+ *    response=401,
+ *    description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * )
@@ -70,9 +91,16 @@ class FollowBlogController extends Controller
  * operationId="followersblog",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id of current blog  ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
@@ -87,11 +115,18 @@ class FollowBlogController extends Controller
  *      )
  *       )
  *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Wrong credentials response",
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * )
@@ -107,11 +142,11 @@ class FollowBlogController extends Controller
  * security={ {"bearer": {} }},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful  response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object",        
- *         @OA\Property(property="followings", type="array",
+ *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        @OA\Property(property="response", type="object",        
+ *        @OA\Property(property="followings", type="array",
  *                  @OA\Items(
  *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
@@ -122,11 +157,18 @@ class FollowBlogController extends Controller
  *    )
  *       )
  *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Wrong credentials response",
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * )
@@ -149,19 +191,26 @@ class FollowBlogController extends Controller
  * 
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *         @OA\Property(property="response", type="obeject",example={"followed":true},
  *                 
  *              ),
  *       )
  *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Wrong credentials response",
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * )
