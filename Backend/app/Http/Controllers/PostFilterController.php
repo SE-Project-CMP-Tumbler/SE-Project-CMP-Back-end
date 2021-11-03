@@ -16,13 +16,18 @@ class PostFilterController extends Controller
  * tags={"Posts"},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *     
+ *      @OA\Property(property="post_id", type="integer", example=5),
+ *   @OA\Property(property="blog_id", type="integer", example=5),
+ *    @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
  *       @OA\Property(property="post_type", type="string", example="text"),
  *        @OA\Property(property="title", type="string", example="New post"),
  *       @OA\Property(property="description", type="string", example="new post"),
@@ -37,16 +42,16 @@ class PostFilterController extends Controller
  *   ,
  *  @OA\Response(
  *    response=401,
- *    description="Wrong credentials response",
+ *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
  * ),
@@ -61,13 +66,19 @@ class PostFilterController extends Controller
  * tags={"Posts"},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *     
+ *      @OA\Property(property="post_id", type="integer", example=5),
+ *   @OA\Property(property="blog_id", type="integer", example=5),
+ *  
+ *     @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
  *       @OA\Property(property="post_type", type="string", example="chat"),
  *        @OA\Property(property="chat_title", type="string", example="New post"),
  *       @OA\Property(property="chat_body", type="string", example="new post"),
@@ -81,16 +92,16 @@ class PostFilterController extends Controller
  *   ,
  *  @OA\Response(
  *    response=401,
- *    description="Wrong credentials response",
+ *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
  * ),
@@ -105,13 +116,18 @@ class PostFilterController extends Controller
  * tags={"Posts"},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *     
+ *       @OA\Property(property="post_id", type="integer", example=5),
+ *   @OA\Property(property="blog_id", type="integer", example=5),
+ * @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
  *        @OA\Property(property="post_type", type="string", example="quote"),
  *        @OA\Property(property="quote_title", type="string", example="New post"),
  *        @OA\Property(property="quote_resouce", type="string", example="new post"),
@@ -126,16 +142,16 @@ class PostFilterController extends Controller
  *   ,
  *  @OA\Response(
  *    response=401,
- *    description="Wrong credentials response",
+ *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
  * ),
@@ -156,7 +172,12 @@ class PostFilterController extends Controller
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
- *     
+ *        @OA\Property(property="post_id", type="integer", example=5),
+ *   @OA\Property(property="blog_id", type="integer", example=5),
+ *         @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
  *        @OA\Property(property="post_type", type="string", example="image"),
  *        @OA\Property(property="images ", type="array",
  *        @OA\Items(
@@ -176,16 +197,16 @@ class PostFilterController extends Controller
  *   ,
  *  @OA\Response(
  *    response=401,
- *    description="Wrong credentials response",
+ *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
  * ),
@@ -206,6 +227,12 @@ class PostFilterController extends Controller
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
+ *      @OA\Property(property="post_id", type="integer",  example=5),
+ *       @OA\Property(property="blog_id", type="integer", example=5),
+ * @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
  *       @OA\Property(property="video ", type="string", format="byte", example=""),
  *        @OA\Property(property="post_type", type="string", example="video"),
  *       @OA\Property(property="url_videos ", type="array",
@@ -226,16 +253,16 @@ class PostFilterController extends Controller
  *   ,
  *  @OA\Response(
  *    response=401,
- *    description="Wrong credentials response",
+ *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
  * ),
@@ -250,12 +277,18 @@ class PostFilterController extends Controller
  * tags={"Posts"},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful  response",
  *     @OA\JsonContent(
  *    @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
  *       @OA\Property(property="posts",type="array",
  *        @OA\Items(
+ *       @OA\Property(property="post_id", type="integer", example=5),
+ *       @OA\Property(property="blog_id", type="integer", example=5),
+ * @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
  *       @OA\Property(property="audio ", type="string", format="byte", example=""),
  *        @OA\Property(property="post_type", type="string", example="aduio"),
  *          ),
@@ -268,16 +301,16 @@ class PostFilterController extends Controller
  *   ,
  *  @OA\Response(
  *    response=401,
- *    description="Wrong credentials response",
+ *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * ),

@@ -39,6 +39,13 @@ class FollowBlogController extends Controller
  * operationId="unfollowblog",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
  *    description="Successful credentials response",
@@ -57,7 +64,7 @@ class FollowBlogController extends Controller
  */
 /**
  * @OA\Get(
- * path="/followers",
+ * path="/followers/{blog_id}",
  * summary="follower's blog",
  * description=" Primary blog  get all his/her followers",
  * operationId="followersblog",
