@@ -11,9 +11,9 @@ class PostController extends Controller
 /**
  * @OA\Put(
  * path="/post/{post_id}",
- * summary="create new post",
- * description=" A blog can edit post",
- * operationId="createpost",
+ * summary="Edit a new post",
+ * description="A blog can edit post",
+ * operationId="editpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *   @OA\RequestBody(

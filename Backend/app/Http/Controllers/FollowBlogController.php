@@ -128,10 +128,18 @@ class FollowBlogController extends Controller
  * @OA\Get(
  * path="/followed_by/{blog_id}",
  * summary="followed_by blog",
- * description=" Check if followed by blog",
+ * description=" Check if the current blog is followed by another specific blog",
  * operationId="followingblog",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *          name="blog_id",
+ *          description="The id of the blog to check if he/she is following the current blog",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ * 
  * @OA\Response(
  *    response=200,
  *    description="Successful credentials response",
