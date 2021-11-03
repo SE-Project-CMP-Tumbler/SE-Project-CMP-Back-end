@@ -13,6 +13,7 @@ class TagController extends Controller
  * description="Creates a specific tag",
  * operationId="createTag",
  * tags={"Tags"},
+ * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="tag_description",
  *          description="Tag Description",
@@ -23,7 +24,7 @@ class TagController extends Controller
  * 
  *  @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),),),
  * 
@@ -41,6 +42,7 @@ class TagController extends Controller
  * description="Returns data of a specific tag",
  * operationId="getTagData",
  * tags={"Tags"},
+ * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="tag_description",
  *          description="Tag Description",
@@ -51,7 +53,7 @@ class TagController extends Controller
  * 
  *  @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
@@ -62,7 +64,7 @@ class TagController extends Controller
  * 
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified description was not found"})))
  * )
@@ -74,6 +76,7 @@ class TagController extends Controller
  * description="Returns list of all posts associated to a specific tag",
  * operationId="getTagPosts",
  * tags={"Tags"},
+ * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="tag_description",
  *          description="Tag Description",
@@ -92,7 +95,7 @@ class TagController extends Controller
  * 
  *  @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
@@ -128,7 +131,7 @@ class TagController extends Controller
  * 
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Tag description or sort type was not found"})))
  * )
