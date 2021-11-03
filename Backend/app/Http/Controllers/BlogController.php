@@ -29,7 +29,7 @@ class BlogController extends Controller
  *               ),
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *        )
@@ -42,10 +42,10 @@ class BlogController extends Controller
  *        )
  *     ),
 *  @OA\Response(
- *    response=404,
- *    description="Wrong credentials response",
+ *    response=500,
+ *    description="Internal Server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
  *        )
  *     )
  * )
@@ -59,16 +59,16 @@ class BlogController extends Controller
  * security={ {"bearer": {} }},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Wrong response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
  *     )
  * )

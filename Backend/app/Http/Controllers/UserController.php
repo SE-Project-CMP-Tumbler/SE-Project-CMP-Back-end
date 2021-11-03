@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 /**
- * @OA\Post(
+* @OA\Post(
  * path="/register",
  * summary="Signup a new user",
  * description=" Creating a secondary blog",
@@ -31,7 +31,7 @@ class UserController extends Controller
  * 
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
@@ -39,11 +39,11 @@ class UserController extends Controller
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
  *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
- *       @OA\Property(property="api_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
  *         ),
  *        )
  *     ),
-*  @OA\Response(
+ *  @OA\Response(
  *    response=422,
  *    description="Unprocessable Entity",
  *    @OA\JsonContent(
@@ -51,20 +51,22 @@ class UserController extends Controller
  *        )
  *     ),
  *  @OA\Response(
- *    response=404,
- *    description="Wrong credentials response",
+ *    response=500,
+ *    description="Internal Server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
  *        )
  *     )
  * ),
- *  * @OA\Post(
+
+ *
+* @OA\Post(
  * path="/login",
  * summary="login user",
  * description="user login",
  * tags={"User"},
  * operationId="loginuser",
-*   @OA\RequestBody(
+ *   @OA\RequestBody(
  *    required=true,
  *    description=  "
  *    email : The email of the user ,
@@ -77,7 +79,7 @@ class UserController extends Controller
  *               ),
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
@@ -85,15 +87,155 @@ class UserController extends Controller
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
  *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
- *       @OA\Property(property="api_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
  *         ),
  *        )
  *     ),
-*  @OA\Response(
+ *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Wrong response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *        )
+ *     )
+ * ),
+
+ * 
+* @OA\Post(
+ * path="/logout",
+ * summary="logout user",
+ * description="user logout",
+ * tags={"User"},
+ * security={ {"bearer": {} }},
+ * operationId="logoutuser",
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Wrong response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *        )
+ *     )
+ * ),
+ 
+* @OA\Post(
+ * path="/forgot-password",
+ * summary="email verification",
+ * description="sending email verification link to the user",
+ * tags={"User"},
+ * operationId="emailverification",
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description=  "
+ *    email : this is the same email that the user used to signup ",
+ *    @OA\JsonContent(
+ *      required={"email"},
+ *      @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *                )
+ *               ),
+ * 
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Wrong response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *        )
+ *     )
+ * ),
+ * 
+* @OA\get(
+ * path="/reset_password/{access_token}",
+ * summary="entering a new password",
+ * description="the page that helps the user to create a new password",
+ * tags={"User"},
+ * operationId="enternewpassword",
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response",type="object",
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),      
+ *         ),
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Wrong response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=500,
+ *    description="Internal Server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+ *        )
+ *     )
+ * ),
+* @OA\Post(
+ * path="/reset_password",
+ * summary="reset password",
+ * description="reseting the user's password",
+ * tags={"User"},
+ * security={ {"bearer": {} }},
+ * operationId="resetpassword",
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description=  "
+ *    access_token : this is the token that was sent to the user via email in the verification link,
+ *    email : this is the same email that the user used to signup and also for recieving the verification email ,
+ *    password : this is the new password,
+ *    password_confirmation : the password of the new password ",
+ *    @OA\JsonContent(
+ *      required={"access_token","email","password","password_confirmation"},
+ *      @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
+ *      @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *      @OA\Property(property="password", type="string",format="password", example="CMP21520cmp>"),
+*      @OA\Property(property="password_confirmation", type="string",format="password", example="CMP21520cmp>"),
+ *                )
+ *               ),
+ * 
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response",type="object",
+ *       @OA\Property(property="id", type="string", example="12151"),
+ *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
+ *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *         ),
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Wrong response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *        )
+ *     ),
+  *  @OA\Response(
+ *    response=500,
+ *    description="Internal Server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
  *        )
  *     )
  * ),
