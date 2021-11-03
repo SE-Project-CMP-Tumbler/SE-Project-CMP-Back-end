@@ -13,7 +13,7 @@ class Controller extends BaseController
     /**
      * @OA\Info(
      *      version="1.0.0",
-     *      title="Laravel OpenApi Demo Documentation",
+     *      title="Tumblr Api Documentation",
      *      description="L5 Swagger OpenApi description",
      *      @OA\Contact(
      *          email="admin@admin.com"

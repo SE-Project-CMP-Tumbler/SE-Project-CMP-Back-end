@@ -15,6 +15,14 @@ class PostNoteController extends Controller
  * operationId="getPostNotesByPostId",
  * tags={"Post Notes"},
  * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *          name="post_id",
+ *          description="The Post Id for the notes to be retrieved",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="string")),
+ * 
  * @OA\Response(
  *    response=200,
  *    description="list of notes",
@@ -46,7 +54,7 @@ class PostNoteController extends Controller
  * 
  *              @OA\Property(property="reblogs", type="array",
  *                  @OA\Items(
- *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="blog_avatar", type="string", format="byte", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=2),

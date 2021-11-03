@@ -407,7 +407,7 @@ class PostController extends Controller
  * @OA\Get(
  * path="/post/{blog_id}/submission",
  * summary="Get posts of blog which are submitted",
- * description=" A blog get  submitted posts",
+ * description=" A blog get submitted posts",
  * operationId="post",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
