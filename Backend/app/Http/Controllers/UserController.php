@@ -37,7 +37,7 @@ class UserController extends Controller
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
- *       @OA\Property(property="email", type="string", example="zezo@gmail.com"),   
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
  *       @OA\Property(property="api_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
  *         ),
@@ -83,7 +83,7 @@ class UserController extends Controller
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
- *       @OA\Property(property="email", type="string", example="zezo@gmail.com"),   
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
  *       @OA\Property(property="api_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
  *         ),
@@ -98,6 +98,6 @@ class UserController extends Controller
  *     )
  * ),
  */
- 
+
 
 }
