@@ -29,7 +29,7 @@ class BlogController extends Controller
  *               ),
  * @OA\Response(
  *    response=200,
- *    description="Successfully created a blog",
+ *    description="Successful credentials response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *        )
