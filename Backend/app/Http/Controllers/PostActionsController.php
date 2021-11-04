@@ -47,6 +47,7 @@ class PostActionsController extends Controller
  *            @OA\Property(property="blog_id", type="integer", example=1032),
  *            @OA\Property(property="followed", type="boolean", example=false),
  *            @OA\Property(property="reply_text", type="string", example="this is my last reply"),
+ *            @OA\Property(property="reply_time", type="date-time", example="02-02-2021"),
  *          )
  *       ),
  *    ),
@@ -61,6 +62,7 @@ class PostActionsController extends Controller
  *  ),
  * )
  */
+
 
  /**
  * @OA\Post(
@@ -177,7 +179,7 @@ class PostActionsController extends Controller
  *   @OA\JsonContent(
  *      @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not Found"}),
  *   ),
- *  ),
+ *  )
  * )
  */
 

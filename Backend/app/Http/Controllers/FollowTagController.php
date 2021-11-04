@@ -98,5 +98,27 @@ class FollowTagController extends Controller
  * 
  * )
  */
+/**
+ * @OA\Get(
+ * path="/follow_tag/trending",
+ * summary="Get all tags which are trendinf",
+ * description="Returns list of  tags  which are trending",
+ * operationId="gettrendingTags",
+ * tags={"Tags"},
+ * security={ {"bearer": {} }},
+ *  @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *       @OA\Property(property="response",type="object",
+ *          @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
+ * 
+ * 
+ * )
+ */
 
 }

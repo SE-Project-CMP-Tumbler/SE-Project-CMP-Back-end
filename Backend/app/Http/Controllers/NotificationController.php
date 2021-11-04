@@ -32,8 +32,7 @@ class NotificationController extends Controller
  *   follow: a new follower 
  *   mention_in_reply: a mention of your blog in a reply
  *   mention_in_post: a mention of your blog in a post
- *   reblog_naked: a reblog of your post, without commentary
- *   reblog_with_comment: a reblog of your post, with commentary
+ *   reblog: a reblog of your post, without commentary 
  *   ask: a new ask recieved 
  *   answer: an answered ask that you had sent
  *   all: to get all type of notifications",
@@ -56,7 +55,6 @@ class NotificationController extends Controller
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
  *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="followed", type="boolean", example=false),
  *                      @OA\Property(property="answer_time", type="date-time", example=""),
  *                      @OA\Property(property="post_id",type="integer",example=5),
  *                      @OA\Property(property="post",type="object",

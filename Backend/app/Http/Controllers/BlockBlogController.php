@@ -57,12 +57,19 @@ class BlockBlogController extends Controller
  */
 /**
  * @OA\Get(
- * path="/block",
+ * path="/block/{blog_id}",
  * summary="blocked blogs",
  * description=" Primary blog  get all blocked blogs",
  * operationId="followersblog",
  * tags={"Block Blogs"},
  * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
  *    description="Successful credentials response",

@@ -40,6 +40,7 @@ class PostController extends Controller
  *    in quote type:  quote_text is required , quote_body is optinal 
  *    in video type:  video is required , url_videos are optinal
  *    in audio type: audio is required
+ *    in link type:  link is required
  *    is genral : all fields can be given , to be genarl at least two different field of types should given" ,
  *    @OA\JsonContent(
  *      required={"post_status","post_type"},
@@ -55,6 +56,8 @@ class PostController extends Controller
  *      @OA\Property(property="quote_text", type="string", example="New post"),
  *      @OA\Property(property="quote_resouce", type="string", example="My post"),
  *      @OA\Property(property="keep_reading", type="integer", example=1),
+ *      @OA\Property(property="link",type="string",example="facebook.com"),
+ *      @OA\Property(property="scheulding_time",type="date-time",example=""),
  *      @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -89,6 +92,8 @@ class PostController extends Controller
  *       @OA\Property(property="description", type="string", example="new post"),
  *       @OA\Property(property="chat_title", type="string", example="New post"),
  *       @OA\Property(property="chat_body", type="string", example="My post"),
+ *       @OA\Property(property="link",type="string",example="facebook.com"),
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),     
  *       @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -208,7 +213,7 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * ),
+ * )
  *   
  */
 /**
@@ -247,7 +252,10 @@ class PostController extends Controller
  *      @OA\Property(property="chat_body", type="string", example="My post"),
  *      @OA\Property(property="quote_text", type="string", example="New post"),
  *      @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *      @OA\Property(property="link",type="string",example="facebook.com"),
+ *      @OA\Property(property="post_time",type="date_time",example="02-02-2012"), 
  *      @OA\Property(property="keep_reading", type="integer", example=1),
+ *      @OA\Property(property="scheulding_time",type="date-time",example=""),
  *      @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -315,7 +323,7 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * ),
+ * )
  *   
  */
  /**
@@ -353,6 +361,9 @@ class PostController extends Controller
  *       @OA\Property(property="quote_text", type="string", example="New post"),
  *       @OA\Property(property="quote_resouce", type="string", example="My post"),
  *       @OA\Property(property="keep_reading", type="integer", example=1),
+ *       @OA\Property(property="link",type="string",example="facebook.com"),
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"), 
+ *       @OA\Property(property="scheulding_time",type="date-time",example=""),
  *       @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -417,7 +428,10 @@ class PostController extends Controller
  *       @OA\Property(property="chat_body", type="string", example="My post"),
  *       @OA\Property(property="quote_text", type="string", example="New post"),
  *       @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *       @OA\Property(property="link",type="string",example="facebook.com"),
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *       @OA\Property(property="keep_reading", type="integer", example=1),
+ *       @OA\Property(property="scheulding_time",type="date-time",example=""),
  *       @OA\Property(property="images ", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", format="byte",example="/images.png"),
@@ -464,7 +478,7 @@ class PostController extends Controller
  *  ),
  * ),
  *  
- * ),
+ * )
  */
 /**
  * @OA\Get(
@@ -503,6 +517,8 @@ class PostController extends Controller
  *              @OA\Property(property="chat_body", type="string", example="My post"),
  *              @OA\Property(property="quote_text", type="string", example="New post"),
  *              @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *              @OA\Property(property="link",type="string",example="facebook.com"),
+ *              @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *              @OA\Property(property="keep_reading", type="integer", example=1),
  *              @OA\Property(property="images ", type="array",
  *                  @OA\Items(
@@ -571,7 +587,7 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * ),
+ * )
  *   
  */
 /**
@@ -611,6 +627,8 @@ class PostController extends Controller
  *       @OA\Property(property="chat_body", type="string", example="My post"),
  *       @OA\Property(property="quote_text", type="string", example="New post"),
  *       @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *       @OA\Property(property="link",type="string",example="facebook.com"),
  *       @OA\Property(property="keep_reading", type="integer", example=1),
  *       @OA\Property(property="images ", type="array",
  *        @OA\Items(
@@ -677,7 +695,7 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * ),
+ * )
  *   
  */
 
@@ -713,12 +731,15 @@ class PostController extends Controller
  *              @OA\Property(property="2", type="string", example="stay positive"),)),
  *          @OA\Property(property="post_status", type="string", example="scheduling"),
  *          @OA\Property(property="title", type="string", example="New post"),
+ *          @OA\Property(property="scheulding_time",type="date-time",example="02-02-2021"),
  *          @OA\Property(property="description", type="string", example="new post"),
  *          @OA\Property(property="chat_title", type="string", example="New post"),
  *          @OA\Property(property="chat_body", type="string", example="My post"),
  *          @OA\Property(property="quote_text", type="string", example="New post"),
  *          @OA\Property(property="quote_resouce", type="string", example="My post"),
  *          @OA\Property(property="keep_reading", type="integer", example=1),
+ *          @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *          @OA\Property(property="link",type="string",example="facebook.com"),
  *          @OA\Property(property="images ", type="array",
  *              @OA\Items(
  *                  @OA\Property(property="0", type="string", format="byte",example="/images.png"),
@@ -783,7 +804,7 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * ),
+ * )
  *   
  */
  
@@ -826,6 +847,8 @@ class PostController extends Controller
  *                  @OA\Property(property="quote_text", type="string", example="New post"),
  *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
  *                  @OA\Property(property="keep_reading", type="integer", example=1),
+ *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *                  @OA\Property(property="link",type="string",example="facebook.com"),
  *                  @OA\Property(property="images ", type="array",
  *                      @OA\Items(
  *                          @OA\Property(property="0", type="string", format="byte",example="/images.png"),
@@ -890,7 +913,7 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * ),
+ * )
  *   
  */
 
@@ -932,6 +955,8 @@ class PostController extends Controller
  *                  @OA\Property(property="quote_text", type="string", example="New post"),
  *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
  *                  @OA\Property(property="keep_reading", type="integer", example=1),
+ *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *                  @OA\Property(property="link",type="string",example="facebook.com"),
  *                  @OA\Property(property="images ", type="array",
  *                      @OA\Items(
  *                          @OA\Property(property="0", type="string", format="byte",example="/images.png"),
@@ -996,7 +1021,7 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * ),
+ * )
  *   
  */
 /**
@@ -1047,8 +1072,8 @@ class PostController extends Controller
  *   
  */
 /**
- * @OA\Delete(
- * path="/post/{post_id}/{blog_id}/pinned",
+ * @OA\Put(
+ * path="/post/{post_id}/{blog_id}/unpinned",
  * summary="Make  a post unpinned in a blog",
  * description=" A blog change the post to be pinned",
  * operationId="post",
@@ -1122,7 +1147,8 @@ class PostController extends Controller
  *    description="Change status of post from private/queue/draft/submission/scheduling to be pusblished",
  *    @OA\JsonContent(
  *      required={"post_status"},
- *       @OA\Property(property="post_status", type="string", example="queue")
+ *       @OA\Property(property="post_status", type="string", example="queue"),
+ *       @OA\Property(property="scheulding_time",type="date-time",example=""),
  *     )
  * ),
  * @OA\Response(
