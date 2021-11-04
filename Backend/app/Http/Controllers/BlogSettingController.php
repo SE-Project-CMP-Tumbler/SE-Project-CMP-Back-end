@@ -44,7 +44,11 @@ class BlogSettingController extends Controller
  *              @OA\Property(property="allow_submittions", type="bool", example=true),
  *              @OA\Property(property="submissions_page_title", type="string", example="Submit a post"),
  *              @OA\Property(property="submissions_guidelines", type="string", example="To approve a submitted post it should be free of violence."),),
- *          @OA\Property(property="allow_messages", type="bool", example=true),))),
+ *          @OA\Property(property="allow_messages", type="bool", example=true),
+ *          @OA\Property(property="queue_settings", type="object",
+ *              @OA\Property(property="times_per_day", type="int", example=5),
+ *              @OA\Property(property="start_hour", type="int", example=12),
+ *              @OA\Property(property="end_hour", type="int", example=14),),))),
  * 
  * @OA\Response(
  *  response=401,
@@ -101,7 +105,11 @@ class BlogSettingController extends Controller
  *              @OA\Property(property="allow_submittions", type="bool", example=true),
  *              @OA\Property(property="submissions_page_title", type="string", example="Submit a post"),
  *              @OA\Property(property="submissions_guidelines", type="string", example="To approve a submitted post it should be free of violence."),),
- *          @OA\Property(property="allow_messages", type="bool", example=true),))),
+ *          @OA\Property(property="allow_messages", type="bool", example=true),
+ *          @OA\Property(property="queue_settings", type="object",
+ *              @OA\Property(property="times_per_day", type="int", example=5),
+ *              @OA\Property(property="start_hour", type="int", example=12),
+ *              @OA\Property(property="end_hour", type="int", example=14),),))),
  * 
  * @OA\Response(
  *  response=401,
