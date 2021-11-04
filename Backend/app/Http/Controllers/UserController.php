@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 /**
-* @OA\Post(
+ * @OA\Post(
  * path="/register",
  * summary="Signup a new user",
  * description=" Creating a new user",
@@ -61,8 +61,8 @@ class UserController extends Controller
  *     )
  * ),
  *
- *
-* @OA\Post(
+ */
+/** @OA\Post(
  * path="/login",
  * summary="login user",
  * description="user login",
@@ -101,8 +101,8 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- * 
-* @OA\get(
+ */ 
+/** @OA\get(
  * path="/redirect_to_google",
  * summary="using google account",
  * description="login or signup using google account",
@@ -123,8 +123,8 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- * 
-* @OA\Post(
+ */ 
+/** @OA\Post(
  * path="/register_with_googleid",
  * summary="Register a new user",
  * description=" Creating a new user using google_id ",
@@ -177,8 +177,8 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- * 
-* @OA\Post(
+ */ 
+/** @OA\Post(
  * path="/logout",
  * summary="logout user",
  * description="user logout",
@@ -201,14 +201,14 @@ class UserController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
  *     )
  * ),
- *
-* @OA\get(
+ */
+/** @OA\get(
  * path="/email/verify/{id}/{access_token}",
  * summary="email verification",
  * description="the page that helps the user to create a new password",
@@ -237,7 +237,7 @@ class UserController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),
  *        )
@@ -250,8 +250,8 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- * 
-* @OA\Post(
+ */ 
+/** @OA\Post(
  * path="/email/resend_verification",
  * summary="resend verification email",
  * description="resend verification email to the email",
@@ -287,8 +287,8 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- * 
-* @OA\Post(
+ */ 
+/** @OA\Post(
  * path="/forgot_password",
  * summary="sending password reset email",
  * description="sending an email with a password reset link to the user",
@@ -313,14 +313,14 @@ class UserController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="Not found response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
  *     )
  * ),
- * 
-* @OA\get(
+ */
+/** @OA\get(
  * path="/reset_password/{id}/{access_token}",
  * summary="entering a new password",
  * description="the page that helps the user to create a new password",
@@ -352,7 +352,7 @@ class UserController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),
  *        )
@@ -365,7 +365,8 @@ class UserController extends Controller
  *        )
  *     )
  * ),
-* @OA\Post(
+ */
+/** @OA\Post(
  * path="/reset_password",
  * summary="reset password",
  * description="reseting the user's password",
@@ -409,7 +410,7 @@ class UserController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
@@ -422,6 +423,92 @@ class UserController extends Controller
  *        )
  *     )
  * ),
+ */
+ 
+/** @OA\Put(
+ * path="/change_password",
+ * summary="Change password of user",
+ * description=" Change a password of user",
+ * tags={"User"},
+ * operationId="changepassword",
+ *  security={ {"bearer": {} }},
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description=  "
+ *    password : The password of the  user,
+ *    password_confirmation : The password of the user",
+ *    @OA\JsonContent(
+ *      required={"password","password_confirmation"},
+ *      @OA\Property(property="password", type="string", format="password", example="123"),
+ *      @OA\Property(property="password_confirmation", type="string",  format="password", example="123"),
+ *                )
+ *               ),
+ * 
+ * 
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=500,
+ *    description="Internal Server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+ *        )
+ *     )
+ * ),
+ *
+ */
+ /** @OA\Put(
+ * path="/change_email",
+ * summary="Change email of user",
+ * description=" Change a email of user",
+ * tags={"User"},
+ * operationId="changeemail",
+ *  security={ {"bearer": {} }},
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description=  "
+ *    password : The password of the user,
+ *    email : The  email of the  user",
+ *    @OA\JsonContent(
+ *      required={"password","password_confirmation"},
+ *      @OA\Property(property="password", type="string", format="password", example="123"),
+ *      @OA\Property(property="password_confirmation", type="string",  format="password", example="123"),
+ *                )
+ *               ),
+ * 
+ * 
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response", type="object", 
+ *           @OA\Property(property="email",type="string",format="email",example="radwa@gmail.com"),
+ *         ),
+ *        )
+ *     ),
+ *    @OA\Response(
+ *    response=422,
+ *    description="Unprocessable Entity",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"Unprocessable Entity"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=500,
+ *    description="Internal Server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+ *        )
+ *     )
+ * ),
+ *
  */
 
 

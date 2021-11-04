@@ -25,9 +25,7 @@ class PostActionsController extends Controller
  *    )
  *  ),
  *  @OA\RequestBody(
- *   description="
- *   reply_text: reply text body
- *   reblog_key: random key for each post",
+ *   description="reply_text: reply text body",
  *   @OA\JsonContent(
  *       @OA\Property(property="reply_text", type="string", example="Good Work"),
  *     ),
@@ -48,6 +46,7 @@ class PostActionsController extends Controller
  *            @OA\Property(property="followed", type="boolean", example=false),
  *            @OA\Property(property="reply_text", type="string", example="this is my last reply"),
  *            @OA\Property(property="reply_time", type="date-time", example="02-02-2021"),
+ *            @OA\Property(property="reply_id", type="integer", example=5),
  *          )
  *       ),
  *    ),

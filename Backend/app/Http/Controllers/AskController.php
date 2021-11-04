@@ -43,6 +43,7 @@ class AskController extends Controller
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=1032), 
  *                      @OA\Property(property="question_body", type="string", example="How are you?"),
+ *                      @OA\Property(property="question_id", type="integer", example=3),
  *                      @OA\Property(property="flag", type="boolean", example=false)
  *         
  *       ),
@@ -82,13 +83,13 @@ class AskController extends Controller
  *   @OA\RequestBody(
  *    required=true,
  *    description="Post/Answer Request has different types depeneds on answer type :
- *    in text type :description or title are required, at least one of them ,keep reading is optinal
- *    in image type : at least one uplaoded image , 
- *    in chat type : chat_body is required ,chat_title is optional
- *    in quote type:  quote_text is required , quote_body is optinal 
- *    in video type:  video is required , url_videos are optinal
- *    in audio type: audio is required
- *    is genral : all fields can be given , to be genarl at least two different field of types should given" ,
+ *     in text type :description or title are required, at least one of them ,keep reading is optinal
+ *     in image type : at least one uplaoded image , 
+ *     in chat type : chat_body is required ,chat_title is optional
+ *     in quote type:  quote_text is required , quote_body is optinal 
+ *     in video type:  video is required , url_videos are optinal
+ *     in audio type: audio is required
+ *     is genral : all fields can be given , to be genarl at least two different field of types should given" ,
  *    @OA\JsonContent(
  *       required={"post_status","post_type"},
  *       
@@ -102,9 +103,9 @@ class AskController extends Controller
  *       @OA\Property(property="keep_reading", type="integer", example=1),
  *       @OA\Property(property="images ", type="array",
  *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="0", type="string", format="byte",example="aksjslmpdmndp"),
+ *                      @OA\Property(property="1", type="string", format="byte", example="aksjslmpdmndpg"),
+ *                      @OA\Property(property="2", type="string", format="byte", example="aksjslmpdmndp"),
  *                      
  *                  )
  *           ),
@@ -146,13 +147,15 @@ class AskController extends Controller
  *       @OA\Property(property="meta", type="object", example={ "status":"200","msg":"OK"}),
  *       @OA\Property(property="response", type="object",
  *         @OA\Property(property="post_id", type="integer", example=5),
+ *         @OA\Property(property="post_time", type="date-time", example="02-02-2012"),
  *         @OA\Property(property="blog_id", type="integer", example=5),
  *         @OA\Property(property="title", type="string", example="New post"),
- *         @OA\Property(property="blog_avatar_asking", type="string", example="/storage/imgname2.extension"),
+ *         @OA\Property(property="blog_avatar_asking", type="string", example="/storage/imgname2.png"),
  *         @OA\Property(property="blog_avatar_shape_asking", type="string", example="circle"),
  *         @OA\Property(property="blog_username_asking", type="string", example="radwa-ahmed213"),
  *         @OA\Property(property="blog_id_asking", type="integer", example=1032), 
  *         @OA\Property(property="question_body", type="string", example="How  are you?"), 
+ *         @OA\Property(property="question_id", type="integer", example=5), 
  *         @OA\Property(property="flag", type="bool", example=false),  
  *         @OA\Property(property="tags",type="array",
  *              @OA\Items(
@@ -192,5 +195,44 @@ class AskController extends Controller
  * 
  * 
  */
-
+ /**
+ * @OA\Delete(
+ * path="/ask/{ask_id}",
+ * summary="ask blog",
+ * description=" Primary blog delete ask from another blog",
+ * operationId="deleteaskblog",
+ * tags={"Ask Blogs"},
+ * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="ask_id",
+ *          description="ask_id of asking blog ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful  response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        
+ *        
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found question"})
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *        )
+ *     )
+ * )
+ */
 }

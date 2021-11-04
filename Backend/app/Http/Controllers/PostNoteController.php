@@ -44,10 +44,13 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=2),
- *                      @OA\Property(property="reply_content", type="string", example="What an amazing post!"))),
+ *                      @OA\Property(property="reply_id", type="integer", example=5),
+ *                      @OA\Property(property="reply_time", type="date-time", example="02-02-2012"),
+ *                      @OA\Property(property="reply_text", type="string", example="What an amazing post!"))),
  * 
  *              @OA\Property(property="reblogs", type="array",
  *                  @OA\Items(
+ *                       @OA\Property(property="post_id", type="integer", example=5),
  *                      @OA\Property(property="blog_avatar", type="string", format="byte", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),

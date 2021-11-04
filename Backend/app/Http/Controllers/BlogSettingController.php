@@ -34,7 +34,8 @@ class BlogSettingController extends Controller
  *  @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *          @OA\Property(property="id",type="integer", example=2),
+ *          @OA\Property(property="blog_id",type="integer", example=2),
+ *          @OA\Property(property="blog_username",type="string", example="radwa"),
  *          @OA\Property(property="replies_settings", type="string", example="Everyone can reply"),
  *          @OA\Property(property="ask_settings", type="object", 
  *              @OA\Property(property="allow_ask", type="bool", example=false),
@@ -54,7 +55,7 @@ class BlogSettingController extends Controller
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized to get this blog settings"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
  * 
  * @OA\Response(
  *  response=404,
@@ -93,9 +94,8 @@ class BlogSettingController extends Controller
  *  A request body containing 1 key: value pair will update its corresponding settings' option only.
  *  The key: value pairs specified in the request body are the pairs whose corresponding settings option will be updated only.",
  *  @OA\JsonContent(
- *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
- *      @OA\Property(property="response",type="object",
- *          @OA\Property(property="id",type="integer", example=2),
+ *          @OA\Property(property="blog_id",type="integer", example=2),
+ *          @OA\Property(property="blog_username",type="string", example="radwa"),
  *          @OA\Property(property="replies_settings", type="string", example="Everyone can reply"),
  *          @OA\Property(property="ask_settings", type="object", 
  *              @OA\Property(property="allow_ask", type="bool", example=false),
@@ -109,13 +109,35 @@ class BlogSettingController extends Controller
  *          @OA\Property(property="queue_settings", type="object",
  *              @OA\Property(property="times_per_day", type="int", example=5),
  *              @OA\Property(property="start_hour", type="int", example=12),
+ *              @OA\Property(property="end_hour", type="int", example=14),),)),
+ *  @OA\Response(
+ *  response=200,
+ *  description="Successful response",
+ *  @OA\JsonContent(
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="response",type="object",
+ *          @OA\Property(property="blog_id",type="integer", example=2),
+ *          @OA\Property(property="blog_username",type="string", example="radwa"),
+ *          @OA\Property(property="replies_settings", type="string", example="Everyone can reply"),
+ *          @OA\Property(property="ask_settings", type="object", 
+ *              @OA\Property(property="allow_ask", type="bool", example=false),
+ *              @OA\Property(property="ask_page_title", type="string", example=""),
+ *              @OA\Property(property="allow_anonymous_questions", type="bool", example=""),),
+ *          @OA\Property(property="submissions_settings", type="object", 
+ *              @OA\Property(property="allow_submissions", type="bool", example=true),
+ *              @OA\Property(property="submissions_page_title", type="string", example="Submit a post"),
+ *              @OA\Property(property="submissions_guidelines", type="string", example="To approve a submitted post it should be free of violence."),),
+ *          @OA\Property(property="allow_messages", type="bool", example=true),
+ *          @OA\Property(property="queue_settings", type="object",
+ *              @OA\Property(property="times_per_day", type="int", example=5),
+ *              @OA\Property(property="start_hour", type="int", example=12),
  *              @OA\Property(property="end_hour", type="int", example=14),),))),
  * 
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized to update this blog settings"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
  * 
  * @OA\Response(
  *  response=404,

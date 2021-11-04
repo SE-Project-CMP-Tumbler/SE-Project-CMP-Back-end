@@ -151,6 +151,13 @@ class BlogController extends Controller
  * description=" Deleting a secondary blog",
  * tags={"Blogs"},
  * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id of followed blog ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
  *    description="Successful response",

@@ -46,10 +46,6 @@ class PostController extends Controller
  *      required={"post_status","post_type"},
  *      @OA\Property(property="post_status", type="string", example="published"),
  *      @OA\Property(property="title", type="string", example="New post"),
- *      @OA\Property(property="tags",type="array",
- *          @OA\Items(
- *              @OA\Property(property="tag_description",type="string",example="books"),
- *              @OA\Property(property="tag_image",type="string",format="byte",example=""))),
  *      @OA\Property(property="description", type="string", example="new post"),
  *      @OA\Property(property="chat_title", type="string", example="New post"),
  *      @OA\Property(property="chat_body", type="string", example="My post"),
@@ -93,7 +89,15 @@ class PostController extends Controller
  *       @OA\Property(property="chat_title", type="string", example="New post"),
  *       @OA\Property(property="chat_body", type="string", example="My post"),
  *       @OA\Property(property="link",type="string",example="facebook.com"),
- *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),     
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"), 
+ *       @OA\Property(property="question_body", type="string", example="How are you?"),
+ *       @OA\Property(property="question_id", type="integer", example=3),
+ *       @OA\Property(property="question_flag", type="boolean", example=false),
+ *       @OA\Property(property="blog_id_asking", type="integer", example=""),
+ *       @OA\Property(property="blog_username_asking", type="string", example=""),
+ *       @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+ *       @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+ *        @OA\Property(property="blog_title_asking", type="string", example=""),    
  *       @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -242,6 +246,8 @@ class PostController extends Controller
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
+ *   @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="response",type="object",
  *      @OA\Property(property="post_status", type="string", example="published"),
  *      @OA\Property(property="post_id", type="integer", example=5),
  *      @OA\Property(property="blog_id", type="integer", example=5),
@@ -256,6 +262,10 @@ class PostController extends Controller
  *      @OA\Property(property="post_time",type="date_time",example="02-02-2012"), 
  *      @OA\Property(property="keep_reading", type="integer", example=1),
  *      @OA\Property(property="scheulding_time",type="date-time",example=""),
+ *      @OA\Property(property="blog_username_asking", type="string", example=""),
+ *      @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+ *      @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+ *      @OA\Property(property="blog_title_asking", type="string", example=""),  
  *      @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -308,7 +318,7 @@ class PostController extends Controller
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *     ),
  * )
- *   ,
+ *   ),
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -845,6 +855,10 @@ class PostController extends Controller
  *                  @OA\Property(property="keep_reading", type="integer", example=1),
  *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *                  @OA\Property(property="link",type="string",example="facebook.com"),
+ *                  @OA\Property(property="blog_username_asking", type="string", example=""),
+ *                  @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+ *                  @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+ *                  @OA\Property(property="blog_title_asking", type="string", example=""),  
  *                  @OA\Property(property="images ", type="array",
  *                      @OA\Items(
  *                          @OA\Property(property="0", type="string", format="byte",example="/images.png"),
