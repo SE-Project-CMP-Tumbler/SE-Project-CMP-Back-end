@@ -175,7 +175,7 @@ class PostController extends Controller
  * path="/post/{post_id}/{blog_id}",
  * summary="Delete post",
  * description=" A blog delete his/her post",
- * operationId="post",
+ * operationId="deletepost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  * @OA\Parameter(
@@ -221,7 +221,7 @@ class PostController extends Controller
  * path="/post/{post_id}",
  * summary="Get specific post",
  * description=" A blog get  post",
- * operationId="post",
+ * operationId="getapost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *   @OA\Parameter(
@@ -344,13 +344,13 @@ class PostController extends Controller
  *   @OA\RequestBody(
  *    required=true,
  *    description="Post Request has different types depeneds on post type :
- *    in text type :description or title are required, at least one of them ,keep reading is optinal
- *    in image type : at least one uplaoded image , 
- *    in chat type : chat_body is required ,chat_title is optional
- *    in quote type:  quote_text is required , quote_body is optinal 
- *    in video type:  video is required , url_videos are optinal
- *    in audio type: audio is required
- *    is general : all fields can be given , to be general at least two different field of types should given" ,
+ *     in text type :description or title are required, at least one of them ,keep reading is optinal
+ *     in image type : at least one uplaoded image , 
+ *     in chat type : chat_body is required ,chat_title is optional
+ *     in quote type:  quote_text is required , quote_body is optinal 
+ *     in video type:  video is required , url_videos are optinal
+ *     in audio type: audio is required
+ *     is general : all fields can be given , to be general at least two different field of types should given" ,
  *    @OA\JsonContent(
  *       required={"post_status","post_type"},
  *       @OA\Property(property="post_status", type="string", example="published"),
@@ -474,10 +474,9 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))
- *     ),
+ *        ),
+ *      ),
  *  ),
- * ),
- *  
  * )
  */
 /**
@@ -485,7 +484,7 @@ class PostController extends Controller
  * path="/post/{blog_id}/submission",
  * summary="Get posts of blog which are submitted",
  * description=" A blog get submitted posts",
- * operationId="post",
+ * operationId="getsubmissionposts",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *   @OA\Parameter(
@@ -565,11 +564,9 @@ class PostController extends Controller
  *                              @OA\Property(property="0", type="string", example="facebook.com"),
  *                              @OA\Property(property="1", type="string", example="google.com"),
  *                              @OA\Property(property="2", type="string", example="yahoo.com"),),),))
- *          ),
- *   
+ *           ),
+ *        ),
  *       ),
- *        
- * ),
  *     ),
  * )
  *   ,
@@ -595,7 +592,7 @@ class PostController extends Controller
  * path="/post/{blog_id}/queue",
  * summary="Get posts of blog which are queued ",
  * description=" A blog get queued posts",
- * operationId="post",
+ * operationId="getqueuepost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *   @OA\Parameter(
@@ -674,10 +671,9 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))
- *  ),
- *   
+ *        ),
  *       ),     
- * ),
+ *      ),
  *     ),      
  * )
  *   ,
@@ -704,7 +700,7 @@ class PostController extends Controller
  * path="/post/{blog_id}/scheduling ",
  * summary="Get posts of blog which are scheduled  ",
  * description=" A blog get scheduled posts",
- * operationId="post",
+ * operationId="getschedulingpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *    @OA\Parameter(
@@ -785,8 +781,8 @@ class PostController extends Controller
  *                          @OA\Property(property="1", type="string", example="google.com"),
  *                          @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *          ),
+ *        ),
  *       ),
- * ),
  *     ),
  * )
  *   ,
@@ -813,7 +809,7 @@ class PostController extends Controller
  * path="/post/{blog_id}",
  * summary="Get posts of blog which are published",
  * description=" A blog get  blog 's posts",
- * operationId="post",
+ * operationId="getposts",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  * @OA\Parameter(
@@ -894,8 +890,8 @@ class PostController extends Controller
  *                              @OA\Property(property="1", type="string", example="google.com"),
  *                              @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *          ),
- *       ),
- * ),
+ *        ),
+ *      ),
  *     ),
  * )
  *   ,
@@ -922,7 +918,7 @@ class PostController extends Controller
  * path="/post/{blog_id}/draft ",
  * summary="Get posts of blog which are drafted  ",
  * description=" A blog get scheduled posts",
- * operationId="post",
+ * operationId="getdraftpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *    @OA\Parameter(
@@ -1003,7 +999,7 @@ class PostController extends Controller
  *                                  @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *          ),
  *       ),
- * ),
+ *      ),
  *     ),
  * )
  *   ,
@@ -1029,7 +1025,7 @@ class PostController extends Controller
  * path="/post/{post_id}/{blog_id}/pinned",
  * summary="Make  a post is pinned in a blog",
  * description=" A blog change the post to be pinned",
- * operationId="post",
+ * operationId="pinnedpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  * @OA\Parameter(
@@ -1076,7 +1072,7 @@ class PostController extends Controller
  * path="/post/{post_id}/{blog_id}/unpinned",
  * summary="Make  a post unpinned in a blog",
  * description=" A blog change the post to be pinned",
- * operationId="post",
+ * operationId="unpinnedpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  * @OA\Parameter(
@@ -1125,7 +1121,7 @@ class PostController extends Controller
  * path="/post/{post_id}/{blog_id}/change_status",
  * summary="change status of posts in a blog",
  * description=" A blog delete his/her post",
- * operationId="post",
+ * operationId="poststatus",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  * @OA\Parameter(

@@ -60,7 +60,7 @@ class BlogController extends Controller
  * path="/blog",
  * summary="Get  all blogs of user",
  * description="Returns the general information of a specific blog",
- * operationId="getBlog",
+ * operationId="getBlogs",
  * tags={"Blogs"},
  * security={ {"bearer": {} }},
  * @OA\Response(
@@ -172,7 +172,7 @@ class BlogController extends Controller
  * path="/blog/check_out_blogs",
  * summary="Check out another random blogs",
  * description="Returns  another blogs ",
- * operationId="getBlog",
+ * operationId="getcheckoutBlogs",
  * tags={"Blogs"},
  * security={ {"bearer": {} }},
  * @OA\Response(
@@ -217,7 +217,7 @@ class BlogController extends Controller
  * path="/blog/trending",
  * summary="Get blogs which are trending",
  * description="Returns  trending blogs ",
- * operationId="getBlog",
+ * operationId="gettrendingBlogs",
  * tags={"Blogs"},
  * security={ {"bearer": {} }},
  * @OA\Response(

@@ -140,7 +140,7 @@ class ChatController extends Controller
 
 /**
  * @OA\Delete(
- *  path="/chat/{chat_participant}/clear",
+ *  path="/chat/{chat_participant}",
  *  operationId="clearChatRoom",
  *  tags={"Chatting"},
  *  security={ {"bearer": {} }},

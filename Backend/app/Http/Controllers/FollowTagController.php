@@ -101,7 +101,7 @@ class FollowTagController extends Controller
 /**
  * @OA\Get(
  * path="/follow_tag/trending",
- * summary="Get all tags which are trendinf",
+ * summary="Get all tags which are trending",
  * description="Returns list of  tags  which are trending",
  * operationId="gettrendingTags",
  * tags={"Tags"},
