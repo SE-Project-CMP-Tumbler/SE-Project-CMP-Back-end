@@ -8,14 +8,14 @@ class PostActionsController extends Controller
 {
  /**
  * @OA\Post(
- * path="/post/reply",
+ * path="/post/reply/{post_id}",
  * summary="add reply on a post",
  * description="send note/reply on a specific post on any blog",
  * operationId="addPostNote",
  * tags={"Post Notes"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
- *    in="query",
+ *    in="path",
  *    name="post_id",
  *    description="for the post to reply on",
  *    required=true,
@@ -64,14 +64,14 @@ class PostActionsController extends Controller
 
  /**
  * @OA\Post(
- * path="/post/like",
+ * path="/post/like/{post_id}",
  * summary="add like on a post",
  * description="send like on a specific post on any blog via this api route",
  * operationId="addPostLike",
  * tags={"Post Notes"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
- *    in="query",
+ *    in="path",
  *    name="post_id",
  *    description="for the post to reply on",
  *    required=true,
@@ -99,7 +99,7 @@ class PostActionsController extends Controller
 
  /**
  * @OA\Delete(
- * path="/post/delete_reply/{reply_id}",
+ * path="/post/reply/{reply_id}",
  * summary="delete a specific note/repy from a post",
  * description="each blog can delete any note/repy from their posts, using this api route",
  * operationId="deletePostNote",
@@ -142,7 +142,7 @@ class PostActionsController extends Controller
 
  /**
  * @OA\Delete(
- * path="/post/delete_like/{post_id}",
+ * path="/post/like/{post_id}",
  * description="delete a specific like from a post",
  * operationId="deletePostLike",
  * tags={"Post Notes"},

@@ -54,10 +54,55 @@ class BlogController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
  * 
  * )
- */    
+ */ 
+ /**
+ * @OA\Get(
+ * path="/blog",
+ * summary="Get  all blogs of user",
+ * description="Returns the general information of a specific blog",
+ * operationId="getBlog",
+ * tags={"Blogs"},
+ * security={ {"bearer": {} }},
+ * @OA\Response(
+ *  response=200,
+ *  description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response", type="object", 
+ *           @OA\Property(property="blogs",type="array",
+ *             @OA\Items(
+ *                    @OA\Property(property="id", type="integer", example=2026),
+ *                    @OA\Property(property="username", type="string", example="newinvestigations"),
+ *                    @OA\Property(property="avatar", type="string", format="byte", example=""),
+ *                    @OA\Property(property="avatar_shape", type="string", example="square"),
+ *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
+ *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))) 
+ *      )),
+ * 
+ * @OA\Response(
+ *  response=401,
+ *  description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized to get this blog information"}),)), 
+ * 
+ * @OA\Response(
+ *  response=404,
+ *  description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)), 
+ * 
+ * @OA\Response(
+ *  response=500,
+ *  description="Internal server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
+ * 
+ * )
+ */   
 /**
  * @OA\Post(
- * path="/new/blog",
+ * path="/blog",
  * summary="create blog",
  * description=" Creating a secondary blog",
  * tags={"Blogs"},

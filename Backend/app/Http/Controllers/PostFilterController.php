@@ -176,9 +176,9 @@ class PostFilterController extends Controller
  *        @OA\Property(property="post_type", type="string", example="image"),
  *        @OA\Property(property="images ", type="array",
  *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="0", type="string", format="byte",example="/images.png"),
+ *                      @OA\Property(property="1", type="string", format="byte", example="/images.png"),
+ *                      @OA\Property(property="2", type="string", format="byte", example="/images.png"),
  *                      
  *                  )
  *           ),
@@ -227,7 +227,7 @@ class PostFilterController extends Controller
  *              @OA\Property(property="tags",type="array",
  *                 @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"))),
- *        @OA\Property(property="video ", type="string", format="byte", example=""),
+ *        @OA\Property(property="video ", type="string", format="byte", example="/video.mov"),
  *        @OA\Property(property="post_type", type="string", example="video"),
  *        @OA\Property(property="url_videos ", type="array",
  *            @OA\Items(
@@ -282,7 +282,7 @@ class PostFilterController extends Controller
  *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"))),
- *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
+ *                  @OA\Property(property="audio ", type="string", format="byte", example="/audio.mp3"),
  *                  @OA\Property(property="post_type", type="string", example="aduio"),
  *          ),
  *   

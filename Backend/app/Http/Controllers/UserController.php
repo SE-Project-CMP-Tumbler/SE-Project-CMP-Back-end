@@ -125,21 +125,12 @@ class UserController extends Controller
  * ),
  
 * @OA\Post(
- * path="/forgot-password",
+ * path="/verify_email",
  * summary="email verification",
  * description="sending email verification link to the user",
  * tags={"User"},
  * operationId="emailverification",
- *   @OA\RequestBody(
- *    required=true,
- *    description=  "
- *    email : this is the same email that the user used to signup ",
- *    @OA\JsonContent(
- *      required={"email"},
- *      @OA\Property(property="email", type="string", example="user2023@gmail.com"),
- *                )
- *               ),
- * 
+ * security={ {"bearer": {} }},
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -156,20 +147,25 @@ class UserController extends Controller
  *     )
  * ),
  * 
-* @OA\get(
- * path="/reset_password/{access_token}",
+* @OA\Post(
+ * path="/change_password",
  * summary="entering a new password",
  * description="the page that helps the user to create a new password",
  * tags={"User"},
+ *  security={ {"bearer": {} }},
  * operationId="enternewpassword",
+ *  @OA\RequestBody(
+ *    required=true,
+ *    @OA\JsonContent(
+ *     @OA\Property(property="password", type="string", format="password",example="12345678"),
+ *      @OA\Property(property="password_confirmation", type="string", format="password",example="12345678")
+ *   )
+ * ),
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response",type="object",
- *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),      
- *         ),
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
  *        )
  *     ),
  *  @OA\Response(
@@ -192,7 +188,6 @@ class UserController extends Controller
  * summary="reset password",
  * description="reseting the user's password",
  * tags={"User"},
- * security={ {"bearer": {} }},
  * operationId="resetpassword",
  *   @OA\RequestBody(
  *    required=true,
