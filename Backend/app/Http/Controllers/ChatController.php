@@ -100,8 +100,8 @@ class ChatController extends Controller
  *   photo: send a photo message or empty",
  *   @OA\JsonContent(
  *    @OA\Property(property="text", type="string", example="hello, how are you?"),
- *    @OA\Property(property="gif", type="url", example="/storage/gif_example.gif"),
- *    @OA\Property(property="photo", type="url", example="/storage/photo_example.gif"),
+ *    @OA\Property(property="gif", type="string", format="byte", example="asdlkfjaksjdfknvzxc"),
+ *    @OA\Property(property="photo", type="string", format="byte", example="asdkfjaasdfskzcvm"),
  *   ),
  *  ),
  *  @OA\Response(
