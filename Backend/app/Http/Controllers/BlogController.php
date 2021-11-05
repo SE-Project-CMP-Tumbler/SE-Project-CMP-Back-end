@@ -118,7 +118,7 @@ class BlogController extends Controller
  *      required={"title","blog_username"},
  *      @OA\Property(property="title", type="string", example="my blog"),
  *      @OA\Property(property="blog_username", type="string", example="CairoBlogs"),
- *      @OA\Property(property="password", type="string",format="password", example="<df1212V>"),
+ *      @OA\Property(property="password", type="string",format="password", example="123"),
  *                )
  *               ),
  * @OA\Response(

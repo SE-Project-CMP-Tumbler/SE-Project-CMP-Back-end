@@ -17,16 +17,16 @@ class BlockBlogController extends Controller
  * security={ {"bearer": {} }},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful  response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *        )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * )
@@ -41,16 +41,16 @@ class BlockBlogController extends Controller
  * security={ {"bearer": {} }},
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful  response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
  *       )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description=" Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * )
@@ -72,7 +72,7 @@ class BlockBlogController extends Controller
  *              type="integer")),
  * @OA\Response(
  *    response=200,
- *    description="Successful credentials response",
+ *    description="Successful  response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
@@ -89,9 +89,9 @@ class BlockBlogController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong credentials response",
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"error"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
  *     )
  * )

@@ -27,15 +27,13 @@ class NotificationController extends Controller
  *  ),
  *  @OA\RequestBody(
  *   description="type: is a string parameter indicates which notification type to be recieved:
- *   like: a like on your post
- *   reply: a reply on your post
- *   follow: a new follower 
- *   mention_in_reply: a mention of your blog in a reply
- *   mention_in_post: a mention of your blog in a post
- *   reblog: a reblog of your post, without commentary 
- *   ask: a new ask recieved 
- *   answer: an answered ask that you had sent
- *   all: to get all type of notifications",
+ *     like: a like on your post
+ *     reply: a reply on your post
+ *     follow: a new follower 
+ *     reblog: a reblog of your post 
+ *     ask: a new ask recieved 
+ *     answer: an answered ask that you had sent
+ *     all: to get all type of notifications",
  *   @OA\JsonContent(
  *         @OA\Property(property="type", type="string", example="all")
  *     ),
@@ -88,6 +86,7 @@ class NotificationController extends Controller
  *              @OA\Property(property="asks",type="array",
  *                    @OA\Items(
  *                      @OA\Property(property="question_body", type="string", example="How are you?"),
+ *                      @OA\Property(property="question_id", type="integer", example=5),
  *                      @OA\Property(property="flag", type="boolean", example=false),
  *                      @OA\Property(property="ask_time", type="date-time", example=""),
  *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
@@ -155,6 +154,7 @@ class NotificationController extends Controller
  *                      @OA\Property(property="blog_id", type="integer", example=1032),
  *                      @OA\Property(property="followed", type="boolean", example=false),
  *                      @OA\Property(property="reply_text", type="string", example="this is my last reply"),
+ *                      @OA\Property(property="reply_id", type="integer", example=5),
  *                      @OA\Property(property="reply_time", type="date-time", example=""),
  *                      @OA\Property(property="post",type="object",
  *                           @OA\Property(property="title", type="string", example="New post"),

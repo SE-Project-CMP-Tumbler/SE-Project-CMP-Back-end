@@ -48,14 +48,14 @@ class ThemeController extends Controller
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
  *       @OA\Property(property="header_image", type="array", 
  *         @OA\Items(
- *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
+ *            @OA\Property(property="url", type="string",format="byte", example="assksineuug"),
  *            @OA\Property(property="reset", type="boolean", example="true"),
  *            @OA\Property(property="stretch", type="boolean", example="true"),
  *         )
  *       ),
  *       @OA\Property(property="avater", type="array", 
  *           @OA\Items(
- *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
+ *              @OA\Property(property="url", type="string",format="byte", example="aksmdnurjrj"),
  *              @OA\Property(property="shape", type="string", example="circle"),
  *              @OA\Property(property="show_avatar", type="boolean", example="true"),
  *           )
@@ -66,7 +66,8 @@ class ThemeController extends Controller
  *    response=200,
  *    description="Successful  response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="name", type="string", example="mycppblog"),
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
  *       @OA\Property(property="title", type="array", 
@@ -100,8 +101,9 @@ class ThemeController extends Controller
  *              @OA\Property(property="shape", type="string", example="circle"),
  *              @OA\Property(property="show_avatar", type="boolean", example="true"),
  *           )
- *       )
- *    )
+ *        )
+ *     )
+ *    ) 
  *  ),
  *  @OA\Response(
  *    response=401,
@@ -149,7 +151,8 @@ class ThemeController extends Controller
  *    response=200,
  *    description="Successful  response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="name", type="string", example="mycppblog"),
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
  *       @OA\Property(property="title", type="array", 
@@ -183,7 +186,8 @@ class ThemeController extends Controller
  *              @OA\Property(property="shape", type="string", example="circle"),
  *              @OA\Property(property="show_avatar", type="boolean", example="true"),
  *           )
- *       )
+ *        )
+ *      )
  *    )
  *   ),
  *  @OA\Response(

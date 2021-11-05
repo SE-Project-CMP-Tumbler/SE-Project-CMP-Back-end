@@ -89,11 +89,14 @@ class AskController extends Controller
  *     in quote type:  quote_text is required , quote_body is optinal 
  *     in video type:  video is required , url_videos are optinal
  *     in audio type: audio is required
+ *     in link type: link in required
  *     is genral : all fields can be given , to be genarl at least two different field of types should given" ,
  *    @OA\JsonContent(
  *       required={"post_status","post_type"},
  *       
  *       @OA\Property(property="post_status", type="string", example="published"),
+ *       @OA\Property(property="post_type", type="string", example="text"),
+ *       @OA\Property(property="link", type="string", example="facebook.com"),
  *       @OA\Property(property="title", type="string", example="New post"),
  *       @OA\Property(property="description", type="string", example="new post"),
  *       @OA\Property(property="chat_title", type="string", example="New post"),
@@ -148,6 +151,8 @@ class AskController extends Controller
  *       @OA\Property(property="response", type="object",
  *         @OA\Property(property="post_id", type="integer", example=5),
  *         @OA\Property(property="post_time", type="date-time", example="02-02-2012"),
+ *         @OA\Property(property="post_type", type="string", example="text"),
+ *         @OA\Property(property="link", type="string", example="facebook.com"),
  *         @OA\Property(property="blog_id", type="integer", example=5),
  *         @OA\Property(property="title", type="string", example="New post"),
  *         @OA\Property(property="blog_avatar_asking", type="string", example="/storage/imgname2.png"),

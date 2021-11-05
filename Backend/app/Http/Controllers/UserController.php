@@ -102,28 +102,47 @@ class UserController extends Controller
  *     )
  * ),
  */ 
-/** @OA\get(
- * path="/redirect_to_google",
- * summary="using google account",
- * description="login or signup using google account",
+/** @OA\Post(
+ * path="/login_with_googleid",
+ * summary="login a user",
+ * description=" login using google_id ",
  * tags={"User"},
- * operationId="redirecttogoogle",
+ * operationId="loginuserwithgoogleid",
+ * 
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description=  "
+ *    email : The email of the new user ,
+ *    google_id : The google_id of the user's gmail account",
+ *    @OA\JsonContent(
+ *      required={"email","google_id","blog_username","age"},
+ *      @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *      @OA\Property(property="google_id", type="string", example="151656461515"),
+ *                )
+ *               ),
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response",type="object",
+ *       @OA\Property(property="id", type="string", example="12151"),
+ *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
+ *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *         ),
  *        )
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
  *     )
  * ),
- */ 
+ */  
 /** @OA\Post(
  * path="/register_with_googleid",
  * summary="Register a new user",
@@ -476,9 +495,9 @@ class UserController extends Controller
  *    password : The password of the user,
  *    email : The  email of the  user",
  *    @OA\JsonContent(
- *      required={"password","password_confirmation"},
+ *      required={"password","email"},
  *      @OA\Property(property="password", type="string", format="password", example="123"),
- *      @OA\Property(property="password_confirmation", type="string",  format="password", example="123"),
+ *      @OA\Property(property="email", type="string",  format="email", example="radwa@gmail.com"),
  *                )
  *               ),
  * 
