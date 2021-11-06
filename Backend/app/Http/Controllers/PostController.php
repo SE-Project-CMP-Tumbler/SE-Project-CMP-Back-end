@@ -1253,4 +1253,90 @@ class PostController extends Controller
  *     )
  * )
  */
+ /**
+ * @OA\Post(
+ * path="/post/submission/{blog_id}",
+ * summary="sumbit new post to another blog",
+ * description="A blog can  submit a post",
+ * operationId="createpost",
+ * tags={"Posts"},
+ * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="blog_id who is submited ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description="Post Request has different types depeneds on post type :
+ *     in text type :description or title are required, at least one of them ,keep reading is optinal
+ *     in image type : at least one uplaoded image,
+ *     in quote type:  quote_text is required, quote_body is optinal
+ *     in video type:  video is required, url_videos are optinal
+ *     in link type: link is required
+ *     is general : all fields can be given, to be general at least two different field of types should given",
+ *    @OA\JsonContent(
+ *       required={"post_status","post_type"},
+ *       @OA\Property(property="post_status", type="string", example="published"),
+ *       @OA\Property(property="title", type="string", example="New post"),
+ *       @OA\Property(property="description", type="string", example="new post"),
+ *       @OA\Property(property="quote_text", type="string", example="New post"),
+ *       @OA\Property(property="quote_resouce", type="string", example="My post"),
+ *       @OA\Property(property="link",type="string",example="facebook.com"),
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *       @OA\Property(property="post_tags", type="array",
+ *          @OA\Items(
+ *              @OA\Property(property="0", type="string", example="books"),
+ *              @OA\Property(property="1", type="string", example="reading"),
+ *              @OA\Property(property="2", type="string", example="stay positive"),)),
+ *      @OA\Property(property="images ", type="array",
+ *          @OA\Items(
+ *                      @OA\Property(property="0", type="string", format="byte",example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
+ *                      @OA\Property(property="1", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
+ *                      @OA\Property(property="2", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
+ *                  )
+ *           ),
+ *       @OA\Property(property="video ", type="string", format="byte", example=""),
+ *       @OA\Property(property="post_type ", type="string", example="text"),
+ *       @OA\Property(property="url_videos ", type="array",
+ *            @OA\Items(
+ *                      @OA\Property(property="0", type="string", example="facebook.com"),
+ *                      @OA\Property(property="1", type="string", example="google.com"),
+ *                      @OA\Property(property="2", type="string", example="yahoo.com"),
+ *                  )
+ *       )
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={ "status":"200","msg":"OK"}),
+ *      ),
+ *  ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *     )
+ *  ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=500,
+ *    description="Internal Server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+ *     )
+ *  ),
+ * )
+ */
 }

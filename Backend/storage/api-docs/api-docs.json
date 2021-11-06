@@ -1060,7 +1060,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "401",
-                                                "msg": "unauthorized to get this blog information"
+                                                "msg": "Unauthorized"
                                             }
                                         }
                                     },
@@ -1119,7 +1119,7 @@
                     "Blogs"
                 ],
                 "summary": "delete blog",
-                "description": " Deleting a secondary blog",
+                "description": "Deleting a secondary blog",
                 "parameters": [
                     {
                         "name": "blog_id",
@@ -1161,7 +1161,45 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "not found"
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -1183,7 +1221,7 @@
                 "tags": [
                     "Blogs"
                 ],
-                "summary": "Get  all blogs of user",
+                "summary": "Get all blogs of user",
                 "description": "Returns the general information of a specific blog",
                 "operationId": "getBlogs",
                 "responses": {
@@ -1259,7 +1297,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "401",
-                                                "msg": "unauthorized to get this blog information"
+                                                "msg": "Unauthorized"
                                             }
                                         }
                                     },
@@ -1278,7 +1316,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "The blog id specified was not found"
+                                                "msg": "Not found"
                                             }
                                         }
                                     },
@@ -1497,7 +1535,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "401",
-                                                "msg": "unauthorized to get this blog information"
+                                                "msg": "Unauthorized"
                                             }
                                         }
                                     },
@@ -1633,7 +1671,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "401",
-                                                "msg": "unauthorized to get this blog information"
+                                                "msg": "Unauthorized"
                                             }
                                         }
                                     },
@@ -1652,7 +1690,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "The blog id specified was not found"
+                                                "msg": "not found"
                                             }
                                         }
                                     },
@@ -2253,6 +2291,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -2391,6 +2448,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -2466,6 +2542,25 @@
                                             "example": {
                                                 "status": "401",
                                                 "msg": "unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -3129,6 +3224,25 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -3289,26 +3403,9 @@
                                 }
                             }
                         }
-                    }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            }
-        },
-        "/follow_tag/trending": {
-            "get": {
-                "tags": [
-                    "Tags"
-                ],
-                "summary": "Get all tags which are trending",
-                "description": "Returns list of  tags  which are trending",
-                "operationId": "gettrendingTags",
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
+                    },
+                    "404": {
+                        "description": "Not found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3316,31 +3413,28 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "200",
-                                                "msg": "OK"
+                                                "status": "404",
+                                                "msg": "Not found"
                                             }
-                                        },
-                                        "response": {
-                                            "properties": {
-                                                "tags": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "tag_description": {
-                                                                "type": "string",
-                                                                "example": "books"
-                                                            },
-                                                            "tag_image": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -4646,7 +4740,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n *    in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *    in image type : at least one uplaoded image , \r\n *    in chat type : chat_body is required ,chat_title is optional\r\n *    in quote type:  quote_text is required , quote_body is optinal \r\n *    in video type:  video is required , url_videos are optinal\r\n *    in audio type: audio is required\r\n *    in link type:  link is required\r\n *    is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n *    in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *    in image type : at least one uplaoded image,\r\n *    in chat type : chat_body is required ,chat_title is optional\r\n *    in quote type:  quote_text is required, quote_body is optinal\r\n *    in video type:  video is required , url_videos are optinal\r\n *    in audio type: audio is required\r\n *    in link type:  link is required\r\n *    is genral : all fields can be given , to be genarl at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -5111,6 +5205,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -5195,6 +5308,25 @@
                                             "example": {
                                                 "status": "401",
                                                 "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
                                             }
                                         }
                                     },
@@ -5573,6 +5705,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -5938,6 +6089,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -5969,7 +6139,7 @@
                     "Posts"
                 ],
                 "summary": "create new post",
-                "description": " A blog can create new post",
+                "description": "A blog can create new post",
                 "operationId": "createpost",
                 "parameters": [
                     {
@@ -5983,7 +6153,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image , \r\n *     in chat type : chat_body is required ,chat_title is optional\r\n *     in quote type:  quote_text is required , quote_body is optinal \r\n *     in video type:  video is required , url_videos are optinal\r\n *     in audio type: audio is required\r\n *     is general : all fields can be given , to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image,\r\n *     in chat type : chat_body is required, chat_title is optional\r\n *     in quote type:  quote_text is required, quote_body is optinal\r\n *     in video type:  video is required, url_videos are optinal\r\n *     in audio type: audio is required\r\n *     is general : all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -6121,44 +6291,6 @@
                     }
                 },
                 "responses": {
-                    "500": {
-                        "description": "Internal Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "500",
-                                                "msg": "Internal Server error"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful response",
                         "content": {
@@ -6426,6 +6558,63 @@
                                                 }
                                             },
                                             "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -6750,6 +6939,25 @@
                                             "example": {
                                                 "status": "401",
                                                 "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
                                             }
                                         }
                                     },
@@ -7094,6 +7302,25 @@
                                             "example": {
                                                 "status": "401",
                                                 "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
                                             }
                                         }
                                     },
@@ -7450,6 +7677,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -7794,6 +8040,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -7888,6 +8153,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -7898,7 +8182,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "post is not found"
+                                                "msg": "not found"
                                             }
                                         }
                                     },
@@ -7974,6 +8258,25 @@
                                             "example": {
                                                 "status": "401",
                                                 "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
                                             }
                                         }
                                     },
@@ -8100,6 +8403,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -8111,6 +8433,227 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "post is not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/post/submission/{blog_id}": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "sumbit new post to another blog",
+                "description": "A blog can  submit a post",
+                "operationId": "createpost",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "blog_id who is submited ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image,\r\n *     in quote type:  quote_text is required, quote_body is optinal\r\n *     in video type:  video is required, url_videos are optinal\r\n *     in link type: link is required\r\n *     is general : all fields can be given, to be general at least two different field of types should given",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "post_status",
+                                    "post_type"
+                                ],
+                                "properties": {
+                                    "post_status": {
+                                        "type": "string",
+                                        "example": "published"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "new post"
+                                    },
+                                    "quote_text": {
+                                        "type": "string",
+                                        "example": "New post"
+                                    },
+                                    "quote_resouce": {
+                                        "type": "string",
+                                        "example": "My post"
+                                    },
+                                    "link": {
+                                        "type": "string",
+                                        "example": "facebook.com"
+                                    },
+                                    "post_time": {
+                                        "type": "date_time",
+                                        "example": "02-02-2012"
+                                    },
+                                    "post_tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "0": {
+                                                    "type": "string",
+                                                    "example": "books"
+                                                },
+                                                "1": {
+                                                    "type": "string",
+                                                    "example": "reading"
+                                                },
+                                                "2": {
+                                                    "type": "string",
+                                                    "example": "stay positive"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "images ": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "0": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"
+                                                },
+                                                "1": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"
+                                                },
+                                                "2": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "video ": {
+                                        "type": "string",
+                                        "format": "byte",
+                                        "example": ""
+                                    },
+                                    "post_type ": {
+                                        "type": "string",
+                                        "example": "text"
+                                    },
+                                    "url_videos ": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "0": {
+                                                    "type": "string",
+                                                    "example": "facebook.com"
+                                                },
+                                                "1": {
+                                                    "type": "string",
+                                                    "example": "google.com"
+                                                },
+                                                "2": {
+                                                    "type": "string",
+                                                    "example": "yahoo.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
                                             }
                                         }
                                     },
@@ -9725,6 +10268,235 @@
                 ]
             }
         },
+        "/post/dashboad": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get  dashboad post",
+                "description": " A blog get dashboad posts",
+                "operationId": "dashboardpost",
+                "responses": {
+                    "200": {
+                        "description": "Successful  response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "posts": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "post_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": ""
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "post_tags": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "0": {
+                                                                            "type": "string",
+                                                                            "example": "books"
+                                                                        },
+                                                                        "1": {
+                                                                            "type": "string",
+                                                                            "example": "reading"
+                                                                        },
+                                                                        "2": {
+                                                                            "type": "string",
+                                                                            "example": "stay positive"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "post_status": {
+                                                                "type": "string",
+                                                                "example": "published"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "New post"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "new post"
+                                                            },
+                                                            "chat_title": {
+                                                                "type": "string",
+                                                                "example": "New post"
+                                                            },
+                                                            "chat_body": {
+                                                                "type": "string",
+                                                                "example": "My post"
+                                                            },
+                                                            "quote_text": {
+                                                                "type": "string",
+                                                                "example": "New post"
+                                                            },
+                                                            "quote_resouce": {
+                                                                "type": "string",
+                                                                "example": "My post"
+                                                            },
+                                                            "keep_reading": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "post_time": {
+                                                                "type": "date_time",
+                                                                "example": "02-02-2012"
+                                                            },
+                                                            "link": {
+                                                                "type": "string",
+                                                                "example": "facebook.com"
+                                                            },
+                                                            "images ": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "0": {
+                                                                            "type": "string",
+                                                                            "format": "byte",
+                                                                            "example": "/images.png"
+                                                                        },
+                                                                        "1": {
+                                                                            "type": "string",
+                                                                            "format": "byte",
+                                                                            "example": "/images.png"
+                                                                        },
+                                                                        "2": {
+                                                                            "type": "string",
+                                                                            "format": "byte",
+                                                                            "example": "/images.png"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "video ": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "audio ": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "post_type ": {
+                                                                "type": "string",
+                                                                "example": "text"
+                                                            },
+                                                            "url_videos ": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "0": {
+                                                                            "type": "string",
+                                                                            "example": "facebook.com"
+                                                                        },
+                                                                        "1": {
+                                                                            "type": "string",
+                                                                            "example": "google.com"
+                                                                        },
+                                                                        "2": {
+                                                                            "type": "string",
+                                                                            "example": "yahoo.com"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "post is not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/post_notes/{post_id}": {
             "get": {
                 "tags": [
@@ -10377,6 +11149,119 @@
                 }
             }
         },
+        "/tag/data/{post_id}/{tag_description}": {
+            "post": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Create a new tag",
+                "description": "Creates a specific tag",
+                "operationId": "createTag",
+                "parameters": [
+                    {
+                        "name": "tag_description",
+                        "in": "path",
+                        "description": "Tag Description",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "The Id of the post which is creating the tag inside it",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "409",
+                                                "msg": "The request could not be completed due to a conflict with the current state of the resource."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/tag/data/{tag_description}": {
             "get": {
                 "tags": [
@@ -10456,54 +11341,9 @@
                                 }
                             }
                         }
-                    }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Tags"
-                ],
-                "summary": "Create a new tag",
-                "description": "Creates a specific tag",
-                "operationId": "createTag",
-                "parameters": [
-                    {
-                        "name": "tag_description",
-                        "in": "path",
-                        "description": "Tag Description",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "200",
-                                                "msg": "OK"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
                     },
-                    "409": {
-                        "description": "Conflict",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -10511,8 +11351,8 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "409",
-                                                "msg": "The request could not be completed due to a conflict with the current state of the resource."
+                                                "status": "401",
+                                                "msg": "Unauthorized"
                                             }
                                         }
                                     },
@@ -10714,6 +11554,121 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "Tag description or sort type was not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/tag/trending": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get all tags which are trending",
+                "description": "Returns list of  tags  which are trending",
+                "operationId": "gettrendingTags",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "tags": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "tag_description": {
+                                                                "type": "string",
+                                                                "example": "books"
+                                                            },
+                                                            "tag_image": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
                                             }
                                         }
                                     },
@@ -12532,7 +13487,7 @@
                 ],
                 "summary": "delete the user",
                 "description": " delete the user account",
-                "operationId": "delete",
+                "operationId": "deleteuser",
                 "requestBody": {
                     "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
                     "required": true,
@@ -12547,12 +13502,12 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "radwa@gmail.com"
+                                        "example": "user2023@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "123"
+                                        "example": "<syudhguin21215>"
                                     }
                                 },
                                 "type": "object"
