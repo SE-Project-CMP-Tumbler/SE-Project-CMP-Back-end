@@ -28,7 +28,7 @@ class ThemeController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="name", type="string", example="mycppblog"),
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
- *       @OA\Property(property="title", type="array", 
+ *       @OA\Property(property="title", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="CPP Programming"),
  *           @OA\Property(property="show", type="boolean", example="true"),
@@ -37,7 +37,7 @@ class ThemeController extends Controller
  *           @OA\Property(property="font_weight", type="string", example="bold"),
  *         )
  *       ),
- *       @OA\Property(property="description", type="array", 
+ *       @OA\Property(property="description", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
  *           @OA\Property(property="show", type="boolean", example="true"),
@@ -46,14 +46,14 @@ class ThemeController extends Controller
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
- *       @OA\Property(property="header_image", type="array", 
+ *       @OA\Property(property="header_image", type="array",
  *         @OA\Items(
  *            @OA\Property(property="url", type="string",format="byte", example="assksineuug"),
  *            @OA\Property(property="reset", type="boolean", example="true"),
  *            @OA\Property(property="stretch", type="boolean", example="true"),
  *         )
  *       ),
- *       @OA\Property(property="avater", type="array", 
+ *       @OA\Property(property="avater", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="string",format="byte", example="aksmdnurjrj"),
  *              @OA\Property(property="shape", type="string", example="circle"),
@@ -70,7 +70,7 @@ class ThemeController extends Controller
  *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="name", type="string", example="mycppblog"),
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
- *       @OA\Property(property="title", type="array", 
+ *       @OA\Property(property="title", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="CPP Programming"),
  *           @OA\Property(property="show", type="boolean", example="true"),
@@ -79,7 +79,7 @@ class ThemeController extends Controller
  *           @OA\Property(property="font_weight", type="string", example="bold"),
  *         )
  *       ),
- *       @OA\Property(property="description", type="array", 
+ *       @OA\Property(property="description", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
  *           @OA\Property(property="show", type="boolean", example="true"),
@@ -88,14 +88,14 @@ class ThemeController extends Controller
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
- *       @OA\Property(property="header_image", type="array", 
+ *       @OA\Property(property="header_image", type="array",
  *         @OA\Items(
  *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
  *            @OA\Property(property="reset", type="boolean", example="true"),
  *            @OA\Property(property="stretch", type="boolean", example="true"),
  *         )
  *       ),
- *       @OA\Property(property="avater", type="array", 
+ *       @OA\Property(property="avater", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
  *              @OA\Property(property="shape", type="string", example="circle"),
@@ -155,7 +155,7 @@ class ThemeController extends Controller
  *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="name", type="string", example="mycppblog"),
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
- *       @OA\Property(property="title", type="array", 
+ *       @OA\Property(property="title", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="CPP Programming"),
  *           @OA\Property(property="show", type="boolean", example="true"),
@@ -164,7 +164,7 @@ class ThemeController extends Controller
  *           @OA\Property(property="font_weight", type="string", example="bold"),
 *          )
  *       ),
- *       @OA\Property(property="description", type="array", 
+ *       @OA\Property(property="description", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
  *           @OA\Property(property="show", type="boolean", example="true"),
@@ -173,14 +173,14 @@ class ThemeController extends Controller
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
- *       @OA\Property(property="header_image", type="array", 
+ *       @OA\Property(property="header_image", type="array",
  *         @OA\Items(
  *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
  *            @OA\Property(property="reset", type="boolean", example="true"),
  *            @OA\Property(property="stretch", type="boolean", example="true"),
  *         )
  *       ),
- *       @OA\Property(property="avater", type="array", 
+ *       @OA\Property(property="avater", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
  *              @OA\Property(property="shape", type="string", example="circle"),
