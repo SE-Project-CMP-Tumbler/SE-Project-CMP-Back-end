@@ -95,7 +95,7 @@ class UserController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
@@ -286,7 +286,7 @@ class UserController extends Controller
  *     ),
  *  @OA\Response(
  *    response=404,
- *    description="Wrong response",
+ *    description="not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
@@ -520,6 +520,71 @@ class UserController extends Controller
  *        )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=500,
+ *    description="Internal Server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+ *        )
+ *     )
+ * ),
+ *
+ */
+/** @OA\Delete(
+ * path="/delete_user",
+ * summary="delete the user",
+ * description=" delete the user account",
+ * tags={"User"},
+ * operationId="delete",
+ *  security={ {"bearer": {} }},
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description=  "
+ *    email : The  email of the  user,
+ *    password : The password of the user",
+ *    @OA\JsonContent(
+ *      required={"password","email"},
+ *      @OA\Property(property="email", type="string",  format="email", example="radwa@gmail.com"),
+ *      @OA\Property(property="password", type="string", format="password", example="123"),
+ *                )
+ *               ),
+ * 
+ * 
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=500,
  *    description="Internal Server error",
  *    @OA\JsonContent(
@@ -532,3 +597,5 @@ class UserController extends Controller
 
 
 }
+
+

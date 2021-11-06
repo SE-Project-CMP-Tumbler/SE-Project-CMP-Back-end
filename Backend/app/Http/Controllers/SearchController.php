@@ -75,13 +75,6 @@ class SearchController extends Controller
  *     ),
  * ),
  *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
