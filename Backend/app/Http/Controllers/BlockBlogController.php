@@ -15,6 +15,13 @@ class BlockBlogController extends Controller
  * operationId="followblog",
  * tags={"Block Blogs"},
  * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id of bolcked blog ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
  *    description="Successful  response",
@@ -28,6 +35,19 @@ class BlockBlogController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
  *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))
+ * ),
+ *    @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
  *     )
  * )
  */
@@ -39,6 +59,13 @@ class BlockBlogController extends Controller
  * operationId="unfollowblog",
  * tags={"Block Blogs"},
  * security={ {"bearer": {} }},
+ *   @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id of bolcked blog ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
  *    description="Successful  response",
@@ -51,6 +78,13 @@ class BlockBlogController extends Controller
  *    description=" Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ *     ),
+ *     @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     )
  * )
@@ -65,7 +99,7 @@ class BlockBlogController extends Controller
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
  *          name="blog_id",
- *          description="Blog_id ",
+ *          description="Blog_id of current blog",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -92,6 +126,19 @@ class BlockBlogController extends Controller
  *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))
+ * ),
+ *     @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     )
  * )

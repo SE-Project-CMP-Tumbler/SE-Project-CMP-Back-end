@@ -62,7 +62,7 @@ class PostNoteController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A post with the specified ID was not found"})))
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A post with the specified ID was not found"}))),
  * )
  */
 }

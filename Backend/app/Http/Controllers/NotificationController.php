@@ -229,11 +229,6 @@ class NotificationController extends Controller
  *                    
  *                   ),
  *             ),
- *          ),
- *        ),
- *       ),
- *     ),
- *  ),
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -241,6 +236,20 @@ class NotificationController extends Controller
  *     @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized"}),
  *     ),
  *  ),
- * )
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ * ),
+ *   @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ * ),
+ * ),
  */
 }

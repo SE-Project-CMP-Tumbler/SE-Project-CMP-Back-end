@@ -144,8 +144,27 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "404",
+                                                "status": "401",
                                                 "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -507,6 +526,25 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -583,8 +621,27 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "404",
+                                                "status": "401",
                                                 "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -613,7 +670,7 @@
                     {
                         "name": "blog_id",
                         "in": "path",
-                        "description": "Blog_id ",
+                        "description": "Blog_id of current blog",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -687,6 +744,44 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -702,6 +797,17 @@
                 "summary": "block blog",
                 "description": " Primary blog block another blog",
                 "operationId": "followblog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "Blog_id of bolcked blog ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful  response",
@@ -740,6 +846,44 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -755,6 +899,17 @@
                 "summary": "unblock blog",
                 "description": " Primary blog unblock another blog",
                 "operationId": "unfollowblog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "Blog_id of bolcked blog ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful  response",
@@ -786,6 +941,25 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -2394,8 +2568,27 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "404",
+                                                "status": "401",
                                                 "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -2458,7 +2651,7 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "404",
+                                                "status": "401",
                                                 "msg": "Unauthorized"
                                             }
                                         }
@@ -2479,6 +2672,25 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -2572,7 +2784,7 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "404",
+                                                "status": "401",
                                                 "msg": "Unauthorized"
                                             }
                                         }
@@ -2593,6 +2805,25 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -2703,6 +2934,25 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2766,7 +3016,7 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-                                                "status": "404",
+                                                "status": "401",
                                                 "msg": "Unauthorized"
                                             }
                                         }
@@ -2787,6 +3037,25 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -3819,6 +4088,63 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -3951,6 +4277,44 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -3992,6 +4356,25 @@
                                             "example": {
                                                 "status": "200",
                                                 "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -4083,6 +4466,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -4142,6 +4544,25 @@
                                             "example": {
                                                 "status": "200",
                                                 "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -9673,6 +10094,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "200": {
                         "description": "Successful response",
                         "content": {
@@ -9908,25 +10348,6 @@
                                                 }
                                             },
                                             "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
                                         }
                                     },
                                     "type": "object"
@@ -11063,7 +11484,7 @@
                         }
                     },
                     "404": {
-                        "description": "Wrong response",
+                        "description": "not found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11509,7 +11930,7 @@
                         }
                     },
                     "404": {
-                        "description": "Wrong response",
+                        "description": "not found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12058,6 +12479,25 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal Server error",
                         "content": {
@@ -12084,28 +12524,144 @@
                     }
                 ]
             }
-        }
-    },
-    "components": {
-        "responses": {
-            "401": {
-                "description": "Unauthorized",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "properties": {
-                                "meta": {
-                                    "type": "object",
-                                    "example": {
-                                        "status": "401",
-                                        "msg": "unauthorized"
+        },
+        "/delete_user": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "delete the user",
+                "description": " delete the user account",
+                "operationId": "delete",
+                "requestBody": {
+                    "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "radwa@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "123"
                                     }
-                                }
-                            },
-                            "type": "object"
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },

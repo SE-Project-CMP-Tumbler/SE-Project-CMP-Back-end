@@ -60,7 +60,14 @@ class AskController extends Controller
  *    response=401,
  *    description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *     @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     )
  * )
@@ -194,6 +201,13 @@ class AskController extends Controller
  *     ),
  *  ),
  * ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
  *  
  * ),
  * 
@@ -235,7 +249,14 @@ class AskController extends Controller
  *    response=401,
  *    description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     )
  * )
