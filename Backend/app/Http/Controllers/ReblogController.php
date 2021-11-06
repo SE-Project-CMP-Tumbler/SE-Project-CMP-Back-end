@@ -74,6 +74,13 @@ class ReblogController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *     )
  * ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     ),
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
