@@ -66,6 +66,13 @@ class ChatController extends Controller
  *     ),
  *  ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"}),
+ *     ),
+ *  ),
+ *  @OA\Response(
  *   response=404,
  *   description="Not Found",
  *   @OA\JsonContent(
@@ -129,6 +136,13 @@ class ChatController extends Controller
  *    ),
  *  ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"}),
+ *     ),
+ *  ),
+ *  @OA\Response(
  *   response=404,
  *   description="Not Found",
  *   @OA\JsonContent(
@@ -170,6 +184,13 @@ class ChatController extends Controller
  *    ),
  *  ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"}),
+ *     ),
+ *  ),
+ *  @OA\Response(
  *   response=404,
  *   description="Not Found",
  *   @OA\JsonContent(
@@ -178,6 +199,4 @@ class ChatController extends Controller
  *  ),
  * )
  */
-
-
 }

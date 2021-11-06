@@ -30,14 +30,13 @@ class PostController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="integer")),
- * 
  *   @OA\RequestBody(
  *    required=true,
  *    description="Post Request has different types depeneds on post type :
  *    in text type :description or title are required, at least one of them ,keep reading is optinal
- *    in image type : at least one uplaoded image , 
+ *    in image type : at least one uplaoded image,
  *    in chat type : chat_body is required ,chat_title is optional
- *    in quote type:  quote_text is required , quote_body is optinal 
+ *    in quote type:  quote_text is required, quote_body is optinal
  *    in video type:  video is required , url_videos are optinal
  *    in audio type: audio is required
  *    in link type:  link is required
@@ -63,7 +62,7 @@ class PostController extends Controller
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", format="byte",example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
  *              @OA\Property(property="1", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
- *              @OA\Property(property="2", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),        
+ *              @OA\Property(property="2", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
  *                  )
  *           ),
  *      @OA\Property(property="video ", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
@@ -74,7 +73,6 @@ class PostController extends Controller
  *              @OA\Property(property="0", type="string", example="facebook.com"),
  *              @OA\Property(property="1", type="string", example="google.com"),
  *              @OA\Property(property="2", type="string", example="yahoo.com"),)))),
- * 
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -89,7 +87,7 @@ class PostController extends Controller
  *       @OA\Property(property="chat_title", type="string", example="New post"),
  *       @OA\Property(property="chat_body", type="string", example="My post"),
  *       @OA\Property(property="link",type="string",example="facebook.com"),
- *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"), 
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *       @OA\Property(property="question_body", type="string", example="How are you?"),
  *       @OA\Property(property="question_id", type="integer", example=3),
  *       @OA\Property(property="question_flag", type="boolean", example=false),
@@ -97,7 +95,7 @@ class PostController extends Controller
  *       @OA\Property(property="blog_username_asking", type="string", example=""),
  *       @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
  *       @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
- *        @OA\Property(property="blog_title_asking", type="string", example=""),    
+ *        @OA\Property(property="blog_title_asking", type="string", example=""),
  *       @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -110,7 +108,7 @@ class PostController extends Controller
  *          @OA\Items(
  *              @OA\Property(property="0", type="string",example="/image.png"),
  *              @OA\Property(property="1", type="string", example="/image.png"),
- *              @OA\Property(property="2", type="string",example="/image.png"),        
+ *              @OA\Property(property="2", type="string",example="/image.png"),
  *                  )
  *           ),
  *       @OA\Property(property="video ", type="string", example="/audio.mp3"),
@@ -121,7 +119,7 @@ class PostController extends Controller
  *              @OA\Property(property="0", type="string", example="facebook.com"),
  *              @OA\Property(property="1", type="string", example="google.com"),
  *              @OA\Property(property="2", type="string", example="yahoo.com"),),),
- *       @OA\Property(property="traced_back_posts", type="array", 
+ *       @OA\Property(property="traced_back_posts", type="array",
  *          @OA\Items(
  *              @OA\Property(property="post_id", type="integer", example=5),
  *              @OA\Property(property="blog_id", type="integer", example=5),
@@ -150,7 +148,6 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))),),),
- * 
  *@OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -166,14 +163,22 @@ class PostController extends Controller
  *        )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
  *        )
  *     )
- * )    
+ * )
  */
+
 /**
  * @OA\Delete(
  * path="/post/{post_id}/{blog_id}",
@@ -211,6 +216,13 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -218,8 +230,8 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
+
 /**
  * @OA\Get(
  * path="/post/{post_id}",
@@ -259,13 +271,13 @@ class PostController extends Controller
  *      @OA\Property(property="quote_text", type="string", example="New post"),
  *      @OA\Property(property="quote_resouce", type="string", example="My post"),
  *      @OA\Property(property="link",type="string",example="facebook.com"),
- *      @OA\Property(property="post_time",type="date_time",example="02-02-2012"), 
+ *      @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *      @OA\Property(property="keep_reading", type="integer", example=1),
  *      @OA\Property(property="scheulding_time",type="date-time",example=""),
  *      @OA\Property(property="blog_username_asking", type="string", example=""),
  *      @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
  *      @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
- *      @OA\Property(property="blog_title_asking", type="string", example=""),  
+ *      @OA\Property(property="blog_title_asking", type="string", example=""),
  *      @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", example="books"),
@@ -275,7 +287,7 @@ class PostController extends Controller
  *          @OA\Items(
  *              @OA\Property(property="0", type="string", format="byte",example="./image.png"),
  *              @OA\Property(property="1", type="string", format="byte", example="./image.png"),
- *              @OA\Property(property="2", type="string", format="byte", example="./image.png"),        
+ *              @OA\Property(property="2", type="string", format="byte", example="./image.png"),
  *                  )
  *           ),
  *      @OA\Property(property="video ", type="string", format="byte", example="./videp.mov"),
@@ -287,7 +299,7 @@ class PostController extends Controller
  *              @OA\Property(property="1", type="string", example="google.com"),
  *              @OA\Property(property="2", type="string", example="yahoo.com"),),
  *      ),
- *      @OA\Property(property="traced_back_posts", type="array", 
+ *      @OA\Property(property="traced_back_posts", type="array",
  *          @OA\Items(
  *              @OA\Property(property="post_id", type="integer", example=5),
  *              @OA\Property(property="blog_id", type="integer", example=5),
@@ -327,6 +339,13 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -334,13 +353,13 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
+
  /**
  * @OA\Post(
  * path="/post/{blog_id}",
  * summary="create new post",
- * description=" A blog can create new post",
+ * description="A blog can create new post",
  * operationId="createpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
@@ -355,12 +374,12 @@ class PostController extends Controller
  *    required=true,
  *    description="Post Request has different types depeneds on post type :
  *     in text type :description or title are required, at least one of them ,keep reading is optinal
- *     in image type : at least one uplaoded image , 
- *     in chat type : chat_body is required ,chat_title is optional
- *     in quote type:  quote_text is required , quote_body is optinal 
- *     in video type:  video is required , url_videos are optinal
+ *     in image type : at least one uplaoded image,
+ *     in chat type : chat_body is required, chat_title is optional
+ *     in quote type:  quote_text is required, quote_body is optinal
+ *     in video type:  video is required, url_videos are optinal
  *     in audio type: audio is required
- *     is general : all fields can be given , to be general at least two different field of types should given" ,
+ *     is general : all fields can be given, to be general at least two different field of types should given",
  *    @OA\JsonContent(
  *       required={"post_status","post_type"},
  *       @OA\Property(property="post_status", type="string", example="published"),
@@ -372,7 +391,7 @@ class PostController extends Controller
  *       @OA\Property(property="quote_resouce", type="string", example="My post"),
  *       @OA\Property(property="keep_reading", type="integer", example=1),
  *       @OA\Property(property="link",type="string",example="facebook.com"),
- *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"), 
+ *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *       @OA\Property(property="scheulding_time",type="date-time",example=""),
  *       @OA\Property(property="post_tags", type="array",
  *          @OA\Items(
@@ -384,7 +403,6 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", format="byte",example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
  *                      @OA\Property(property="1", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
  *                      @OA\Property(property="2", type="string", format="byte", example="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"),
- *                      
  *                  )
  *           ),
  *       @OA\Property(property="video ", type="string", format="byte", example=""),
@@ -395,28 +413,9 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
  *                  )
  *       )
- * 
- *   
  *    ),
- * ),
- * @OA\Response(
- *    response=500,
- *    description="Internal Server error",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
- *        
- *     )
- * ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        
- *     )
  * ),
  * @OA\Response(
  *    response=200,
@@ -455,7 +454,7 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"))),
- *       @OA\Property(property="traced_back_posts", type="array", 
+ *       @OA\Property(property="traced_back_posts", type="array",
  *          @OA\Items(
  *              @OA\Property(property="post_id", type="integer", example=5),
  *              @OA\Property(property="blog_id", type="integer", example=5),
@@ -487,8 +486,30 @@ class PostController extends Controller
  *        ),
  *      ),
  *  ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *     )
+ *  ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=500,
+ *    description="Internal Server error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+ *     )
+ *  ),
  * )
  */
+
 /**
  * @OA\Get(
  * path="/post/{blog_id}/submission",
@@ -534,7 +555,6 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", format="byte",example="/images.png"),
  *                      @OA\Property(property="1", type="string", format="byte", example="/images.png"),
  *                      @OA\Property(property="2", type="string", format="byte", example="/images.png"),
- *                      
  *                  )
  *           ),
  *              @OA\Property(property="video ", type="string", format="byte", example="./video.mov"),
@@ -545,7 +565,7 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),
- *              @OA\Property(property="traced_back_posts", type="array", 
+ *              @OA\Property(property="traced_back_posts", type="array",
  *                  @OA\Items(
  *                      @OA\Property(property="post_id", type="integer", example=5),
  *                      @OA\Property(property="blog_id", type="integer", example=5),
@@ -578,14 +598,20 @@ class PostController extends Controller
  *        ),
  *       ),
  *     ),
- * )
- *   ,
+ * ),
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
  *     ),
  *  @OA\Response(
  *    response=404,
@@ -595,8 +621,8 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
+
 /**
  * @OA\Get(
  * path="/post/{blog_id}/queue",
@@ -652,7 +678,7 @@ class PostController extends Controller
  *                      @OA\Property(property="0", type="string", example="facebook.com"),
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),
- *       @OA\Property(property="traced_back_posts", type="array", 
+ *       @OA\Property(property="traced_back_posts", type="array",
  *          @OA\Items(
  *              @OA\Property(property="post_id", type="integer", example=5),
  *              @OA\Property(property="blog_id", type="integer", example=5),
@@ -682,9 +708,9 @@ class PostController extends Controller
  *                      @OA\Property(property="1", type="string", example="google.com"),
  *                      @OA\Property(property="2", type="string", example="yahoo.com"),),),))
  *        ),
- *       ),     
+ *       ),
  *      ),
- *     ),      
+ *     ),
  * )
  *   ,
  *  @OA\Response(
@@ -695,6 +721,13 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -702,7 +735,6 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
 
 /**
@@ -750,7 +782,7 @@ class PostController extends Controller
  *              @OA\Items(
  *                  @OA\Property(property="0", type="string", format="byte",example="/images.png"),
  *                  @OA\Property(property="1", type="string", format="byte", example="/images.png"),
- *                  @OA\Property(property="2", type="string", format="byte", example="/images.png"),     
+ *                  @OA\Property(property="2", type="string", format="byte", example="/images.png"),
  *                  )
  *           ),
  *          @OA\Property(property="video ", type="string", format="byte", example=""),
@@ -761,7 +793,7 @@ class PostController extends Controller
  *              @OA\Property(property="0", type="string", example="facebook.com"),
  *              @OA\Property(property="1", type="string", example="google.com"),
  *              @OA\Property(property="2", type="string", example="yahoo.com"),),),
- *          @OA\Property(property="traced_back_posts", type="array", 
+ *          @OA\Property(property="traced_back_posts", type="array",
  *              @OA\Items(
  *                  @OA\Property(property="post_id", type="integer", example=5),
  *                  @OA\Property(property="blog_id", type="integer", example=5),
@@ -804,6 +836,13 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -811,7 +850,6 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
  
 /**
@@ -858,12 +896,12 @@ class PostController extends Controller
  *                  @OA\Property(property="blog_username_asking", type="string", example=""),
  *                  @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
  *                  @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
- *                  @OA\Property(property="blog_title_asking", type="string", example=""),  
+ *                  @OA\Property(property="blog_title_asking", type="string", example=""),
  *                  @OA\Property(property="images ", type="array",
  *                      @OA\Items(
  *                          @OA\Property(property="0", type="string", format="byte",example="/images.png"),
  *                          @OA\Property(property="1", type="string", format="byte", example="/images.png"),
- *                          @OA\Property(property="2", type="string", format="byte", example="/images.png"), 
+ *                          @OA\Property(property="2", type="string", format="byte", example="/images.png"),
  *                  )
  *           ),
  *                  @OA\Property(property="video ", type="string", format="byte", example=""),
@@ -874,7 +912,7 @@ class PostController extends Controller
  *                          @OA\Property(property="0", type="string", example="facebook.com"),
  *                          @OA\Property(property="1", type="string", example="google.com"),
  *                          @OA\Property(property="2", type="string", example="yahoo.com"),),),
- *                  @OA\Property(property="traced_back_posts", type="array", 
+ *                  @OA\Property(property="traced_back_posts", type="array",
  *                  @OA\Items(
  *                      @OA\Property(property="post_id", type="integer", example=5),
  *                      @OA\Property(property="blog_id", type="integer", example=5),
@@ -917,6 +955,13 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -924,7 +969,6 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
 
  /**
@@ -982,7 +1026,7 @@ class PostController extends Controller
  *                          @OA\Property(property="0", type="string", example="facebook.com"),
  *                          @OA\Property(property="1", type="string", example="google.com"),
  *                          @OA\Property(property="2", type="string", example="yahoo.com"),),),
- *                  @OA\Property(property="traced_back_posts", type="array", 
+ *                  @OA\Property(property="traced_back_posts", type="array",
  *                      @OA\Items(
  *                          @OA\Property(property="post_id", type="integer", example=5),
  *                          @OA\Property(property="blog_id", type="integer", example=5),
@@ -1015,14 +1059,20 @@ class PostController extends Controller
  *       ),
  *      ),
  *     ),
- * )
- *   ,
+ * ) ,
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *       )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
  *     ),
  *  @OA\Response(
  *    response=404,
@@ -1032,8 +1082,8 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
+
 /**
  * @OA\Put(
  * path="/post/{post_id}/{blog_id}/pinned",
@@ -1072,15 +1122,22 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
  *        )
  *     )
  * )
- *   
  */
+
 /**
  * @OA\Put(
  * path="/post/{post_id}/{blog_id}/unpinned",
@@ -1119,6 +1176,13 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -1126,9 +1190,7 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
-  
 
  /**
  * @OA\Put(
@@ -1176,6 +1238,13 @@ class PostController extends Controller
  *       )
  *     ),
  *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+ *        )
+ *     ),
+ *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -1183,8 +1252,5 @@ class PostController extends Controller
  *        )
  *     )
  * )
- *   
  */
- 
-
 }
