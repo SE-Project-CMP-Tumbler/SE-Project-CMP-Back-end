@@ -90,7 +90,7 @@ class BlogController extends Controller
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found), 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"}))),
  * 
  * @OA\Response(
  *  response=500,
