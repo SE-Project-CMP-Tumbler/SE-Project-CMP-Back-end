@@ -8,7 +8,7 @@ class TagController extends Controller
 {
 /**
  * @OA\Post(
- * path="/tag/data/{tag_description}",
+ * path="/tag/data/{post_id}/{tag_description}",
  * summary="Create a new tag",
  * description="Creates a specific tag",
  * operationId="createTag",
@@ -21,13 +21,28 @@ class TagController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ * @OA\Parameter(
+ *          name="post_id",
+ *          description="The Id of the post which is creating the tag inside it",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),),),
- * 
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"}))),
  *  @OA\Response(
  *    response=409,
  *    description="Conflict",
@@ -66,7 +81,12 @@ class TagController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified description was not found"})))
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified description was not found"}))),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */    
 /**
@@ -133,7 +153,43 @@ class TagController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Tag description or sort type was not found"})))
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Tag description or sort type was not found"}))),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
+ * )
+ */
+/**
+ * @OA\Get(
+ * path="/tag/trending",
+ * summary="Get all tags which are trending",
+ * description="Returns list of  tags  which are trending",
+ * operationId="gettrendingTags",
+ * tags={"Tags"},
+ * security={ {"bearer": {} }},
+ *  @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *       @OA\Property(property="response",type="object",
+ *          @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
+ * 
+ *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"}))),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */
 }

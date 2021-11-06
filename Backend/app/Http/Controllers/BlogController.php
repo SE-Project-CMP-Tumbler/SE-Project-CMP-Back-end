@@ -39,7 +39,7 @@ class BlogController extends Controller
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized to get this blog information"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
  * 
  * @OA\Response(
  *  response=404,
@@ -58,7 +58,7 @@ class BlogController extends Controller
  /**
  * @OA\Get(
  * path="/blog",
- * summary="Get  all blogs of user",
+ * summary="Get all blogs of user",
  * description="Returns the general information of a specific blog",
  * operationId="getBlogs",
  * tags={"Blogs"},
@@ -84,13 +84,13 @@ class BlogController extends Controller
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized to get this blog information"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
  * 
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found), 
  * 
  * @OA\Response(
  *  response=500,
@@ -148,7 +148,7 @@ class BlogController extends Controller
  * @OA\Delete(
  * path="/blog/{blog_id}",
  * summary="delete blog",
- * description=" Deleting a secondary blog",
+ * description="Deleting a secondary blog",
  * tags={"Blogs"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
@@ -169,7 +169,21 @@ class BlogController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     )
  * )
@@ -203,7 +217,7 @@ class BlogController extends Controller
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized to get this blog information"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
  * 
  * @OA\Response(
  *  response=404,
@@ -248,13 +262,13 @@ class BlogController extends Controller
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized to get this blog information"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
  * 
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)), 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),)), 
  * 
  * @OA\Response(
  *  response=500,

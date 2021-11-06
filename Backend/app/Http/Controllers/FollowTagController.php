@@ -32,7 +32,12 @@ class FollowTagController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified id was not found"})))
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified id was not found"}))),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */
 /**
@@ -94,30 +99,17 @@ class FollowTagController extends Controller
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
- * 
- * 
- * )
- */
-/**
- * @OA\Get(
- * path="/follow_tag/trending",
- * summary="Get all tags which are trending",
- * description="Returns list of  tags  which are trending",
- * operationId="gettrendingTags",
- * tags={"Tags"},
- * security={ {"bearer": {} }},
  *  @OA\Response(
- *    response=200,
- *    description="Successful response",
+ *    response=404,
+ *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
- *       @OA\Property(property="response",type="object",
- *          @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
- * 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"}))),
+ *  
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */
 
