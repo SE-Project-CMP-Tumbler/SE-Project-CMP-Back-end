@@ -50,14 +50,13 @@ class PostNoteController extends Controller
  * 
  *              @OA\Property(property="reblogs", type="array",
  *                  @OA\Items(
- *                       @OA\Property(property="post_id", type="integer", example=5),
+ *                      @OA\Property(property="post_id", type="integer", example=5),
  *                      @OA\Property(property="blog_avatar", type="string", format="byte", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=2),
- *                      @OA\Property(property="reblog_content", type="string", example=""),
- *                      @OA\Property(property="reblog_tags", type="string", example="[]"), 
- *                      @OA\Property(property="reblog_type", type="string", example="video")))))),
+ *                      @OA\Property(property="reblog_content", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>")))))),
+ *                
  *  @OA\Response(
  *    response=404,
  *    description="Not found",

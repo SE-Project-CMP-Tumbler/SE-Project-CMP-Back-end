@@ -25,11 +25,11 @@ class AskController extends Controller
  *              type="integer")),
  * @OA\RequestBody(
  *    required=true,
- *    description="Question Asked body , flag show if anonymous or not ,true for anonymous and in case of anonymous , blog values will appear in response ",
+ *    description="Question Asked body , question_flag show if anonymous or not ,true for anonymous and in case of anonymous , blog values will appear in response ",
  *     @OA\JsonContent(
- *         required={"question_body","flag"},
- *       @OA\Property(property="question_body", type="string", example="How are you?"),
- *       @OA\Property(property="flag", type="boolean", example=false)
+ *         required={"question_body","question_flag"},
+ *       @OA\Property(property="question_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *       @OA\Property(property="question_flag", type="boolean", example=false)
  *    )
  *  ),
  * @OA\Response(
@@ -42,9 +42,10 @@ class AskController extends Controller
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *                      @OA\Property(property="blog_id", type="integer", example=1032), 
- *                      @OA\Property(property="question_body", type="string", example="How are you?"),
+ *                      @OA\Property(property="question_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *                      @OA\Property(property="question_flag", type="boolean", example=false),
  *                      @OA\Property(property="question_id", type="integer", example=3),
- *                      @OA\Property(property="flag", type="boolean", example=false)
+ *                    
  *         
  *       ),
  *        )
@@ -90,46 +91,16 @@ class AskController extends Controller
  *   @OA\RequestBody(
  *    required=true,
  *    description="Post/Answer Request has different types depeneds on answer type :
- *     in text type :description or title are required, at least one of them ,keep reading is optinal
- *     in image type : at least one uplaoded image , 
- *     in chat type : chat_body is required ,chat_title is optional
- *     in quote type:  quote_text is required , quote_body is optinal 
- *     in video type:  video is required , url_videos are optinal
- *     in audio type: audio is required
- *     in link type: link in required
+ *     
  *     is genral : all fields can be given , to be genarl at least two different field of types should given" ,
  *    @OA\JsonContent(
  *       required={"post_status","post_type"},
  *       
  *       @OA\Property(property="post_status", type="string", example="published"),
- *       @OA\Property(property="post_type", type="string", example="text"),
- *       @OA\Property(property="link", type="string", example="facebook.com"),
- *       @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="images ", type="array",
- *        @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="aksjslmpdmndp"),
- *                      @OA\Property(property="1", type="string", format="byte", example="aksjslmpdmndpg"),
- *                      @OA\Property(property="2", type="string", format="byte", example="aksjslmpdmndp"),
- *                      
- *                  )
- *           ),
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
- *       @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
- *                      @OA\Property(property="0", type="string", example="facebook.com"),
- *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  )
- *       )
+ *       @OA\Property(property="post_type", type="string", example="answer"),
+ *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *    
+ *    
  * 
  *   
  *    ),
@@ -158,46 +129,22 @@ class AskController extends Controller
  *       @OA\Property(property="response", type="object",
  *         @OA\Property(property="post_id", type="integer", example=5),
  *         @OA\Property(property="post_time", type="date-time", example="02-02-2012"),
- *         @OA\Property(property="post_type", type="string", example="text"),
- *         @OA\Property(property="link", type="string", example="facebook.com"),
+ *         @OA\Property(property="post_type", type="string", example="answer"),
+ *         @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *         @OA\Property(property="question_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *         @OA\Property(property="question_flag", type="boolean", example=false),
  *         @OA\Property(property="blog_id", type="integer", example=5),
- *         @OA\Property(property="title", type="string", example="New post"),
+ *         @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.png"),
+ *         @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
+ *         @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
  *         @OA\Property(property="blog_avatar_asking", type="string", example="/storage/imgname2.png"),
  *         @OA\Property(property="blog_avatar_shape_asking", type="string", example="circle"),
  *         @OA\Property(property="blog_username_asking", type="string", example="radwa-ahmed213"),
  *         @OA\Property(property="blog_id_asking", type="integer", example=1032), 
- *         @OA\Property(property="question_body", type="string", example="How  are you?"), 
+ *         
  *         @OA\Property(property="question_id", type="integer", example=5), 
- *         @OA\Property(property="flag", type="bool", example=false),  
- *         @OA\Property(property="tags",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""))),
- *        @OA\Property(property="description", type="string", example="new post"),
- *        @OA\Property(property="chat_title", type="string", example="New post"),
- *        @OA\Property(property="chat_body", type="string", example="My post"),
- *        @OA\Property(property="quote_text", type="string", example="New post"),
- *        @OA\Property(property="quote_resouce", type="string", example="My post"),
- *        @OA\Property(property="keep_reading", type="integer", example=1),
- *        @OA\Property(property="images ", type="array",
- *         @OA\Items(
- *                      @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),
- *                      
- *                  )
- *           ),
- *        @OA\Property(property="video ", type="string", format="byte", example=""),
- *        @OA\Property(property="audio ", type="string", format="byte", example=""),
- *        @OA\Property(property="post_type ", type="string", example="text"),
- *        @OA\Property(property="url_videos ", type="array",
- *            @OA\Items(
- *                      @OA\Property(property="0", type="string", example="facebook.com"),
- *                      @OA\Property(property="1", type="string", example="google.com"),
- *                      @OA\Property(property="2", type="string", example="yahoo.com"),
- *                         
- *                  ),
- *       ),
+ *       
+ *        
  *     ),
  *  ),
  * ),
