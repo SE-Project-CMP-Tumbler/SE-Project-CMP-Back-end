@@ -33,32 +33,9 @@ class ReblogController extends Controller
  *    description= "Reblog Request can contain different data types, however, all fields are optional" ,
  *    @OA\JsonContent(
  *       @OA\Property(property="post_status", type="string", example="published"),
- *       @OA\Property(property="title", type="string", example="New post"),
- *       @OA\Property(property="description", type="string", example="new post"),
- *       @OA\Property(property="chat_title", type="string", example="New post"),
- *       @OA\Property(property="chat_body", type="string", example="My post"),
- *       @OA\Property(property="quote_text", type="string", example="New post"),
- *       @OA\Property(property="quote_resouce", type="string", example="My post"),
- *       @OA\Property(property="keep_reading", type="integer", example=1),
- *       @OA\Property(property="post_tags", type="array",
- *          @OA\Items(
- *              @OA\Property(property="0", type="string", example="books"),
- *              @OA\Property(property="1", type="string", example="reading"),
- *              @OA\Property(property="2", type="string", example="stay positive"),)),
- *       @OA\Property(property="images ", type="array",
- *          @OA\Items(
- *              @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *              @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *              @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
- * 
- *       @OA\Property(property="video ", type="string", format="byte", example=""),
- *       @OA\Property(property="audio ", type="string", format="byte", example=""),
- *       @OA\Property(property="post_type ", type="string", example="text"),
- *       @OA\Property(property="url_videos ", type="array",
- *          @OA\Items(
- *              @OA\Property(property="0", type="string", example="facebook.com"),
- *              @OA\Property(property="1", type="string", example="google.com"),
- *              @OA\Property(property="2", type="string", example="yahoo.com"),))),),
+ *       @OA\Property(property="post_type", type="string", example="general"),
+ *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *   )),
  * 
  * @OA\Response(
  *    response=500,

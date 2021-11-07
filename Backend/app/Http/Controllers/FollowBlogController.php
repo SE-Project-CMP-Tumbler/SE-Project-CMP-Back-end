@@ -250,6 +250,103 @@ class FollowBlogController extends Controller
  *     )
  * )
  */
-
+ /**
+ * @OA\Get(
+ * path="/total_followers/{blog_id}",
+ * summary="total_followers number of blog",
+ * description=" return total_followers number of blog",
+ * operationId="followernumberblog",
+ * tags={"Follow Blogs"},
+ * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *          name="blog_id",
+ *          description="The id of current blog",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ * 
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *         @OA\Property(property="response", type="obeject",example={"followers":5},
+ *                 
+ *              ),
+ *       )
+ *     ),
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
+ * )
+ */
+ /**
+ * @OA\Get(
+ * path="/total_followings/{blog_id}",
+ * summary="total_followings number of blog",
+ * description=" return total_followings number of blog",
+ * operationId="followingnumberblog",
+ * tags={"Follow Blogs"},
+ * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *          name="blog_id",
+ *          description="The id of current blog",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ * 
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *         @OA\Property(property="response", type="obeject",example={"followings":5},
+ *                 
+ *              ),
+ *       )
+ *     ),
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
+ * )
+ */
 
 }
