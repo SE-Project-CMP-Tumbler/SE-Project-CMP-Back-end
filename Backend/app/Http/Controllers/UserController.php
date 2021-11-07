@@ -103,21 +103,19 @@ class UserController extends Controller
  * ),
  */ 
 /** @OA\Post(
- * path="/login_with_googleid",
+ * path="/login_with_google",
  * summary="login a user",
- * description=" login using google_id ",
+ * description=" login using google ",
  * tags={"User"},
- * operationId="loginuserwithgoogleid",
+ * operationId="loginuserwithgoogle",
  * 
  *   @OA\RequestBody(
  *    required=true,
  *    description=  "
- *    email : The email of the new user ,
- *    google_id : The google_id of the user's gmail account",
+ *    google_access_token : The access_token of the user's gmail account",
  *    @OA\JsonContent(
- *      required={"email","google_id","blog_username","age"},
- *      @OA\Property(property="email", type="string", example="user2023@gmail.com"),
- *      @OA\Property(property="google_id", type="string", example="151656461515"),
+ *      required={"google_access_token"},
+ *      @OA\Property(property="google_access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *                )
  *               ),
  * @OA\Response(
@@ -144,23 +142,21 @@ class UserController extends Controller
  * ),
  */  
 /** @OA\Post(
- * path="/register_with_googleid",
+ * path="/register_with_google",
  * summary="Register a new user",
- * description=" Creating a new user using google_id ",
+ * description="Creating a new user using google",
  * tags={"User"},
- * operationId="signupuserwithgoogleid",
+ * operationId="signupuserwithgoogle",
  * 
  *   @OA\RequestBody(
  *    required=true,
  *    description=  "
- *    email : The email of the new user ,
- *    google_id : The google_id of the user's gmail account,
+ *    google_access_token : The access_token of the user's gmail account,
  *    blog_username : The blog_username will be used in the primary blog,
  *    age : The age of the new user",
  *    @OA\JsonContent(
- *      required={"email","google_id","blog_username","age"},
- *      @OA\Property(property="email", type="string", example="user2023@gmail.com"),
- *      @OA\Property(property="google_id", type="string", example="151656461515"),
+ *      required={"google_access_token","blog_username","age"},
+ *      @OA\Property(property="google_access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *      @OA\Property(property="blog_username", type="string", example="CairoBlogs"),
  *      @OA\Property(property="age", type="string", example="22"),
  *                )
