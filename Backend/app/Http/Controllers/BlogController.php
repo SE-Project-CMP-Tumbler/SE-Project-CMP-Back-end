@@ -26,7 +26,7 @@ class BlogController extends Controller
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *          @OA\Property(property="id", type="integer", example=2026),
  *          @OA\Property(property="username", type="string", example="newinvestigations"),
  *          @OA\Property(property="avatar", type="string", format="byte", example=""),
@@ -34,27 +34,27 @@ class BlogController extends Controller
  *          @OA\Property(property="header_image", type="string", format="byte", example=""),
  *          @OA\Property(property="title", type="string", example="My 1st Blog"),
  *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)),
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
  * )
- */ 
+ */
  /**
  * @OA\Get(
  * path="/blog",
@@ -68,7 +68,7 @@ class BlogController extends Controller
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -77,29 +77,29 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))) 
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"}))),
- * 
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
  * )
- */   
+ */
 /**
  * @OA\Post(
  * path="/blog",
@@ -201,7 +201,7 @@ class BlogController extends Controller
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -210,27 +210,27 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))) 
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)),
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
  * )
  */
 /**
@@ -246,7 +246,7 @@ class BlogController extends Controller
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -255,27 +255,79 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))) 
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),)),
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
+ * )
+ */
+
+ /**
+ * @OA\Get(
+ * path="/blog/likes",
+ * description="get all likes of my current blog",
+ * operationId="getBlogLikes",
+ * tags={"Blogs"},
+ * security={ {"bearer": {} }},
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="response",type="object",
+ *        @OA\Property(property="posts",type="array",
+ *            @OA\Items(
+ *               @OA\Property(property="blog_username", type="string", example="newinvestigations"),
+ *               @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+ *               @OA\Property(property="blog_avatar_shape", type="string", example="square"),
+ *               @OA\Property(property="post_id", type="integer", example=5),
+ *               @OA\Property(property="blog_id", type="integer", example=5),
+ *               @OA\Property(property="post_status", type="string", example="published"),
+ *               @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *               @OA\Property(property="post_type", type="string", example="general"),
+ *               @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *               @OA\Property(property="traced_back_posts", type="array",
+ *                   @OA\Items(
+ *                       @OA\Property(property="post_id", type="integer", example=5),
+ *                       @OA\Property(property="blog_id", type="integer", example=5),
+ *                       @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
+ *                       @OA\Property(property="post_type", type="string", example="general"),
+ *                       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),))
+ *                 ),
+ *       ),
+ *      ),
+ *    ),
+ *  ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"}))
+ * ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized"}),
+ *     ),
+ *  ),
  * )
  */
 }
