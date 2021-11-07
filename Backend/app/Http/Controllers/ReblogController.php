@@ -12,7 +12,7 @@ class ReblogController extends Controller
  * summary="Creates a new reblog post",
  * description="Create a new reblog whose parent post is the direct post it is reblogged from",
  * operationId="createReblog",
- * tags={"Replogs"},
+ * tags={"Reblogs"},
  * security={ {"bearer": {} }},
  * @OA\Parameter(
  *      name="blog_id",
