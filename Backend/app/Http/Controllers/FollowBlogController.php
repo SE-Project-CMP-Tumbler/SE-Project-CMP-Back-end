@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class FollowBlogController extends Controller
 {
- 
+
  /**
  * @OA\Post(
  * path="/follow_blog/{blog_id}",
@@ -123,7 +123,7 @@ class FollowBlogController extends Controller
  *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),       
+ *                      @OA\Property(property="blog_id", type="integer", example=1032),
  *                  )
  *              ),
  *      )
@@ -166,13 +166,13 @@ class FollowBlogController extends Controller
  *    description="Successful  response",
  *    @OA\JsonContent(
  *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *        @OA\Property(property="response", type="object",        
+ *        @OA\Property(property="response", type="object",
  *        @OA\Property(property="followings", type="array",
  *                  @OA\Items(
  *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),       
+ *                      @OA\Property(property="blog_id", type="integer", example=1032),
  *                  )
  *              ),
  *    )
@@ -216,14 +216,14 @@ class FollowBlogController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="integer")),
- * 
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
  *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *         @OA\Property(property="response", type="obeject",example={"followed":true},
- *                 
+ *
  *              ),
  *       )
  *     ),
@@ -265,14 +265,14 @@ class FollowBlogController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="integer")),
- * 
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
  *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *         @OA\Property(property="response", type="obeject",example={"followers":5},
- *                 
+ *
  *              ),
  *       )
  *     ),
@@ -314,14 +314,14 @@ class FollowBlogController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="integer")),
- * 
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
  *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *         @OA\Property(property="response", type="obeject",example={"followings":5},
- *                 
+ *
  *              ),
  *       )
  *     ),
@@ -348,5 +348,4 @@ class FollowBlogController extends Controller
  *     )
  * )
  */
-
 }

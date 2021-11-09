@@ -115,7 +115,7 @@ class BlockBlogController extends Controller
  *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
  *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),       
+ *                      @OA\Property(property="blog_id", type="integer", example=1032),
  *                  )
  *              ),
  *      )
@@ -143,5 +143,4 @@ class BlockBlogController extends Controller
  *     )
  * )
  */
-
 }

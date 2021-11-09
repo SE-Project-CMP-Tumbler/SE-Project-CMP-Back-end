@@ -21,13 +21,13 @@ class FollowTagController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),),),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
@@ -55,25 +55,25 @@ class FollowTagController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}))),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"A Tag with the specified id was not found"}))),
- * 
+ *
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
- * 
+ *
  *  @OA\Response(
  *    response=500,
  *    description="Internal server error",
@@ -104,7 +104,7 @@ class FollowTagController extends Controller
  *    description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"}))),
- *  
+ *
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -112,5 +112,4 @@ class FollowTagController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */
-
 }

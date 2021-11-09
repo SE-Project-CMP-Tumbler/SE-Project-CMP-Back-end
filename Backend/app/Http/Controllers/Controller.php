@@ -9,7 +9,10 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
+
     /**
      * @OA\Info(
      *      version="1.0.0",
@@ -35,5 +38,4 @@ class Controller extends BaseController
      *     description="API Endpoints of Projects"
      * )
      */
-    
 }

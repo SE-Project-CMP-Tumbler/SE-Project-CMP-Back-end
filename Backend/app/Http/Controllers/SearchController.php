@@ -21,7 +21,7 @@ class SearchController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful  response",
@@ -51,7 +51,7 @@ class SearchController extends Controller
  *                      @OA\Items(
  *                          @OA\Property(property="0", type="string", format="byte",example="/images.png"),
  *                          @OA\Property(property="1", type="string", format="byte", example="/images.png"),
- *                          @OA\Property(property="2", type="string", format="byte", example="/images.png"), 
+ *                          @OA\Property(property="2", type="string", format="byte", example="/images.png"),
  *                  )
  *           ),
  *                  @OA\Property(property="video ", type="string", format="byte", example=""),
@@ -82,6 +82,6 @@ class SearchController extends Controller
  *        )
  *     )
  * )
- *   
+ *
  */
 }
