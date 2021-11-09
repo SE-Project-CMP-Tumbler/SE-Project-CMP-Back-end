@@ -208,4 +208,44 @@ class AskController extends Controller
  *     )
  * )
  */
+/**
+ * @OA\Delete(
+ * path="/ask",
+ * summary="all asks recieved",
+ * description="deleting all the recieved asks",
+ * operationId="deleteAllAsks",
+ * tags={"Ask Blogs"},
+ * security={ {"bearer": {} }},
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful  response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        
+ *        
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found question"})
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
+ * )
+ */
 }

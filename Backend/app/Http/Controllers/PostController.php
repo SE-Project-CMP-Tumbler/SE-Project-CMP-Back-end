@@ -346,7 +346,7 @@ class PostController extends Controller
 
 /**
  * @OA\Get(
- * path="/post/{blog_id}/submission",
+ * path="/post/submission/{blog_id}",
  * summary="Get posts of blog which are submitted",
  * description="A blog get submitted posts",
  * operationId="getsubmissionposts",
@@ -463,7 +463,7 @@ class PostController extends Controller
  *                      @OA\Property(property="post_type", type="string", example="general"),
  *                      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
  *                      @OA\Property(property="question_body", type="string", example=""),
- *                      @OA\Property(property="question_id", type="integer", example=),
+ *                      @OA\Property(property="question_id", type="integer", example=""),
  *                      @OA\Property(property="question_flag", type="boolean", example=false),
  *                      @OA\Property(property="blog_id_asking", type="integer", example=""),
  *                      @OA\Property(property="blog_username_asking", type="string", example=""),
@@ -805,6 +805,93 @@ class PostController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
  *     )
  *  ),
+ * )
+ */
+/**
+ * @OA\Delete(
+ * path="/post/submission/{post_id}",
+ * summary="delete submission",
+ * description=" A blog deletes a submitted post",
+ * operationId="deleteSubmission",
+ * tags={"Posts"},
+ * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="post_id",
+ *          description="post_id of the submitted post to be deleted",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful  response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        
+ *        
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
+ * )
+ */
+/**
+ * @OA\Delete(
+ * path="/post/submission",
+ * summary="delete all submissions",
+ * description="deleting all recieved submission posts",
+ * operationId="deleteAllSubmissions",
+ * tags={"Posts"},
+ * security={ {"bearer": {} }},
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful  response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        
+ *        
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
  * )
  */
 }
