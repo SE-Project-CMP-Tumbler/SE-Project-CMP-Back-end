@@ -29,9 +29,9 @@ class NotificationController extends Controller
  *   description="type: is a string parameter indicates which notification type to be recieved:
  *     like: a like on your post
  *     reply: a reply on your post
- *     follow: a new follower
- *     reblog: a reblog of your post
- *     ask: a new ask recieved
+ *     follow: a new follower 
+ *     reblog: a reblog of your post 
+ *     ask: a new ask recieved 
  *     answer: an answered ask that you had sent
  *     all: to get all type of notifications",
  *   @OA\JsonContent(
@@ -127,7 +127,7 @@ class NotificationController extends Controller
  *                      @OA\Property(property="post_type ", type="string", example="text"),
  *                       ),
  *                       ),
- *
+ *                    
  *                   ),
  *                   ),
  *               ),
@@ -165,7 +165,7 @@ class NotificationController extends Controller
  *                           @OA\Property(property="post_type ", type="string", example="text"),
  *                          ),),
  *                       ),
- *
+ *                    
  *                   ),
  *             ),
  *  @OA\Response(
@@ -192,3 +192,6 @@ class NotificationController extends Controller
  * ),
  */
 }
+
+
+

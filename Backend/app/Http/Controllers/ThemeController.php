@@ -103,7 +103,7 @@ class ThemeController extends Controller
  *           )
  *        )
  *     )
- *    )
+ *    ) 
  *  ),
  *  @OA\Response(
  *    response=401,

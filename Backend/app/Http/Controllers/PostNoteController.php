@@ -22,7 +22,7 @@ class PostNoteController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- *
+ * 
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -37,8 +37,7 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
  *                      @OA\Property(property="blog_id", type="integer", example=1032),
  *                      @OA\Property(property="followed", type="boolean", example=false))),
- *
- *              @OA\Property(property="notes_count", type="integer", example=123465),
+ *              
  *              @OA\Property(property="replies", type="array",
  *                  @OA\Items(
  *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
@@ -48,7 +47,7 @@ class PostNoteController extends Controller
  *                      @OA\Property(property="reply_id", type="integer", example=5),
  *                      @OA\Property(property="reply_time", type="date-time", example="02-02-2012"),
  *                      @OA\Property(property="reply_text", type="string", example="What an amazing post!"))),
- *
+ * 
  *              @OA\Property(property="reblogs", type="array",
  *                  @OA\Items(
  *                      @OA\Property(property="post_id", type="integer", example=5),
