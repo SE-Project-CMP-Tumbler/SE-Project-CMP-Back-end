@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class ActivityController extends Controller
 {
 /**
- * @OA\get(
+ * @OA\Get(
  * path="/graph/notes/{period}/{rate}",
  * summary="get the notes",
  * description="get the notes for the activity graph",
@@ -55,19 +55,19 @@ class ActivityController extends Controller
  *              @OA\Property(property="notes", type="integer", example=2),
  *              @OA\Property(property="top_post", type="string", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),),
  *          )),
- *       @OA\Property(property="top_post", type="object", 
+ *       @OA\Property(property="top_post", type="object",
  *              @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
  *              @OA\Property(property="total_notes_count", type="integer", example=14),
  *              @OA\Property(property="notes_count", type="integer", example=2),
  *              ),
  *       @OA\Property(property="biggest_fan", type="array",
  *          @OA\Items(
- * 
+ *
  *               @OA\Property(property="name", type="string", example="mycppblog"),
  *               @OA\Property(property="blog_id", type="int", example="123456789"),
  *               @OA\Property(property="blog_username", type="int", example="123456789"),
- *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),    
- *              @OA\Property(property="blog_avatar_shape", type="string", example="square"), 
+ *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),
+ *              @OA\Property(property="blog_avatar_shape", type="string", example="square"),
  *               @OA\Property(property="followed", type="bool", example=true),
  *               @OA\Property(property="theme_id", type="int", example="123456789"),
  *               @OA\Property(property="title", type="array",
@@ -77,8 +77,8 @@ class ActivityController extends Controller
  *                      @OA\Property(property="color", type="string", example="#000000"),
  *                       @OA\Property(property="font", type="string", example="Gibson"),
  *                       @OA\Property(property="font_weight", type="string", example="bold"),
- *                                        )) 
- *                                   ),          
+ *                                        ))
+ *                                   ),
  *              ),
  *         ),
  *        )
@@ -88,13 +88,6 @@ class ActivityController extends Controller
  *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     ),
  *  @OA\Response(
@@ -115,7 +108,7 @@ class ActivityController extends Controller
  *
  */
 /**
- * @OA\get(
+ * @OA\Get(
  * path="/graph/new_followers/{period}/{rate}",
  * summary="get the number of the new followers",
  * description="get the number of the new followers for the activity graph",
@@ -160,19 +153,19 @@ class ActivityController extends Controller
  *              @OA\Property(property="timestamp", type="string", example="2021-11-05 01:13:39"),
  *              @OA\Property(property="new_followers", type="integer", example=2),),
  *          )),
- *       @OA\Property(property="top_post", type="object", 
+ *       @OA\Property(property="top_post", type="object",
  *              @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
  *              @OA\Property(property="total_notes_count", type="integer", example=14),
  *              @OA\Property(property="notes_count", type="integer", example=2),
  *              ),
  *       @OA\Property(property="biggest_fan", type="array",
  *          @OA\Items(
- * 
+ *
  *               @OA\Property(property="name", type="string", example="mycppblog"),
  *               @OA\Property(property="blog_id", type="int", example="123456789"),
  *               @OA\Property(property="blog_username", type="int", example="123456789"),
- *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),    
- *              @OA\Property(property="blog_avatar_shape", type="string", example="square"), 
+ *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),
+ *              @OA\Property(property="blog_avatar_shape", type="string", example="square"),
  *               @OA\Property(property="followed", type="bool", example=true),
  *               @OA\Property(property="theme_id", type="int", example="123456789"),
  *               @OA\Property(property="title", type="array",
@@ -182,8 +175,8 @@ class ActivityController extends Controller
  *                      @OA\Property(property="color", type="string", example="#000000"),
  *                       @OA\Property(property="font", type="string", example="Gibson"),
  *                       @OA\Property(property="font_weight", type="string", example="bold"),
- *                                        )) 
- *                                   ),          
+ *                                        ))
+ *                                   ),
  *              ),
  *         ),
  *        )
@@ -193,13 +186,6 @@ class ActivityController extends Controller
  *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     ),
  *  @OA\Response(
@@ -220,7 +206,7 @@ class ActivityController extends Controller
  *
  */
 /**
- * @OA\get(
+ * @OA\Get(
  * path="/graph/total_followers/{period}/{rate}",
  * summary="get the total number of followers",
  * description="get the total number of followers for the activity graph",
@@ -265,19 +251,19 @@ class ActivityController extends Controller
  *              @OA\Property(property="timestamp", type="string", example="2021-11-05 01:13:39"),
  *              @OA\Property(property="total_followers", type="integer", example=304),),
  *          )),
- *       @OA\Property(property="top_post", type="object", 
+ *       @OA\Property(property="top_post", type="object",
  *              @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
  *              @OA\Property(property="total_notes_count", type="integer", example=14),
  *              @OA\Property(property="notes_count", type="integer", example=2),
  *              ),
  *       @OA\Property(property="biggest_fan", type="array",
  *          @OA\Items(
- * 
+ *
  *               @OA\Property(property="name", type="string", example="mycppblog"),
  *               @OA\Property(property="blog_id", type="int", example="123456789"),
  *               @OA\Property(property="blog_username", type="int", example="123456789"),
- *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),    
- *              @OA\Property(property="blog_avatar_shape", type="string", example="square"), 
+ *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),
+ *              @OA\Property(property="blog_avatar_shape", type="string", example="square"),
  *               @OA\Property(property="followed", type="bool", example=true),
  *               @OA\Property(property="theme_id", type="int", example="123456789"),
  *               @OA\Property(property="title", type="array",
@@ -287,8 +273,8 @@ class ActivityController extends Controller
  *                      @OA\Property(property="color", type="string", example="#000000"),
  *                       @OA\Property(property="font", type="string", example="Gibson"),
  *                       @OA\Property(property="font_weight", type="string", example="bold"),
- *                                        )) 
- *                                   ),          
+ *                                        ))
+ *                                   ),
  *              ),
  *         ),
  *        )
@@ -298,13 +284,6 @@ class ActivityController extends Controller
  *    description="Unauthorized",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
  *        )
  *     ),
  *  @OA\Response(
@@ -324,4 +303,4 @@ class ActivityController extends Controller
  * ),
  *
  */
- }
+}
