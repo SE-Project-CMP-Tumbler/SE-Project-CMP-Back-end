@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class ActivityController extends Controller
 {
 /**
- * @OA\get(
+ * @OA\Get(
  * path="/graph/notes/{period}/{rate}",
  * summary="get the notes",
  * description="get the notes for the activity graph",
@@ -108,7 +108,7 @@ class ActivityController extends Controller
  *
  */
 /**
- * @OA\get(
+ * @OA\Get(
  * path="/graph/new_followers/{period}/{rate}",
  * summary="get the number of the new followers",
  * description="get the number of the new followers for the activity graph",
@@ -206,7 +206,7 @@ class ActivityController extends Controller
  *
  */
 /**
- * @OA\get(
+ * @OA\Get(
  * path="/graph/total_followers/{period}/{rate}",
  * summary="get the total number of followers",
  * description="get the total number of followers for the activity graph",
