@@ -8,12 +8,19 @@ class UploadFilesController extends Controller
 {
 /**
  * @OA\Post(
- * path="/post/upload_photo",
+ * path="/post/upload_photo/{blog_id}",
  * summary="upload a photo",
  * description="upload the image in the request body and get the url for that image back in the response",
  * operationId="uploadPhoto",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
+ *@OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\RequestBody(
  *    required=true,
  *    @OA\MediaType(
@@ -76,12 +83,19 @@ class UploadFilesController extends Controller
 
 /**
  * @OA\Post(
- * path="/post/upload_audio",
+ * path="/post/upload_audio/{blog_id}",
  * summary="upload a audio",
  * description="upload the audio in the request body and get the url for that audio back in the response",
  * operationId="uploadAudio",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\RequestBody(
  *    required=true,
  *    @OA\MediaType(
@@ -140,12 +154,19 @@ class UploadFilesController extends Controller
 
 /**
  * @OA\Post(
- * path="/post/upload_video",
+ * path="/post/upload_video/{blog_id}",
  * summary="upload a video",
  * description="upload the video in the request body and get the url for that video back in the response",
  * operationId="uploadVideo",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *          name="blog_id",
+ *          description="Blog_id ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\RequestBody(
  *    required=true,
  *    @OA\MediaType(

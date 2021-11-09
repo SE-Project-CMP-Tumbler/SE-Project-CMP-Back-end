@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PostActionsController extends Controller
+class PostActionController extends Controller
 {
  /**
  * @OA\Post(
@@ -211,7 +211,4 @@ class PostActionsController extends Controller
  *  )
  * )
  */
-
-
-
 }

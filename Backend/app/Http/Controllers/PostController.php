@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    
+
 
 /**
  * @OA\Put(
@@ -405,7 +405,7 @@ class PostController extends Controller
 
 
 
- 
+
 /**
  * @OA\Get(
  * path="/post/{blog_id}",

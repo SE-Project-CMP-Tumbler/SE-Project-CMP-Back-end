@@ -13,7 +13,7 @@ class UserController extends Controller
  * description=" Creating a new user",
  * tags={"User"},
  * operationId="signupuser",
- * 
+ *
  *   @OA\RequestBody(
  *    required=true,
  *    description=  "
@@ -29,8 +29,8 @@ class UserController extends Controller
  *      @OA\Property(property="age", type="string", example="22"),
  *                )
  *               ),
- * 
- * 
+ *
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -39,9 +39,9 @@ class UserController extends Controller
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
- *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
- *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
  *        )
  *     ),
@@ -87,9 +87,9 @@ class UserController extends Controller
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
- *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
- *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
  *        )
  *     ),
@@ -101,14 +101,14 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- */ 
+ */
 /** @OA\Post(
  * path="/login_with_google",
  * summary="login a user",
  * description=" login using google ",
  * tags={"User"},
  * operationId="loginuserwithgoogle",
- * 
+ *
  *   @OA\RequestBody(
  *    required=true,
  *    description=  "
@@ -126,9 +126,9 @@ class UserController extends Controller
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
- *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
- *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
  *        )
  *     ),
@@ -140,14 +140,14 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- */  
+ */
 /** @OA\Post(
  * path="/register_with_google",
  * summary="Register a new user",
  * description="Creating a new user using google",
  * tags={"User"},
  * operationId="signupuserwithgoogle",
- * 
+ *
  *   @OA\RequestBody(
  *    required=true,
  *    description=  "
@@ -161,8 +161,8 @@ class UserController extends Controller
  *      @OA\Property(property="age", type="string", example="22"),
  *                )
  *               ),
- * 
- * 
+ *
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -171,9 +171,9 @@ class UserController extends Controller
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
- *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
- *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
  *        )
  *     ),
@@ -192,7 +192,7 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- */ 
+ */
 /** @OA\Post(
  * path="/logout",
  * summary="logout user",
@@ -265,7 +265,7 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- */ 
+ */
 /** @OA\Post(
  * path="/email/resend_verification",
  * summary="resend verification email",
@@ -302,7 +302,7 @@ class UserController extends Controller
  *        )
  *     )
  * ),
- */ 
+ */
 /** @OA\Post(
  * path="/forgot_password",
  * summary="sending password reset email",
@@ -318,7 +318,7 @@ class UserController extends Controller
  *      @OA\Property(property="email", type="string", example="user2023@gmail.com"),
  *                )
  *               ),
- * 
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -361,7 +361,7 @@ class UserController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
- *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),      
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
  *         ),
  *        )
  *     ),
@@ -401,7 +401,7 @@ class UserController extends Controller
  *      @OA\Property(property="password_confirmation", type="string",format="password", example="CMP21520cmp>"),
  *                )
  *               ),
- * 
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -410,9 +410,9 @@ class UserController extends Controller
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
- *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),   
+ *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
- *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),   
+ *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
  *        )
  *     ),
@@ -439,7 +439,7 @@ class UserController extends Controller
  *     )
  * ),
  */
- 
+
 /** @OA\Put(
  * path="/change_password",
  * summary="Change password of user",
@@ -458,14 +458,14 @@ class UserController extends Controller
  *      @OA\Property(property="password_confirmation", type="string",  format="password", example="123"),
  *                )
  *               ),
- * 
- * 
+ *
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       
+ *
  *        )
  *     ),
  *  @OA\Response(
@@ -496,14 +496,14 @@ class UserController extends Controller
  *      @OA\Property(property="email", type="string",  format="email", example="radwa@gmail.com"),
  *                )
  *               ),
- * 
- * 
+ *
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *           @OA\Property(property="email",type="string",format="email",example="radwa@gmail.com"),
  *         ),
  *        )
@@ -551,8 +551,8 @@ class UserController extends Controller
  *      @OA\Property(property="password", type="string", format="password", example="<syudhguin21215>"),
  *                )
  *               ),
- * 
- * 
+ *
+ *
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -591,8 +591,4 @@ class UserController extends Controller
  * ),
  *
  */
-
-
 }
-
-
