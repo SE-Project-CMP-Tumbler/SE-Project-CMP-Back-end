@@ -117,6 +117,59 @@ class PostActionController extends Controller
  */
 
  /**
+ * @OA\Get(
+ * path="/post/like/{blog_id}/{post_id}",
+ * description="check if specific blog likes specific post",
+ * operationId="checkBlogLikesPost",
+ * tags={"Post Notes"},
+ * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *   in="path",
+ *   name="blog_id",
+ *   description="blog id",
+ *   required=true,
+ *   example="14253976254",
+ *    @OA\Schema(
+ *       type="intger",
+ *    )
+ * ),
+ *  @OA\Parameter(
+ *    in="path",
+ *    name="post_id",
+ *    description="post id",
+ *    required=true,
+ *    example="666746885177049088",
+ *    @OA\Schema(
+ *       type="integer",
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful Like",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object",example={"status":"200","msg":"OK"}),
+ *       @OA\Property(property="response",type="object",
+ *         @OA\Property(property="like_status", type="boolean", example=false),
+ *       ),
+ *   ),
+ *  ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"}))
+ * ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized"}),
+ *     ),
+ *  ),
+ * )
+ */
+
+ /**
  * @OA\Delete(
  * path="/post/reply/{reply_id}",
  * summary="delete a specific note/repy from a post",
