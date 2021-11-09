@@ -8,19 +8,12 @@ class UploadFilesController extends Controller
 {
 /**
  * @OA\Post(
- * path="/post/upload_photo/{blog_id}",
+ * path="/upload_photo",
  * summary="upload a photo",
  * description="upload the image in the request body and get the url for that image back in the response",
  * operationId="uploadPhoto",
- * tags={"Posts"},
+ * tags={"Upload Photo"},
  * security={ {"bearer": {} }},
- *@OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
  * @OA\RequestBody(
  *    required=true,
  *    @OA\MediaType(
