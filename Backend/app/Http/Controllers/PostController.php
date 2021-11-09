@@ -72,6 +72,7 @@ class PostController extends Controller
  *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
  *       @OA\Property(property="traced_back_posts", type="array",
  *          @OA\Items(
+ *              
  *              @OA\Property(property="post_id", type="integer", example=5),
  *              @OA\Property(property="blog_id", type="integer", example=5),
  *              @OA\Property(property="blog_username", type="string", example=""),
@@ -80,7 +81,15 @@ class PostController extends Controller
  *              @OA\Property(property="blog_title", type="string", example=""),
  *              @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
  *              @OA\Property(property="post_type", type="string", example="text"),
- *              @OA\Property(property="post_body", type="string", example="<div><h1>The title</h1> <p>a post of type text.</p></div>"),))),),),
+ *              @OA\Property(property="post_body", type="string", example="<div><h1>The title</h1> <p>a post of type text.</p></div>"),
+ *              @OA\Property(property="question_body", type="string", example="How are you?"),
+ *              @OA\Property(property="question_id", type="integer", example=3),
+ *              @OA\Property(property="question_flag", type="boolean", example=false),
+ *              @OA\Property(property="blog_id_asking", type="integer", example=""),
+ *              @OA\Property(property="blog_username_asking", type="string", example=""),
+ *              @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+ *              @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+ *              @OA\Property(property="blog_title_asking", type="string", example=""),))),),),
  *@OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -169,7 +178,7 @@ class PostController extends Controller
  * @OA\Get(
  * path="/post/{post_id}",
  * summary="Get specific post",
- * description=" A blog get  post",
+ * description="A blog get post",
  * operationId="getapost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
@@ -202,6 +211,10 @@ class PostController extends Controller
  *      @OA\Property(property="blog_title", type="string", example=""),
  *      @OA\Property(property="pinned", type="boolean", example=false),
  *      @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *      @OA\Property(property="question_body", type="string", example="How are you?"),
+ *      @OA\Property(property="question_id", type="integer", example=3),
+ *      @OA\Property(property="question_flag", type="boolean", example=false),
+ *      @OA\Property(property="blog_id_asking", type="integer", example=""),
  *      @OA\Property(property="blog_username_asking", type="string", example=""),
  *      @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
  *      @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
@@ -218,7 +231,15 @@ class PostController extends Controller
  *              @OA\Property(property="blog_title", type="string", example=""),
  *              @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
  *              @OA\Property(property="post_type", type="string", example="general"),
- *              @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),))
+ *              @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *              @OA\Property(property="question_body", type="string", example="How are you?"),
+ *              @OA\Property(property="question_id", type="integer", example=3),
+ *              @OA\Property(property="question_flag", type="boolean", example=false),
+ *              @OA\Property(property="blog_id_asking", type="integer", example=""),
+ *              @OA\Property(property="blog_username_asking", type="string", example=""),
+ *              @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+ *              @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+ *              @OA\Property(property="blog_title_asking", type="string", example=""),))
  *     ),
  * )
  *   ),
@@ -272,11 +293,12 @@ class PostController extends Controller
  *     in audio type: audio is required
  *     is general : all fields can be given, to be general at least two different field of types should given",
  *    @OA\JsonContent(
- *       required={"post_status","post_type"},
- *       @OA\Property(property="post_status", type="string", example="published"),
- *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
- *       @OA\Property(property="post_type", type="string", example="general"),
- *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *      required={"post_status","post_type"},
+ *      @OA\Property(property="post_status", type="string", example="published"),
+ *      @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *      @OA\Property(property="post_type", type="string", example="general"),
+ *      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *      
  *    ),
  * ),
  * @OA\Response(
@@ -295,17 +317,6 @@ class PostController extends Controller
  *       @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *       @OA\Property(property="post_type", type="string", example="general"),
  *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
- *       @OA\Property(property="traced_back_posts", type="array",
- *          @OA\Items(
- *              @OA\Property(property="post_id", type="integer", example=5),
- *              @OA\Property(property="blog_id", type="integer", example=5),
- *              @OA\Property(property="blog_username", type="string", example=""),
- *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
- *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
- *              @OA\Property(property="blog_title", type="string", example=""),
- *              @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
- *              @OA\Property(property="post_type", type="string", example="general"),
- *              @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),))
  *        ),
  *      ),
  *  ),
@@ -337,7 +348,7 @@ class PostController extends Controller
  * @OA\Get(
  * path="/post/{blog_id}/submission",
  * summary="Get posts of blog which are submitted",
- * description=" A blog get submitted posts",
+ * description="A blog get submitted posts",
  * operationId="getsubmissionposts",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
@@ -366,13 +377,6 @@ class PostController extends Controller
  *              @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *              @OA\Property(property="post_type", type="string", example="general"),
  *              @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
- *              @OA\Property(property="traced_back_posts", type="array",
- *                  @OA\Items(
- *                      @OA\Property(property="post_id", type="integer", example=5),
- *                      @OA\Property(property="blog_id", type="integer", example=5),
- *                      @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
- *                      @OA\Property(property="post_type", type="string", example="general"),
- *                      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),))
  *           ),
  *        ),
  *       ),
@@ -410,7 +414,7 @@ class PostController extends Controller
  * @OA\Get(
  * path="/post/{blog_id}",
  * summary="Get posts of blog which are published",
- * description=" A blog get  blog 's posts",
+ * description="A blog get blog's posts",
  * operationId="getposts",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
@@ -423,7 +427,7 @@ class PostController extends Controller
  *              type="integer")),
  * @OA\Response(
  *    response=200,
- *    description="Successful  response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
@@ -438,6 +442,10 @@ class PostController extends Controller
  *                  @OA\Property(property="pinned", type="boolean", example=false),
  *                  @OA\Property(property="post_status", type="string", example="published"),
  *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *                  @OA\Property(property="question_body", type="string", example="How are you?"),
+ *                  @OA\Property(property="question_id", type="integer", example=3),
+ *                  @OA\Property(property="question_flag", type="boolean", example=false),
+ *                  @OA\Property(property="blog_id_asking", type="integer", example=""),
  *                  @OA\Property(property="blog_username_asking", type="string", example=""),
  *                  @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
  *                  @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
@@ -448,9 +456,20 @@ class PostController extends Controller
  *                  @OA\Items(
  *                      @OA\Property(property="post_id", type="integer", example=5),
  *                      @OA\Property(property="blog_id", type="integer", example=5),
+ *                      @OA\Property(property="blog_username", type="string", example="lifeisnotfair"),
+ *                      @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+ *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
  *                      @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
  *                      @OA\Property(property="post_type", type="string", example="general"),
- *                      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),))
+ *                      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *                      @OA\Property(property="question_body", type="string", example=""),
+ *                      @OA\Property(property="question_id", type="integer", example=),
+ *                      @OA\Property(property="question_flag", type="boolean", example=false),
+ *                      @OA\Property(property="blog_id_asking", type="integer", example=""),
+ *                      @OA\Property(property="blog_username_asking", type="string", example=""),
+ *                      @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+ *                      @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+ *                      ))
  *          ),
  *        ),
  *      ),
@@ -483,9 +502,9 @@ class PostController extends Controller
 
  /**
  * @OA\Get(
- * path="/post/{blog_id}/draft ",
- * summary="Get posts of blog which are drafted  ",
- * description=" A blog get scheduled posts",
+ * path="/post/{blog_id}/draft",
+ * summary="Get posts of blog which are drafted",
+ * description="A blog get scheduled posts",
  * operationId="getdraftpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
@@ -498,7 +517,7 @@ class PostController extends Controller
  *              type="integer")),
  * @OA\Response(
  *    response=200,
- *    description="Successful  response",
+ *    description="Successful response",
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
@@ -520,7 +539,15 @@ class PostController extends Controller
  *                          @OA\Property(property="blog_id", type="integer", example=5),
  *                          @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
  *                          @OA\Property(property="post_type", type="string", example="general"),
- *                          @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),))
+ *                          @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *                          @OA\Property(property="question_body", type="string", example="How are you?"),
+ *                          @OA\Property(property="question_id", type="integer", example=3),
+ *                          @OA\Property(property="question_flag", type="boolean", example=false),
+ *                          @OA\Property(property="blog_id_asking", type="integer", example=""),
+ *                          @OA\Property(property="blog_username_asking", type="string", example=""),
+ *                          @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+ *                          @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+ *                          ))
  *          ),
  *       ),
  *      ),
@@ -553,8 +580,8 @@ class PostController extends Controller
 /**
  * @OA\Put(
  * path="/post/{post_id}/{blog_id}/pinned",
- * summary="Make  a post is pinned in a blog",
- * description=" A blog change the post to be pinned",
+ * summary="Make a post is pinned in a blog",
+ * description="A blog change the post to be pinned",
  * operationId="pinnedpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
