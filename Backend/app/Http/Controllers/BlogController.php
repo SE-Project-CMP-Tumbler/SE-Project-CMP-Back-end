@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Misc\Helpers\Config;
+use App\Http\Misc\Helpers\Success;
+use App\Models\Blog;
+use App\Http\Resources\BlogResource;
+use App\Http\Resources\BlogCollection;
+use App\Http\Requests\BlogRequest;
 
 class BlogController extends Controller
 {
@@ -56,6 +62,19 @@ class BlogController extends Controller
  * )
  */
  /**
+  * Get specific blog
+  * @return Json
+ */
+    public function show(Blog $blog)
+    {
+        // not handle not found
+        if ($blog == null) {
+            return $this-> $this->general_response("", "The blog id specified was not found", "404");
+        }
+
+        return $this->general_response(new BlogResource($blog), "ok");
+    }
+ /**
  * @OA\Get(
  * path="/blog",
  * summary="Get all blogs of user",
@@ -100,6 +119,15 @@ class BlogController extends Controller
  *
  * )
  */
+ /**
+  * Get all blogs of user
+  * @return Json
+ */
+    public function index(Request $request)
+    {
+       // waits the user model to test
+        return $this->general_response(new BlogCollection($request->user()->blog()), "ok");
+    }
 /**
  * @OA\Post(
  * path="/blog",
@@ -144,6 +172,22 @@ class BlogController extends Controller
  *     )
  * )
  */
+ /**
+  * Create a new blog for user
+  * @param BlogRequest $request
+  * @return Json
+ */
+    public function create(BlogRequest $request)
+    {
+        //$user_id=$request->user()->id;
+        $blog = $request->validated();
+        if ($request->has('password')) {
+            $blog['password'] = md5($blog['password']);
+        }
+        //$blog['id']=$user_id;
+        Blog::create($blog);
+        return $this->general_response("", "ok");
+    }
 /**
  * @OA\Delete(
  * path="/blog/{blog_id}",
@@ -188,6 +232,17 @@ class BlogController extends Controller
  *     )
  * )
  */
+ /**
+  * Delte a  blog for user
+  * @param Blog $blog
+  * @return Json
+ */
+    public function delete(Request $request, Blog $blog)
+    {
+        //$this->authorize('delete', $request->user(), $blog);
+        $blog->delete();
+        return $this->general_response("", "ok");
+    }
 /**
  * @OA\Get(
  * path="/blog/check_out_blogs",
@@ -233,6 +288,15 @@ class BlogController extends Controller
  *
  * )
  */
+  /**
+  *checkout Other Blogs for user
+  * @param Request $request
+  * @return Json
+ */
+    public function checkOutOtherBlog(Request $request)
+    {
+        return $this->general_response(new BlogCollection(Blog::all()), "ok");
+    }
 /**
  * @OA\Get(
  * path="/blog/trending",
@@ -278,6 +342,15 @@ class BlogController extends Controller
  *
  * )
  */
+ /**
+  *Get Trending blogs
+  * @param Request $request
+  * @return Json
+ */
+    public function getTrendingBlog(Request $request)
+    {
+        return $this->general_response(new BlogCollection(Blog::all()), "ok");
+    }
 /**
  * @OA\Get(
  * path="/blog/likes",
