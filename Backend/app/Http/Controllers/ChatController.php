@@ -96,8 +96,8 @@ class ChatController extends Controller
  *    @OA\Property(property="from_blog_name", type="string", example="cpphelloworld"),
  *    @OA\Property(property="to_blog_name", type="string", example="cpphelloworld"),
  *    @OA\Property(property="text", type="string", example="hello, how are you?"),
- *    @OA\Property(property="gif", type="string", format="byte", example="asdlkfjaksjdfknvzxc"),
- *    @OA\Property(property="photo", type="string", format="byte", example="asdkfjaasdfskzcvm"),
+ *    @OA\Property(property="gif", type="string", format="byte", example="/storage/photo_example.jpg"),
+ *    @OA\Property(property="photo", type="string", format="byte", example="/storage/photo_example.jpg"),
  *   ),
  *  ),
  *  @OA\Response(
