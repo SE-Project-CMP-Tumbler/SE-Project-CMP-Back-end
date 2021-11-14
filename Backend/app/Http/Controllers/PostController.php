@@ -126,6 +126,10 @@ class PostController extends Controller
  */
     public function update(Post $post, UpdatePostRequest $request)
     {
+        if ($post == null) {
+            return $this->general_response("", "This post was not found", "404");
+        }
+
         $post->update([
             'status' => $request->post_status ?? $post->status,
             'published_at' => $request->post_time ?? $post->published_at,
@@ -134,7 +138,7 @@ class PostController extends Controller
             'pinned' => $request->pinned ?? $post->pinned
         ]);
 
-        return new PostResource($post);
+        return $this->general_response(new PostResource($post), "ok");
     }
 /**
  * @OA\Delete(
@@ -283,7 +287,10 @@ class PostController extends Controller
  */
     public function show(Post $post)
     {
-        return new PostResource($post);
+        if ($post == null) {
+            return $this->general_response("", "This post was not found", "404");
+        }
+        return $this->general_response(new PostResource($post), "ok");
     }
  /**
  * @OA\Post(
@@ -372,7 +379,7 @@ class PostController extends Controller
             'blog_id' => $request->blog_id
         ]);
 
-        return new PostResource($post);
+        return $this->general_response(new PostResource($post), "ok");
     }
 /**
  * @OA\Get(

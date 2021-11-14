@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
 {
-    public static $wrap = 'response';
     /**
      * Transform the resource into an array.
      *
@@ -36,20 +35,5 @@ class PostResource extends JsonResource
             "blog_avatar_shape_asking" => "",
             "blog_title_asking" => "",
         ];
-    }
-
-    public function with($request)
-    {
-        return [
-            'meta'  => [
-                'status' => 200,
-                'msg' => 'OK'
-            ]
-        ];
-    }
-
-    public function withResponse($request, $response)
-    {
-        $response->setStatusCode(200, 'OK');
     }
 }
