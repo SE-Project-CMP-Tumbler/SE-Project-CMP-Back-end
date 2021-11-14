@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
+use App\Models\Post;
+use Faker\Factory;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -72,7 +77,6 @@ class PostController extends Controller
  *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
  *       @OA\Property(property="traced_back_posts", type="array",
  *          @OA\Items(
- *              
  *              @OA\Property(property="post_id", type="integer", example=5),
  *              @OA\Property(property="blog_id", type="integer", example=5),
  *              @OA\Property(property="blog_username", type="string", example=""),
@@ -120,7 +124,18 @@ class PostController extends Controller
  *     )
  * )
  */
+    public function update(Post $post, UpdatePostRequest $request)
+    {
+        $post->update([
+            'status' => $request->post_status ?? $post->status,
+            'published_at' => $request->post_time ?? $post->published_at,
+            'body' => $request->post_body ?? $post->body,
+            'type' => $request->post_type ?? $post->type,
+            'pinned' => $request->pinned ?? $post->pinned
+        ]);
 
+        return new PostResource($post);
+    }
 /**
  * @OA\Delete(
  * path="/post/{post_id}/{blog_id}",
@@ -266,7 +281,10 @@ class PostController extends Controller
  *     )
  * )
  */
-
+    public function show(Post $post)
+    {
+        return new PostResource($post);
+    }
  /**
  * @OA\Post(
  * path="/post/{blog_id}",
@@ -298,7 +316,6 @@ class PostController extends Controller
  *      @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
  *      @OA\Property(property="post_type", type="string", example="general"),
  *      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
- *      
  *    ),
  * ),
  * @OA\Response(
@@ -343,7 +360,20 @@ class PostController extends Controller
  *  ),
  * )
  */
+    public function store(PostRequest $request)
+    {
+        $published_at = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
 
+        $post = Post::create([
+            'status' => $request->post_status,
+            'published_at' => $published_at,
+            'body' => $request->post_body,
+            'type' => $request->post_type,
+            'blog_id' => $request->blog_id
+        ]);
+
+        return new PostResource($post);
+    }
 /**
  * @OA\Get(
  * path="/post/submission/{blog_id}",
@@ -827,8 +857,6 @@ class PostController extends Controller
  *    description="Successful  response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *        
- *        
  *        )
  *     ),
  *  @OA\Response(
@@ -867,8 +895,6 @@ class PostController extends Controller
  *    description="Successful  response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *        
- *        
  *        )
  *     ),
  *  @OA\Response(
