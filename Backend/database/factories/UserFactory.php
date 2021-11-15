@@ -13,7 +13,7 @@ class UserFactory extends Factory
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = \App\Models\User::class;
 
     /**
      * Define the model's default state.
@@ -22,12 +22,15 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $temp = $this->faker->boolean();
+        $temp2 = $temp ? $this->faker->unique()->biasedNumberBetween(100000000, 999999999) : null;
         return [
-            'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'age' => $this->faker->biasedNumberBetween(16, 100),
+            'linked_by_google' => $temp,
+            'google_id' => $temp2,
         ];
     }
 
