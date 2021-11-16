@@ -144,6 +144,30 @@ class BlogController extends Controller
  *     )
  * )
  */
+ /**
+  * Create a new blog for user
+  * @param BlogRequest $request
+  * @return Json
+ */
+    public function store(BlogRequest $request)
+    {
+        $user_id = $request->user()->id;
+
+        $arr = $request->validated();
+        if ($request->has('password')) {
+            $blog['password'] = md5($arr['password']);
+        }
+        //check this with TAs
+        $blog ['username'] = $arr['blog_username'];
+        $blog['title'] = $arr['title'];
+
+        if (Blog::where('username', $blog['username'])->count() > 0) {
+            return $this->general_response("", "This username is alreay exits", "422");
+        }
+        $blog['user_id'] = $user_id;
+        Blog::create($blog);
+        return $this->general_response("", "ok");
+    }
 /**
  * @OA\Delete(
  * path="/blog/{blog_id}",
@@ -188,6 +212,17 @@ class BlogController extends Controller
  *     )
  * )
  */
+ /**
+  * Delte a  blog for user
+  * @param Blog $blog
+  * @return Json
+ */
+    public function delete(Request $request, Blog $blog)
+    {
+        $this->authorize('delete', $blog);
+        $blog->delete();
+        return $this->general_response("", "ok");
+    }
 /**
  * @OA\Get(
  * path="/blog/check_out_blogs",
@@ -233,6 +268,22 @@ class BlogController extends Controller
  * 
  * )
  */
+  /**
+  *checkout Other Blogs for user
+  * @param Request $request
+  * @return Json
+ */
+    public function checkOutOtherBlog(Request $request)
+    {
+        $blogs = $request->user()->blog;
+        $ids = [];
+        foreach ($blogs as $blog) {
+            array_push($ids, $blog['id']);
+        }
+       // $blogs =  Blog::whereNotIn('id', $ids)->inRandomOrder();
+        return $blogs;
+      // return $this->general_response( new BlogCollection($blogs), "ok");
+    }
 /**
  * @OA\Get(
  * path="/blog/trending",
@@ -278,4 +329,83 @@ class BlogController extends Controller
  * 
  * )
  */
+ /**
+  *Get Trending blogs
+  * @param Request $request
+  * @return Json
+ */
+   //PAGINAGTE??
+   //COMMENTS
+   //functional docs
+    public function getTrendingBlog(Request $request)
+    {
+        return $this->general_response(new BlogCollection(Blog::all()), "ok");
+    }
+/**
+ * @OA\Get(
+ * path="/blog/likes/{blog_id}",
+ * description="get all likes of my current blog",
+ * operationId="getBlogLikes",
+ * tags={"Blogs"},
+ * security={ {"bearer": {} }},
+ *   @OA\Parameter(
+ *          name="blog_id",
+ *          description="The id of the blog whose information will be retrieved",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *      @OA\Property(property="response",type="object",
+ *        @OA\Property(property="posts",type="array",
+ *            @OA\Items(
+ *               @OA\Property(property="blog_username", type="string", example="newinvestigations"),
+ *               @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+ *               @OA\Property(property="blog_avatar_shape", type="string", example="square"),
+ *               @OA\Property(property="post_id", type="integer", example=5),
+ *               @OA\Property(property="blog_id", type="integer", example=5),
+ *               @OA\Property(property="post_status", type="string", example="published"),
+ *               @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+ *               @OA\Property(property="post_type", type="string", example="general"),
+ *               @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+ *               @OA\Property(property="traced_back_posts", type="array",
+ *                   @OA\Items(
+ *                       @OA\Property(property="post_id", type="integer", example=5),
+ *                       @OA\Property(property="blog_id", type="integer", example=5),
+ *                       @OA\Property(property="post_time",type="date_time",example="02-02-2011"),
+ *                       @OA\Property(property="post_type", type="string", example="general"),
+ *                       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),))
+ *                 ),
+ *       ),
+ *      ),
+ *    ),
+ *  ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"}))
+ * ),
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *     @OA\Property(property="meta", type="object", example={"status": "401", "msg":"unauthorized"}),
+ *     ),
+ *  ),
+ * )
+ */
+ /**
+  *Get Likes of specific blog
+  * @param Request $request
+  * @return Json
+ */
+    public function getLikeBlog(Request $request, Blog $blog)
+    {
+        // return $this->general_response(new PostCollection($blog->post)), "ok");
+    }
 }

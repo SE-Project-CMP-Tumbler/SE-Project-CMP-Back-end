@@ -32,10 +32,49 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
+<<<<<<< Updated upstream
     public function register()
     {
         $this->reportable(function (Throwable $e) {
             //
         });
+=======
+    public function report(Throwable $exception)
+    {
+        parent::report($exception);
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($request->expectsJson()) {
+            if ($exception instanceof ModelNotFoundException) {
+                return $this->error_response(Errors::TESTING, "404");
+            } elseif ($exception instanceof AuthorizationException) {
+                return $this->error_response(Errors::UNAUTHORIZED, "401");
+            } elseif ($exception instanceof AuthenticationException) {
+                return $this->error_response(Errors::UNAUTHENTICATED, "403");
+            } elseif ($exception instanceof ValidationException) {
+                return $this->error_response($this->printValidationError($exception->validator->errors()->all()), (string)$exception->status);
+            }
+        }
+        return parent::render($request, $exception);
+    }
+    private function printValidationError($errors)
+    {
+        $errors_txt = "";
+        foreach ($errors as $message) {
+            $errors_txt .= $message;
+        }
+        return $errors_txt;
+>>>>>>> Stashed changes
     }
 }
