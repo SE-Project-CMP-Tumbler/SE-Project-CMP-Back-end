@@ -27,7 +27,7 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'blog_username' => 'required|min:3|unique:blogs',
+            'blog_username' => 'required|min:3',
             'title' => 'required|min:3',
             'password' => 'min:3'
         ];

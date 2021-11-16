@@ -15,20 +15,36 @@ class Blog extends Model
      * @var string[]
      */
     protected $fillable = [
-        'blog_username',
+        'username',
         'is_primary',
         'password',
         'description',
         'avatar',
         'header_image',
-        'title'
+        'title',
+        'replies_settings',
+        'allow_messages',
+        'allow_ask',
+        'ask_page_title',
+        'allow_anonymous_questions',
+        'allow_submittions',
+        'submissions_page_title',
+        'submissions_guidelines'
     ];
     /**
-     * This is relation between user and blog
+     * This is has relation between user and blog
      * @return User
      */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+     /**
+     * This is like relation between post and blog
+     * @return Post
+     */
+    // public function post()
+    // {
+    //     return $this->belongsToMany(Post::class);
+    // }
 }

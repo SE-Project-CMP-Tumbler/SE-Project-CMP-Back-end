@@ -16,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('blog', [BlogController::class,'index']);
+Route::post('blog', [BlogController::class,'store']);
+Route::get('blog/{blog}', [BlogController::class,'show']);
+Route::delete('blog/{blog}', [BlogController::class,'delete']);
+Route::get('blog/likes/{blog}', [BlogController::class,'getLikeBlog']);
+Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog']);
+Route::get('blogs/trending', [BlogController::class,'checkOutOtherBlog']);
+Route::get('blog_settings/{blog}', [BlogSettingController::class,'show']);
+Route::put('blog_settings/{blog}', [BlogSettingController::class,'update']);
+
 Route::post('post/{blog_id}', [PostController::class,'store']);
 Route::apiResource('/post', PostController::class);
 

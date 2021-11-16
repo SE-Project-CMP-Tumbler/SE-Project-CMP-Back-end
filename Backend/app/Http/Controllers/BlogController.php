@@ -26,7 +26,7 @@ class BlogController extends Controller
  *          required=true,
  *          in="path",
  *          @OA\Schema(
- *              type="string")),
+ *              type="integer")),
  * @OA\Response(
  *  response=200,
  *  description="Successful response",
@@ -67,11 +67,6 @@ class BlogController extends Controller
  */
     public function show(Blog $blog)
     {
-        // not handle not found
-        if ($blog == null) {
-            return $this-> $this->general_response("", "The blog id specified was not found", "404");
-        }
-
         return $this->general_response(new BlogResource($blog), "ok");
     }
  /**
@@ -177,12 +172,19 @@ class BlogController extends Controller
   * @param BlogRequest $request
   * @return Json
  */
-    public function create(BlogRequest $request)
+    public function store(BlogRequest $request)
     {
         //$user_id=$request->user()->id;
-        $blog = $request->validated();
+        $arr = $request->validated();
         if ($request->has('password')) {
-            $blog['password'] = md5($blog['password']);
+            $blog['password'] = md5($arr['password']);
+        }
+        //check this with TAs
+        $blog ['username'] = $arr['blog_username'];
+        $blog['title'] = $arr['title'];
+
+        if (Blog::where('username', $blog['username'])->count() > 0) {
+            return $this->general_response("", "Internal Server error", "500");
         }
         //$blog['id']=$user_id;
         Blog::create($blog);
@@ -245,7 +247,7 @@ class BlogController extends Controller
     }
 /**
  * @OA\Get(
- * path="/blog/check_out_blogs",
+ * path="/blogs/check_out_blogs",
  * summary="Check out another random blogs",
  * description="Returns  another blogs ",
  * operationId="getcheckoutBlogs",
@@ -299,7 +301,7 @@ class BlogController extends Controller
     }
 /**
  * @OA\Get(
- * path="/blog/trending",
+ * path="/blogs/trending",
  * summary="Get blogs which are trending",
  * description="Returns  trending blogs ",
  * operationId="gettrendingBlogs",
@@ -347,17 +349,27 @@ class BlogController extends Controller
   * @param Request $request
   * @return Json
  */
+   //PAGINAGTE??
+   //COMMENTS
+   //functional docs
     public function getTrendingBlog(Request $request)
     {
         return $this->general_response(new BlogCollection(Blog::all()), "ok");
     }
 /**
  * @OA\Get(
- * path="/blog/likes",
+ * path="/blog/likes/{blog_id}",
  * description="get all likes of my current blog",
  * operationId="getBlogLikes",
  * tags={"Blogs"},
  * security={ {"bearer": {} }},
+ *   @OA\Parameter(
+ *          name="blog_id",
+ *          description="The id of the blog whose information will be retrieved",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  * @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -402,4 +414,13 @@ class BlogController extends Controller
  *  ),
  * )
  */
+ /**
+  *Get Likes of specific blog
+  * @param Request $request
+  * @return Json
+ */
+    public function getLikeBlog(Request $request, Blog $blog)
+    {
+        return $this->general_response(new PostCollection($blog->post()), "ok");
+    }
 }

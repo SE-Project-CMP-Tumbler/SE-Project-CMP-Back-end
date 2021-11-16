@@ -15,17 +15,24 @@ class CreateBlogsTable extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            // check this??
-            $table->string('blog_username')->unique();
+            $table->string('username')->unique();
             $table->string('title');
             $table->string('password')->nullable();
             $table->boolean('is_primary')->default(false);
             $table->text('description')->nullable();
             $table->text('avatar')->nullable();
             $table->text('header_image')->nullable();
-            //??
+            // pulpular
+            $table->boolean('allow_messages')->default(false);
+            $table->string('replies_settings')->default('Everyone can reply');
+            $table->boolean('allow_submittions')->default(false);
+            $table->text('submissions_page_title')->nullable();
+            $table->text('submissions_guidelines')->nullable();
+            $table->boolean('allow_ask')->default(false);
+            $table->text('ask_page_title')->nullable();
+            $table->boolean('allow_anonymous_questions')->default(false);
             //$table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            // settings
+
             $table->timestamps();
         });
     }

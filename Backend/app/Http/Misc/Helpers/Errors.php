@@ -22,14 +22,6 @@ class Errors
     const UNAUTHORIZED = 'Unauthorized.';
     const GENERAL = "Internal Server error";
 
-    //coupon errors
-    const PRODUCT_NOT_EXISTS = "This product is not supported in the coupon offer";
-    const COUPON_USED = "You have used this coupon before";
-
-    //save for later
-    const QUANTITY_NOT_AVAILABLE = "This quantity is bigger than available number";
-
-
     const INVALID_EMAIL_VERIFICATION_URL = "that email is invalid to verification";
     const EMAIL_ALREADY_VERIFIED = 'api.email_already_verified';
 
