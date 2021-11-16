@@ -31,7 +31,7 @@ class CreateBlogsTable extends Migration
             $table->boolean('allow_ask')->default(false);
             $table->text('ask_page_title')->nullable();
             $table->boolean('allow_anonymous_questions')->default(false);
-            //$table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
             $table->timestamps();
         });

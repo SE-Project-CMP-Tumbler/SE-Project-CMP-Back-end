@@ -67,7 +67,7 @@ class Handler extends ExceptionHandler
             } elseif ($exception instanceof AuthenticationException) {
                 return $this->error_response(Errors::UNAUTHENTICATED, "403");
             } elseif ($exception instanceof ValidationException) {
-                return $this->error_response($this->print_validation_errors($exception->validator->errors()->all()), "422");
+                return $this->error_response($this->print_validation_errors($exception->validator->errors()->all()), (string)$exception->status);
             }
         }
         return parent::render($request, $exception);
@@ -76,8 +76,7 @@ class Handler extends ExceptionHandler
     {
         $errors_txt = "";
         foreach($errors as $message)
-            $errors_txt .= $message."\n";
+            $errors_txt .= $message;
         return $errors_txt;
     }
-
 }

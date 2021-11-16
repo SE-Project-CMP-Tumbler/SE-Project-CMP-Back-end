@@ -120,8 +120,7 @@ class BlogController extends Controller
  */
     public function index(Request $request)
     {
-       // waits the user model to test
-        return $this->general_response(new BlogCollection($request->user()->blog()), "ok");
+        return $this->general_response(new BlogCollection($request->user()->blog), "ok");
     }
 /**
  * @OA\Post(
@@ -174,7 +173,8 @@ class BlogController extends Controller
  */
     public function store(BlogRequest $request)
     {
-        //$user_id=$request->user()->id;
+        $user_id=$request->user()->id;
+
         $arr = $request->validated();
         if ($request->has('password')) {
             $blog['password'] = md5($arr['password']);
@@ -184,9 +184,9 @@ class BlogController extends Controller
         $blog['title'] = $arr['title'];
 
         if (Blog::where('username', $blog['username'])->count() > 0) {
-            return $this->general_response("", "Internal Server error", "500");
+            return $this->general_response("", "This username is alreay exits", "422");
         }
-        //$blog['id']=$user_id;
+        $blog['user_id']=$user_id;
         Blog::create($blog);
         return $this->general_response("", "ok");
     }
@@ -241,9 +241,10 @@ class BlogController extends Controller
  */
     public function delete(Request $request, Blog $blog)
     {
-        //$this->authorize('delete', $request->user(), $blog);
+    
+        $this->authorize('delete', $blog);
         $blog->delete();
-        return $this->general_response("", "ok");
+       return $this->general_response("", "ok");
     }
 /**
  * @OA\Get(
@@ -419,8 +420,8 @@ class BlogController extends Controller
   * @param Request $request
   * @return Json
  */
-    public function getLikeBlog(Request $request, Blog $blog)
-    {
-        return $this->general_response(new PostCollection($blog->post()), "ok");
-    }
+    // public function getLikeBlog(Request $request, Blog $blog)
+    // {
+    //     return $this->general_response(new PostCollection($blog->post)), "ok");
+    // }
 }

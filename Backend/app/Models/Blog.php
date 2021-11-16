@@ -29,7 +29,8 @@ class Blog extends Model
         'allow_anonymous_questions',
         'allow_submittions',
         'submissions_page_title',
-        'submissions_guidelines'
+        'submissions_guidelines',
+        'user_id'
     ];
     /**
      * This is has relation between user and blog
@@ -43,8 +44,8 @@ class Blog extends Model
      * This is like relation between post and blog
      * @return Post
      */
-    // public function post()
-    // {
-    //     return $this->belongsToMany(Post::class);
-    // }
+    public function post()
+    {
+        return $this->belongsToMany(Post::class);
+    }
 }

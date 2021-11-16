@@ -85,7 +85,6 @@ class BlogSettingController extends Controller
  */
     public function show(Request $request, Blog $blog)
     {
-         //$this->authorize('delete', $request->user(), $blog);
         return  $this->general_response(new BlogSettingResource($blog));
     }
 /**
@@ -169,7 +168,7 @@ class BlogSettingController extends Controller
  */
     public function update(BlogSettingRequest $request, Blog $blog)
     {
-        //$this->authorize('update', $request->user(), $blog);
+        $this->authorize('update', $blog);
         $blog->update($request->validated());
         return  $this->general_response(new BlogSettingResource($blog));
     }
