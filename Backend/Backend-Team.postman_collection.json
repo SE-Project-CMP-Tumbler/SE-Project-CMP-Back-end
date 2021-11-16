@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5c294aad-2431-4eab-a9a9-368d9842ab25",
+		"_postman_id": "03036356-b167-44e9-9997-f51579334608",
 		"name": "Backend-Team",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -31,6 +31,183 @@
 							],
 							"path": [
 								"index"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "upload_photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/ahmed/Pictures/index.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/upload_photo/123456789",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"upload_photo",
+								"123456789"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_audio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audio",
+									"type": "file",
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts.mp3"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/upload_audio/123456789",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"upload_audio",
+								"123456789"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_1080p.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/upload_video/123456789",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"upload_video",
+								"123456789"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_ext_photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageUrl",
+									"value": "http://i.stack.imgur.com/52Ha1.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/upload_ext_photo/123456789",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"upload_ext_photo",
+								"123456789"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_ext_video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoUrl",
+									"value": "https://www.youtube.com/watch?v=N69iZPwRneM",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/upload_ext_video/123456789",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"upload_ext_video",
+								"123456789"
 							]
 						}
 					},

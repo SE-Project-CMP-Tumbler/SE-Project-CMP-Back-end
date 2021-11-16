@@ -65,7 +65,7 @@ class TagController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -76,7 +76,7 @@ class TagController extends Controller
  *          @OA\Property(property="tag_image",type="string", format="byte", example=""),
  *          @OA\Property(property="followed",type="bool", example=false),
  *          @OA\Property(property="followers_number",type="integer", example=1026),)),),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
@@ -88,7 +88,7 @@ class TagController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
- */    
+ */
 /**
  * @OA\Get(
  * path="/tag/posts/{tag_description}?sort=sort_type",
@@ -104,7 +104,7 @@ class TagController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  * @OA\Parameter(
  *          name="sort",
  *          description="The sort method to retrieve the posts",
@@ -112,7 +112,7 @@ class TagController extends Controller
  *          in="query",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -148,7 +148,7 @@ class TagController extends Controller
  *                          @OA\Property(property="0", type="string", example="books"),
  *                          @OA\Property(property="1", type="string", example="reading"),
  *                          @OA\Property(property="2", type="string", example="stay positive"),)),),),)),),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
@@ -179,7 +179,7 @@ class TagController extends Controller
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",

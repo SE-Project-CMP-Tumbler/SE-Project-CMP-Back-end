@@ -32,13 +32,6 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-<<<<<<< Updated upstream
-    public function register()
-    {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
-=======
     public function report(Throwable $exception)
     {
         parent::report($exception);
@@ -75,6 +68,5 @@ class Handler extends ExceptionHandler
             $errors_txt .= $message;
         }
         return $errors_txt;
->>>>>>> Stashed changes
     }
 }

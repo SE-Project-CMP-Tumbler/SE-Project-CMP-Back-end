@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Misc\Helpers\Config;
+use App\Http\Misc\Helpers\Success;
+use App\Models\Blog;
+use App\Http\Resources\BlogResource;
+use App\Http\Resources\BlogCollection;
+use App\Http\Requests\BlogRequest;
 
 class BlogController extends Controller
 {
@@ -20,13 +26,13 @@ class BlogController extends Controller
  *          required=true,
  *          in="path",
  *          @OA\Schema(
- *              type="string")),
+ *              type="integer")),
  * @OA\Response(
  *  response=200,
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *          @OA\Property(property="id", type="integer", example=2026),
  *          @OA\Property(property="username", type="string", example="newinvestigations"),
  *          @OA\Property(property="avatar", type="string", format="byte", example=""),
@@ -34,27 +40,35 @@ class BlogController extends Controller
  *          @OA\Property(property="header_image", type="string", format="byte", example=""),
  *          @OA\Property(property="title", type="string", example="My 1st Blog"),
  *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)),
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
  * )
- */ 
+ */
+ /**
+  * Get specific blog
+  * @return Json
+ */
+    public function show(Blog $blog)
+    {
+        return $this->general_response(new BlogResource($blog), "ok");
+    }
  /**
  * @OA\Get(
  * path="/blog",
@@ -68,7 +82,7 @@ class BlogController extends Controller
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -77,29 +91,37 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))) 
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"}))),
- * 
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
  * )
- */   
+ */
+ /**
+  * Get all blogs of user
+  * @return Json
+ */
+    public function index(Request $request)
+    {
+        return $this->general_response(new BlogCollection($request->user()->blog), "ok");
+    }
 /**
  * @OA\Post(
  * path="/blog",
@@ -151,7 +173,7 @@ class BlogController extends Controller
  */
     public function store(BlogRequest $request)
     {
-        $user_id = $request->user()->id;
+        $user_id=$request->user()->id;
 
         $arr = $request->validated();
         if ($request->has('password')) {
@@ -164,7 +186,7 @@ class BlogController extends Controller
         if (Blog::where('username', $blog['username'])->count() > 0) {
             return $this->general_response("", "This username is alreay exits", "422");
         }
-        $blog['user_id'] = $user_id;
+        $blog['user_id']=$user_id;
         Blog::create($blog);
         return $this->general_response("", "ok");
     }
@@ -219,13 +241,14 @@ class BlogController extends Controller
  */
     public function delete(Request $request, Blog $blog)
     {
+    
         $this->authorize('delete', $blog);
         $blog->delete();
-        return $this->general_response("", "ok");
+       return $this->general_response("", "ok");
     }
 /**
  * @OA\Get(
- * path="/blog/check_out_blogs",
+ * path="/blogs/check_out_blogs",
  * summary="Check out another random blogs",
  * description="Returns  another blogs ",
  * operationId="getcheckoutBlogs",
@@ -236,7 +259,7 @@ class BlogController extends Controller
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -245,27 +268,27 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))) 
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)),
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
  * )
  */
   /**
@@ -275,18 +298,11 @@ class BlogController extends Controller
  */
     public function checkOutOtherBlog(Request $request)
     {
-        $blogs = $request->user()->blog;
-        $ids = [];
-        foreach ($blogs as $blog) {
-            array_push($ids, $blog['id']);
-        }
-       // $blogs =  Blog::whereNotIn('id', $ids)->inRandomOrder();
-        return $blogs;
-      // return $this->general_response( new BlogCollection($blogs), "ok");
+        return $this->general_response(new BlogCollection(Blog::all()), "ok");
     }
 /**
  * @OA\Get(
- * path="/blog/trending",
+ * path="/blogs/trending",
  * summary="Get blogs which are trending",
  * description="Returns  trending blogs ",
  * operationId="gettrendingBlogs",
@@ -297,7 +313,7 @@ class BlogController extends Controller
  *  description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object", 
+ *       @OA\Property(property="response", type="object",
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -306,27 +322,27 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))) 
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
- * 
+ *
  * @OA\Response(
  *  response=401,
  *  description="Unauthorized",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}),)),
+ *
  * @OA\Response(
  *  response=404,
  *  description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"}),)),
+ *
  * @OA\Response(
  *  response=500,
  *  description="Internal server error",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)), 
- * 
+ *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal server error"}),)),
+ *
  * )
  */
  /**
@@ -404,8 +420,8 @@ class BlogController extends Controller
   * @param Request $request
   * @return Json
  */
-    public function getLikeBlog(Request $request, Blog $blog)
-    {
-        // return $this->general_response(new PostCollection($blog->post)), "ok");
-    }
+    // public function getLikeBlog(Request $request, Blog $blog)
+    // {
+    //     return $this->general_response(new PostCollection($blog->post)), "ok");
+    // }
 }

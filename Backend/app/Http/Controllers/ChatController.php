@@ -8,19 +8,16 @@ class ChatController extends Controller
 {
 /**
  * @OA\Get(
- *  path="/chat/{chat_participant}",
+ *  path="/chat",
  *  operationId="getAllMessages",
  *  tags={"Chatting"},
  *  security={ {"bearer": {} }},
  *  description="retrieve all messages sent between the current user blog and the other chat_participant",
- *  @OA\Parameter(
- *    in="path",
- *    name="chat_participant",
- *    description="the blog_id/blog_name to chat with.",
- *    required=true,
- *    example="123456789",
- *    @OA\Schema(
- *       type="int",
+ * @OA\RequestBody(
+ *   required=true,
+ *    @OA\JsonContent(
+ *       @OA\Property(property="from_blog_name", type="string", example="cpphelloworld"),
+ *       @OA\Property(property="to_blog_name", type="string", example="cpphelloworld"),
  *    )
  *  ),
  *  @OA\Response(
@@ -85,30 +82,22 @@ class ChatController extends Controller
 
 /**
  * @OA\Post(
- *  path="/chat/{chat_participant}",
+ *  path="/chat",
  *  operationId="sendMessage",
  *  tags={"Chatting"},
  *  security={ {"bearer": {} }},
  *  description="send messages to the other chat_participant.",
- *  @OA\Parameter(
- *    in="path",
- *    name="chat_participant",
- *    description="the blog_id/blog_name to chat with.",
- *    required=true,
- *    example="123456789",
- *    @OA\Schema(
- *       type="int",
- *    )
- *  ),
  *  @OA\RequestBody(
  *   description="send one of the following types {text | gif | photo | text + gif | text + photo}
  *   text: send a text message or empty
  *   gif: send a gif message or empty
  *   photo: send a photo message or empty",
  *   @OA\JsonContent(
+ *    @OA\Property(property="from_blog_name", type="string", example="cpphelloworld"),
+ *    @OA\Property(property="to_blog_name", type="string", example="cpphelloworld"),
  *    @OA\Property(property="text", type="string", example="hello, how are you?"),
- *    @OA\Property(property="gif", type="string", format="byte", example="asdlkfjaksjdfknvzxc"),
- *    @OA\Property(property="photo", type="string", format="byte", example="asdkfjaasdfskzcvm"),
+ *    @OA\Property(property="gif", type="string", format="byte", example="/storage/photo_example.jpg"),
+ *    @OA\Property(property="photo", type="string", format="byte", example="/storage/photo_example.jpg"),
  *   ),
  *  ),
  *  @OA\Response(
@@ -154,19 +143,16 @@ class ChatController extends Controller
 
 /**
  * @OA\Delete(
- *  path="/chat/{chat_participant}",
+ *  path="/chat",
  *  operationId="clearChatRoom",
  *  tags={"Chatting"},
  *  security={ {"bearer": {} }},
  *  description="delete all messages in the chat room between this blog and the other chat_participant",
- *  @OA\Parameter(
- *    in="path",
- *    name="chat_participant",
- *    description="the blog_id/blog_name to chat with.",
- *    required=true,
- *    example="123456789",
- *    @OA\Schema(
- *       type="int",
+ * @OA\RequestBody(
+ *   required=true,
+ *    @OA\JsonContent(
+ *       @OA\Property(property="from_blog_name", type="string", example="cpphelloworld"),
+ *       @OA\Property(property="to_blog_name", type="string", example="cpphelloworld"),
  *    )
  *  ),
  *  @OA\Response(
