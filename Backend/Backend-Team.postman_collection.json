@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "03036356-b167-44e9-9997-f51579334608",
+		"_postman_id": "46e2a837-4c47-4353-b120-33ebb9bc1bb9",
 		"name": "Backend-Team",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -39,175 +39,98 @@
 			]
 		},
 		{
-			"name": "Upload",
+			"name": "Post",
 			"item": [
 				{
-					"name": "upload_photo",
+					"name": "Get Post Request",
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "image",
-									"type": "file",
-									"src": "/home/ahmed/Pictures/index.jpeg"
-								}
-							]
-						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "127.0.0.1:8000/api/upload_photo/123456789",
+							"raw": "{{host}}/post/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"upload_photo",
-								"123456789"
+								"post",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "upload_audio",
+					"name": "Create Post Request",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "audio",
-									"type": "file",
-									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts.mp3"
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p>Faith. I believe that allah's choices for us is the best ones</p>\",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"published\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "127.0.0.1:8000/api/upload_audio/123456789",
+							"raw": "{{host}}/post/500",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"upload_audio",
-								"123456789"
+								"post",
+								"500"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "upload_video",
+					"name": "Edit Post Request",
 					"request": {
-						"method": "POST",
-						"header": [],
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "video",
-									"type": "file",
-									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_1080p.mp4"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\r\n    \"post_status\": \"published\",\r\n    \"pinned\": false,\r\n    \"post_body\": \"<p>Bye!!</p>\"\r\n}"
 						},
 						"url": {
-							"raw": "127.0.0.1:8000/api/upload_video/123456789",
+							"raw": "{{host}}/post/10",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"upload_video",
-								"123456789"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "upload_ext_photo",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "imageUrl",
-									"value": "http://i.stack.imgur.com/52Ha1.png",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "127.0.0.1:8000/api/upload_ext_photo/123456789",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"upload_ext_photo",
-								"123456789"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "upload_ext_video",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "videoUrl",
-									"value": "https://www.youtube.com/watch?v=N69iZPwRneM",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "127.0.0.1:8000/api/upload_ext_video/123456789",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"upload_ext_video",
-								"123456789"
+								"post",
+								"10"
 							]
 						}
 					},
