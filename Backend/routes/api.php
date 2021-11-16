@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UploadFilesController;
 use Illuminate\Http\Request;
@@ -57,3 +58,13 @@ Route::post(
     "/upload_ext_video/{blog_id}",
     [UploadFilesController::class, 'uploadExtVideo']
 )->where([ 'blog_id' => '[0-9]{9}' ]);
+
+Route::post('/login', [UserController::class,'login'])->name('login');
+
+Route::post('/register', [UserController::class,'register'])->name('register');
+
+Route::post('/logout', [UserController::class,'logout'])->name('logout')->middleware('auth:api');
+
+Route::get('/email/verify/{id}/{hash}', [UserController::class,'emailVerification'])->middleware(['signed'])->name('verification.verify');
+
+Route::post('/email/resend_verification', [UserController::class,'resendVerification'])->middleware(['auth:api', 'throttle:10,1'])->name('verification.send');
