@@ -173,7 +173,7 @@ class BlogController extends Controller
  */
     public function store(BlogRequest $request)
     {
-        $user_id=$request->user()->id;
+        $user_id = $request->user()->id;
 
         $arr = $request->validated();
         if ($request->has('password')) {
@@ -186,7 +186,7 @@ class BlogController extends Controller
         if (Blog::where('username', $blog['username'])->count() > 0) {
             return $this->general_response("", "This username is alreay exits", "422");
         }
-        $blog['user_id']=$user_id;
+        $blog['user_id'] = $user_id;
         Blog::create($blog);
         return $this->general_response("", "ok");
     }
@@ -241,10 +241,10 @@ class BlogController extends Controller
  */
     public function delete(Request $request, Blog $blog)
     {
-    
+
         $this->authorize('delete', $blog);
         $blog->delete();
-       return $this->general_response("", "ok");
+        return $this->general_response("", "ok");
     }
 /**
  * @OA\Get(
