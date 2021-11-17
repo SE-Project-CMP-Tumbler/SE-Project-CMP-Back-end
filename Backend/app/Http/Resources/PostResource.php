@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource

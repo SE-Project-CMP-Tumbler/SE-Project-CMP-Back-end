@@ -30,8 +30,8 @@ Route::get('blogs/trending', [BlogController::class,'checkOutOtherBlog']);
 Route::get('blog_settings/{blog}', [BlogSettingController::class,'show']);
 Route::put('blog_settings/{blog}', [BlogSettingController::class,'update'])->middleware('auth:api');
 
-Route::post('post/{blog_id}', [PostController::class,'store']);
-Route::apiResource('/post', PostController::class);
+// Route::post('post/{blog_id}', [PostController::class,'store']);
+// Route::apiResource('/post', PostController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -75,6 +75,6 @@ Route::post('/email/resend_verification', [UserController::class,'resendVerifica
 # ==========================getRandomPosts, getTrendingPosts======================================================
 
 Route::get('/post/random_posts', [PostFilterController::class, 'getRandomPosts']);
-// Route::get('/post/trending', [PostFilterController::class, 'getTrendingPosts']);
+Route::get('/post/trending', [PostFilterController::class, 'getTrendingPosts']);
 
 # ================================================================================
