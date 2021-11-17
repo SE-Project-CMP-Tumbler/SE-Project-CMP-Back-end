@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use App\Http\Misc\Traits\WebServiceResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Http\Misc\Helpers\Errors;
@@ -16,8 +15,6 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    use WebServiceResponse;
-
     /**
      * A list of the exception types that are not reported.
      *
@@ -33,17 +30,15 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
 
     /**
-     * Report or log an exception.
+     * Register the exception handling callbacks for the application.
      *
-     * @param  \Throwable  $exception
      * @return void
-     *
-     * @throws \Exception
      */
     public function report(Throwable $exception)
     {
@@ -74,15 +69,17 @@ class Handler extends ExceptionHandler
                 return $this->error_response(Errors::TESTING, "404");
             } elseif ($exception instanceof MethodNotAllowedHttpException) {
                 return $this->error_response(Errors::NOTALLOWED, "405");
+                return $this->error_response($this->printValidationError($exception->validator->errors()->all()), (string)$exception->status);
             }
         }
         return parent::render($request, $exception);
     }
-    private function print_validation_errors($errors)
+    private function printValidationError($errors)
     {
         $errors_txt = "";
-        foreach($errors as $message)
+        foreach ($errors as $message) {
             $errors_txt .= $message;
+        }
         return $errors_txt;
     }
 }

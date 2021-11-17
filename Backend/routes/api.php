@@ -28,7 +28,7 @@ Route::post('blog', [BlogController::class,'store'])->middleware('auth:api');
 Route::get('blog/{blog}', [BlogController::class,'show'])->middleware('auth:api');
 Route::delete('blog/{blog}', [BlogController::class,'delete'])->middleware('auth:api');
 Route::get('blog/likes/{blog}', [BlogController::class,'getLikeBlog']);
-Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog']);
+Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog'])->middleware('auth:api');
 Route::get('blogs/trending', [BlogController::class,'checkOutOtherBlog']);
 Route::get('blog_settings/{blog}', [BlogSettingController::class,'show']);
 Route::put('blog_settings/{blog}', [BlogSettingController::class,'update'])->middleware('auth:api');

@@ -44,7 +44,7 @@ class Blog extends Model
      * This is like relation between post and blog
      * @return Post
      */
-    public function post()
+    public function posts()
     {
         return $this->belongsToMany(Post::class);
     }
