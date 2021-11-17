@@ -23,14 +23,14 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->unsignedBigInteger('blog_id');
-            $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('restrict');
+            $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
 
             //a nullble parent means it has no parent, means this post is an original post
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')
                 ->references('id')
                 ->on('posts')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
         });
     }
 

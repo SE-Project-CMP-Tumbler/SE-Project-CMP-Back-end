@@ -4,18 +4,18 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class BlogCollection extends ResourceCollection
+class TagCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return JSON
      */
     public function toArray($request)
     {
         return [
-            "blogs" => BlogResource::Collection($this->collection)
-                 ];
+            "tags" => TagResource::collection($this->collection)
+        ];
     }
 }

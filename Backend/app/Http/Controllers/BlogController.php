@@ -63,7 +63,8 @@ class BlogController extends Controller
  */
  /**
   * Get specific blog
-  * @return Json
+  * @param \Blog  $blog
+  * @return \json
  */
     public function show(Blog $blog)
     {
@@ -116,11 +117,12 @@ class BlogController extends Controller
  */
  /**
   * Get all blogs of user
-  * @return Json
+  * @param \Request $request
+  * @return \json
  */
     public function index(Request $request)
     {
-        return $this->general_response(new BlogCollection($request->user()->blog), "ok");
+        return $this->general_response(new BlogCollection($request->user()->blogs), "ok");
     }
 /**
  * @OA\Post(
@@ -168,8 +170,8 @@ class BlogController extends Controller
  */
  /**
   * Create a new blog for user
-  * @param BlogRequest $request
-  * @return Json
+  * @param \BlogRequest $request
+  * @return \json
  */
     public function store(BlogRequest $request)
     {
@@ -236,8 +238,8 @@ class BlogController extends Controller
  */
  /**
   * Delte a  blog for user
-  * @param Blog $blog
-  * @return Json
+  * @param \Blog $blog
+  * @return \json
  */
     public function delete(Request $request, Blog $blog)
     {
@@ -293,8 +295,8 @@ class BlogController extends Controller
  */
   /**
   *checkout Other Blogs for user
-  * @param Request $request
-  * @return Json
+  * @param \Request $request
+  * @return \json
  */
     public function checkOutOtherBlog(Request $request)
     {
@@ -347,8 +349,8 @@ class BlogController extends Controller
  */
  /**
   *Get Trending blogs
-  * @param Request $request
-  * @return Json
+  * @param \Request $request
+  * @return \json
  */
    //PAGINAGTE??
    //COMMENTS
@@ -417,8 +419,8 @@ class BlogController extends Controller
  */
  /**
   *Get Likes of specific blog
-  * @param Request $request
-  * @return Json
+  * @param \Request $request
+  * @return \json
  */
     // public function getLikeBlog(Request $request, Blog $blog)
     // {

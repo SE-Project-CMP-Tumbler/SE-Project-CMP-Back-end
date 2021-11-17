@@ -21,7 +21,11 @@ class PostRequest extends FormRequest
         return true;
     }
 
-    //include the query parameter blog_id in the request data inorder to apply validation on it
+    /**
+     * Include the query parameter blog_id in the request data inorder to apply validation on it
+     *
+     * @return array
+     */
     public function all($keys = null)
     {
         $data = parent::all($keys);
@@ -40,7 +44,7 @@ class PostRequest extends FormRequest
         $statuses = array('published', 'draft', 'private', 'submission');
         return [
             'post_body' => ['required'],
-            'post_type' => ['required', Rule::in($types)], //should i calculate it or the front?
+            'post_type' => ['required', Rule::in($types)],
             'post_time' => ['nullable', 'date'],
             'post_status' => ['required', Rule::in($statuses)], //we should specify these specific values to the front
             'blog_id' => 'required|exists:blogs,id' //must be a blog id of the blogs of the auth user
