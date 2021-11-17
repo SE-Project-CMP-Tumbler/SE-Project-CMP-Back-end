@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostFilterController extends Controller
 {
@@ -433,8 +434,13 @@ class PostFilterController extends Controller
      **/
     public function getRandomPosts()
     {
-        $allRandomPosts = Post::all()->random();
-        return $this->general_response(new PostResource($allRandomPosts), "ok");
+        $res = ["posts" => []];
+        $allRandomPosts = Post::all();
+        foreach ($allRandomPosts as $item) {
+            array_push($res["posts"], new PostResource($item));
+        }
+        shuffle($res["posts"]);
+        return $this->general_response($res, "ok");
     }
 
     /**
@@ -500,7 +506,8 @@ class PostFilterController extends Controller
      **/
     public function getTrendingPosts()
     {
-        # code...
+        # TODO: do the logic for getting the trending posts
+        return $this->getRandomPosts();
     }
 
 
