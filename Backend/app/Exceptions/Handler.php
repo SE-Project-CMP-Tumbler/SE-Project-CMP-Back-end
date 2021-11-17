@@ -10,6 +10,8 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -68,6 +70,10 @@ class Handler extends ExceptionHandler
                 return $this->error_response(Errors::UNAUTHENTICATED, "403");
             } elseif ($exception instanceof ValidationException) {
                 return $this->error_response($this->print_validation_errors($exception->validator->errors()->all()), (string)$exception->status);
+            } elseif ($exception instanceof NotFoundHttpException) {
+                return $this->error_response(Errors::TESTING, "404");
+            } elseif ($exception instanceof MethodNotAllowedHttpException) {
+                return $this->error_response(Errors::NOTALLOWED, "405");
             }
         }
         return parent::render($request, $exception);

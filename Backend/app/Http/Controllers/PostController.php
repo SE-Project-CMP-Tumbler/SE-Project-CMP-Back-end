@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
+use App\Models\Blog;
 use App\Models\Post;
 use Faker\Factory;
 use Illuminate\Http\Request;
@@ -192,7 +193,26 @@ class PostController extends Controller
  *     )
  * )
  */
-
+    /**
+     * Delte a post
+     *
+     * @param mixed $post_id
+     * @param mixed $blog_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($post_id, $blog_id)
+    {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
+            return $this->general_response("", "This post doesn't exist", "404");
+        }
+        $blog = Blog::where('id', $blog_id)->first();
+        if (empty($blog)) {
+            return $this->general_response("", "The blog requesting this action doesn't exist", "404");
+        }
+        $post->delete();
+        return $this->general_response("", "ok");
+    }
 /**
  * @OA\Get(
  * path="/post/{post_id}",

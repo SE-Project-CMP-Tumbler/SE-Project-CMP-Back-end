@@ -58,13 +58,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/1",
+							"raw": "{{host}}/post/10000",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"1"
+								"10000"
 							]
 						}
 					},
@@ -124,13 +124,149 @@
 							"raw": "{\r\n    \"post_status\": \"published\",\r\n    \"pinned\": false,\r\n    \"post_body\": \"<p>Bye!!</p>\"\r\n}"
 						},
 						"url": {
-							"raw": "{{host}}/post/10",
+							"raw": "{{host}}/post/1999",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"10"
+								"1999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/44/25",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"44",
+								"25"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "Create Tag Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tag/data/3/scrum",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"data",
+								"3",
+								"scrum"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tag Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tag/data/scrum",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"data",
+								"scrum"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trending Tags Request",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/tag/trending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"trending"
 							]
 						}
 					},
