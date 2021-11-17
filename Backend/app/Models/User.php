@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * This is has relation between user and blog
      * @return blog
      */
-    public function blog()
+    public function blogs()
     {
         return $this->hasMany(Blog::class);
     }
