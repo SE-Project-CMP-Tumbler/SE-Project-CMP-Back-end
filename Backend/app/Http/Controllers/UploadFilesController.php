@@ -659,6 +659,6 @@ class UploadFilesController extends Controller
         //     return $this->general_response($sucessObj, "ok", "200");
         // }
 
-        return $this->general_response("", "not supported image type", "422");
+        return $this->general_response("", "not supported vidoe type", "422");
     }
 }
