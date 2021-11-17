@@ -18,7 +18,7 @@ class BlogSettingRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Get the validation rules that apply  to blog settings the request.
      *
      * @return array
      */
@@ -26,7 +26,6 @@ class BlogSettingRequest extends FormRequest
     {
         $replies = array('Everyone can reply','Tumblrs you follow and Tumblrs following you
         for a  week can reply','Only Tumblrs you follow can reply');
-        // what is required???
         return [
             'allow_messages' => 'boolean',
             'replies_settings' => ['string',Rule::in($replies)],

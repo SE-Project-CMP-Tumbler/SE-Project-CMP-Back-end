@@ -18,7 +18,7 @@ class BlogResource extends JsonResource
             'id' => $this->id,
             'username' => $this->username,
             'avatar' => $this->avatar,
-            // not handel
+            // not handle i is in theme
             'avatar_shape' => 'circle',
             'header_image' => $this->header_image,
             'title' => $this->title,

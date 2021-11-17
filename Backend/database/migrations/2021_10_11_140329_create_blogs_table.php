@@ -22,7 +22,7 @@ class CreateBlogsTable extends Migration
             $table->text('description')->nullable();
             $table->text('avatar')->nullable();
             $table->text('header_image')->nullable();
-            // pulpular
+            // popular
             $table->boolean('allow_messages')->default(false);
             $table->string('replies_settings')->default('Everyone can reply');
             $table->boolean('allow_submittions')->default(false);
