@@ -25,19 +25,12 @@ class UploadFileController extends Controller
 {
    /**
     * @OA\Post(
-    * path="/upload_photo/{blog_id}",
+    * path="/upload_photo",
     * summary="upload a photo",
     * description="upload the image in the request body and get the url for that image back in the response",
     * operationId="uploadPhoto",
     * tags={"Upload"},
     * security={ {"bearer": {} }},
-    * @OA\Parameter(
-    *          name="blog_id",
-    *          description="Blog_id ",
-    *          required=true,
-    *          in="path",
-    *          @OA\Schema(
-    *              type="integer")),
     * @OA\RequestBody(
     *    required=true,
     *    @OA\MediaType(
@@ -123,20 +116,13 @@ class UploadFileController extends Controller
 
    /**
     * @OA\Post(
-    * path="/upload_ext_photo/{blog_id}",
+    * path="/upload_ext_photo",
     * summary="upload an external photo",
     * description="upload the image from imageUrl
     * in the request body and get the url for that image back in the response",
     * operationId="uploadExtPhoto",
     * tags={"Upload"},
     * security={ {"bearer": {} }},
-    * @OA\Parameter(
-    *          name="blog_id",
-    *          description="Blog_id ",
-    *          required=true,
-    *          in="path",
-    *          @OA\Schema(
-    *              type="integer")),
     * @OA\RequestBody(
     *   required=true,
     *   description="imageUrl: is the url to fetch the image from",
@@ -221,19 +207,12 @@ class UploadFileController extends Controller
 
    /**
     * @OA\Post(
-    * path="/upload_audio/{blog_id}",
+    * path="/upload_audio",
     * summary="upload a audio",
     * description="upload the audio in the request body and get the url for that audio back in the response",
     * operationId="uploadAudio",
     * tags={"Upload"},
     * security={ {"bearer": {} }},
-    * @OA\Parameter(
-    *          name="blog_id",
-    *          description="Blog_id ",
-    *          required=true,
-    *          in="path",
-    *          @OA\Schema(
-    *              type="integer")),
     * @OA\RequestBody(
     *    required=true,
     *    @OA\MediaType(
@@ -314,19 +293,12 @@ class UploadFileController extends Controller
 
    /**
     * @OA\Post(
-    * path="/upload_video/{blog_id}",
+    * path="/upload_video",
     * summary="upload a video",
     * description="upload the video in the request body and get the url for that video back in the response",
     * operationId="uploadVideo",
     * tags={"Upload"},
     * security={ {"bearer": {} }},
-    * @OA\Parameter(
-    *          name="blog_id",
-    *          description="Blog_id ",
-    *          required=true,
-    *          in="path",
-    *          @OA\Schema(
-    *              type="integer")),
     * @OA\RequestBody(
     *    required=true,
     *    @OA\MediaType(
@@ -413,20 +385,13 @@ class UploadFileController extends Controller
 
    /**
     * @OA\Post(
-    * path="/upload_ext_video/{blog_id}",
+    * path="/upload_ext_video",
     * summary="upload an external video",
     * description="upload the video from videoUrl
     * in the request body and get the url for that vidoe back in the response",
     * operationId="uploadExtVideo",
     * tags={"Upload"},
     * security={ {"bearer": {} }},
-    * @OA\Parameter(
-    *          name="blog_id",
-    *          description="Blog_id ",
-    *          required=true,
-    *          in="path",
-    *          @OA\Schema(
-    *              type="integer")),
     * @OA\RequestBody(
     *   required=true,
     *   description="videoUrl: is the url to fetch the video from",
