@@ -9,6 +9,7 @@ use App\Models\Blog;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BlogCollection;
 use App\Http\Requests\BlogRequest;
+use App\Services\BlogService;
 
 class BlogController extends Controller
 {
@@ -175,21 +176,17 @@ class BlogController extends Controller
  */
     public function store(BlogRequest $request)
     {
+        $blogService = new BlogService();
         $user_id = $request->user()->id;
+        if (! $blogService->uniqueBlog($request->blog_username)) {
+            return $this->general_response("", "The blog username is already exists", "422");
+        }
 
-        $arr = $request->validated();
         if ($request->has('password')) {
-            $blog['password'] = md5($arr['password']);
+            $blogService->createBlog($request->blog_username, $request->title, $user_id, $request->password);
+        } else {
+            $blogService->createBlog($request->blog_username, $request->title, $user_id);
         }
-        //check this with TAs
-        $blog ['username'] = $arr['blog_username'];
-        $blog['title'] = $arr['title'];
-
-        if (Blog::where('username', $blog['username'])->count() > 0) {
-            return $this->general_response("", "This username is alreay exits", "422");
-        }
-        $blog['user_id'] = $user_id;
-        Blog::create($blog);
         return $this->general_response("", "ok");
     }
 /**
