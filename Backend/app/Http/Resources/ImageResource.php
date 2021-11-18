@@ -19,7 +19,7 @@ class ImageResource extends JsonResource
             'width' => $this->width,
             'height' => $this->height,
             'orignal_filename' => $this->orignal_filename,
-            'routation' => $this->routation,
+            'rotation' => $this->rotation,
             'upload_id' => $this->upload_id,
         ];
     }
