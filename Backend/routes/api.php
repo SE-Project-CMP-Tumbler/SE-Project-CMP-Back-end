@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\UploadFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogSettingController;
 use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\UploadFilesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,36 +44,17 @@ Route::delete('post/{post_id}/{blog_id}', [PostController::class,'destroy'])
         'post_id' => '[0-9]+']);
 Route::apiResource('/post', PostController::class);
 
-# Route::get('/post/random_posts', [PostFilterController::class, 'getRandomPosts']);
-# Route::get('/post/trending', [PostFilterController::class, 'getTrendingPosts']);
+// Route::get('/post/random_posts', [PostFilterController::class, 'getRandomPosts']);
+// Route::get('/post/trending', [PostFilterController::class, 'getTrendingPosts']);
 
 /*
 | Uploads Routes
 */
-Route::post(
-    "/upload_photo/{blog_id}",
-    [UploadFilesController::class, 'uploadPhoto']
-)->where([ 'blog_id' => '[0-9]{9}' ]);
-
-Route::post(
-    "/upload_audio/{blog_id}",
-    [UploadFilesController::class, 'uploadAudio']
-)->where([ 'blog_id' => '[0-9]{9}' ]);
-
-Route::post(
-    "/upload_video/{blog_id}",
-    [UploadFilesController::class, 'uploadVideo']
-)->where([ 'blog_id' => '[0-9]{9}' ]);
-
-Route::post(
-    "/upload_ext_photo/{blog_id}",
-    [UploadFilesController::class, 'uploadExtPhoto']
-)->where([ 'blog_id' => '[0-9]{9}' ]);
-
-Route::post(
-    "/upload_ext_video/{blog_id}",
-    [UploadFilesController::class, 'uploadExtVideo']
-)->where([ 'blog_id' => '[0-9]{9}' ]);
+Route::post("/upload_photo", [UploadFileController::class, 'uploadPhoto']);
+Route::post("/upload_audio", [UploadFileController::class, 'uploadAudio']);
+Route::post("/upload_video", [UploadFileController::class, 'uploadVideo']);
+Route::post("/upload_ext_photo", [UploadFileController::class, 'uploadExtPhoto']);
+Route::post("/upload_ext_video", [UploadFileController::class, 'uploadExtVideo']);
 
 
 Route::post('/login', [UserController::class,'login'])->name('login');
@@ -89,4 +70,3 @@ Route::post('/email/resend_verification', [UserController::class,'resendVerifica
 Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store']);
 Route::get('/tag/data/{tag_description}', [TagController::class,'show']);
 Route::get('/tag/trending', [TagController::class,'index']);
-

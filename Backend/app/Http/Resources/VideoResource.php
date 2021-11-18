@@ -14,7 +14,7 @@ class VideoResource extends JsonResource
      */
     public function toArray($request)
     {
-        if(is_null($this->body)) {
+        if (is_null($this->body)) {
             return [
                 'url' => $this->url,
                 'width' => $this->width,
