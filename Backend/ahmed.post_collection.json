@@ -6,39 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "Blog",
-			"item": [
-				{
-					"name": "index",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/index",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"index"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Upload",
 			"item": [
 				{
@@ -75,18 +42,17 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/home/ahmed/Pictures/Screenshot from 2021-11-04 15-10-42.png"
+									"src": "/home/ahmed/Pictures/warty-final-ubuntu.png"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{host}}/upload_photo/123456789",
+							"raw": "{{host}}/upload_photo",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"upload_photo",
-								"123456789"
+								"upload_photo"
 							]
 						}
 					},
@@ -120,13 +86,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{host}}/upload_audio/123456789",
+							"raw": "{{host}}/upload_audio",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"upload_audio",
-								"123456789"
+								"upload_audio"
 							]
 						}
 					},
@@ -155,18 +120,17 @@
 								{
 									"key": "video",
 									"type": "file",
-									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_1080p.mp4"
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_360p.mp4"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{host}}/upload_video/123456789",
+							"raw": "{{host}}/upload_video",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"upload_video",
-								"123456789"
+								"upload_video"
 							]
 						}
 					},
@@ -191,10 +155,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"imageUrl\": \"https://www.youtube.com/watch?v=feV7PfadPV0&list=PLPe5CNNrgsscjLPbd0g84JJeyRgwjEhwG&index=28\"\n}"
+							"raw": "{\n  \"imageUrl\": \"https://64.media.tumblr.com/170f88a028264c59474e845a37214f6e/d45cf8a9f8fa13eb-94/s540x810/6c4a4325897264657c05d68ab1c86071cd61664b.jpg\"\n}"
 						},
 						"url": {
-							"raw": "127.0.0.1:8000/api/upload_ext_photo/123456789",
+							"raw": "127.0.0.1:8000/api/upload_ext_photo",
 							"host": [
 								"127",
 								"0",
@@ -204,8 +168,7 @@
 							"port": "8000",
 							"path": [
 								"api",
-								"upload_ext_photo",
-								"123456789"
+								"upload_ext_photo"
 							],
 							"query": [
 								{
@@ -236,16 +199,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n}"
+							"raw": "{\n  \"videoUrl\": \"https://www.youtube.com/watch?v=feV7PfadPV0&list=PLPe5CNNrgsscjLPbd0g84JJeyRgwjEhwG&index=28\"\n}"
 						},
 						"url": {
-							"raw": "{{host}}/upload_ext_video/123456789",
+							"raw": "{{host}}/upload_ext_video",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"upload_ext_video",
-								"123456789"
+								"upload_ext_video"
 							]
 						}
 					},
