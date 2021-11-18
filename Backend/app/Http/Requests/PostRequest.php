@@ -22,7 +22,7 @@ class PostRequest extends FormRequest
     }
 
     /**
-     * Include the query parameter blog_id in the request data inorder to apply validation on it
+     * Include the query parameter blog_id in the request body data inorder to apply validation on it
      *
      * @return array
      */

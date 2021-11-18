@@ -37,12 +37,10 @@ Route::put('blog_settings/{blog}', [BlogSettingController::class,'update'])->mid
 /*
 | Post Routes
 */
-Route::post('post/{blog_id}', [PostController::class,'store'])
-->where(['blog_id' => '[0-9]+']);
-Route::delete('post/{post_id}/{blog_id}', [PostController::class,'destroy'])
-->where(['blog_id' => '[0-9]+',
-        'post_id' => '[0-9]+']);
-Route::apiResource('/post', PostController::class);
+Route::get('post/{post_id}', [PostController::class,'show'])->where(['post_id' => '[0-9]+']);
+Route::post('post/{blog_id}', [PostController::class,'store'])->where(['blog_id' => '[0-9]+']);//->middleware('auth:api');
+Route::delete('post/{post_id}/{blog_id}', [PostController::class,'delete'])->where(['blog_id' => '[0-9]+', 'post_id' => '[0-9]+']);//->middleware('auth:api');
+Route::put('post/{post_id}', [PostController::class,'update'])->where(['post_id' => '[0-9]+']);//->middleware('auth:api');
 
 # Route::get('/post/random_posts', [PostFilterController::class, 'getRandomPosts']);
 # Route::get('/post/trending', [PostFilterController::class, 'getTrendingPosts']);
@@ -86,7 +84,6 @@ Route::post('/email/resend_verification', [UserController::class,'resendVerifica
 /*
 | Tags Routes
 */
-Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store']);
+Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store']);//->middleware('auth:api');
 Route::get('/tag/data/{tag_description}', [TagController::class,'show']);
 Route::get('/tag/trending', [TagController::class,'index']);
-
