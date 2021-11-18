@@ -73,9 +73,10 @@ class Handler extends ExceptionHandler
                 return $this->error_response(Errors::TESTING, "404");
             } elseif ($exception instanceof MethodNotAllowedHttpException) {
                 return $this->error_response(Errors::NOTALLOWED, "405");
-            } elseif ($exception instanceof QueryException) {
-                  return $this->error_response(Errors::TESTING, "404");
             }
+            // } elseif ($exception instanceof QueryException) {
+            //       return $this->error_response(Errors::TESTING, "404");
+            // }
         }
         return parent::render($request, $exception);
     }
