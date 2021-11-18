@@ -9,7 +9,15 @@ use Embed\Embed;
 use FFMpeg\FFMpeg;
 use Illuminate\Support\Str;
 
-class UploadFilesService
+/**
+ * UploadFileService handles the logic of uploading files
+ * @method validateImageService($uploadedImage)
+ * @method validateExtImageService(string $imageUrl)
+ * @method validateAudioService($uploadedAudio)
+ * @method validateVideoService($uploadedVideo)
+ * @method validateExtVideoService(string $videoUrl)
+ */
+class UploadFileService
 {
     /**
      * upload image service
@@ -120,7 +128,7 @@ class UploadFilesService
      * validate the type and size of an uploaded video
      * then allow or reject that video.
      *
-     * @param \Illuminate\Http\File $uploadedvideo the user uploaded video
+     * @param \Illuminate\Http\File $uploadedVideo the user uploaded video
      * @return \App\Models\Video|null
      **/
     public function validateVideoService($uploadedVideo)
