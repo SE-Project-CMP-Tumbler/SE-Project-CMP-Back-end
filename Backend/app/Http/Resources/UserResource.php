@@ -15,7 +15,8 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $blog = Blog::where('user_id', $this->id)->first();
+        $blog = Blog::where([['user_id',$this->id],['is_primary', true]])->first();
+
         return [
             'id' => $this->id,
             'username' => $blog->username,

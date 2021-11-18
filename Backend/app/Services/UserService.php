@@ -15,52 +15,6 @@ use App\Http\Misc\Helpers\Errors;
 class UserService
 {
  /**
-  * validate the rest of the register credentials
-  * @param string $email
-  * @param string $password
-  * @param int $age (optional)
-  * @param string $username
-  * @return array
- */
-    public function validateRegisterCredentials(string $email, string $password, int $age = null, string $username)
-    {
-        //email validations email|unique:users'
-        $validator = Validator::make(['email' => $email], [
-            'email' => 'email|unique:users'
-          ], [
-            'email.email' => Errors::NOT_VALID_EMAIL,
-            'email.unique' => Errors::EMAIL_TAKEN
-          ]);
-        if (!$validator->passes()) {
-            return [$validator->errors()->all()[0],'422'];
-        }
-        //password validations
-        $validator = Validator::make(['password' => $password], [
-            'password' => [Password::min(8)->letters()->mixedCase()->numbers()->uncompromised(10)],
-          ], [
-            'password.min' => Errors::PASSWORD_SHORT,
-          ]);
-        if (!$validator->passes()) {
-            return [$validator->errors()->all()[0],'422'];
-        }
-        //blogname validations
-        $validator = Validator::make(['username' => $username], [
-            'username' => 'unique:blogs'
-          ], [
-            'username.unique' => Errors::MISSING_BLOG_USERNAME,
-          ]);
-        if (!$validator->passes()) {
-            return [$validator->errors()->all()[0],'422'];
-        }
-        //age validations
-        if (!$age) {
-            return [ Errors::MISSING_AGE,'422'];
-        }
-
-
-        return null;
-    }
- /**
   * Create a new user
   * @param string $email
   * @param string $password

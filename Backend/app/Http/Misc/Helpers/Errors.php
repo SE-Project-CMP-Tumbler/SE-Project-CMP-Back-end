@@ -22,6 +22,7 @@ class Errors
     const SHORT_PASSWORD = 'The password must be at least 8 characters.';
     const MISSING_BLOG_USERNAME = 'That is not a valid blog name. Someone beat you to that username.';
     const PASSWORD_SHORT = 'The password must be at least 8 characters.';
+    const RESTRICT_AGE  = 'please enter a valid age';
 
     //signin errors (errors are ordered W.R.T it's priorities + missing only mail or only password errors are the same as the signup errors)
     const MISSING_BOTH_EMAIL_PASSWORD = 'You do have to fill this stuff out, you know.';
