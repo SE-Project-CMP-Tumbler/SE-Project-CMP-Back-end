@@ -14,6 +14,7 @@ use App\Http\Resources\UserResource;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Services\UserService;
+use App\Services\BlogService;
 
 class UserController extends Controller
 {
@@ -81,14 +82,10 @@ class UserController extends Controller
     public function register(UserRegisterRequest $request)
     {
         $userService = new UserService();
-        $error = $userService->validateRegisterCredentials(
-            $request->email,
-            $request->password,
-            $request->age,
-            $request->blog_username
-        );
-        if ($error) {
-            return $this->error_response($error[0], $error[1]);
+        $blogService = new BlogService();
+        $unique = $blogService->uniqueBlog($request->blog_username);
+        if (!$unique) {
+            return $this->error_response(Errors::MISSING_BLOG_USERNAME, '404');
         }
         $user = $userService->register(
             $request->email,
