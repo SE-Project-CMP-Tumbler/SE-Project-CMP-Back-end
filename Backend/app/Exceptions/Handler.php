@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
             } elseif ($exception instanceof AuthenticationException) {
                 return $this->error_response(Errors::UNAUTHENTICATED, "403");
             } elseif ($exception instanceof ValidationException) {
-                return $this->error_response($this->print_validation_errors($exception->validator->errors()->all()), (string)$exception->status);
+                return $this->error_response($this->printValidationError($exception->validator->errors()->all()), (string)$exception->status);
             } elseif ($exception instanceof NotFoundHttpException) {
                 return $this->error_response(Errors::TESTING, "404");
             } elseif ($exception instanceof MethodNotAllowedHttpException) {

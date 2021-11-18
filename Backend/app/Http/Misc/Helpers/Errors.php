@@ -12,6 +12,22 @@ class Errors
     const NOT_VERIFIED_USER = 'Non Verified User.';
     const NO_FOLLOW = 'you cannot unfollow a non followed user.';
 
+    //signup errors (errors are ordered W.R.T it's priorities)
+    const MISSING_EMAIL = 'You forgot to enter your email!';
+    const MISSING_PASSWORD = 'You forgot to enter your password!';
+    const MISSING_BLOGNAME = 'You forgot to enter your blog name!';
+    const MISSING_AGE = 'your age is required.';
+    const NOT_VALID_EMAIL = 'That is not a valid email address. Please try again.';
+    const EMAIL_TAKEN = 'This email address is already in use.';
+    const SHORT_PASSWORD = 'The password must be at least 8 characters.';
+    const MISSING_BLOG_USERNAME = 'That is not a valid blog name. Someone beat you to that username.';
+    const PASSWORD_SHORT = 'The password must be at least 8 characters.';
+
+    //signin errors (errors are ordered W.R.T it's priorities + missing only mail or only password errors are the same as the signup errors)
+    const MISSING_BOTH_EMAIL_PASSWORD = 'You do have to fill this stuff out, you know.';
+    const INCORRECT_EMAIL_PASSWORD = 'Your email or password were incorrect.';
+
+
     //records errors
     const EXISTS = "Record already exists!";
     const NOT_EXISTS = "Record not exists!";

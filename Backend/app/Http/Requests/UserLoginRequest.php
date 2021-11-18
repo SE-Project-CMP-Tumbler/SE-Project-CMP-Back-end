@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Misc\Helpers\Errors;
 
 class UserLoginRequest extends FormRequest
 {
@@ -24,8 +25,21 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-                'email' => 'required|email',
-                'password' => 'required'
+                'email' => 'required_without:password|required',
+                'password' => 'required_with:email'
+        ];
+    }
+ /**
+ * Get the error messages for the defined validation rules.
+ *
+ * @return array
+ */
+    public function messages()
+    {
+        return [
+        'email.required_without' => Errors::MISSING_BOTH_EMAIL_PASSWORD,
+        'email.required' => Errors::MISSING_EMAIL,
+        'password.required_with' => Errors::MISSING_PASSWORD,
         ];
     }
 }

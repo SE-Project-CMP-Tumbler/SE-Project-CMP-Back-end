@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Misc\Helpers\Errors;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,10 +10,10 @@ use App\Http\Misc\Traits\WebServiceResponse;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
-use App\Models\Blog;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
@@ -79,23 +80,30 @@ class UserController extends Controller
  */
     public function register(UserRegisterRequest $request)
     {
-        $user = User::create([
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'age' => $request->age,
-        'linked_by_google' => false,
-        ]);
-        $blog = Blog::create([
-            'blog_username' => $request->blog_username,
-            'title' => $request->blog_username,
-            'is_primary' => true,
-            /* Question why the user_id isn't in the blog migration?
-            'user_id' => $user->$id,
-            */
-        ]);
-        event(new Registered($user));
-        $token = $user->createToken('Auth Token')->accessToken;
-        $user->withAccessToken($token);
+        $userService = new UserService();
+        $error = $userService->validateRegisterCredentials(
+            $request->email,
+            $request->password,
+            $request->age,
+            $request->blog_username
+        );
+        if($error)
+        {
+            return $this->error_response($error[0], $error[1]);
+        }
+        $user = $userService->register(
+            $request->email,
+            $request->password,
+            $request->age,
+            false,
+            $request->blog_username
+        );
+        if (!$user) {
+            return $this->error_response('not found', '404');
+        }
+
+        $userService->grantAccessToken($user);
+
         return $this->general_response(new UserResource($user), "Successful response", "200");
     }
 /** @OA\Post(
@@ -145,14 +153,13 @@ class UserController extends Controller
  */
     public function login(UserLoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return $this->error_response('Unprocessable Entity', 422);
+        $userService = new UserService();
+        $user = $userService->checkLoginCredentials($request->email, $request->password);
+        if (!$user) {
+            return $this->error_response(Errors::INCORRECT_EMAIL_PASSWORD, '422');
         }
-
-        $token = $user->createToken('Auth Token')->accessToken;
-        $user->withAccessToken($token);
-        return $this->general_response(new UserResource($user), "Successful response", "200");
+        $userService->grantAccessToken($user);
+        return $this->general_response(new UserResource($user), "Successful response", '200');
     }
 /** @OA\Post(
  * path="/login_with_google",
@@ -282,8 +289,10 @@ class UserController extends Controller
  */
     public function logout(Request $request)
     {
-        $request->user()->token()->delete();
-        return $this->general_response('', "Successful response", "200");
+        if ((new UserService())->logout($request->user())) {
+            return $this->general_response('', "Successful response", '200');
+        }
+        return $this->error_response('not found', '404');
     }
 /** @OA\get(
  * path="/email/verify/{id}/{hash}",
@@ -336,26 +345,16 @@ class UserController extends Controller
  */
     public function emailVerification($id, $hash)
     {
+        $userService = new UserService();
         $user = User::find($id);
-        if (!$user) {
-            return $this->error_response('not found', 404);
-        }
-
         if (
-            ! hash_equals(
-                $hash,
-                sha1($user->getEmailForVerification())
-            )
+            !($userService->matchMagicLinkHash($id, $hash)) ||
+            !($userService->verifyUserEmail($user, false))
         ) {
-            return $this->error_response('not found', 404);
+            return $this->error_response('not found', '404');
         }
 
-
-        if (! $user->hasVerifiedEmail()) {
-                 $user->markEmailAsVerified();
-                 event(new Verified($user));
-        }
-        return $this->general_response("", "Successful response", "200");
+        return $this->general_response("", "Successful response", '200');
     }
 
 
@@ -403,12 +402,10 @@ class UserController extends Controller
  */
     public function resendVerification(Request $request)
     {
-        if (! $request->user()->hasVerifiedEmail()) {
-            $request->user()->sendEmailVerificationNotification();
-
-            return $this->general_response("", "Successful response", "200");
+        if ((new UserService())->verifyUserEmail($request->user(), true)) {
+            return $this->general_response("", "Successful response", '200');
         }
-        return $this->error_response("Bad request", "400");
+        return $this->error_response("not found", '404');
     }
 /** @OA\Post(
  * path="/forgot_password",
