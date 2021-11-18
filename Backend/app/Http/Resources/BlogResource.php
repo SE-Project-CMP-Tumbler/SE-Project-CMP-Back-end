@@ -22,6 +22,7 @@ class BlogResource extends JsonResource
             'header_image' => $this->header_image,
             'title' => $this->title,
             'description' => $this->description
+            //'is_primary' => $this->is_primary 
         ];
     }
 }
