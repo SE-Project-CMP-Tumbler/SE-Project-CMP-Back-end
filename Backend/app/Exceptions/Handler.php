@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Misc\Traits\WebServiceResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Http\Misc\Helpers\Errors;
@@ -15,6 +16,7 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use WebServiceResponse;
     /**
      * A list of the exception types that are not reported.
      *
