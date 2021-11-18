@@ -75,7 +75,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/home/ahmed/Downloads/index.tiff"
+									"src": "/home/ahmed/Pictures/Screenshot from 2021-11-04 15-10-42.png"
 								}
 							]
 						},
@@ -190,14 +190,8 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "imageUrl",
-									"value": "http://i.stack.imgur.com/52Ha1.png",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n  \"imageUrl\": \"https://www.youtube.com/watch?v=feV7PfadPV0&list=PLPe5CNNrgsscjLPbd0g84JJeyRgwjEhwG&index=28\"\n}"
 						},
 						"url": {
 							"raw": "127.0.0.1:8000/api/upload_ext_photo/123456789",
@@ -228,16 +222,21 @@
 					"name": "upload_ext_video",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "videoUrl",
-									"value": "https://www.youtube.com/watch?v=QC61CKXgxkU&list=PLS1QulWo1RIa-sDLWbP01sEnlm_Bxmvqs&index=6",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n}"
 						},
 						"url": {
 							"raw": "{{host}}/upload_ext_video/123456789",
