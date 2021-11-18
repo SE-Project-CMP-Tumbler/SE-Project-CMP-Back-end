@@ -87,8 +87,7 @@ class UserController extends Controller
             $request->age,
             $request->blog_username
         );
-        if($error)
-        {
+        if ($error) {
             return $this->error_response($error[0], $error[1]);
         }
         $user = $userService->register(

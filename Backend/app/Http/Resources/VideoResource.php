@@ -14,15 +14,23 @@ class VideoResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'url' => $request->newVideoUrl,
-            'width' => $request->width,
-            'height' => $request->height,
-            'size' => $request->size,
-            'duration' => $request->duration,
-            'audio_codec' => $request->audio_codec,
-            'video_codec' => $request->video_codec,
-            'preview_image_url' => $request->preview_image_url,
-        ];
+        if (is_null($this->body)) {
+            return [
+                'url' => $this->url,
+                'width' => $this->width,
+                'height' => $this->height,
+                'size' => $this->size,
+                'duration' => $this->duration,
+                'audio_codec' => $this->audio_codec,
+                'video_codec' => $this->video_codec,
+                'preview_image_url' => $this->preview_image_url,
+            ];
+        } else {
+            return [
+                'body' => $this->body,
+                'width' => $this->width,
+                'height' => $this->height,
+            ];
+        }
     }
 }

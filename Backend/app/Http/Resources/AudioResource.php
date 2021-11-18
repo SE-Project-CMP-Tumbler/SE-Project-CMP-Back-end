@@ -15,8 +15,8 @@ class AudioResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'url' => $request->url,
-            'album_art_url' => $request->album_art_url
+            'url' => $this->url,
+            'album_art_url' => $this->album_art_url
         ];
     }
 }

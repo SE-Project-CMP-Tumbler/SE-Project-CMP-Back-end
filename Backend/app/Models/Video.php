@@ -11,6 +11,7 @@ class Video extends Model
 
     protected $fillable = [
         'url',
+        'body',
         'width',
         'height',
         'size',
