@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagRequest;
+use App\Http\Resources\TagCollection;
+use App\Http\Resources\TagResource;
+use App\Models\Post;
+use App\Models\PostTag;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -50,6 +57,33 @@ class TagController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "409", "msg":"The request could not be completed due to a conflict with the current state of the resource."})))
  * )
  */
+    /**
+     * Creates a new tag
+     *
+     * @param \App\Http\Requests\TagRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(TagRequest $request)
+    {
+        if (Tag::where('description', $request->tag_description)->count() > 0) {
+            return $this->general_response("", "this tag already exists", "422");
+        }
+
+        if (Post::where('id', $request->post_id)->count() == 0) {
+            return $this->general_response("", "this post doesn't exist", "404");
+        }
+
+        $tag = Tag::create([
+            'description' => $request->tag_description
+        ]);
+
+        PostTag::create([
+            'post_id' => $request->post_id,
+            'tag_description' => $request->tag_description
+        ]);
+
+        return $this->general_response("", "ok");
+    }
 /**
  * @OA\Get(
  * path="/tag/data/{tag_description}",
@@ -65,7 +99,7 @@ class TagController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -76,7 +110,7 @@ class TagController extends Controller
  *          @OA\Property(property="tag_image",type="string", format="byte", example=""),
  *          @OA\Property(property="followed",type="bool", example=false),
  *          @OA\Property(property="followers_number",type="integer", example=1026),)),),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
@@ -88,7 +122,22 @@ class TagController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
- */    
+ */
+    /**
+     * Get information of a tag
+     *
+     * @param mixed $tag_description
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($tag_description)
+    {
+        $tag = Tag::where('description', $tag_description)->first();
+
+        if (empty($tag)) {
+            return $this->general_response("", "the tag doesn't exist", 404);
+        }
+        return $this->general_response(new TagResource($tag), "ok");
+    }
 /**
  * @OA\Get(
  * path="/tag/posts/{tag_description}?sort=sort_type",
@@ -104,7 +153,7 @@ class TagController extends Controller
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  * @OA\Parameter(
  *          name="sort",
  *          description="The sort method to retrieve the posts",
@@ -112,7 +161,7 @@ class TagController extends Controller
  *          in="query",
  *          @OA\Schema(
  *              type="string")),
- * 
+ *
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -148,7 +197,7 @@ class TagController extends Controller
  *                          @OA\Property(property="0", type="string", example="books"),
  *                          @OA\Property(property="1", type="string", example="reading"),
  *                          @OA\Property(property="2", type="string", example="stay positive"),)),),),)),),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
@@ -179,7 +228,7 @@ class TagController extends Controller
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
- * 
+ *
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
@@ -192,4 +241,21 @@ class TagController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */
+    /**
+     * Get tags ordered descendingly by their post counts
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index()
+    {
+        $trending = DB::table('tags')
+        ->join('post_tag', 'tags.description', '=', 'post_tag.tag_description')
+        ->join('posts', 'post_tag.post_id', '=', 'posts.id')
+        ->select(DB::raw('count(description) as num_of_posts, description, image'))
+        ->groupBy('tags.description')
+        ->orderBy('num_of_posts', 'desc')
+        ->get();
+
+        return $this->general_response(new TagCollection($trending), "ok");
+    }
 }

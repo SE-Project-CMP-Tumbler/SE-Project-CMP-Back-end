@@ -1,15 +1,585 @@
 {
 	"info": {
-		"_postman_id": "5c294aad-2431-4eab-a9a9-368d9842ab25",
+		"_postman_id": "8cd359c5-bd5a-4377-8056-62626e623d52",
 		"name": "Backend-Team",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p>Faith. I believe that allah's choices for us is the best ones</p>\",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"published\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/post/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/44/25",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"44",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_status\": \"published\",\r\n    \"pinned\": false,\r\n    \"post_body\": \"<p>Bye!!</p>\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "upload_photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/ahmed/Pictures/index.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_photo/123456789",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_photo",
+								"123456789"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_audio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audio",
+									"type": "file",
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts.mp3"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_audio/123456789",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_audio",
+								"123456789"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_1080p.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_video/123456789",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_video",
+								"123456789"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_ext_photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageUrl",
+									"value": "http://i.stack.imgur.com/52Ha1.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_ext_photo/123456789",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_ext_photo",
+								"123456789"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_ext_video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoUrl",
+									"value": "https://www.youtube.com/watch?v=N69iZPwRneM",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_ext_video/123456789",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_ext_video",
+								"123456789"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"miklaziz122000miklaziz122000@gmail.com\",\r\n  \"password\": \"123\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resend_verification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/email/resend_verification",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"email",
+								"resend_verification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"rorodeana2132000@gmail.com\",\r\n  \"blog_username\": \"ok\",\r\n  \"password\": \"12321212114454\",\r\n  \"age\": \"22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify_email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/email/verify/1/c5e203daf59c43c62ef70298dfe98ead22176448?expires=1637116115&signature=1e6bee11b14fc00dea6c1507f6c711bd02c8c4b4374fd9d8a88c64f8ba56d145",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"email",
+								"verify",
+								"1",
+								"c5e203daf59c43c62ef70298dfe98ead22176448"
+							],
+							"query": [
+								{
+									"key": "expires",
+									"value": "1637116115"
+								},
+								{
+									"key": "signature",
+									"value": "1e6bee11b14fc00dea6c1507f6c711bd02c8c4b4374fd9d8a88c64f8ba56d145"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Blog",
 			"item": [
 				{
 					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"my blog\",\r\n  \"blog_username\": \"RadwaAhmedttok\",\r\n    \"password\": \"123\"\r\n  \r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/blog",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -25,12 +595,234 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/index",
+							"raw": "{{host}}/blog/5",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"index"
+								"blog",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get blog_setting",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog_settings/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog_settings",
+								"4"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update blog_setting",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"replies_settings\": \"Everyone can reply\",\r\n    \"allow_ask\": false,\r\n    \"ask_page_title\": \"okh\",\r\n    \"allow_anonymous_questions\": false,\r\n    \"allow_submittions\": false,\r\n    \"submissions_page_title\": \"Submit a post\",\r\n    \"submissions_guidelines\": \"To approve a submitted post it should be free of violence.\",\r\n  \"allow_messages\": false,\r\n  \"header_image\":\"kkk\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/blog_settings/7",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog_settings",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tag/data/3/scrum",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"data",
+								"3",
+								"scrum"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tag/data/scrum",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"data",
+								"scrum"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-trending-tags",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/tag/trending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"trending"
 							]
 						}
 					},
