@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Blog;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -14,12 +15,12 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        //$blog =Blog::where('user_id', $this->id)->first();
+        $blog = Blog::where('user_id', $this->id)->first();
         return [
             'id' => $this->id,
-            //'blog_username' => $blog->blog_username,
+            'username' => $blog->username,
             'email' => $this->email,
-            //'blog_avatar' => $blog->avatar,
+            'blog_avatar' => $blog->avatar,
             'access_token' =>  $this->token(),
         ];
     }

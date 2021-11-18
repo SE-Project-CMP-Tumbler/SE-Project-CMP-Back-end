@@ -22,15 +22,15 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $temp = $this->faker->boolean();
-        $temp2 = $temp ? $this->faker->unique()->biasedNumberBetween(100000000, 999999999) : null;
+        $linked_by_google = $this->faker->boolean();
+        $google_id = $linked_by_google ? $this->faker->unique()->regexify('[0-9]{21}') : null;
         return [
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'age' => $this->faker->biasedNumberBetween(16, 100),
-            'linked_by_google' => $temp,
-            'google_id' => $temp2,
+            'linked_by_google' => $linked_by_google,
+            'google_id' => $google_id,
         ];
     }
 

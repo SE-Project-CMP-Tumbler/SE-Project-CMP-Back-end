@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('age');
             $table->boolean('linked_by_google');
-            $table->integer('google_id')->nullable();
+            $table->string('google_id')->nullable();
             $table->timestamps();
         });
     }
