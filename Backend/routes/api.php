@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogSettingController;
+use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UploadFilesController;
 use Illuminate\Http\Request;
@@ -43,6 +44,9 @@ Route::delete('post/{post_id}/{blog_id}', [PostController::class,'destroy'])
         'post_id' => '[0-9]+']);
 Route::apiResource('/post', PostController::class);
 
+# Route::get('/post/random_posts', [PostFilterController::class, 'getRandomPosts']);
+# Route::get('/post/trending', [PostFilterController::class, 'getTrendingPosts']);
+
 /*
 | Uploads Routes
 */
@@ -71,23 +75,13 @@ Route::post(
     [UploadFilesController::class, 'uploadExtVideo']
 )->where([ 'blog_id' => '[0-9]{9}' ]);
 
-/*
-| User Routes
-*/
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('/login', [UserController::class,'login'])->name('login');
-
 Route::post('/register', [UserController::class,'register'])->name('register');
-
 Route::post('/logout', [UserController::class,'logout'])->name('logout')->middleware('auth:api');
-
 Route::get('/email/verify/{id}/{hash}', [UserController::class,'emailVerification'])->middleware(['signed'])->name('verification.verify');
-
 Route::post('/email/resend_verification', [UserController::class,'resendVerification'])->middleware(['auth:api', 'throttle:10,1'])->name('verification.send');
+
 
 /*
 | Tags Routes
@@ -95,3 +89,4 @@ Route::post('/email/resend_verification', [UserController::class,'resendVerifica
 Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store']);
 Route::get('/tag/data/{tag_description}', [TagController::class,'show']);
 Route::get('/tag/trending', [TagController::class,'index']);
+

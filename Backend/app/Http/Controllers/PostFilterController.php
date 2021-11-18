@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostFilterController extends Controller
 {
@@ -313,6 +316,7 @@ class PostFilterController extends Controller
  * )
  *
  */
+
 /**
  * @OA\Get(
  * path="/post/radar",
@@ -366,110 +370,147 @@ class PostFilterController extends Controller
  *
  */
 
-/**
- * @OA\Get(
- * path="/post/random_posts",
- * summary="Get  random posts",
- * description=" A blog get random posts",
- * operationId="randompost",
- * tags={"Posts"},
- * security={ {"bearer": {} }},
- * @OA\Response(
- *    response=200,
- *    description="Successful  response",
- *   @OA\JsonContent(
- *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
- *      @OA\Property(property="response",type="object",
- *      @OA\Property(property="posts",type="array",
- *          @OA\Items(
- *              @OA\Property(property="post_id", type="integer", example=5),
- *              @OA\Property(property="post_body", type="string", example=
- * "<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
- *               ),
- *              @OA\Property(property="post_status", type="string", example="published"),
- *              @OA\Property(property="blog_id", type="integer", example=5),
- *              @OA\Property(property="blog_username", type="string", example=""),
- *              @OA\Property(property="post_type", type="string", example="general"),
- *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
- *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
- *              @OA\Property(property="blog_title", type="string", example=""),
- *              @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
- *          ),
- *
- *       ),
- *
- * ),
- *     ),
- * ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
- *        )
- *     )
- * )
- *
- */
-/**
- * @OA\Get(
- * path="/post/trending",
- * summary="Get  trending posts",
- * description=" A blog get trending posts",
- * operationId="trendingpost",
- * tags={"Posts"},
- * security={ {"bearer": {} }},
- * @OA\Response(
- *    response=200,
- *    description="Successful  response",
- *  @OA\JsonContent(
- *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
- *      @OA\Property(property="response",type="object",
- *      @OA\Property(property="posts",type="array",
- *          @OA\Items(
- *              @OA\Property(property="post_id", type="integer", example=5),
- *              @OA\Property(property="post_status", type="string", example="published"),
- *              @OA\Property(property="post_body", type="string", example=
- *              "<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
- *               ),
- *              @OA\Property(property="blog_id", type="integer", example=5),
- *              @OA\Property(property="blog_username", type="string", example=""),
- *              @OA\Property(property="post_type", type="string", example="general"),
- *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
- *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
- *              @OA\Property(property="blog_title", type="string", example=""),
- *              @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
- *          ),
- *
- *       ),
- *
- * ),
- *     ),
- * ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
- *        )
- *     )
- * )
- *
- */
+    /**
+     * @OA\Get(
+     * path="/post/random_posts",
+     * summary="Get  random posts",
+     * description=" A blog get random posts",
+     * operationId="randompost",
+     * tags={"Posts"},
+     * security={ {"bearer": {} }},
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful  response",
+     *   @OA\JsonContent(
+     *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+     *      @OA\Property(property="response",type="object",
+     *      @OA\Property(property="posts",type="array",
+     *          @OA\Items(
+     *              @OA\Property(property="post_id", type="integer", example=5),
+     *              @OA\Property(property="post_body", type="string", example=
+     * "<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
+     *               ),
+     *              @OA\Property(property="post_status", type="string", example="published"),
+     *              @OA\Property(property="blog_id", type="integer", example=5),
+     *              @OA\Property(property="blog_username", type="string", example=""),
+     *              @OA\Property(property="post_type", type="string", example="general"),
+     *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+     *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
+     *              @OA\Property(property="blog_title", type="string", example=""),
+     *              @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+     *          ),
+     *
+     *       ),
+     *
+     * ),
+     *     ),
+     * ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+     *        )
+     *     )
+     * )
+     *
+     */
+
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
+    public function getRandomPosts()
+    {
+        $res = ["posts" => []];
+        $allRandomPosts = Post::all();
+        foreach ($allRandomPosts as $item) {
+            array_push($res["posts"], new PostResource($item));
+        }
+        shuffle($res["posts"]);
+        return $this->general_response($res, "ok");
+    }
+
+    /**
+     * @OA\Get(
+     * path="/post/trending",
+     * summary="Get trending posts",
+     * description=" A blog get trending posts",
+     * operationId="trendingpost",
+     * tags={"Posts"},
+     * security={ {"bearer": {} }},
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful  response",
+     *  @OA\JsonContent(
+     *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+     *      @OA\Property(property="response",type="object",
+     *      @OA\Property(property="posts",type="array",
+     *          @OA\Items(
+     *              @OA\Property(property="post_id", type="integer", example=5),
+     *              @OA\Property(property="post_status", type="string", example="published"),
+     *              @OA\Property(property="post_body", type="string", example=
+     *              "<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
+     *               ),
+     *              @OA\Property(property="blog_id", type="integer", example=5),
+     *              @OA\Property(property="blog_username", type="string", example=""),
+     *              @OA\Property(property="post_type", type="string", example="general"),
+     *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+     *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
+     *              @OA\Property(property="blog_title", type="string", example=""),
+     *              @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+     *          ),
+     *
+     *       ),
+     *
+     * ),
+     *     ),
+     * ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+     *        )
+     *     )
+     * )
+     **/
+
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
+    public function getTrendingPosts()
+    {
+        # TODO: do the logic for getting the trending posts
+        return $this->getRandomPosts();
+    }
+
+
 /**
  * @OA\Get(
  * path="/post/ask",

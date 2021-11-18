@@ -25,6 +25,8 @@ class BlogFactory extends Factory
             //"avatar_shape" => $this->faker->randomElement(['circle','square']),
             "title" => $this->faker->title(),
             "user_id" => $this->faker->randomElement($available_user_ids)
+
+
         ];
     }
 }

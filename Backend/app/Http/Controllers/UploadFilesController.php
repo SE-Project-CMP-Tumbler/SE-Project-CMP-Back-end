@@ -2,6 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AudioRequest;
+use App\Http\Requests\ExtImageRequest;
+use App\Http\Requests\ExtVideoRequest;
+use App\Http\Requests\ImageRequest;
+use App\Http\Requests\VideoRequest;
+use App\Http\Resources\AudioResource;
+use App\Http\Resources\ImageResource;
+use App\Http\Resources\VideoResource;
+use App\Models\Audio;
+use App\Models\Image;
+use App\Models\Video;
+use Embed\Embed;
 use FFMpeg\FFMpeg;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -102,36 +114,29 @@ class UploadFilesController extends Controller
      * @return json
      * @throws conditon
      **/
-    public function uploadPhoto(Request $request)
+    public function uploadPhoto(ImageRequest $request)
     {
         // useful methods for dealing with files
         // guessExtension(), getMimeType(), store(), asStore(), storePublicly(), move(), getClientOriginalName()
         // getClientMimeType(), guessClientExtension(), getSize(), getError(), isValid()
 
         // Note: edit upload_max_filesize in /etc/php/8.0/cli/php.ini and /etc/php/8.0/appache2/php.ini
-        $rules = [
-            'image' => 'required|mimes:jpg,jpeg,png,bmp,gif|max:102400'
-        ];
-        $messages = [
-          'required'  => 'The :attribute field is required.',
-        ];
-        $request->validate($rules, $messages);
-
+        // $request->validate();
         // $request('image')->store('dir'); // sotres it with random name of -chars in /storage/doc/{dir}/{name.ext}
+
         $uploadedImage = $request->file('image');
         $newImageName = Str::random(40) . '.' . $uploadedImage->getClientOriginalExtension();
-        $newImageUrl = $uploadedImage->move(public_path('images'), $newImageName);
-        [$width, $height] = getimagesize($newImageUrl);
-
-        $sucessObj = [
-            'url' => $newImageUrl->getRealPath(),
+        $newImage = $uploadedImage->move(public_path('images'), $newImageName);
+        [$width, $height] = getimagesize($newImage);
+        $finalImage = new Image([
+            'url' => $newImage->getRealPath(),
             'width' => $width,
             'height' => $height,
             'orignal_filename' => $uploadedImage->getClientOriginalName(),
-            'routation' => false,
+            'rotation' => false,
             'upload_id' => false
-        ];
-        return $this->general_response($sucessObj, "ok", "200");
+        ]);
+        return $this->general_response(new ImageResource($finalImage), "ok", "200");
     }
 
    /**
@@ -223,20 +228,9 @@ class UploadFilesController extends Controller
      * @return json
      * @throws conditon
      **/
-    public function uploadExtPhoto(Request $request)
+    public function uploadExtPhoto(ExtImageRequest $request)
     {
-        $rules = [
-            // 'imageUrl' => [
-            //     'required',
-            //     'regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i'
-            // ],
-            'imageUrl' => 'required|url',
-        ];
-        $messages = [
-          'required'  => 'The :attribute field is required with a real url.',
-        ];
-
-        $request->validate($rules, $messages);
+        // $request->validate();
         $headerResponse = get_headers($request->imageUrl, 1);
         $validTypes = ["jpg", "jpeg", "png", "gif", "bmp"];
         $isValidType = false;
@@ -251,7 +245,7 @@ class UploadFilesController extends Controller
             }
         }
 
-        // TODO: add the same size resteriction
+        // TODO: add the same size resteriction, get the orignal_filename
         if ($isValidType) {
             // $filePath = pathinfo($request->imageUrl);
             $uploadedImage = file_get_contents($request->imageUrl);
@@ -259,16 +253,15 @@ class UploadFilesController extends Controller
             $newImagePath = public_path('images/' . $newImageName);
             file_put_contents($newImagePath, $uploadedImage);
             [$width, $height] = getimagesize($newImagePath);
-
-            $sucessObj = [
+            $finalImage = new Image([
                 'url' => $newImagePath,
                 'width' => $width,
                 'height' => $height,
                 'orignal_filename' => '',
                 'routation' => false,
                 'upload_id' => false
-            ];
-            return $this->general_response($sucessObj, "ok", "200");
+            ]);
+            return $this->general_response(new ImageResource($finalImage), "ok", "200");
         }
 
         return $this->general_response("", "not supported image type", "422");
@@ -358,26 +351,17 @@ class UploadFilesController extends Controller
      * @return json
      * @throws conditon
      **/
-    public function uploadAudio(Request $request)
+    public function uploadAudio(AudioRequest $request)
     {
-        $rules = [
-            'audio' => 'required|mimes:mp3,wav,3gp,3gpp|max:102400'
-        ];
-        $messages = [
-          'required'  => 'The :attribute field is required.',
-        ];
-        $request->validate($rules, $messages);
-
-        // $request('audio')->store('dir'); // sotres it with random name of -chars in /storage/doc/{dir}/{name.ext}
+        // $request->validate();
         $uploadedAudio = $request->file('audio');
         $newAudioName = Str::random(40) . '.' . $uploadedAudio->getClientOriginalExtension();
         $newAudioUrl = $uploadedAudio->move(public_path('audios'), $newAudioName);
-
-        $sucessObj = [
+        $finalAudio = new Audio([
             'url' => $newAudioUrl->getRealPath(),
             'album_art_url' => false
-        ];
-        return $this->general_response($sucessObj, "ok", "200");
+        ]);
+        return $this->general_response(new AudioResource($finalAudio), "ok", "200");
     }
 
    /**
@@ -470,17 +454,9 @@ class UploadFilesController extends Controller
      * @return json
      * @throws conditon
      **/
-    public function uploadVideo(Request $request)
+    public function uploadVideo(VideoRequest $request)
     {
-        $rules = [
-            'video' => 'required|mimes:mp4,mkv,mov,flv,avi,webm|max:102400'
-        ];
-        $messages = [
-          'required'  => 'The :attribute field is required.',
-        ];
-        $request->validate($rules, $messages);
-
-        // $request('video')->store('dir'); // sotres it with random name of -chars in /storage/doc/{dir}/{name.ext}
+        // $request->validate();
         $uploadedVideo = $request->file('video');
         $newVideoName = Str::random(40) . '.' . $uploadedVideo->getClientOriginalExtension();
         $newVideoObj = $uploadedVideo->move(public_path('videos'), $newVideoName);
@@ -506,7 +482,7 @@ class UploadFilesController extends Controller
         $video_codec = $video->getStreams()->videos()->first()->get('codec_name');
         $audio_codec = $video->getStreams()->audios()->first()->get('codec_name');
 
-        $sucessObj = [
+        $finalVideo = new Video([
             'url' => $newVideoUrl,
             'width' => $width,
             'height' => $height,
@@ -515,8 +491,8 @@ class UploadFilesController extends Controller
             'audio_codec' => $audio_codec,
             'video_codec' => $video_codec,
             'preview_image_url' => ''
-        ];
-        return $this->general_response($sucessObj, "ok", "200");
+        ]);
+        return $this->general_response(new VideoResource($finalVideo), "ok", "200");
     }
 
    /**
@@ -548,14 +524,10 @@ class UploadFilesController extends Controller
     *    @OA\JsonContent(
     *       @OA\Property(property="meta", type="object",example={"status":"200","msg":"OK"}),
     *       @OA\Property(property="response",type="object",
-    *         @OA\Property(property="url", type="url", example="/storage/video_url.jpg"),
+    *         @OA\Property(property="body", type="string",
+    *                      example="<iframe width='200' height='113' src='https://www.youtube.com/embed/QC61CKXgxkU?list=PLS1QulWo1RIa-sDLWbP01sEnlm_Bxmvqs' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"),
     *         @OA\Property(property="width", type="integer", example=360),
     *         @OA\Property(property="height", type="integer", example=168),
-    *         @OA\Property(property="size", type="integer", example=1031273),
-    *         @OA\Property(property="duration", type="float", example=13.760000),
-    *         @OA\Property(property="audio_codec", type="string", example="acc"),
-    *         @OA\Property(property="video_codec", type="string", example="h264"),
-    *         @OA\Property(property="preview_image_url",type="url",example="/storage/preview_image_url.jpg"),
     *       ),
     *   ),
     * ),
@@ -610,55 +582,20 @@ class UploadFilesController extends Controller
      * @return json
      * @throws conditon
      **/
-    // TODO: complete this api route
-    public function uploadExtVideo(Request $request)
+    // TODO: add ExtVideoResource ?!
+    public function uploadExtVideo(ExtVideoRequest $request)
     {
-        $rules = [
-            // 'imageUrl' => [
-            //     'required',
-            //     'regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i'
-            // ],
-            'videoUrl' => 'required|url',
-        ];
-        $messages = [
-          'required'  => 'The :attribute field is required with a real url.',
-        ];
-
-        $request->validate($rules, $messages);
-        $headerResponse = get_headers($request->videoUrl, 1);
-        $validTypes = ["mp4", "mkv", "mov", "flv", "webm", "avi"];
-        $isValidType = false;
-        $videoExt = "";
-        if (strpos($headerResponse[0], "200" == true)) {
-            foreach ($validTypes as $item) {
-                if ($headerResponse['Content-Type'] == "video/" . $item) {
-                    $isValidType = true;
-                    $videoExt = $item;
-                    break;
-                }
-            }
+        // $request->validate();
+        $embed = new Embed();
+        $info = $embed->get($request->videoUrl);
+        if ($info) {
+            $successObj = [
+                'body' => $info->code->html,
+                'width' => $info->code->width,
+                'height' => $info->code->height,
+            ];
+            return $this->general_response($successObj, "ok", "200");
         }
-        // dd($headerResponse);
-
-        // if ($isValidType) {
-        //     // $filePath = pathinfo($request->imageUrl);
-        //     $uploadedVideo = file_get_contents($request->imageUrl);
-        //     $newVideoName = Str::random(40) . '.' . $videoExt;
-        //     $newVideoPath = public_path('images/' . $newVideoName);
-        //     file_put_contents($newVideoPath, $uploadedVideo);
-        //     [$width, $height] = getimagesize($newVideoPath);
-
-        //     $sucessObj = [
-        //         'url' => $newVideoPath,
-        //         'width' => $width,
-        //         'height' => $height,
-        //         'orignal_filename' => '',
-        //         'routation' => false,
-        //         'upload_id' => false
-        //     ];
-        //     return $this->general_response($sucessObj, "ok", "200");
-        // }
-
-        return $this->general_response("", "not supported image type", "422");
+        return $this->general_response("", "not supported", "422");
     }
 }
