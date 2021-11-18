@@ -62,7 +62,7 @@ class Handler extends ExceptionHandler
     {
         if ($request->expectsJson()) {
             if ($exception instanceof ModelNotFoundException) {
-                return $this->error_response(modelName($exception), "404");
+                return $this->error_response($this->modelName($exception), "404");
             } elseif ($exception instanceof AuthorizationException) {
                 return $this->error_response(Errors::UNAUTHORIZED, "401");
             } elseif ($exception instanceof AuthenticationException) {
