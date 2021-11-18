@@ -10,26 +10,18 @@ use App\Http\Requests\VideoRequest;
 use App\Http\Resources\AudioResource;
 use App\Http\Resources\ImageResource;
 use App\Http\Resources\VideoResource;
-use App\Models\Audio;
-use App\Models\Image;
-use App\Models\Video;
-use App\Services\UploadFilesService;
-use Embed\Embed;
-use FFMpeg\FFMpeg;
-use Illuminate\Support\Str;
+use App\Services\UploadFileService;
 use Illuminate\Http\Request;
 
-use function public_path;
-
 /**
- *  UploadFilesController deals with uploading photos, videos and audios
+ *  UploadFileController deals with uploading photos, videos and audios
  * @method uploadPhoto(Request $request)
  * @method uploadExtImage(Request $request)
  * @method uploadAudio(Request $request)
  * @method uploadVideo(Request $request)
  * @method uploadExtVideo(Request $request)
  */
-class UploadFilesController extends Controller
+class UploadFileController extends Controller
 {
    /**
     * @OA\Post(
@@ -121,7 +113,7 @@ class UploadFilesController extends Controller
     public function uploadPhoto(ImageRequest $request)
     {
         // $request->validate();
-        $finalImage = (new UploadFilesService())->validateImageService($request->file('image'));
+        $finalImage = (new UploadFileService())->validateImageService($request->file('image'));
         if ($finalImage) {
             return $this->general_response(new ImageResource($finalImage), "ok", "200");
         } else {
@@ -219,7 +211,7 @@ class UploadFilesController extends Controller
      **/
     public function uploadExtPhoto(ExtImageRequest $request)
     {
-        $finalImage = (new UploadFilesService())->validateExtImageService($request->imageUrl);
+        $finalImage = (new UploadFileService())->validateExtImageService($request->imageUrl);
         if ($finalImage) {
             return $this->general_response(new ImageResource($finalImage), "ok", "200");
         } else {
@@ -312,7 +304,7 @@ class UploadFilesController extends Controller
      **/
     public function uploadAudio(AudioRequest $request)
     {
-        $finalAudio = (new UploadFilesService())->validateAudioService($request->file('audio'));
+        $finalAudio = (new UploadFileService())->validateAudioService($request->file('audio'));
         if ($finalAudio) {
             return $this->general_response(new AudioResource($finalAudio), "ok", "200");
         } else {
@@ -411,7 +403,7 @@ class UploadFilesController extends Controller
      **/
     public function uploadVideo(VideoRequest $request)
     {
-        $finalVideo = (new UploadFilesService())->validateVideoService($request->file('video'));
+        $finalVideo = (new UploadFileService())->validateVideoService($request->file('video'));
         if ($finalVideo) {
             return $this->general_response(new VideoResource($finalVideo), "ok", "200");
         } else {
@@ -507,7 +499,7 @@ class UploadFilesController extends Controller
      **/
     public function uploadExtVideo(ExtVideoRequest $request)
     {
-        $finalVideo = (new UploadFilesService())->validateExtVideoService($request->videoUrl);
+        $finalVideo = (new UploadFileService())->validateExtVideoService($request->videoUrl);
         if ($finalVideo) {
             return $this->general_response(new VideoResource($finalVideo), "ok", "200");
         } else {
