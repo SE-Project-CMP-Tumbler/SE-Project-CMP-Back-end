@@ -424,12 +424,9 @@ class PostFilterController extends Controller
      */
 
     /**
-     * undocumented function summary
+     * get all the posts in random order
      *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
-     * @return type
+     * @return json
      * @throws conditon
      **/
     public function getRandomPosts()
@@ -496,12 +493,9 @@ class PostFilterController extends Controller
      **/
 
     /**
-     * undocumented function summary
+     * get all the trending posts
      *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
-     * @return type
+     * @return json
      * @throws conditon
      **/
     public function getTrendingPosts()
