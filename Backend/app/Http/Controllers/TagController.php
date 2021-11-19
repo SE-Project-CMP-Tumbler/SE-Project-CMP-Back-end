@@ -69,11 +69,13 @@ class TagController extends Controller
             return $this->general_response("", "this tag already exists", "422");
         }
 
-        if (Post::where('id', $request->post_id)->count() == 0) {
+        $post = Post::where('id', $request->post_id)->first();
+        if ($post == null) {
             return $this->general_response("", "this post doesn't exist", "404");
         }
 
-        $tag = Tag::create([
+        $this->authorize('create', [Tag::class, $post]);
+        Tag::create([
             'description' => $request->tag_description
         ]);
 
