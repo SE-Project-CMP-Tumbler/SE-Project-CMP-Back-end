@@ -126,7 +126,7 @@ class TagController extends Controller
     /**
      * Get information of a tag
      *
-     * @param mixed $tag_description
+     * @param string $tag_description
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($tag_description)

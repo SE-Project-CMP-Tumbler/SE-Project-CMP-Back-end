@@ -21,15 +21,27 @@ class Tag extends Model
      * @var string
      */
     protected $keyType = 'string';
+    /**
+     * The incrementing state of the primary key
+     *
+     * @var bool
+     */
     public $incrementing = false;
-
     /**
       * The attributes that are mass assignable.
       *
       * @var string[]
       */
-    protected $fillable = ['description','image'];
+    protected $fillable = [
+      'description',
+      'image'
+    ];
 
+    /**
+     * Get posts having and attached to this tag
+     *
+     * @return \Post[]
+     */
     public function posts()
     {
         return $this->belongsToMany(Post::class, 'post_tag', 'tag_description', 'post_id');

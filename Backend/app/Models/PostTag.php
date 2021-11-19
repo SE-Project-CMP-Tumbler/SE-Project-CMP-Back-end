@@ -18,11 +18,13 @@ class PostTag extends Model
     /**
      * The primary keys of the post_tag table
      *
-     * @var string
+     * @var string[]
      */
     protected $primaryKey = ['post_id', 'tag_description'];
     /**
      * The incrementing state of the primary key
+     *
+     * @var bool
      */
     public $incrementing = false;
     /**
@@ -30,7 +32,8 @@ class PostTag extends Model
      *
      * @var string
      */
-    protected $fillable = ['post_id','tag_description'];
-
-
+    protected $fillable = [
+        'post_id',
+        'tag_description'
+    ];
 }

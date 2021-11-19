@@ -125,12 +125,24 @@ class PostController extends Controller
  *     )
  * )
  */
-    public function update(Post $post, UpdatePostRequest $request)
+    /**
+     * Update an existing post
+     *
+     * @param int $post_id
+     * @param \App\Http\Requests\UpdatePostRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($post_id, UpdatePostRequest $request)
     {
+        // if (preg_match('([0-9]+$)', $post_id) == false) {
+        //     return $this->general_response("", "The post id should be numeric.", "422");
+        // }
+        $post = Post::where('id', $post_id)->first();
         if ($post == null) {
             return $this->general_response("", "This post was not found", "404");
         }
 
+        // $this->authorize('update', $post);
         $post->update([
             'status' => $request->post_status ?? $post->status,
             'published_at' => $request->post_time ?? $post->published_at,
@@ -196,20 +208,18 @@ class PostController extends Controller
     /**
      * Delte a post
      *
-     * @param mixed $post_id
-     * @param mixed $blog_id
+     * @param int $post_id
+     * @param int $blog_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($post_id, $blog_id)
+    public function delete($post_id)
     {
         $post = Post::where('id', $post_id)->first();
         if (empty($post)) {
             return $this->general_response("", "This post doesn't exist", "404");
         }
-        $blog = Blog::where('id', $blog_id)->first();
-        if (empty($blog)) {
-            return $this->general_response("", "The blog requesting this action doesn't exist", "404");
-        }
+
+        $this->authorize('delete', $post);
         $post->delete();
         return $this->general_response("", "ok");
     }
@@ -305,8 +315,20 @@ class PostController extends Controller
  *     )
  * )
  */
-    public function show(Post $post)
+    /**
+     * Retrieve a specific post
+     *
+     * @param int $post_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($post_id, Request $request)
     {
+        // $request->merge(['post_id' => $request->route('post_id')]);
+        // $request->validate([
+        //     'post_id' => 'required|numeric'
+        // ]);
+
+        $post = Post::where('id', $post_id)->first();
         if ($post == null) {
             return $this->general_response("", "This post was not found", "404");
         }
@@ -387,6 +409,12 @@ class PostController extends Controller
  *  ),
  * )
  */
+    /**
+     * Creates a new post
+     *
+     * @param \App\Http\Requests\PostRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(PostRequest $request)
     {
         $published_at = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
@@ -398,6 +426,8 @@ class PostController extends Controller
             'type' => $request->post_type,
             'blog_id' => $request->blog_id
         ]);
+
+        //need to create the tags
 
         return $this->general_response(new PostResource($post), "ok");
     }
