@@ -25,17 +25,16 @@ class BlogSettingRequest extends FormRequest
      */
     public function rules()
     {
-        $replies = array('Everyone can reply','Tumblrs you follow and Tumblrs following you
-        for a  week can reply','Only Tumblrs you follow can reply');
+        $replies = array('Everyone can reply','Tumblrs you follow and Tumblrs following you for a week can reply','Only Tumblrs you follow can reply');
         return [
             'allow_messages' => 'boolean',
             'replies_settings' => ['string',Rule::in($replies)],
             'allow_submittions' => 'boolean',
-            'submissions_page_title' => 'string',
-            'submissions_guidelines' => 'string',
+            'submissions_page_title' => 'string|min:3',
+            'submissions_guidelines' => 'string|min:3',
             'allow_ask' => 'boolean',
             'allow_anonymous_questions' => 'boolean',
-            'ask_page_title' => 'string',
+            'ask_page_title' => 'string|min:3',
         ];
     }
 }

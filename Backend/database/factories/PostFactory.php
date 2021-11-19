@@ -18,7 +18,7 @@ class PostFactory extends Factory
         $available_blog_ids = $blogs->map(function ($blog) {
             return $blog->id;
         })->toArray();
-        print_r($available_blog_ids);
+        // print_r($available_blog_ids);
         return [
             'body' => $this->faker->randomHtml(4, 2),
             'blog_id' => $this->faker->randomElement($available_blog_ids)

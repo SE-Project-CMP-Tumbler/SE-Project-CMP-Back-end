@@ -22,7 +22,7 @@ class BlogFactory extends Factory
         return [
             "username" => $this->faker->unique()->name,
             "avatar" => $this->faker->name,
-            //"avatar_shape" => $this->faker->randomElement(['circle','square']),
+            "description" => $this->faker->text(),
             "title" => $this->faker->title(),
             "user_id" => $this->faker->randomElement($available_user_ids)
 
