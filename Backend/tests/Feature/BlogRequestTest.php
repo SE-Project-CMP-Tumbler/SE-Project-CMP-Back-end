@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Blog;
+use App\Models\User;
 use App\Http\Misc\Helpers\Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,13 +20,14 @@ class BlogRequestTest extends TestCase
     public function testRequiredUsername()
     {
 
-
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $blog = [
             "password" => "123",
             "title" => "First Blog"
         ];
         $response = $this
-        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -39,12 +42,13 @@ class BlogRequestTest extends TestCase
      */
     public function testRequiredTitle()
     {
-
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $blog = [
             "blog_username" => "RadwaAhmed",
         ];
         $response = $this
-        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -59,12 +63,14 @@ class BlogRequestTest extends TestCase
      */
     public function testSizeUsername()
     {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $blog = [
             "blog_username" => "Ra",
             "title" => "Mytitle"
         ];
         $response = $this
-        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -79,13 +85,14 @@ class BlogRequestTest extends TestCase
      */
     public function testSizeTitle()
     {
-
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $blog = [
             "blog_username" => "Radwa",
             "title" => "My"
         ];
         $response = $this
-        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -100,14 +107,15 @@ class BlogRequestTest extends TestCase
      */
     public function testSizePssword()
     {
-
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $blog = [
             "blog_username" => "Radwa",
             "title" => "MyBlog",
             "password" => "12"
         ];
         $response = $this
-        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",

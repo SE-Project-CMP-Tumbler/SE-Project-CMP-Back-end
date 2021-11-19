@@ -250,7 +250,7 @@ class BlogController extends Controller
         if (preg_match('([0-9]+$)', $blog_id) == false) {
             return $this->general_response("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::find($blog_id);
+        $blog = Blog::where(['id' => $blog_id , 'is_primary' => false]);
         if ($blog == null) {
             return $this->general_response("", "Not Found blog", "404");
         }
