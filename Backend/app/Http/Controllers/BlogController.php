@@ -67,8 +67,15 @@ class BlogController extends Controller
   * @param \Blog  $blog
   * @return \json
  */
-    public function show(Blog $blog)
+    public function show($blog_id)
     {
+        if (preg_match('([0-9]+$)', $blog_id) == false) {
+            return $this->general_response("", "The blog id should be numeric.", "422");
+        }
+        $blog = Blog::find($blog_id);
+        if ($blog == null) {
+            return $this->general_response("", "Not Found blog", "404");
+        }
         return $this->general_response(new BlogResource($blog), "ok");
     }
  /**
@@ -238,9 +245,15 @@ class BlogController extends Controller
   * @param \Blog $blog
   * @return \json
  */
-    public function delete(Request $request, Blog $blog)
+    public function delete(Request $request, $blog_id)
     {
-
+        if (preg_match('([0-9]+$)', $blog_id) == false) {
+            return $this->general_response("", "The blog id should be numeric.", "422");
+        }
+        $blog = Blog::find($blog_id);
+        if ($blog == null) {
+            return $this->general_response("", "Not Found blog", "404");
+        }
         $this->authorize('delete', $blog);
         $blog->delete();
         return $this->general_response("", "ok");

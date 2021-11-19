@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class BlogPolicyTest extends TestCase
 {
+
     /**
      * A  test update true policy of blog
      *
@@ -22,27 +23,27 @@ class BlogPolicyTest extends TestCase
         $this->assertTrue($user->can('update', $blog));
     }
     /**
-     * A  test update false policy of blog 
+     * A  test update false policy of blog
      *
      * @return void
      */
     public function testUpdateFalseBlogPolicy()
     {
-        $userOwner = User::factory()->create();
+        $user = User::factory()->create();
         $userGuest = User::factory()->create();
-        $blog = Blog::factory()->create(['user_id' => $userOwner->id]);
+        $blog = Blog::factory()->create(['user_id' => $user->id]);
         $this->assertFalse($userGuest->can('update', $blog));
     }
     /**
-     * A  test update false policy of blog 
+     * A  test update false policy of blog
      *
      * @return void
      */
     public function testDeleteFalseBlogPolicy()
     {
-        $userOwner = User::factory()->create();
+        $user = User::factory()->create();
         $userGuest = User::factory()->create();
-        $blog = Blog::factory()->create(['user_id' => $userOwner->id]);
+        $blog = Blog::factory()->create(['user_id' => $user->id]);
         $this->assertFalse($userGuest->can('delete', $blog));
     }
       /**
