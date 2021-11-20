@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Http\Misc\Helpers\Config;
 use App\Models\Audio;
 use App\Models\Image;
 use App\Models\Video;
 use Embed\Embed;
 use FFMpeg\FFMpeg;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Throwable;
 
 /**
  * UploadFileService handles the logic of uploading files
@@ -35,11 +38,11 @@ class UploadFileService
         } elseif (is_array($uploadedImage)) {
             $uploadedImage = $uploadedImage[0];
         }
-        $newImageName = Str::random(40) . '.' . $uploadedImage->getClientOriginalExtension();
-        $newImage = $uploadedImage->move(public_path('images'), $newImageName);
-        [$width, $height] = getimagesize($newImage);
+        $newImage = $uploadedImage->store('', 'images');
+        $newImagePath = Storage::disk('images')->getAdapter()->getPathPrefix() . $newImage;
+        [$width, $height] = getimagesize($newImagePath);
         $finalImage = new Image([
-            'url' => $newImage->getRealPath(),
+            'url' => $newImagePath,
             'width' => $width,
             'height' => $height,
             'orignal_filename' => $uploadedImage->getClientOriginalName(),
@@ -56,32 +59,70 @@ class UploadFileService
      * then allow or reject that image.
      *
      * @param string $imageUrl the image link
-     * @return \App\Models\Image|null
+     * @return array(bool,\App\Models\Image)
      **/
     public function validateExtImageService(string $imageUrl)
     {
         if (is_null($imageUrl)) {
-            return null;
+            return [false, "The imageUrl field is required"];
         }
-        $headerResponse = get_headers($imageUrl, 1);
-        $validTypes = ["jpg", "jpeg", "png", "gif", "bmp"];
+        try {
+            // stream_context_set_default([
+            //     'http' => [
+            //         'method' => 'HEAD',
+            //         'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0)'
+            //     ]
+            // ]);
+            $headerResponse = get_headers($imageUrl, 1);
+            // $ch = curl_init($imageUrl);
+            // $options = array(
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_HEADER         => true,
+            //     CURLOPT_FOLLOWLOCATION => true,
+            //     CURLOPT_USERAGENT      => "spider",
+            //     CURLOPT_AUTOREFERER    => true,
+            //     CURLOPT_SSL_VERIFYPEER => false,
+            //     CURLOPT_NOBODY => true
+            // );
+            // curl_setopt_array($ch, $options);
+            // $output = curl_exec($ch); // $output contains the output string
+            // curl_close($ch); // close curl resource to free up system resources
+            // $headerResponse = explode("\n", $output);
+            // stream_context_set_default([
+            //     'http' => [
+            //         'method' => 'GET',
+            //         'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0)'
+            //     ]
+            // ]);
+        } catch (Throwable $e) {
+            return [false, "image url should be valid image url"];
+        }
+        if ($headerResponse == false) {
+            return [false, "image url should be valid image url"];
+        }
+        $validTypes = Config::VALID_IMAGE_TYPES;
         $isValidType = false;
         $imageExt = "";
-        if (strpos($headerResponse[0], "200" == true)) {
+        $imageSize = -1;
+        if (strpos($headerResponse[0], "200") == true) {
             foreach ($validTypes as $item) {
                 if ($headerResponse['Content-Type'] == "image/" . $item) {
                     $isValidType = true;
                     $imageExt = $item;
+                    $imageSize = $headerResponse["Content-Length"];
                     break;
                 }
             }
-        }
-        // TODO: add the same size resteriction, get the orignal_filename
-        if ($isValidType) {
-            // $filePath = pathinfo($request->imageUrl);
+            if ($isValidType == false) {
+                return [false, "The image type isn't supported"];
+            }
+            if ($imageSize == -1 || $imageSize > Config::FILE_UPLOAD_MAX_SIZE) {
+                return [false, "Allowed image max size is "  . Config::FILE_UPLOAD_MAX_SIZE / 1024 . "MB"];
+            }
+            // TODO: get the orignal_filename
             $uploadedImage = file_get_contents($imageUrl);
             $newImageName = Str::random(40) . '.' . $imageExt;
-            $newImagePath = public_path('images/' . $newImageName);
+            $newImagePath = Storage::disk('images')->getAdapter()->getPathPrefix() . $newImageName;
             file_put_contents($newImagePath, $uploadedImage);
             [$width, $height] = getimagesize($newImagePath);
             $finalImage = new Image([
@@ -92,9 +133,9 @@ class UploadFileService
                 'routation' => false,
                 'upload_id' => false
             ]);
-            return $finalImage;
+            return [true, $finalImage];
         }
-        return null;
+        return [false, "image url should be valid image url"];
     }
 
     /**
@@ -113,10 +154,10 @@ class UploadFileService
         } elseif (is_array($uploadedAudio)) {
             $uploadedAudio = $uploadedAudio[0];
         }
-        $newAudioName = Str::random(40) . '.' . $uploadedAudio->getClientOriginalExtension();
-        $newAudioUrl = $uploadedAudio->move(public_path('audios'), $newAudioName);
+        $newAudio = $uploadedAudio->store('', 'audios');
+        $newAudioPath = Storage::disk('audios')->getAdapter()->getPathPrefix() . $newAudio;
         $finalAudio = new Audio([
-            'url' => $newAudioUrl->getRealPath(),
+            'url' => $newAudioPath,
             'album_art_url' => false
         ]);
         return $finalAudio;
@@ -138,9 +179,8 @@ class UploadFileService
         } elseif (is_array($uploadedVideo)) {
             $uploadedVideo = $uploadedVideo[0];
         }
-        $newVideoName = Str::random(40) . '.' . $uploadedVideo->getClientOriginalExtension();
-        $newVideoObj = $uploadedVideo->move(public_path('videos'), $newVideoName);
-        $newVideoUrl = $newVideoObj->getRealPath();
+        $newVideo = $uploadedVideo->store('', 'videos');
+        $newVideoPath = Storage::disk('videos')->getAdapter()->getPathPrefix() . $newVideo;
 
         // $ffprobe = FFMpeg::create([
         //     'ffmpeg.binaries' => exec('which ffmpeg'),
@@ -148,14 +188,14 @@ class UploadFileService
         // ]);
 
         $ffprobe = FFMpeg::create();
-        $video = $ffprobe->open($newVideoUrl);
+        $video = $ffprobe->open($newVideoPath);
         $video_dimensions = $video
         ->getStreams()                  // extracts streams informations
         ->videos()                      // filters video streams
         ->first()                       // returns the first video stream
         ->getDimensions();              // returns a FFMpeg\Coordinate\Dimension object
 
-        $size = $newVideoObj->getSize();
+        // $size = $newVideoObj->getSize();
         $width = $video_dimensions->getWidth();
         $height = $video_dimensions->getHeight();
         $duration = $video->getFormat()->get('duration');
@@ -163,10 +203,10 @@ class UploadFileService
         $audio_codec = $video->getStreams()->audios()->first()->get('codec_name');
 
         $finalVideo = new Video([
-            'url' => $newVideoUrl,
+            'url' => $newVideoPath,
             'width' => $width,
             'height' => $height,
-            'size' => $size,
+            // 'size' => $size,
             'duration' => $duration,
             'audio_codec' => $audio_codec,
             'video_codec' => $video_codec,
@@ -178,27 +218,30 @@ class UploadFileService
     /**
      * upload video from url service
      *
-     * validate the type and size of an uploaded video
-     * then allow or reject that video.
-     *
      * @param string $videoUrl the video link
-     * @return \App\Models\Video|null
+     * @return array(bool,\App\Models\Video)
      **/
     public function validateExtVideoService(string $videoUrl)
     {
         if (is_null($videoUrl)) {
-            return null;
+            return [false, "The videoUrl field is required"];
+        } elseif (is_array($videoUrl)) {
+            $videoUrl = $videoUrl[0];
         }
         $embed = new Embed();
-        $info = $embed->get($videoUrl);
-        if ($info) {
+        try {
+            $info = $embed->get($videoUrl);
+        } catch (Throwable $e) {
+            return [false, "video url should be valid video url"];
+        }
+        if ($info->code) {
             $finalVideo = new Video([
                 'body' => $info->code->html,
                 'width' => $info->code->width,
                 'height' => $info->code->height,
             ]);
-            return $finalVideo;
+            return [true, $finalVideo];
         }
-        return null;
+        return [false, "video url should be valid video url"];
     }
 }
