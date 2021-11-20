@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Misc\Helpers\Config;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ImageRequest extends FormRequest
 {
+    protected $stopOnFirstFailure = true;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,8 +26,11 @@ class ImageRequest extends FormRequest
      */
     public function rules()
     {
+        $validTypes = implode(",", Config::VALID_IMAGE_TYPES);
         return [
-            'image' => 'required|mimes:jpg,jpeg,png,bmp,gif|max:102400'
+            // 'image' => 'required|array',
+            // 'image.*' => "image|mimes:{$validTypes}|max:" . Config::FILE_UPLOAD_MAX_SIZE
+            'image' => "required|mimes:{$validTypes}|max:" . Config::FILE_UPLOAD_MAX_SIZE
         ];
     }
 
@@ -38,7 +44,7 @@ class ImageRequest extends FormRequest
         return [
             'image.required' => 'The :attribute field is required',
             'image.mimes' => 'Not supported :attribute type',
-            'image.max' => 'Allowed :attribute max size is 100MB'
+            'image.max' => 'Allowed :attribute max size is ' . Config::FILE_UPLOAD_MAX_SIZE / 1024 . "MB"
         ];
     }
 }

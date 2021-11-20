@@ -16,7 +16,7 @@ class AudioResource extends JsonResource
     {
         return [
             'url' => $this->url,
-            'album_art_url' => $this->album_art_url
+            'album_art_url' => $this->album_art_url,
         ];
     }
 }
