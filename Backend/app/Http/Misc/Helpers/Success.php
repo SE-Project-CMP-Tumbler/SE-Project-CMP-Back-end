@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Misc\Helpers;
-
+/**
+ *  external resource from https://github.com/SiliconArena/alphamart-backend
+ */ 
 class Success
 {
     // user_success_messages
