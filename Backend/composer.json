@@ -21,6 +21,7 @@
         "zircote/swagger-php": "^3.2"
     },
     "require-dev": {
+        "brianium/paratest": "^6.3",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
