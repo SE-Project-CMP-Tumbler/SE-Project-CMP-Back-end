@@ -47,7 +47,7 @@ class PostRequest extends FormRequest
             'post_type' => ['required', Rule::in($types)],
             'post_time' => ['nullable', 'date'],
             'post_status' => ['required', Rule::in($statuses)], //we should specify these specific values to the front
-            'blog_id' => 'required|exists:blogs,id' //must be a blog id of the blogs of the auth user
+            'blog_id' => 'required|numeric|exists:blogs,id' //must be a blog id of the blogs of the auth user
         ];
     }
 }

@@ -7,7 +7,6 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Blog;
 use App\Models\Post;
-use App\Services\PostService;
 use Faker\Factory;
 use Illuminate\Http\Request;
 
@@ -129,19 +128,19 @@ class PostController extends Controller
     /**
      * Update an existing post
      *
-     * @param  \App\Models\Post $post
-     * @param  \App\Http\Requests\UpdatePostRequest $request
+     * @param int $post_id
+     * @param \App\Http\Requests\UpdatePostRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Post $post, UpdatePostRequest $request)
+    public function update($post_id, UpdatePostRequest $request)
     {
-        // if (preg_match('([0-9]+$)', $post_id) == false) {
-        //     return $this->general_response("", "The post id should be numeric.", "422");
-        // }
-        // $post = Post::where('id', $post_id)->first();
-        // if ($post == null) {
-        //     return $this->general_response("", "This post was not found", "404");
-        // }
+        if (preg_match('([0-9]+$)', $post_id) == false) {
+            return $this->general_response("", "The post id should be numeric.", "422");
+        }
+        $post = Post::where('id', $post_id)->first();
+        if ($post == null) {
+            return $this->general_response("", "This post was not found", "404");
+        }
 
         $this->authorize('update', $post);
         $post->update([
@@ -209,15 +208,18 @@ class PostController extends Controller
     /**
      * Delte a post
      *
-     * @param  \App\Models\Post $post
+     * @param int $post_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Post $post)
+    public function delete($post_id)
     {
-        // $post = Post::where('id', $post_id)->first();
-        // if (empty($post)) {
-        //     return $this->general_response("", "This post doesn't exist", "404");
-        // }
+        if (preg_match('([0-9]+$)', $post_id) == false) {
+            return $this->general_response("", "The post id should be numeric.", "422");
+        }
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
+            return $this->general_response("", "This post doesn't exist", "404");
+        }
 
         $this->authorize('delete', $post);
         $post->delete();
@@ -318,20 +320,18 @@ class PostController extends Controller
     /**
      * Retrieve a specific post
      *
-     * @param  \App\Models\Post $post
+     * @param int $post_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Post $post, Request $request)
+    public function show($post_id, Request $request)
     {
-        // $request->merge(['post_id' => $request->route('post_id')]);
-        // $request->validate([
-        //     'post_id' => 'required|numeric'
-        // ]);
-
-        // $post = Post::where('id', $post_id)->first();
-        // if ($post == null) {
-        //     return $this->general_response("", "This post was not found", "404");
-        // }
+        if (preg_match('([0-9]+$)', $post_id) == false) {
+            return $this->general_response("", "The post id should be numeric.", "422");
+        }
+        $post = Post::where('id', $post_id)->first();
+        if ($post == null) {
+            return $this->general_response("", "This post was not found", "404");
+        }
         return $this->general_response(new PostResource($post), "ok");
     }
  /**
@@ -417,11 +417,17 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        //prepare the data 
-        $data = $request->only(['post_status','post_time','post_body','post_type','blog_id']);
+        $blog = Blog::where('id', $request->blog_id)->first();
+        $this->authorize('create', [Post::class, $blog]);
 
-        $service = new PostService();
-        $post = $service->createPost($data);
+        $published_at = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
+        $post = Post::create([
+            'status' => $request->post_status,
+            'published_at' => $published_at,
+            'body' => $request->post_body,
+            'type' => $request->post_type,
+            'blog_id' => $request->blog_id
+        ]);
 
         //need to create the tags
 
