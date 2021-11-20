@@ -58,6 +58,19 @@ class PostRequestTest extends TestCase
         $this->access_token = $response['response']['access_token'];
     }
     /**
+     * Test the successful request
+     *
+     * @test
+     * @return void
+     */
+    public function successfulRequest()
+    {
+        $url = 'api/post/' . $this->blog_id;
+        $response = $this
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON);
+        $this->assertTrue($response->json()["meta"]["status"] === "200");
+    }
+    /**
      * Test the response message when post_body in the request body is not given
      *
      * @test
