@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Http\Misc\Helpers\Config;
 use App\Models\Blog;
 use App\Models\Post;
+use App\Models\User;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -22,9 +23,15 @@ class PostRequestTest extends TestCase
      *
      * @var int
      */
-    protected $blog_id = 12;
+    protected $blog_id;
     /**
-     * Set up the $post data before running each testcase
+     * The access token of the authenticated user that would do testing operations
+     *
+     * @var string
+     */
+    protected $access_token;
+    /**
+     * Set up the $post data, and require the access token for the testing user before running each testcase
      *
      * @return void
      */
@@ -37,6 +44,18 @@ class PostRequestTest extends TestCase
             'post_type' => 'text',
             'post_status' => 'published'
         ];
+        $faker = Factory::create(1);
+        $request_body = [
+            "email" => $faker->email(),
+            "blog_username" => $faker->text(),
+            "password" => "testTest1234",
+            "age" => "22"
+        ];
+        $response = $this->json('POST', 'api/register', $request_body, Config::JSON);
+        $user_id = $response['response']['id'];
+        $blog = Blog::factory()->create(['user_id' => $user_id]);
+        $this->blog_id = $blog->id;
+        $this->access_token = $response['response']['access_token'];
     }
     /**
      * Test the response message when post_body in the request body is not given
@@ -49,7 +68,7 @@ class PostRequestTest extends TestCase
         $this->post['post_body'] = "";
         $url = 'api/post/' . $this->blog_id;
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -68,7 +87,7 @@ class PostRequestTest extends TestCase
         $this->post['post_type'] = "";
         $url = 'api/post/' . $this->blog_id;
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -87,7 +106,7 @@ class PostRequestTest extends TestCase
         $this->post['post_status'] = "";
         $url = 'api/post/' . $this->blog_id;
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -105,7 +124,7 @@ class PostRequestTest extends TestCase
     {
         $url = 'api/post/' . 'sometext';
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -124,7 +143,7 @@ class PostRequestTest extends TestCase
     {
         $url = 'api/post/' . '100000000';
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -144,7 +163,7 @@ class PostRequestTest extends TestCase
         $url = 'api/post/' . $this->blog_id;
         $this->post['post_status'] = "SomeinvalidText";
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -164,7 +183,7 @@ class PostRequestTest extends TestCase
         $url = 'api/post/' . $this->blog_id;
         $this->post['post_type'] = "SomeinvalidText";
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -184,7 +203,7 @@ class PostRequestTest extends TestCase
         $url = 'api/post/' . $this->blog_id;
         $this->post['post_time'] = "SomeinvalidText";
         $response = $this
-        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $this->post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",

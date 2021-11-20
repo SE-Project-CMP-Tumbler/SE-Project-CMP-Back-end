@@ -23,8 +23,20 @@ class TagRequestTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $post = Post::factory()->create();
+
         $faker = Factory::create(1);
+        $request_body = [
+            "email" => $faker->email(),
+            "blog_username" => $faker->text(),
+            "password" => "testTest1234",
+            "age" => "22"
+        ];
+        $response = $this->json('POST', 'api/register', $request_body, Config::JSON);
+        $user_id = $response['response']['id'];
+        $blog = Blog::factory()->create(['user_id' => $user_id]);
+        $this->access_token = $response['response']['access_token'];
+
+        $post = Post::factory()->create();
         $this->tag = [
             'tag_description' => $faker->text(),
             'post_id' => $post->id
