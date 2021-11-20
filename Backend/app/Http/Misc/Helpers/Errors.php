@@ -22,7 +22,8 @@ class Errors
     const SHORT_PASSWORD = 'The password must be at least 8 characters.';
     const MISSING_BLOG_USERNAME = 'That is not a valid blog name. Someone beat you to that username.';
     const PASSWORD_SHORT = 'The password must be at least 8 characters.';
-    const RESTRICT_AGE  = 'please enter a valid age';
+    const MIN_AGE  = 'Your age must be at least 13 YO. ';
+    const INVALID_AGE  = 'Please enter a valid age. ';
 
     //signin errors (errors are ordered W.R.T it's priorities + missing only mail or only password errors are the same as the signup errors)
     const MISSING_BOTH_EMAIL_PASSWORD = 'You do have to fill this stuff out, you know.';
@@ -41,7 +42,6 @@ class Errors
     const NOTALLOWED = "Method Not Allowed";
     const INVALID_EMAIL_VERIFICATION_URL = "that email is invalid to verification";
     const EMAIL_ALREADY_VERIFIED = 'api.email_already_verified';
-    const INVALID_PARAMTER = "Invalid Paramater"; 
 
     //sent email
     const CODE = "Invalid code!";

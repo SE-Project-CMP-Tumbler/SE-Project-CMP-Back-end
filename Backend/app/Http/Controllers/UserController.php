@@ -285,7 +285,8 @@ class UserController extends Controller
  */
     public function logout(Request $request)
     {
-        if ((new UserService())->logout($request->user())) {
+        if ($request->user() && $request->user()->token()) {
+            $request->user()->token()->delete();
             return $this->general_response('', "Successful response", '200');
         }
         return $this->error_response('not found', '404');
