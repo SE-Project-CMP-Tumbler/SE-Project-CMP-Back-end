@@ -54,7 +54,7 @@ class BlogSettingRequestTest extends TestCase
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The submissions guidelines must be a string.The submissions guidelines must be at least 3 characters."
+                "msg" => "The submissions guidelines must be a string."
             ]
         ]);
     }
@@ -76,7 +76,7 @@ class BlogSettingRequestTest extends TestCase
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The submissions page title must be a string.The submissions page title must be at least 3 characters."
+                "msg" => "The submissions page title must be a string."
             ]
         ]);
     }

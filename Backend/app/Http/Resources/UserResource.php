@@ -19,7 +19,7 @@ class UserResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'username' => $blog->username,
+            'blog_username' => $blog->username,
             'email' => $this->email,
             'blog_avatar' => $blog->avatar,
             'access_token' =>  $this->token(),

@@ -92,19 +92,6 @@ class UserService
         return true;
     }
  /**
-  * delete access_token for a user
-  * @param User $user
-  * @return bool
- */
-    public function logout(User $user)
-    {
-        if (!$user || !($user->token())) {
-            return false;
-        }
-        $user->token()->delete();
-        return true;
-    }
- /**
   * either verify email or resend verification mail for an unverified user
   * @param User $user
   * @param bool $resend
