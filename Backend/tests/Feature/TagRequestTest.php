@@ -36,11 +36,25 @@ class TagRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user_id]);
         $this->access_token = $response['response']['access_token'];
 
-        $post = Post::factory()->create();
+        $post = Post::factory()->create(['blog_id' => $blog->id]);
         $this->tag = [
             'tag_description' => $faker->text(),
             'post_id' => $post->id
         ];
+    }
+    /**
+     * Test the successful request
+     *
+     * @test
+     * @return void
+     */
+    public function successfulRequest()
+    {
+        $url = 'api/tag/data/' . $this->tag['post_id'] . '/' . $this->tag['tag_description'];
+        $body = [];
+        $response = $this
+        ->json('POST', $url, $body, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON);
+        $this->assertTrue($response->json()["meta"]["status"] === "200");
     }
     /**
      * Test the reponse message when post id is not numeric

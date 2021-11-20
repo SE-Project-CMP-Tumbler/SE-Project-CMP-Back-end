@@ -53,6 +53,25 @@ class UpdatePostRequestTest extends TestCase
         ])->id;
     }
     /**
+     * Test the successful request
+     *
+     * @test
+     * @return void
+     */
+    public function successfulRequest()
+    {
+        $url = 'api/post/' . $this->post_id;
+        $post = [
+            'post_body' => "Hello this is a post body.",
+            'post_time' => now(),
+            'post_status' => 'draft',
+            'post_type' => 'general'
+        ];
+        $response = $this
+        ->json('PUT', $url, $post, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON);
+        $this->assertTrue($response->json()["meta"]["status"] === "200");
+    }
+    /**
      * Test the response message when post_body in the request body is not given
      *
      * @test
