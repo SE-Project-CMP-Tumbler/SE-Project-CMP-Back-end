@@ -28,7 +28,7 @@ Route::get('blog', [BlogController::class,'index'])->middleware('auth:api');
 Route::post('blog', [BlogController::class,'store'])->middleware('auth:api');
 Route::get('blog/{blog_id}', [BlogController::class,'show'])->middleware('auth:api');
 Route::delete('blog/{blog_id}', [BlogController::class,'delete'])->middleware('auth:api');
-Route::get('blog_settings/{blog_id}', [BlogSettingController::class,'show']);
+Route::get('blog_settings/{blog_id}', [BlogSettingController::class,'show'])->middleware('auth:api');
 Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->middleware('auth:api');
 
 /*

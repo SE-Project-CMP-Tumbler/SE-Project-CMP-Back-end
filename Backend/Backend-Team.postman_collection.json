@@ -751,6 +751,16 @@
 				{
 					"name": "get blog_setting",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -765,13 +775,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/blog_settings/3",
+							"raw": "{{host}}/blog_settings/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"blog_settings",
-								"3"
+								"1"
 							],
 							"query": [
 								{
