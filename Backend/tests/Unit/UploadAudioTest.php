@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Http\Misc\Helpers\Config;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
@@ -10,6 +12,8 @@ use Tests\TestCase;
 
 class UploadAudioTest extends TestCase
 {
+    // use RefreshDatabase;
+
     /**
      * unti test for uploading an audio
      * testing giving uploading null
@@ -19,11 +23,14 @@ class UploadAudioTest extends TestCase
     public function testUploadNullAudio()
     {
         Storage::fake('audios');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_audio', [
             'audio' => null,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -44,6 +51,8 @@ class UploadAudioTest extends TestCase
     public function testUploadAudioNotSupportedType()
     {
         Storage::fake('audios');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $notValidTypes = Config::NOT_VALID_AUDIO_TYPES;
         $randType = array_rand($notValidTypes, 1);
         $audioFile = UploadedFile::fake()
@@ -55,7 +64,8 @@ class UploadAudioTest extends TestCase
             'audio' => $audioFile,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -77,6 +87,8 @@ class UploadAudioTest extends TestCase
     public function testUploadAudioBiggerSize()
     {
         Storage::fake('audios');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $validTypes = Config::VALID_AUDIO_TYPES;
         $randType = array_rand($validTypes, 1);
         $audioFile = UploadedFile::fake()
@@ -88,7 +100,8 @@ class UploadAudioTest extends TestCase
             'audio' => $audioFile,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -111,6 +124,8 @@ class UploadAudioTest extends TestCase
     public function testUploadValidAudioArray()
     {
         Storage::fake('audios');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $validTypes = Config::VALID_AUDIO_TYPES;
         $randType = array_rand($validTypes, 1);
         $numberOfAudios = mt_rand(1, 10);
@@ -127,7 +142,8 @@ class UploadAudioTest extends TestCase
             'audio' => $audioArray,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -148,6 +164,8 @@ class UploadAudioTest extends TestCase
     public function testUploadValidAudio()
     {
         Storage::fake('audios');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $validTypes = Config::VALID_AUDIO_TYPES;
         $randType = array_rand($validTypes, 1);
         $audioFile = UploadedFile::fake()
@@ -159,7 +177,8 @@ class UploadAudioTest extends TestCase
             'audio' => $audioFile,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(200);
         Storage::disk('audios')->assertExists($audioFile->hashName());

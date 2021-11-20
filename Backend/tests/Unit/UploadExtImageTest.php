@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Http\Misc\Helpers\Config;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
@@ -10,6 +12,8 @@ use Tests\TestCase;
 
 class UploadExtImageTest extends TestCase
 {
+    // use RefreshDatabase;
+
     /**
      * unti test for uploading an image through external url
      * testing giving uploading null
@@ -19,11 +23,14 @@ class UploadExtImageTest extends TestCase
     public function testUploadNullImageUrl()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_photo', [
             'imageUrl' => null,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -43,11 +50,14 @@ class UploadExtImageTest extends TestCase
     public function testUploadInvalidImageUrl()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_photo', [
             'imageUrl' => "PleasePass^_^"
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -67,11 +77,14 @@ class UploadExtImageTest extends TestCase
     public function testUploadValidButNotWorkingImageUrl()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_photo', [
             'imageUrl' => "https://bigfish.example.org/"
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -91,11 +104,14 @@ class UploadExtImageTest extends TestCase
     public function testUploadValidWorkingImageUrlNotOk()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_photo', [
             'imageUrl' => "http://google.com/hello"
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -105,6 +121,7 @@ class UploadExtImageTest extends TestCase
             ]
         ]);
     }
+
     /**
      * unti test for uploading an image through external url
      * testing giving uploading one image of not supported type
@@ -115,11 +132,14 @@ class UploadExtImageTest extends TestCase
     public function testUploadExtImageNotSupportedType()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_photo', [
             'imageUrl' => 'https://media.flaticon.com/dist/min/img/logo/flaticon_negative.svg',
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -140,6 +160,8 @@ class UploadExtImageTest extends TestCase
     // public function testUploadExtImageBiggerSize()
     // {
     //     // Storage::fake('images');
+    //     $user = User::factory()->create();
+    //     $token = $user->createToken('Auth Token')->accessToken;
     //     $validTypes = Config::VALID_IMAGE_TYPES;
     //     $randType = array_rand($validTypes, 1);
     //     $imageOriginalName = Str::random(9) . '.' . $validTypes[$randType];
@@ -155,7 +177,8 @@ class UploadExtImageTest extends TestCase
     //         'imageUrl' => 'http://127.0.0.1:8000/storage/images/' . $imageFile->hashName(),
     //     ], [
     //         'Content-Type' => 'application/json',
-    //         'Accept' => 'application/json'
+    //         'Accept' => 'application/json',
+    //         'Authorization' => 'Bearer ' . $token,
     //     ]);
     //     $response->assertStatus(422);
     //     $response->assertJson([
@@ -179,6 +202,8 @@ class UploadExtImageTest extends TestCase
     // public function testUploadValidExtImageArray()
     // {
     //     Storage::fake('images');
+    //     $user = User::factory()->create();
+    //     $token = $user->createToken('Auth Token')->accessToken;
     //     $validTypes = Config::VALID_IMAGE_TYPES;
     //     $randType = array_rand($validTypes, 1);
     //     $numberOfImages = mt_rand(1, 10);
@@ -199,7 +224,8 @@ class UploadExtImageTest extends TestCase
     //         'image' => $imageArray,
     //     ], [
     //         'Content-Type' => 'application/json',
-    //         'Accept' => 'application/json'
+    //         'Accept' => 'application/json',
+    //         'Authorization' => 'Bearer ' . $token,
     //     ]);
     //     $response->assertStatus(422);
     //     $response->assertJson([
@@ -223,11 +249,14 @@ class UploadExtImageTest extends TestCase
     public function testUploadValidExtImage()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_photo', [
             'imageUrl' => 'https://64.media.tumblr.com/a4cd582dda1f8acdfbc5b5f031de930c/a4850b3a923b10a4-08/s400x600/1c5c0d98d1f2cfc49ce37dfe333a5270b67f7b48.jpg',
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(200);
         $uploadedImageName = basename($response->getOriginalContent()["response"]["url"]);

@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Http\Misc\Helpers\Config;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
@@ -10,6 +12,8 @@ use Tests\TestCase;
 
 class UploadImageTest extends TestCase
 {
+    // use RefreshDatabase;
+
     /**
      * unti test for uploading an image
      * testing giving uploading null
@@ -19,11 +23,14 @@ class UploadImageTest extends TestCase
     public function testUploadNullImage()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_photo', [
             'image' => null,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -44,6 +51,8 @@ class UploadImageTest extends TestCase
     public function testUploadImageNotSupportedType()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $notValidTypes = Config::NOT_VALID_IMAGE_TYPES;
         $randType = array_rand($notValidTypes, 1);
         $imageFile = UploadedFile::fake()
@@ -56,7 +65,8 @@ class UploadImageTest extends TestCase
             'image' => $imageFile,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -78,6 +88,8 @@ class UploadImageTest extends TestCase
     public function testUploadImageBiggerSize()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $validTypes = Config::VALID_IMAGE_TYPES;
         $randType = array_rand($validTypes, 1);
         $imageFile = UploadedFile::fake()
@@ -90,7 +102,8 @@ class UploadImageTest extends TestCase
             'image' => $imageFile,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -112,6 +125,8 @@ class UploadImageTest extends TestCase
     public function testUploadValidImageArray()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $validTypes = Config::VALID_IMAGE_TYPES;
         $randType = array_rand($validTypes, 1);
         $numberOfImages = mt_rand(1, 10);
@@ -129,7 +144,8 @@ class UploadImageTest extends TestCase
             'image' => $imageArray,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -150,6 +166,8 @@ class UploadImageTest extends TestCase
     public function testUploadValidImage()
     {
         Storage::fake('images');
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $validTypes = Config::VALID_IMAGE_TYPES;
         $randType = array_rand($validTypes, 1);
         $imageFile = UploadedFile::fake()
@@ -162,7 +180,8 @@ class UploadImageTest extends TestCase
             'image' => $imageFile,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ]);
         $response->assertStatus(200);
         Storage::disk('images')->assertExists($imageFile->hashName());

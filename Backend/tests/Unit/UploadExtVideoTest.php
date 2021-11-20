@@ -2,10 +2,14 @@
 
 namespace Tests\Unit;
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UploadExtVideoTest extends TestCase
 {
+    // use RefreshDatabase;
+
     /**
      * unti test for uploading an video through external url
      * testing giving uploading null
@@ -14,11 +18,14 @@ class UploadExtVideoTest extends TestCase
      */
     public function testUploadNullVideoUrl()
     {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_video', [
             'videoUrl' => null,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -37,11 +44,14 @@ class UploadExtVideoTest extends TestCase
      */
     public function testUploadInValidVideoUrl()
     {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_video', [
             'videoUrl' => "PleasePass^_^"
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -60,11 +70,14 @@ class UploadExtVideoTest extends TestCase
      */
     public function testUploadValidButNotWorkingVideoUrl()
     {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_video', [
             'videoUrl' => "https://bigfish.example.org/"
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -83,11 +96,14 @@ class UploadExtVideoTest extends TestCase
      */
     public function testUploadValidWorkingVideoUrlNotOk()
     {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $response = $this->postJson('/api/upload_ext_video', [
             'videoUrl' => "http://google.com/hello"
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -108,6 +124,8 @@ class UploadExtVideoTest extends TestCase
      */
     public function testUploadValidExtVideoArray()
     {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $videoArray = [
             'https://www.youtube.com/watch?v=jO7oTrcxEBA',
             'https://www.youtube.com/watch?v=cJRXnSkIFas',
@@ -117,7 +135,8 @@ class UploadExtVideoTest extends TestCase
             'videoUrl' => $videoArray,
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(422);
         $response->assertJson([
@@ -136,6 +155,8 @@ class UploadExtVideoTest extends TestCase
      */
     public function testUploadValidExtvideo()
     {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
         $videoArray = [
             'https://www.youtube.com/watch?v=jO7oTrcxEBA',
             'https://www.youtube.com/watch?v=cJRXnSkIFas',
@@ -146,7 +167,8 @@ class UploadExtVideoTest extends TestCase
             'videoUrl' => $videoArray[$randVideo]
         ], [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
         ]);
         $response->assertStatus(200);
     }

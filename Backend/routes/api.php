@@ -45,11 +45,11 @@ Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts'])
 /*
 | Uploads Routes
 */
-Route::post("/upload_photo", [UploadFileController::class, 'uploadImage']);
-Route::post("/upload_audio", [UploadFileController::class, 'uploadAudio']);
-Route::post("/upload_video", [UploadFileController::class, 'uploadVideo']);
-Route::post("/upload_ext_photo", [UploadFileController::class, 'uploadExtImage']);
-Route::post("/upload_ext_video", [UploadFileController::class, 'uploadExtVideo']);
+Route::post("/upload_photo", [UploadFileController::class, 'uploadImage'])->middleware('auth:api');
+Route::post("/upload_audio", [UploadFileController::class, 'uploadAudio'])->middleware('auth:api');
+Route::post("/upload_video", [UploadFileController::class, 'uploadVideo'])->middleware('auth:api');
+Route::post("/upload_ext_photo", [UploadFileController::class, 'uploadExtImage'])->middleware('auth:api');
+Route::post("/upload_ext_video", [UploadFileController::class, 'uploadExtVideo'])->middleware('auth:api');
 
 /*
 | User Routes
