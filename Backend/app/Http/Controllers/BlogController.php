@@ -35,6 +35,7 @@ class BlogController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
  *          @OA\Property(property="id", type="integer", example=2026),
+ *          @OA\Property(property="is_primary", type="boolean", example=false),
  *          @OA\Property(property="username", type="string", example="newinvestigations"),
  *          @OA\Property(property="avatar", type="string", format="byte", example=""),
  *          @OA\Property(property="avatar_shape", type="string", example="square"),
@@ -95,6 +96,7 @@ class BlogController extends Controller
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
+ *                    @OA\Property(property="is_primary", type="boolean", example=false),
  *                    @OA\Property(property="username", type="string", example="newinvestigations"),
  *                    @OA\Property(property="avatar", type="string", format="byte", example=""),
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
@@ -241,7 +243,7 @@ class BlogController extends Controller
  * )
  */
  /**
-  * Delte a  blog for user
+  * Delte a  blog for user which is not primary
   * @param \Blog $blog
   * @return \json
  */
@@ -250,9 +252,12 @@ class BlogController extends Controller
         if (preg_match('([0-9]+$)', $blog_id) == false) {
             return $this->general_response("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::where(['id' => $blog_id , 'is_primary' => false]);
+        $blog = Blog::find($blog_id);
         if ($blog == null) {
             return $this->general_response("", "Not Found blog", "404");
+        }
+        if ($blog->is_primary == true) {
+            return $this->general_response("", "Can't delete this blog because this is primary", "422");
         }
         $this->authorize('delete', $blog);
         $blog->delete();
@@ -308,10 +313,10 @@ class BlogController extends Controller
   * @param \Request $request
   * @return \json
  */
-    public function checkOutOtherBlog(Request $request)
-    {
-        return $this->general_response(new BlogCollection(Blog::all()), "ok");
-    }
+    // public function checkOutOtherBlog(Request $request)
+    // {
+    //     return $this->general_response(new BlogCollection(Blog::all()), "ok");
+    // }
 /**
  * @OA\Get(
  * path="/blogs/trending",
@@ -362,13 +367,11 @@ class BlogController extends Controller
   * @param \Request $request
   * @return \json
  */
-   //PAGINAGTE??
-   //COMMENTS
-   //functional docs
-    public function getTrendingBlog(Request $request)
-    {
-        return $this->general_response(new BlogCollection(Blog::all()), "ok");
-    }
+
+ // public function getTrendingBlog(Request $request)
+// {
+ //     return $this->general_response(new BlogCollection(Blog::all()), "ok");
+ // }
 /**
  * @OA\Get(
  * path="/blog/likes/{blog_id}",
