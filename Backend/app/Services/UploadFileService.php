@@ -22,6 +22,7 @@ use Throwable;
  */
 class UploadFileService
 {
+
     /**
      * upload image service
      *
@@ -67,33 +68,11 @@ class UploadFileService
             return [false, "The imageUrl field is required"];
         }
         try {
-            // stream_context_set_default([
-            //     'http' => [
-            //         'method' => 'HEAD',
-            //         'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0)'
-            //     ]
-            // ]);
+            // $crawler = (new Embed())->getCrawler();
+            // $uri = $crawler->createUri($imageUrl);
+            // $req = $crawler->createRequest("HEAD", $uri);
+            // $headerResponse = $crawler->sendRequest($req);
             $headerResponse = get_headers($imageUrl, 1);
-            // $ch = curl_init($imageUrl);
-            // $options = array(
-            //     CURLOPT_RETURNTRANSFER => true,
-            //     CURLOPT_HEADER         => true,
-            //     CURLOPT_FOLLOWLOCATION => true,
-            //     CURLOPT_USERAGENT      => "spider",
-            //     CURLOPT_AUTOREFERER    => true,
-            //     CURLOPT_SSL_VERIFYPEER => false,
-            //     CURLOPT_NOBODY => true
-            // );
-            // curl_setopt_array($ch, $options);
-            // $output = curl_exec($ch); // $output contains the output string
-            // curl_close($ch); // close curl resource to free up system resources
-            // $headerResponse = explode("\n", $output);
-            // stream_context_set_default([
-            //     'http' => [
-            //         'method' => 'GET',
-            //         'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0)'
-            //     ]
-            // ]);
         } catch (Throwable $e) {
             return [false, "image url should be valid image url"];
         }
@@ -104,11 +83,14 @@ class UploadFileService
         $isValidType = false;
         $imageExt = "";
         $imageSize = -1;
+        // if ($headerResponse->getStatusCode() == 200) {
         if (strpos($headerResponse[0], "200") == true) {
             foreach ($validTypes as $item) {
+                // if ($headerResponse->getHeader('Content-Type')[0] == "image/" . $item) {
                 if ($headerResponse['Content-Type'] == "image/" . $item) {
                     $isValidType = true;
                     $imageExt = $item;
+                    // $imageSize = $headerResponse->getHeader('Content-Length')[0];
                     $imageSize = $headerResponse["Content-Length"];
                     break;
                 }
