@@ -54,7 +54,7 @@ class TagRequestTest extends TestCase
         $url = 'api/tag/data/' . $this->tag['post_id'] . '/' . $this->tag['tag_description'];
         $body = [];
         $response = $this
-        ->json('POST', $url, $body, ['Authorization' => 'Bearer ' . Config::TOKEN], Config::JSON)
+        ->json('POST', $url, $body, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",

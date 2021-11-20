@@ -16,19 +16,12 @@ class PostController extends Controller
 
 /**
  * @OA\Put(
- * path="/post/{post_id}/{blog_id}",
+ * path="/post/{post_id}",
  * summary="Edit a new post",
  * description="A blog can edit post",
  * operationId="editpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
  *  @OA\Parameter(
  *          name="post_id",
  *          description="post_id ",
