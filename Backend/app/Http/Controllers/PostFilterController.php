@@ -429,7 +429,7 @@ class PostFilterController extends Controller
     public function getRandomPosts()
     {
         $randomPosts = (new PostFillterService())->getRandomPostService();
-        return $this->general_response($randomPosts, "ok", "200");
+        return $this->generalResponse($randomPosts, "ok", "200");
     }
 
     /**

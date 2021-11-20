@@ -71,13 +71,13 @@ class BlogController extends Controller
     public function show($blog_id)
     {
         if (preg_match('([0-9]+$)', $blog_id) == false) {
-            return $this->general_response("", "The blog id should be numeric.", "422");
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blog = Blog::find($blog_id);
         if ($blog == null) {
-            return $this->general_response("", "Not Found blog", "404");
+            return $this->generalResponse("", "Not Found blog", "404");
         }
-        return $this->general_response(new BlogResource($blog), "ok");
+        return $this->generalResponse(new BlogResource($blog), "ok");
     }
  /**
  * @OA\Get(
@@ -132,7 +132,7 @@ class BlogController extends Controller
  */
     public function index(Request $request)
     {
-        return $this->general_response(new BlogCollection($request->user()->blogs), "ok");
+        return $this->generalResponse(new BlogCollection($request->user()->blogs), "ok");
     }
 /**
  * @OA\Post(
@@ -188,7 +188,7 @@ class BlogController extends Controller
         $blogService = new BlogService();
         $user_id = $request->user()->id;
         if (! $blogService->uniqueBlog($request->blog_username)) {
-            return $this->general_response("", "The blog username is already exists", "422");
+            return $this->generalResponse("", "The blog username is already exists", "422");
         }
 
         if ($request->has('password')) {
@@ -196,7 +196,7 @@ class BlogController extends Controller
         } else {
             $blogService->createBlog($request->blog_username, $request->title, $user_id);
         }
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Delete(
@@ -250,18 +250,18 @@ class BlogController extends Controller
     public function delete(Request $request, $blog_id)
     {
         if (preg_match('([0-9]+$)', $blog_id) == false) {
-            return $this->general_response("", "The blog id should be numeric.", "422");
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blog = Blog::find($blog_id);
         if ($blog == null) {
-            return $this->general_response("", "Not Found blog", "404");
+            return $this->generalResponse("", "Not Found blog", "404");
         }
         if ($blog->is_primary == true) {
-            return $this->general_response("", "Can't delete this blog because this is primary", "422");
+            return $this->generalResponse("", "Can't delete this blog because this is primary", "422");
         }
         $this->authorize('delete', $blog);
         $blog->delete();
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(
@@ -315,7 +315,7 @@ class BlogController extends Controller
  */
     // public function checkOutOtherBlog(Request $request)
     // {
-    //     return $this->general_response(new BlogCollection(Blog::all()), "ok");
+    //     return $this->generalResponse(new BlogCollection(Blog::all()), "ok");
     // }
 /**
  * @OA\Get(
@@ -370,7 +370,7 @@ class BlogController extends Controller
 
  // public function getTrendingBlog(Request $request)
 // {
- //     return $this->general_response(new BlogCollection(Blog::all()), "ok");
+ //     return $this->generalResponse(new BlogCollection(Blog::all()), "ok");
  // }
 /**
  * @OA\Get(
@@ -437,6 +437,6 @@ class BlogController extends Controller
  */
     // public function getLikeBlog(Request $request, Blog $blog)
     // {
-    //     return $this->general_response(new PostCollection($blog->post)), "ok");
+    //     return $this->generalResponse(new PostCollection($blog->post)), "ok");
     // }
 }
