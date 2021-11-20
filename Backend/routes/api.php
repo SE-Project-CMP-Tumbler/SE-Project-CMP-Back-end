@@ -39,16 +39,16 @@ Route::post('post/{blog_id}', [PostController::class,'store'])->where(['blog_id'
 Route::delete('post/{post}/{blog_id}', [PostController::class,'delete'])->where(['blog_id' => '[0-9]+', 'post' => '[0-9]+'])->middleware('auth:api');
 Route::put('post/{post}', [PostController::class,'update'])->where(['post' => '[0-9]+'])->middleware('auth:api');
 
-// Route::get('/post/random_posts', [PostFilterController::class, 'getRandomPosts']);
-// Route::get('/post/trending', [PostFilterController::class, 'getTrendingPosts']);
+Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
+Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);
 
 /*
 | Uploads Routes
 */
-Route::post("/upload_photo", [UploadFileController::class, 'uploadPhoto']);
+Route::post("/upload_photo", [UploadFileController::class, 'uploadImage']);
 Route::post("/upload_audio", [UploadFileController::class, 'uploadAudio']);
 Route::post("/upload_video", [UploadFileController::class, 'uploadVideo']);
-Route::post("/upload_ext_photo", [UploadFileController::class, 'uploadExtPhoto']);
+Route::post("/upload_ext_photo", [UploadFileController::class, 'uploadExtImage']);
 Route::post("/upload_ext_video", [UploadFileController::class, 'uploadExtVideo']);
 
 /*
