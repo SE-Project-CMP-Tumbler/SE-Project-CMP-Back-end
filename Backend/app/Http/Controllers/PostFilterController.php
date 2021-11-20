@@ -9,9 +9,9 @@ class PostFilterController extends Controller
 
 /**
  * @OA\Get(
- * path="/post/text ",
- * summary="Get posts  with  type text   ",
- * description=" A blog get text posts",
+ * path="/posts/text",
+ * summary="Get posts with  type text",
+ * description="A blog get text posts",
  * operationId="textpost",
  * tags={"Posts"},
  * @OA\Response(
@@ -61,9 +61,9 @@ class PostFilterController extends Controller
  */
  /**
  * @OA\Get(
- * path="/post/chat ",
- * summary="Get posts  with  type chat   ",
- * description=" A blog get text posts",
+ * path="/posts/chat",
+ * summary="Get posts with  type chat",
+ * description="A blog get text posts",
  * operationId="chatpost",
  * tags={"Posts"},
  * @OA\Response(
@@ -113,9 +113,9 @@ class PostFilterController extends Controller
  */
  /**
  * @OA\Get(
- * path="/post/quote ",
- * summary="Get posts  with  type quote   ",
- * description=" A blog get quote posts",
+ * path="/posts/quote",
+ * summary="Get posts with type quote",
+ * description="A blog get quote posts",
  * operationId="quotepost",
  * tags={"Posts"},
  * @OA\Response(
@@ -164,9 +164,9 @@ class PostFilterController extends Controller
  */
  /**
  * @OA\Get(
- * path="/post/image ",
- * summary="Get posts  with  type image   ",
- * description=" A blog get image posts",
+ * path="/posts/image",
+ * summary="Get posts with type image",
+ * description="A blog get image posts",
  * operationId="imagepost",
  * tags={"Posts"},
  * @OA\Response(
@@ -215,9 +215,9 @@ class PostFilterController extends Controller
  */
 /**
  * @OA\Get(
- * path="/post/video ",
- * summary="Get posts  with  type video   ",
- * description=" A blog get video posts",
+ * path="/posts/video",
+ * summary="Get posts with type video",
+ * description="A blog get video posts",
  * operationId="videopost",
  * tags={"Posts"},
  * @OA\Response(
@@ -264,7 +264,7 @@ class PostFilterController extends Controller
 
 /**
  * @OA\Get(
- * path="/post/audio",
+ * path="/posts/audio",
  * summary="Get posts with type audio",
  * description="A blog get aduio posts",
  * operationId="audiopost",
@@ -316,7 +316,7 @@ class PostFilterController extends Controller
 
 /**
  * @OA\Get(
- * path="/post/radar",
+ * path="/posts/radar",
  * summary="Get random posts",
  * description="A blog get post",
  * operationId="radarpost",
@@ -369,7 +369,7 @@ class PostFilterController extends Controller
 
     /**
      * @OA\Get(
-     * path="/post/random_posts",
+     * path="/posts/random_posts",
      * summary="Get  random posts",
      * description=" A blog get random posts",
      * operationId="randompost",
@@ -434,7 +434,7 @@ class PostFilterController extends Controller
 
     /**
      * @OA\Get(
-     * path="/post/trending",
+     * path="/posts/trending",
      * summary="Get trending posts",
      * description=" A blog get trending posts",
      * operationId="trendingpost",
@@ -501,7 +501,7 @@ class PostFilterController extends Controller
 
 /**
  * @OA\Get(
- * path="/post/ask",
+ * path="/posts/ask",
  * summary="Get asked posts",
  * description="A blog get asked posts",
  * operationId="askedpost",
@@ -554,7 +554,7 @@ class PostFilterController extends Controller
  */
  /**
  * @OA\Get(
- * path="/post/dashboad",
+ * path="/posts/dashboad",
  * summary="Get dashboad post",
  * description="A blog get dashboad posts",
  * operationId="dashboardpost",

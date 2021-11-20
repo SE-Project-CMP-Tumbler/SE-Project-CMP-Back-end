@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ExtVideoRequest extends FormRequest
 {
+    protected $stopOnFirstFailure = true;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -37,7 +39,7 @@ class ExtVideoRequest extends FormRequest
     {
         return [
             'videoUrl.required' => 'The :attribute field is required',
-            'videoUrl.url' => ':attribute should be valid image url',
+            'videoUrl.url' => ':attribute should be a valid video url',
         ];
     }
 }

@@ -4,13 +4,29 @@ namespace App\Http\Misc\Helpers;
 
 class Config
 {
-    const PAGINATION_LIMIT = 15;
-    const PAGINATION_LIMIT_MIN = 12;
-    const API_PAGINATION_LIMIT = 10;
-    const MIN_GPS_RADIUS = 0.0;
-    const MAX_GPS_RADIUS = 0.3;
-    const CACHE_TTL = 60 * 60; // 60seconds * 60 min (1hour)
-    const EXPIRE = 10;
-    const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWMyNjU3YzMyMzcwNjY2MGE5M2E4MzcwOGJhZWUwYjgyMjkyZWM2YmE5ZWRlYmYzNzBjMWQ3MTMwNTdhOWQxMWFhMjAyNWMwOTVmZmMyYjYiLCJpYXQiOjE2MzczMzEwNTEuNzAzMjYsIm5iZiI6MTYzNzMzMTA1MS43MDMyNjUsImV4cCI6MTY2ODg2NzA1MS41MTMyMywic3ViIjoiMTIiLCJzY29wZXMiOltdfQ.OdvmqYvMQWSv0lnzRr4utGOmeYAlAEd2m6asGuWLyM6UYTx0Tz4_t57Rab50JA05wrdFIvj06uqnyNewgRFiZyolcR2G6kfXquaK7X7WmuKspbzcVGip6ZBIZVYRsFAu5w07gl3ecYAVAmRpDKi-r35lCKhIr_W224g7Z3dBob3IEIug2HnpZ0gCFIN2-AXWK-96m8NVsvZ5dVtOhFyS76kp1TuwYhwz_qjT_5q330IuPjILJGlphTnZlScZfzkahoN7-JBaIiKUckpt64KPHnFilbtV4BaxV9rXlRqTCWbwnnX7uWu119i3EmWTap5d3_6cMTxRn-jvPYG43vqlYBV1lnrlrnp3X0G9idAbwUleIFFm7QVjJzuqovNyWkVUbdXAuS88qMxszy5pqWNpRrMzRwltzFiXLZWf2NBWGWobs3-2h17_0cSTBgNLPLivSasCZ9sy4emF08Vh1qtOztEEK5IZm8sjSsB7E90mqZKwpZt2uoE_uNjN3i-zEBxn24DBZF8nQptcAx9ityR5u3EPgJTjomHzChz0Ue4v_452zqGJKlQuwXsEI84YV-5gy5sgBInVTkRvyEnZTxsP_opPrMkU8cCPKY279V8hDD1Gcv766CkLMs5-QKTU-ZqIZSmsSc7SFfY-CZE4mT2Z4j5HJcSNrdjBqyQ9vKu4YhI";
-    const JSON = ['Accept' => 'application/json','Content-Type' => 'application/json'];
+    public const PAGINATION_LIMIT = 15;
+    public const PAGINATION_LIMIT_MIN = 12;
+    public const API_PAGINATION_LIMIT = 10;
+    public const MIN_GPS_RADIUS = 0.0;
+    public const MAX_GPS_RADIUS = 0.3;
+    public const CACHE_TTL = 60 * 60; // 60seconds * 60 min (1hour)
+    public const EXPIRE = 10;
+    public const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWVhOWE2NDYwYmIwODU0ODhmMWE4MjJlNTdmMDdhMWM1NWRiNjkzYjc5NzI4NDg4M2UzM2MzMmY0MjlkODI1MzE0YTcwMDIyMmI4NGJkNjIiLCJpYXQiOjE2MzcyNzAyOTkuNzc2ODc0LCJuYmYiOjE2MzcyNzAyOTkuNzc2ODc5LCJleHAiOjE2Njg4MDYyOTkuNjkwMTk4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.AqQ0Sa9H9FXQpuDYhz3PDhG8YGJ1aihEAF9YPNNDnWkN3XOC9j0oqLyUzMBahwkocrVADFYHU78fTfSdDUyE1YyFLzlwURGXiEV7m1kes2zOmBTMMoFCkXAufz_F94yJPovqF2CYoZJy6jnGyHl0Gsr3ag8uEqSet7RmFLU7r28LmMfU9aQRbjIAZUnpYy7ygFryf9Wx9hOf3EXkkjn2pcsNUnMwhfMCOddaS3P_d7KJQD2x5JnV_fj7oM_JrTFsd4HHjPWzFIzds7YLN80KRXYo82Q52Es9VpxVj3F1e013YWl2H5677tO__G-Gt8MOCdphiVLIb515piOTnc8ik9QA0Pjb40soJ-PRRi6lL3lstxV9pAXd75BL3F2TjTcPhPukqDoNxU-ZtubiYs2CBPo2Jp_ceWsY7NHV4gwI7rPZgTlVLJYEyDuybnLWmfnWbOk8FgkVOgvMvngctl3uQQTWJx5TITiSOB_pA7IqCmb17x1hwTPMDFo5vReE7mfeT54WhK-g8-m6B2blcg2BcpwnJSzTiNd5ntzG3R8eiy9nzYxf9cHB1dbkr3cW4-pm_pG8xMDTHyE_Cc1LX7oCGxYzR0lNQWGS3dai0UXctfg5r6WPvjHlyM_j3elEZXz7aW4vieEHtzFdj3N-uf_emDE8vF3hYGz0gRjwaImYloY";
+    public const JSON = ['Accept' => 'application/json','Content-Type' => 'application/json'];
+
+    public const FILE_UPLOAD_MAX_SIZE = 102400; // 100MB
+
+    public const VALID_IMAGE_TYPES = ["jpg", "jpeg", "png", "gif", "bmp", "tif"];
+    public const VALID_AUDIO_TYPES = ["mp3","wav","3gp","3gpp"];
+
+    // if laravel can fake the video type you're adding, add it as first element and increase the length
+    public const VALID_FAKE_LEN = 5;
+    public const VALID_VIDEO_TYPES = ["mp4", "mkv", "mov", "avi", "webm"];
+
+    public const NOT_VALID_IMAGE_TYPES = ["psd", "pdf", "eps", "indd", "ai", "raw", "cr2", "nef", "orf", "sr2"];
+    public const NOT_VALID_AUDIO_TYPES = ["m4a", "flac", "mp4", "wma", "aac", "ogg"];
+
+    // if laravel can fake the video type you're adding, add it as first element and increase the length
+    public const NOT_VALID_FAKE_LEN = 2;
+    public const NOT_VALID_VIDEO_TYPES = ["flv", "swf", "f4v"];
 }
