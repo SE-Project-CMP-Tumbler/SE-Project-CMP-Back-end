@@ -60,7 +60,7 @@ class UploadFileService
      * then allow or reject that image.
      *
      * @param string $imageUrl the image link
-     * @return array(bool,\App\Models\Image)
+     * @return array
      **/
     public function validateExtImageService(string $imageUrl)
     {
@@ -101,7 +101,7 @@ class UploadFileService
             if ($imageSize == -1 || $imageSize > Config::FILE_UPLOAD_MAX_SIZE) {
                 return [false, "Allowed image max size is "  . Config::FILE_UPLOAD_MAX_SIZE / 1024 . "MB"];
             }
-            // TODO: get the orignal_filename
+            # TODO: get the orignal_filename
             $uploadedImage = file_get_contents($imageUrl);
             $newImageName = Str::random(40) . '.' . $imageExt;
             $newImagePath = Storage::disk('images')->getAdapter()->getPathPrefix() . $newImageName;
@@ -201,7 +201,7 @@ class UploadFileService
      * upload video from url service
      *
      * @param string $videoUrl the video link
-     * @return array(bool,\App\Models\Video)
+     * @return array
      **/
     public function validateExtVideoService(string $videoUrl)
     {
