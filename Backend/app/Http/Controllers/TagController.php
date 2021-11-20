@@ -66,12 +66,12 @@ class TagController extends Controller
     public function store(TagRequest $request)
     {
         if (Tag::where('description', $request->tag_description)->count() > 0) {
-            return $this->general_response("", "this tag already exists", "422");
+            return $this->generalResponse("", "this tag already exists", "422");
         }
 
         $post = Post::where('id', $request->post_id)->first();
         if ($post == null) {
-            return $this->general_response("", "this post doesn't exist", "404");
+            return $this->generalResponse("", "this post doesn't exist", "404");
         }
 
         $this->authorize('create', [Tag::class, $post]);
@@ -84,7 +84,7 @@ class TagController extends Controller
             'tag_description' => $request->tag_description
         ]);
 
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(
@@ -136,9 +136,9 @@ class TagController extends Controller
         $tag = Tag::where('description', $tag_description)->first();
 
         if (empty($tag)) {
-            return $this->general_response("", "the tag doesn't exist", 404);
+            return $this->generalResponse("", "the tag doesn't exist", 404);
         }
-        return $this->general_response(new TagResource($tag), "ok");
+        return $this->generalResponse(new TagResource($tag), "ok");
     }
 /**
  * @OA\Get(
@@ -258,6 +258,6 @@ class TagController extends Controller
         ->orderBy('num_of_posts', 'desc')
         ->get();
 
-        return $this->general_response(new TagCollection($trending), "ok");
+        return $this->generalResponse(new TagCollection($trending), "ok");
     }
 }

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "8cd359c5-bd5a-4377-8056-62626e623d52",
-		"name": "Backend-Team",
+		"_postman_id": "034150c1-7e5f-465c-8c80-7e97c5cc6fc1",
+		"name": "Backend-Team Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -83,13 +83,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/post/1",
+							"raw": "{{host}}/post/342",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"1"
+								"342"
 							]
 						}
 					},
@@ -98,6 +98,16 @@
 				{
 					"name": "delete",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -112,14 +122,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/44/25",
+							"raw": "{{host}}/post/377/342",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"44",
-								"25"
+								"377",
+								"342"
 							]
 						}
 					},
@@ -156,13 +166,13 @@
 							"raw": "{\r\n    \"post_status\": \"published\",\r\n    \"pinned\": false,\r\n    \"post_body\": \"<p>Bye!!</p>\"\r\n}"
 						},
 						"url": {
-							"raw": "{{host}}/post/1",
+							"raw": "{{host}}/post/378",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"1"
+								"378"
 							]
 						}
 					},
@@ -185,12 +195,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/random_posts",
+							"raw": "{{host}}/posts/random_posts",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"post",
+								"posts",
 								"random_posts"
 							]
 						}
@@ -199,6 +209,9 @@
 				},
 				{
 					"name": "Get Trending Posts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -213,13 +226,17 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
 						"url": {
-							"raw": "{{host}}/post/trending",
+							"raw": "{{host}}/posts/trending",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"post",
+								"posts",
 								"trending"
 							]
 						}
@@ -264,7 +281,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/Lenovo/Pictures/Capture3.PNG"
+									"src": "/home/ahmed/Pictures/Screenshot from 2021-11-04 15-10-42.png"
 								}
 							]
 						},
@@ -283,6 +300,16 @@
 				{
 					"name": "upload_audio",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -310,6 +337,16 @@
 				{
 					"name": "upload_video",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -318,7 +355,7 @@
 								{
 									"key": "video",
 									"type": "file",
-									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_1080p.mp4"
+									"src": "/home/ahmed/Videos/anger.mp4"
 								}
 							]
 						},
@@ -337,6 +374,16 @@
 				{
 					"name": "upload_ext_photo",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -371,6 +418,16 @@
 				{
 					"name": "upload_ext_video",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -419,7 +476,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"miklaziz122000miklaziz122000@gmail.com\",\r\n  \"password\": \"123\"\r\n}"
+							"raw": "{\r\n  \"email\": \"ahmedgm@gmail.com\",\r\n  \"password\": \"plzPassme123\"\r\n}"
 						},
 						"url": {
 							"raw": "{{host}}/login",
@@ -528,7 +585,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"rorodeana2132000@gmail.com\",\r\n  \"blog_username\": \"ok\",\r\n  \"password\": \"12321212114454\",\r\n  \"age\": \"22\"\r\n}",
+							"raw": "{\r\n  \"email\": \"ahmedgm@gmail.com\",\r\n  \"blog_username\": \"cpphello\",\r\n  \"password\": \"plzPassme123\",\r\n  \"age\": \"22\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -669,7 +726,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"my blog\",\r\n \r\n    \"password\": \"123\"\r\n  \r\n\r\n}"
+							"raw": "{\r\n  \"title\": \"my blog\",\r\n  \"blog_username\": \"cppmainblog\",\r\n   \"password\": \"123\"\r\n  \r\n\r\n}"
 						},
 						"url": {
 							"raw": "{{host}}/blog",
@@ -686,36 +743,17 @@
 				{
 					"name": "show",
 					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/blog/5",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"blog",
-								"5"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "DELETE",
+						},
+						"method": "GET",
 						"header": [
 							{
 								"key": "Accept",
@@ -736,6 +774,45 @@
 							"path": [
 								"blog",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog/343",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"343"
 							],
 							"query": [
 								{
@@ -825,13 +902,13 @@
 							"raw": "{\r\n\r\n  \"replies_settings\": \"Everyone can reply\",\r\n    \"allow_ask\": false,\r\n    \"ask_page_title\":\"okk\" ,\r\n    \"allow_anonymous_questions\": false,\r\n    \"allow_submittions\": false,\r\n    \"submissions_page_title\": \"Submit a post\",\r\n    \"submissions_guidelines\": \"To approve a submitted post it should be free of violence.\",\r\n  \"allow_messages\": false\r\n\r\n}"
 						},
 						"url": {
-							"raw": "{{host}}/blog_settings/1",
+							"raw": "{{host}}/blog_settings/342",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"blog_settings",
-								"1"
+								"342"
 							]
 						}
 					},
@@ -845,6 +922,16 @@
 				{
 					"name": "store",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -863,14 +950,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/tag/data/3/scrum",
+							"raw": "{{host}}/tag/data/379/scrum",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"tag",
 								"data",
-								"3",
+								"379",
 								"scrum"
 							]
 						}
@@ -883,6 +970,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{

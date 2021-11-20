@@ -108,9 +108,9 @@ class UploadFileController extends Controller
         $request->validated();
         $finalImage = (new UploadFileService())->validateImageService($request->file('image'));
         if ($finalImage) {
-            return $this->general_response(new ImageResource($finalImage), "ok", "200");
+            return $this->generalResponse(new ImageResource($finalImage), "ok", "200");
         } else {
-            return $this->error_response("Unprocessable Entity", 422);
+            return $this->errorResponse("Unprocessable Entity", 422);
         }
     }
 
@@ -200,9 +200,9 @@ class UploadFileController extends Controller
         $request->validated();
         $finalImage = (new UploadFileService())->validateExtImageService($request->imageUrl);
         if ($finalImage[0]) {
-            return $this->general_response(new ImageResource($finalImage[1]), "ok", "200");
+            return $this->generalResponse(new ImageResource($finalImage[1]), "ok", "200");
         } else {
-            return $this->error_response($finalImage[1], 422);
+            return $this->errorResponse($finalImage[1], 422);
         }
     }
 
@@ -287,9 +287,9 @@ class UploadFileController extends Controller
         $request->validated();
         $finalAudio = (new UploadFileService())->validateAudioService($request->file('audio'));
         if ($finalAudio) {
-            return $this->general_response(new AudioResource($finalAudio), "ok", "200");
+            return $this->generalResponse(new AudioResource($finalAudio), "ok", "200");
         } else {
-            return $this->error_response("Unprocessable Entity", 422);
+            return $this->errorResponse("Unprocessable Entity", 422);
         }
     }
 
@@ -380,9 +380,9 @@ class UploadFileController extends Controller
         $request->validated();
         $finalVideo = (new UploadFileService())->validateVideoService($request->file('video'));
         if ($finalVideo) {
-            return $this->general_response(new VideoResource($finalVideo), "ok", "200");
+            return $this->generalResponse(new VideoResource($finalVideo), "ok", "200");
         } else {
-            return $this->error_response("Unprocessable Entity", 422);
+            return $this->errorResponse("Unprocessable Entity", 422);
         }
     }
 
@@ -470,9 +470,9 @@ class UploadFileController extends Controller
         $request->validated();
         $finalVideo = (new UploadFileService())->validateExtVideoService($request->videoUrl);
         if ($finalVideo[0]) {
-            return $this->general_response(new VideoResource($finalVideo[1]), "ok", "200");
+            return $this->generalResponse(new VideoResource($finalVideo[1]), "ok", "200");
         } else {
-            return $this->error_response($finalVideo[1], 422);
+            return $this->errorResponse($finalVideo[1], 422);
         }
     }
 }

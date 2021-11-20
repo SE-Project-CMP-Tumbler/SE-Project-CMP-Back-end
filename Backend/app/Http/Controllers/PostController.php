@@ -128,11 +128,11 @@ class PostController extends Controller
     public function update($post_id, UpdatePostRequest $request)
     {
         if (preg_match('([0-9]+$)', $post_id) == false) {
-            return $this->general_response("", "The post id should be numeric.", "422");
+            return $this->generalResponse("", "The post id should be numeric.", "422");
         }
         $post = Post::where('id', $post_id)->first();
         if ($post == null) {
-            return $this->general_response("", "This post was not found", "404");
+            return $this->generalResponse("", "This post was not found", "404");
         }
 
         $this->authorize('update', $post);
@@ -144,7 +144,7 @@ class PostController extends Controller
             'pinned' => $request->pinned ?? $post->pinned
         ]);
 
-        return $this->general_response(new PostResource($post), "ok");
+        return $this->generalResponse(new PostResource($post), "ok");
     }
 /**
  * @OA\Delete(
@@ -207,16 +207,16 @@ class PostController extends Controller
     public function delete($post_id)
     {
         if (preg_match('([0-9]+$)', $post_id) == false) {
-            return $this->general_response("", "The post id should be numeric.", "422");
+            return $this->generalResponse("", "The post id should be numeric.", "422");
         }
         $post = Post::where('id', $post_id)->first();
         if (empty($post)) {
-            return $this->general_response("", "This post doesn't exist", "404");
+            return $this->generalResponse("", "This post doesn't exist", "404");
         }
 
         $this->authorize('delete', $post);
         $post->delete();
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(
@@ -319,13 +319,13 @@ class PostController extends Controller
     public function show($post_id, Request $request)
     {
         if (preg_match('([0-9]+$)', $post_id) == false) {
-            return $this->general_response("", "The post id should be numeric.", "422");
+            return $this->generalResponse("", "The post id should be numeric.", "422");
         }
         $post = Post::where('id', $post_id)->first();
         if ($post == null) {
-            return $this->general_response("", "This post was not found", "404");
+            return $this->generalResponse("", "This post was not found", "404");
         }
-        return $this->general_response(new PostResource($post), "ok");
+        return $this->generalResponse(new PostResource($post), "ok");
     }
  /**
  * @OA\Post(
@@ -424,7 +424,7 @@ class PostController extends Controller
 
         //need to create the tags
 
-        return $this->general_response(new PostResource($post), "ok");
+        return $this->generalResponse(new PostResource($post), "ok");
     }
 /**
  * @OA\Get(
