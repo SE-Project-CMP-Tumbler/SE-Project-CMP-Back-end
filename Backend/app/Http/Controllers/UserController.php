@@ -85,7 +85,7 @@ class UserController extends Controller
         $blogService = new BlogService();
         $unique = $blogService->uniqueBlog($request->blog_username);
         if (!$unique) {
-            return $this->error_response(Errors::MISSING_BLOG_USERNAME, '404');
+            return $this->errorResponse(Errors::MISSING_BLOG_USERNAME, '404');
         }
         $user = $userService->register(
             $request->email,
@@ -95,12 +95,12 @@ class UserController extends Controller
             $request->blog_username
         );
         if (!$user) {
-            return $this->error_response('not found', '404');
+            return $this->errorResponse('not found', '404');
         }
 
         $userService->grantAccessToken($user);
 
-        return $this->general_response(new UserResource($user), "Successful response", "200");
+        return $this->generalResponse(new UserResource($user), "Successful response", "200");
     }
 /** @OA\Post(
  * path="/login",
@@ -152,10 +152,10 @@ class UserController extends Controller
         $userService = new UserService();
         $user = $userService->checkLoginCredentials($request->email, $request->password);
         if (!$user) {
-            return $this->error_response(Errors::INCORRECT_EMAIL_PASSWORD, '422');
+            return $this->errorResponse(Errors::INCORRECT_EMAIL_PASSWORD, '422');
         }
         $userService->grantAccessToken($user);
-        return $this->general_response(new UserResource($user), "Successful response", '200');
+        return $this->generalResponse(new UserResource($user), "Successful response", '200');
     }
 /** @OA\Post(
  * path="/login_with_google",
@@ -287,9 +287,9 @@ class UserController extends Controller
     {
         if ($request->user() && $request->user()->token()) {
             $request->user()->token()->delete();
-            return $this->general_response('', "Successful response", '200');
+            return $this->generalResponse('', "Successful response", '200');
         }
-        return $this->error_response('not found', '404');
+        return $this->errorResponse('not found', '404');
     }
 /** @OA\get(
  * path="/email/verify/{id}/{hash}",
@@ -348,10 +348,10 @@ class UserController extends Controller
             !($userService->matchMagicLinkHash($id, $hash)) ||
             !($userService->verifyUserEmail($user, false))
         ) {
-            return $this->error_response('not found', '404');
+            return $this->errorResponse('not found', '404');
         }
 
-        return $this->general_response("", "Successful response", '200');
+        return $this->generalResponse("", "Successful response", '200');
     }
 
 
@@ -400,9 +400,9 @@ class UserController extends Controller
     public function resendVerification(Request $request)
     {
         if ((new UserService())->verifyUserEmail($request->user(), true)) {
-            return $this->general_response("", "Successful response", '200');
+            return $this->generalResponse("", "Successful response", '200');
         }
-        return $this->error_response("not found", '404');
+        return $this->errorResponse("not found", '404');
     }
 /** @OA\Post(
  * path="/forgot_password",

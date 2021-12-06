@@ -191,4 +191,21 @@ class BlogSettingRequestTest extends TestCase
             ]
         ]);
     }
+     /**
+     *  test Blog blog_settings are correct
+     *
+     * @return void
+     */
+    public function testTrueSetting()
+    {
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id]);
+        $token = $user->createToken('Auth Token')->accessToken;
+        $setting = [
+            "allow_anonymous_questions" => true
+        ];
+        $response = $this
+        ->json('PUT', 'api/blog_settings/' . $blog->id, $setting, ['Authorization' => 'Bearer ' . $token], Config::JSON)
+        ->assertStatus(200);
+    }
 }

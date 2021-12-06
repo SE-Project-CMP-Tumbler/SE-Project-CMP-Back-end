@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *  external resource from https://github.com/SiliconArena/alphamart-backend
+*/ 
 namespace App\Http\Misc\Helpers;
 
 class Errors
@@ -36,7 +39,7 @@ class Errors
 
     // general errors
     const TESTING  = 'Not Found';
-    const UNAUTHENTICATED  = 'Forbidden';
+    const FORBIDDEN  = 'Forbidden';
     const UNAUTHORIZED = 'Unauthorized.';
     const GENERAL = "Internal Server error";
     const NOTALLOWED = "Method Not Allowed";

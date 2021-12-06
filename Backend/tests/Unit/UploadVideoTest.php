@@ -161,22 +161,22 @@ class UploadVideoTest extends TestCase
      *
      * @return void
      */
-    public function testUploadValidvideo()
-    {
-        Storage::fake('videos');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
-        $validTypes = array_slice(Config::VALID_VIDEO_TYPES, 0, Config::VALID_FAKE_LEN, true);
-        $randType = array_rand($validTypes, 1);
-        $videoFile = new UploadedFile("/home/ahmed/Videos/anger.mp4", 'anger.mp4', null, null, true);
-        $response = $this->postJson('/api/upload_video', [
-            'video' => $videoFile,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
-        $response->assertStatus(200);
-        Storage::disk('videos')->assertExists($videoFile->hashName());
-    }
+    // public function testUploadValidvideo()
+    // {
+    //     Storage::fake('videos');
+    //     $user = User::factory()->create();
+    //     $token = $user->createToken('Auth Token')->accessToken;
+    //     $validTypes = array_slice(Config::VALID_VIDEO_TYPES, 0, Config::VALID_FAKE_LEN, true);
+    //     $randType = array_rand($validTypes, 1);
+    //     $videoFile = new UploadedFile("/home/ahmed/Videos/anger.mp4", 'anger.mp4', null, null, true);
+    //     $response = $this->postJson('/api/upload_video', [
+    //         'video' => $videoFile,
+    //     ], [
+    //         'Content-Type' => 'application/json',
+    //         'Accept' => 'application/json',
+    //         'Authorization' => 'Bearer ' . $token
+    //     ]);
+    //     $response->assertStatus(200);
+    //     Storage::disk('videos')->assertExists($videoFile->hashName());
+    // }
 }

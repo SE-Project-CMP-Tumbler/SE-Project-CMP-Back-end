@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *  external resource from  https://github.com/SiliconArena/alphamart-backend
+*/ 
 namespace App\Http\Misc\Helpers;
 
 class Config
