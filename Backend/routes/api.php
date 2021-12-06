@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogSettingController;
+use App\Http\Controllers\FollowTagController;
 use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
@@ -67,3 +68,9 @@ Route::post('/email/resend_verification', [UserController::class,'resendVerifica
 Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store'])->middleware('auth:api');
 Route::get('/tag/data/{tag_description}', [TagController::class,'show'])->middleware('auth:api');
 Route::get('/tag/trending', [TagController::class,'index'])->middleware('auth:api');
+
+/*
+| Follow Tag Routes
+*/
+Route::post('/follow_tag/{tag_description}', [FollowTagController::class,'store'])->middleware('auth:api');
+Route::delete('/follow_tag/{tag_description}', [FollowTagController::class,'destroy'])->middleware('auth:api');

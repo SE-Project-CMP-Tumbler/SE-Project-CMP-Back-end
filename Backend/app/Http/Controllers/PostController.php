@@ -7,6 +7,9 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Blog;
 use App\Models\Post;
+use App\Models\PostTag;
+use App\Models\Tag;
+use App\Services\PostService;
 use Faker\Factory;
 use Illuminate\Http\Request;
 
@@ -232,7 +235,6 @@ class PostController extends Controller
  * description="A blog get post",
  * operationId="getapost",
  * tags={"Posts"},
- * security={ {"bearer": {} }},
  *   @OA\Parameter(
  *          name="blog_id",
  *          description="Blog_id ",
@@ -429,7 +431,22 @@ class PostController extends Controller
             'blog_id' => $request->blog_id
         ]);
 
-        //need to create the tags
+
+        $postService = new PostService();
+        $tags = $postService->extractTags($post->body);
+
+        //Iterate through the tags array
+        foreach ($tags as $tag) {
+            //if the tag was never found then create a new one
+            Tag::firstOrCreate(
+                ['description' => $tag]
+            );
+            //if was found or wasn't create a relation recording this post with that tag
+            PostTag::create([
+                'tag_description' => $tag,
+                'post_id' => $post->id
+            ]);
+        }
 
         return $this->general_response(new PostResource($post), "ok");
     }
