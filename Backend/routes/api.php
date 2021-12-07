@@ -56,10 +56,16 @@ Route::post("/upload_ext_video", [UploadFileController::class, 'uploadExtVideo']
 */
 Route::post('/login', [UserController::class,'login'])->name('login');
 Route::post('/register', [UserController::class,'register'])->name('register');
+Route::post('/check_register_credentials', [UserController::class,'checkRegisterCredentials'])->name('register.check');
 Route::post('/logout', [UserController::class,'logout'])->name('logout')->middleware('auth:api');
 Route::get('/email/verify/{id}/{hash}', [UserController::class,'emailVerification'])->name('verification.verify');
 Route::post('/email/resend_verification', [UserController::class,'resendVerification'])->middleware(['auth:api', 'throttle:10,1'])->name('verification.send');
-
+Route::post('/forgot_password', [UserController::class,'forgotPassword'])->middleware('guest')->name('password.email');
+Route::get('/reset_password/{id}/{token}', [UserController::class,'resetPasswordLink'])->middleware('guest')->name('password.update');
+Route::post('/reset_password', [UserController::class,'resetPassword'])->middleware('guest')->name('password.update');
+Route::post('/register_with_google', [UserController::class,'registerWithGoogle'])->name('register.google');
+Route::post('/login_with_google', [UserController::class,'loginWithGoogle'])->name('login.google');
+Route::put('/change_password', [UserController::class,'changePassword'])->name('password.change')->middleware(['auth:api']);
 
 /*
 | Tags Routes

@@ -2,7 +2,8 @@
 
 /**
  *  external resource from https://github.com/SiliconArena/alphamart-backend
-*/ 
+*/
+
 namespace App\Http\Misc\Helpers;
 
 class Errors
@@ -32,6 +33,16 @@ class Errors
     const MISSING_BOTH_EMAIL_PASSWORD = 'You do have to fill this stuff out, you know.';
     const INCORRECT_EMAIL_PASSWORD = 'Your email or password were incorrect.';
 
+    //reset password errors
+    const MISSING_PASSWORD_CONFORMATION = 'you password does not match the password confirmation';
+
+    //login with google errors
+    const NOT_LINKED_BY_GOOGLE = 'your account already exists, but not linked';
+
+    //change password errors
+    const INVALID_CHANGE_PASSWORD = 'Invalid password entered';
+    const INVALID_CHANGE_PASSWORD_CONFORMATION = "Password don't match";
+    const MISSING_CHANGE_PASSWORD = 'Password is empty';
 
     //records errors
     const EXISTS = "Record already exists!";

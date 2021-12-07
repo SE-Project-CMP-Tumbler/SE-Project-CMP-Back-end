@@ -31,7 +31,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -40,7 +40,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -301,7 +301,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -310,7 +310,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -559,7 +559,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -568,7 +568,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -987,7 +987,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post/Answer Request has different types depeneds on answer type :\n *     \n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "description": "Post/Answer Request has different types depeneds on answer type :\r\n *     \r\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2071,7 +2071,7 @@
                 "description": " Creating a secondary blog",
                 "operationId": "createBlog",
                 "requestBody": {
-                    "description": "\n *    title : the title of the new blog ,\n *    blog_username : the blog_username will be used in the blog URL,\n *    password : the password of the new blog if there's a one",
+                    "description": "\r\n *    title : the title of the new blog ,\r\n *    blog_username : the blog_username will be used in the blog URL,\r\n *    password : the password of the new blog if there's a one",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2606,7 +2606,7 @@
                     "Blogs"
                 ],
                 "summary": "Get the settings of a specific blog",
-                "description": "Returns list of blog settings\n * Note that: Response may have 1 or 2 attributes changing based on whether it's primary or secondry\n *  Extra Attributes for a primary blog settings:\n *      share_likes: bool to whether allow or not sharing likes on a specific blog's website,\n *      share_followings: bool to whether allow or not sharing followings on a specific blog's website\n *  Extra Attributes for a secondry blog settings:\n *      allow_password: bool to whether or not allow having a password on a specific secondry blog",
+                "description": "Returns list of blog settings\r\n * Note that: Response may have 1 or 2 attributes changing based on whether it's primary or secondry\r\n *  Extra Attributes for a primary blog settings:\r\n *      share_likes: bool to whether allow or not sharing likes on a specific blog's website,\r\n *      share_followings: bool to whether allow or not sharing followings on a specific blog's website\r\n *  Extra Attributes for a secondry blog settings:\r\n *      allow_password: bool to whether or not allow having a password on a specific secondry blog",
                 "operationId": "getBlogSettings",
                 "parameters": [
                     {
@@ -2777,7 +2777,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "The Request Body can have one or more key:value pairs, i.e the route can update a single settings option or many settings options via 1 request.\n *  The Request Body need to contain any of the following key value pairs, i.e the request body doesn't need to contain all the following example's key: value pairs.\n *  A request body containing 1 key: value pair will update its corresponding settings' option only.\n *  The key: value pairs specified in the request body are the pairs whose corresponding settings option will be updated only.",
+                    "description": "The Request Body can have one or more key:value pairs, i.e the route can update a single settings option or many settings options via 1 request.\r\n *  The Request Body need to contain any of the following key value pairs, i.e the request body doesn't need to contain all the following example's key: value pairs.\r\n *  A request body containing 1 key: value pair will update its corresponding settings' option only.\r\n *  The key: value pairs specified in the request body are the pairs whose corresponding settings option will be updated only.",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -3156,7 +3156,7 @@
                 "description": "send messages to the other chat_participant.",
                 "operationId": "sendMessage",
                 "requestBody": {
-                    "description": "send one of the following types {text | gif | photo | text + gif | text + photo}\n *   text: send a text message or empty\n *   gif: send a gif message or empty\n *   photo: send a photo message or empty",
+                    "description": "send one of the following types {text | gif | photo | text + gif | text + photo}\r\n *   text: send a text message or empty\r\n *   gif: send a gif message or empty\r\n *   photo: send a photo message or empty",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -4592,7 +4592,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "type: is a string parameter indicates which notification type to be recieved:\n *     like: a like on your post\n *     reply: a reply on your post\n *     follow: a new follower\n *     reblog: a reblog of your post\n *     ask: a new ask recieved\n *     answer: an answered ask that you had sent\n *     mentions_posts: get mentions in posts\n *     mentions_replies: get mentions in replies\n *     all: to get all type of notifications",
+                    "description": "type: is a string parameter indicates which notification type to be recieved:\r\n *     like: a like on your post\r\n *     reply: a reply on your post\r\n *     follow: a new follower\r\n *     reblog: a reblog of your post\r\n *     ask: a new ask recieved\r\n *     answer: an answered ask that you had sent\r\n *     mentions_posts: get mentions in posts\r\n *     mentions_replies: get mentions in replies\r\n *     all: to get all type of notifications",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5821,7 +5821,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\n *     in image type : at least one uplaoded image,\n *     in chat type : chat_body is required ,chat_title is optional\n *     in quote type:  quote_text is required, quote_body is optinal\n *     in video type:  video is required , url_videos are optinal\n *     in audio type: audio is required\n *     in link type:  link is required\n *     is general : all fields can be given , to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image,\r\n *     in chat type : chat_body is required ,chat_title is optional\r\n *     in quote type:  quote_text is required, quote_body is optinal\r\n *     in video type:  video is required , url_videos are optinal\r\n *     in audio type: audio is required\r\n *     in link type:  link is required\r\n *     is general : all fields can be given , to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -6506,7 +6506,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\n *     in image type : at least one uplaoded image,\n *     in chat type : chat_body is required, chat_title is optional\n *     in quote type:  quote_text is required, quote_body is optinal\n *     in video type:  video is required, url_videos are optinal\n *     in audio type: audio is required\n *     is general : all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image,\r\n *     in chat type : chat_body is required, chat_title is optional\r\n *     in quote type:  quote_text is required, quote_body is optinal\r\n *     in video type:  video is required, url_videos are optinal\r\n *     in audio type: audio is required\r\n *     is general : all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -6845,7 +6845,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\n *     in image type : at least one uplaoded image,\n *     in quote type:  quote_text is required, quote_body is optinal\n *     in video type:  video is required, url_videos are optinal\n *     in link type: link is required\n *     is general : all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image,\r\n *     in quote type:  quote_text is required, quote_body is optinal\r\n *     in video type:  video is required, url_videos are optinal\r\n *     in link type: link is required\r\n *     is general : all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -11653,7 +11653,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11662,7 +11662,107 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "422",
-                                                "msg": "Unprocessable Entity"
+                                                "msg": "This email address is already in use."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/checkRegisterCredentials": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "check new user Credentials",
+                "description": " check if those Credentials are good to create a new user",
+                "operationId": "signupuser",
+                "requestBody": {
+                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "blog_username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user2023@gmail.com"
+                                    },
+                                    "blog_username": {
+                                        "type": "string",
+                                        "example": "CairoBlogs"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "<df1212V>"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "This email address is already in use."
                                             }
                                         }
                                     },
@@ -11887,6 +11987,25 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "your account already exists, but not linked"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -11976,7 +12095,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11985,7 +12104,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "422",
-                                                "msg": "Unprocessable Entity"
+                                                "msg": "This email address is already in use."
                                             }
                                         }
                                     },
@@ -12320,8 +12439,27 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "400",
+                                                "msg": "Password already sent"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
-                        "description": "Not found response",
+                        "description": "Not found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12342,7 +12480,7 @@
                 }
             }
         },
-        "/reset_password/{id}/{access_token}": {
+        "/reset_password/{id}/{token}": {
             "get": {
                 "tags": [
                     "User"
@@ -12449,17 +12587,22 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
+                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
+                                    "token",
                                     "email",
                                     "password",
                                     "password_confirmation"
                                 ],
                                 "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"
+                                    },
                                     "email": {
                                         "type": "string",
                                         "example": "user2023@gmail.com"
@@ -12526,25 +12669,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -12583,12 +12707,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/change_password": {
@@ -12600,16 +12719,22 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\n *    password : The password of the  user,\n *    password_confirmation : The password of the user",
+                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
+                                    "current_password",
                                     "password",
                                     "password_confirmation"
                                 ],
                                 "properties": {
+                                    "current_password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "<cufe>"
+                                    },
                                     "password": {
                                         "type": "string",
                                         "format": "password",
@@ -12638,6 +12763,25 @@
                                             "example": {
                                                 "status": "200",
                                                 "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "Invalid password entered"
                                             }
                                         }
                                     },
