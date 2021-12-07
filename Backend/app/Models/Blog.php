@@ -44,8 +44,8 @@ class Blog extends Model
      * This is like relation between post and blog
      * @return Post
      */
-    public function posts()
+    public function likes()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class, 'likes', 'blog_id', 'post_id');
     }
 }
