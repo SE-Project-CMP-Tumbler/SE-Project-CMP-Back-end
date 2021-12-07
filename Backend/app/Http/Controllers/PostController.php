@@ -513,13 +513,13 @@ class PostController extends Controller
 
 /**
  * @OA\Get(
- * path="/post/{blog_id}",
+ * path="/posts/{blogId}/published",
  * summary="Get posts of blog which are published",
  * description="A blog get blog's posts",
  * operationId="getposts",
  * tags={"Posts"},
  * @OA\Parameter(
- *          name="blog_id",
+ *          name="blogId",
  *          description="Blog_id ",
  *          required=true,
  *          in="path",
@@ -538,7 +538,6 @@ class PostController extends Controller
  *              @OA\Property(property="current_page",type="int",example=2),
  *              @OA\Property(property="total_pages",type="int",example=2),
  *              @OA\Property(property="first_page_url",type="boolean",example=false),
- *              @OA\Property(property="last_page_url",type="int",example=2),
  *              @OA\Property(property="next_page_url",type="string",example=null),
  *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
  *          @OA\Property(property="posts",type="array",
@@ -612,29 +611,28 @@ class PostController extends Controller
     /**
      * Get all published posts of a specific blog.
      *
-     * @param int $blog_id The id of the blog whose published posts will be retrieved.
+     * @param int $blogId The id of the blog whose published posts will be retrieved.
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($blog_id)
+    public function index($blogId)
     {
-        if (preg_match('(^[0-9]+$)', $blog_id) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
 
-        $blog = Blog::where('id', $blog_id)->first();
+        $blog = Blog::where('id', $blogId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found", "404");
         }
 
-        $publishedPosts = Post::where('blog_id', $blog->id)
-            ->where('status', 'published')->paginate(10);
+        $publishedPosts = $blog->posts()->where('status', 'published')->paginate(10);
 
-        return $this->generalResponse(new PostCollection($publishedPosts), "ok");
+        return $this->generalResponse(new PostCollection($publishedPosts), "OK");
     }
 
  /**
  * @OA\Get(
- * path="/post/{blog_id}/draft",
+ * path="/post/{blogId}/draft",
  * summary="Get posts of blog which are drafted",
  * description="A blog get scheduled posts",
  * operationId="getdraftpost",
@@ -653,6 +651,15 @@ class PostController extends Controller
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
+ *          @OA\Property(property="pagination",type="object",
+ *              @OA\Property(property="total",type="int",example=17),
+ *              @OA\Property(property="count",type="int",example=7),
+ *              @OA\Property(property="per_page",type="int",example=10),
+ *              @OA\Property(property="current_page",type="int",example=2),
+ *              @OA\Property(property="total_pages",type="int",example=2),
+ *              @OA\Property(property="first_page_url",type="boolean",example=false),
+ *              @OA\Property(property="next_page_url",type="string",example=null),
+ *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
  *          @OA\Property(property="posts",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="post_id", type="integer", example=5),
@@ -703,12 +710,41 @@ class PostController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"This blog id is not found."})
+ *        )
+ *     ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Unprocessable Entity",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"The blog Id should be numeric."})
  *        )
  *     )
  * )
  */
+    /**
+     * Get Draft Posts.
+     * Retrieve all draft posts for any blog of the authenticated user blogs.
+     *
+     * @param int $blogId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDraftPosts($blogId)
+    {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog Id should be numeric.", "422");
+        }
 
+        $blog = Blog::where('id', $blogId)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This blog id is not found.", "404");
+        }
+
+        $this->authorize('viewDraftPosts', [Post::class, $blog]);
+
+        $draftPosts = $blog->posts()->where('status', 'draft')->paginate(10);
+        return $this->generalResponse(new PostCollection($draftPosts), "OK");
+    }
 /**
  * @OA\Put(
  * path="/post/{post_id}/{blog_id}/pinned",

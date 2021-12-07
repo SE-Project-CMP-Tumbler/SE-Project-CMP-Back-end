@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "localhost:8000",
+            "url": "http://my-default-host.com",
             "description": "Demo API Server"
         }
     ],
@@ -6197,9 +6197,7 @@
                         "bearer": []
                     }
                 ]
-            }
-        },
-        "/post/{post_id}/{blog_id}": {
+            },
             "delete": {
                 "tags": [
                     "Posts"
@@ -6372,10 +6370,6 @@
                                                         "first_page_url": {
                                                             "type": "boolean",
                                                             "example": false
-                                                        },
-                                                        "last_page_url": {
-                                                            "type": "int",
-                                                            "example": 2
                                                         },
                                                         "next_page_url": {
                                                             "type": "string",
@@ -7122,6 +7116,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -7286,6 +7317,25 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "post is not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "The blog Id should be numeric."
                                             }
                                         }
                                     },
@@ -10318,12 +10368,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/blog/{blog_id}/theme": {

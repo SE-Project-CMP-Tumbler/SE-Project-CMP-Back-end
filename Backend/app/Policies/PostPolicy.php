@@ -12,14 +12,15 @@ class PostPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can view draft posts.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User $user
+     * @param \App\Models\Blog $blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewDraftPosts(User $user, Blog $blog)
     {
-        //
+        return $blog->user_id == $user->id;
     }
 
     /**

@@ -37,14 +37,16 @@ Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->
 /*
 | Post Routes
 */
-Route::get('post/{post_id}', [PostController::class,'show'])->middleware('auth:api');
+Route::get('post/{post_id}', [PostController::class,'show']);
 Route::post('post/{blog_id}', [PostController::class,'store'])->middleware('auth:api');
 Route::delete('post/{post_id}', [PostController::class,'delete'])->middleware('auth:api');
 Route::put('post/{post_id}', [PostController::class,'update'])->middleware('auth:api');
 
 Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
 Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);
-Route::get('/posts/{blog_id}', [PostController::class, 'index']);
+Route::get('/posts/{blogId}/published', [PostController::class, 'index']);
+Route::get('/post/{blogId}/draft', [PostController::class, 'getDraftPosts'])->middleware('auth:api');
+
 /*
 | Uploads Routes
 */
@@ -68,8 +70,8 @@ Route::post('/email/resend_verification', [UserController::class,'resendVerifica
 | Tags Routes
 */
 Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store'])->middleware('auth:api');
-Route::get('/tag/data/{tag_description}', [TagController::class,'show'])->middleware('auth:api');
-Route::get('/tag/trending', [TagController::class,'index'])->middleware('auth:api');
+Route::get('/tag/data/{tag_description}', [TagController::class,'show']);
+Route::get('/tag/trending', [TagController::class,'index']);
 
 /*
 | Follow Tag Routes

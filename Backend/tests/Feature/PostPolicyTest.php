@@ -72,7 +72,7 @@ class PostPolicyTest extends TestCase
         $this->assertTrue($user->can('delete', [Post::class, $post]));
     }
     /**
-     * Testing the non authorization of a user to edit a post
+     * Testing the non authorization of a user to edit a post.
      *
      * @return void
      */
@@ -83,5 +83,36 @@ class PostPolicyTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $post = Post::factory()->create(['blog_id' => $blog->id]);
         $this->assertFalse($userGuest->can('delete', [Post::class, $post]));
+    }
+    /**
+     * Testing the authorization of a user to get draft posts.
+     *
+     * @return void
+     */
+    public function testTrueGetDraftPosts()
+    {
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id]);
+        $post = Post::factory()->create([
+            'blog_id' => $blog->id,
+            'status' => 'draft'
+        ]);
+        $this->assertTrue($user->can('viewDraftPosts', [Post::class, $blog]));
+    }
+    /**
+     * Testing the non authorization of a user to get draft posts.
+     *
+     * @return void
+     */
+    public function testFalseGetDraftPosts()
+    {
+        $user = User::factory()->create();
+        $userGuest = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id]);
+        $post = Post::factory()->create([
+            'blog_id' => $blog->id,
+            'status' => 'draft'
+        ]);
+        $this->assertFalse($userGuest->can('viewDraftPosts', [Post::class, $blog]));
     }
 }
