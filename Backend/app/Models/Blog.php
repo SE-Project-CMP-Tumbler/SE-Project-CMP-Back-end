@@ -40,9 +40,9 @@ class Blog extends Model
     {
         return $this->belongsTo(User::class);
     }
-     /**
-     * This is like relation between post and blog
-     * @return Post
+    /**
+     * The relation of getting all posts that the blog liked
+     * @return Post[]
      */
     public function likes()
     {
@@ -63,5 +63,22 @@ class Blog extends Model
     public function followers()
     {
         return $this->belongsToMany(Blog::class, 'likes', 'folllower_id', 'followed_id');
+    }
+    /** 
+     * The relation of getting all tags followed by the blog.
+     *
+     * @return Tag[]
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'blog_follow_tag', 'blog_id', 'tag_description');
+    }
+    /**
+     * The relation of getting all posts belonging to the blog
+     * @return Post[]
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
