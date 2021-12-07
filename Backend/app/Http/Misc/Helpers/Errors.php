@@ -39,7 +39,7 @@ class Errors
 
     // general errors
     const TESTING  = 'Not Found';
-    const UNAUTHENTICATED  = 'Forbidden';
+    const FORBIDDEN  = 'Forbidden';
     const UNAUTHORIZED = 'Unauthorized.';
     const GENERAL = "Internal Server error";
     const NOTALLOWED = "Method Not Allowed";

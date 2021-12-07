@@ -65,14 +65,14 @@ class BlogController extends Controller
  *
  * )
  */
- /**
-  * Get specific blog
-  * @param \Blog  $blog
-  * @return \json
- */
+    /**
+     * Get specific blog
+     * @param \Blog  $blog
+     * @return \json
+     */
     public function show($blogId)
     {
-        if (preg_match('([0-9]+$)', $blogId) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blog = Blog::find($blogId);
@@ -263,7 +263,7 @@ class BlogController extends Controller
  */
     public function delete(Request $request, $blogId)
     {
-        if (preg_match('([0-9]+$)', $blogId) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
 

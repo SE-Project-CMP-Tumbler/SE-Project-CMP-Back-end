@@ -64,9 +64,9 @@ class Handler extends ExceptionHandler
             if ($exception instanceof ModelNotFoundException) {
                 return $this->errorResponse($this->modelName($exception), "404");
             } elseif ($exception instanceof AuthorizationException) {
-                return $this->errorResponse(Errors::UNAUTHORIZED, "401");
+                return $this->errorResponse(Errors::FORBIDDEN, "403");
             } elseif ($exception instanceof AuthenticationException) {
-                return $this->errorResponse(Errors::UNAUTHENTICATED, "403");
+                return $this->errorResponse(Errors::UNAUTHORIZED, "401");
             } elseif ($exception instanceof ValidationException) {
                 return $this->errorResponse($exception->validator->errors()->first(), (string) $exception->status);
             } elseif ($exception instanceof NotFoundHttpException) {
