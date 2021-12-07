@@ -42,7 +42,7 @@ Route::put('post/{post_id}', [PostController::class,'update'])->middleware('auth
 
 Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
 Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);
-
+Route::get('/posts/{blog_id}', [PostController::class, 'index']);
 /*
 | Uploads Routes
 */

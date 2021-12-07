@@ -52,13 +52,7 @@ class FollowTagController extends Controller
     public function store($tag_description)
     {
         $user = auth()->user();
-        $blogs = $user->blogs;
-        $primaryBlog = null;
-        foreach ($blogs as $blog) {
-            if ($blog->is_primary) {
-                $primaryBlog = $blog;
-            }
-        }
+        $primaryBlog = $user->blogs()->where('is_primary', true)->first();
 
         $tag = Tag::where([
             'description' => $tag_description
@@ -134,13 +128,7 @@ class FollowTagController extends Controller
     public function destroy($tag_description)
     {
         $user = auth()->user();
-        $blogs = $user->blogs;
-        $primaryBlog = null;
-        foreach ($blogs as $blog) {
-            if ($blog->is_primary) {
-                $primaryBlog = $blog;
-            }
-        }
+        $primaryBlog = $user->blogs()->where('is_primary', true)->first();
 
         $tag = Tag::where('description', $tag_description)->first();
         if ($tag == "") {

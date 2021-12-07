@@ -40,13 +40,13 @@ class Blog extends Model
     {
         return $this->belongsTo(User::class);
     }
-     /**
-     * This is like relation between post and blog
-     * @return Post
+    /**
+     * The relation of getting all posts belonging to the blog
+     * @return Post[]
      */
     public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->hasMany(Post::class);
     }
     /**
      * The relation of getting all tags followed by the blog.

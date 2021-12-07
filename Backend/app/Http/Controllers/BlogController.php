@@ -70,7 +70,7 @@ class BlogController extends Controller
  */
     public function show($blog_id)
     {
-        if (preg_match('([0-9]+$)', $blog_id) == false) {
+        if (preg_match('(^[0-9]+$)', $blog_id) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blog = Blog::find($blog_id);
@@ -249,7 +249,7 @@ class BlogController extends Controller
  */
     public function delete(Request $request, $blog_id)
     {
-        if (preg_match('([0-9]+$)', $blog_id) == false) {
+        if (preg_match('(^[0-9]+$)', $blog_id) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blog = Blog::find($blog_id);
