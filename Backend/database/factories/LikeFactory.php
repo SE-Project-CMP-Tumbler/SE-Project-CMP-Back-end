@@ -4,11 +4,9 @@ namespace Database\Factories;
 
 use App\Models\Blog;
 use App\Models\Post;
-use App\Models\PostTag;
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PostTagFactory extends Factory
+class LikeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +15,12 @@ class PostTagFactory extends Factory
      */
     public function definition()
     {
-        $post = Post::factory()->create();
-        $tag = Tag::factory()->create();
+        $blog = Blog::factory()->create();
+        $post =  Post::factory()->create(['blog_id' => $blog->id]);
         return [
+            //
             'post_id' => $post->id,
-            'tag_description' => $tag['description']
+            'blog_id' => $blog->id
         ];
     }
 }

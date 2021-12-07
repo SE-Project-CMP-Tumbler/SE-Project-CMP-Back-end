@@ -7,7 +7,7 @@ namespace App\Http\Misc\Helpers;
 
 class Config
 {
-    public const PAGINATION_LIMIT = 15;
+    public const PAGINATION_LIMIT = 10;
     public const PAGINATION_LIMIT_MIN = 12;
     public const API_PAGINATION_LIMIT = 10;
     public const MIN_GPS_RADIUS = 0.0;

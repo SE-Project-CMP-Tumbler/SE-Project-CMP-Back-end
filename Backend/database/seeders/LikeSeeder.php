@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Post;
+use App\Models\Like;
 use Illuminate\Database\Seeder;
 
-class PostSeeder extends Seeder
+class LikeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,7 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        Post::factory(10)->create();
+        //
+        Like::factory(10)->create();
     }
 }

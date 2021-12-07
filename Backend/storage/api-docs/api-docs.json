@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
+            "url": "localhost:8000",
             "description": "Demo API Server"
         }
     ],
@@ -1745,6 +1745,14 @@
                                                     "type": "string",
                                                     "example": "My 1st Blog"
                                                 },
+                                                "allow_ask": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "allow_submittions": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
                                                 "description": {
                                                     "type": "string",
                                                     "example": "This blog is a sketch of thoughts"
@@ -1948,6 +1956,20 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
                                                 "blogs": {
                                                     "type": "array",
                                                     "items": {
@@ -1981,6 +2003,14 @@
                                                             "title": {
                                                                 "type": "string",
                                                                 "example": "My 1st Blog"
+                                                            },
+                                                            "allow_ask": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "allow_submittions": {
+                                                                "type": "boolean",
+                                                                "example": true
                                                             },
                                                             "description": {
                                                                 "type": "string",
@@ -2139,6 +2169,25 @@
                             }
                         }
                     },
+                    "422": {
+                        "description": "Un Processed Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "The blog title is required"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal Server error",
                         "content": {
@@ -2190,6 +2239,20 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
                                                 "blogs": {
                                                     "type": "array",
                                                     "items": {
@@ -2326,6 +2389,20 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
                                                 "blogs": {
                                                     "type": "array",
                                                     "items": {
@@ -2438,7 +2515,7 @@
                 ]
             }
         },
-        "/blog/likes/{blog_id}": {
+        "/blogs/likes/{blog_id}": {
             "get": {
                 "tags": [
                     "Blogs"
@@ -2472,6 +2549,20 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -2926,6 +3017,25 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "The blog id specified was not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Un Processed Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "The allow_ask should be boolean"
                                             }
                                         }
                                     },
@@ -3880,7 +3990,7 @@
                     "Follow Blogs"
                 ],
                 "summary": "followed_by blog",
-                "description": " Check if the current blog is followed by another specific blog",
+                "description": " Check if I follow  another specific blog",
                 "operationId": "followingblog",
                 "parameters": [
                     {
@@ -5795,12 +5905,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             },
             "put": {
                 "tags": [
@@ -6258,6 +6363,47 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "last_page_url": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -6471,7 +6617,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "post is not found"
+                                                "msg": "This blog id is not found"
                                             }
                                         }
                                     },
@@ -6480,12 +6626,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
@@ -9882,12 +10023,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/tag/posts/{tag_description}?sort=sort_type": {
@@ -10914,7 +11050,7 @@
                     "Upload"
                 ],
                 "summary": "upload an external photo",
-                "description": "upload the image from imageUrl\n    * in the request body and get the url for that image back in the response",
+                "description": "upload the image from imageUrl\r\n    * in the request body and get the url for that image back in the response",
                 "operationId": "uploadExtPhoto",
                 "requestBody": {
                     "description": "imageUrl: is the url to fetch the image from",
@@ -11403,7 +11539,7 @@
                     "Upload"
                 ],
                 "summary": "upload an external video",
-                "description": "upload the video from videoUrl\n    * in the request body and get the url for that vidoe back in the response",
+                "description": "upload the video from videoUrl\r\n    * in the request body and get the url for that vidoe back in the response",
                 "operationId": "uploadExtVideo",
                 "requestBody": {
                     "description": "videoUrl: is the url to fetch the video from",
@@ -11571,7 +11707,7 @@
                 "description": " Creating a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user,\n *    age : The age of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -11802,7 +11938,7 @@
                 "description": "user login",
                 "operationId": "loginuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the user ,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The email of the user ,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -11904,7 +12040,7 @@
                 "description": " login using google ",
                 "operationId": "loginuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12019,7 +12155,7 @@
                 "description": "Creating a new user using google",
                 "operationId": "signupuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account,\n *    blog_username : The blog_username will be used in the primary blog,\n *    age : The age of the new user",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12400,7 +12536,7 @@
                 "description": "sending an email with a password reset link to the user",
                 "operationId": "emailverification",
                 "requestBody": {
-                    "description": "\n *    email : this is the same email that the user used to signup ",
+                    "description": "\r\n *    email : this is the same email that the user used to signup ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12826,7 +12962,7 @@
                 "description": " Change a email of user",
                 "operationId": "changeemail",
                 "requestBody": {
-                    "description": "\n *    password : The password of the user,\n *    email : The  email of the  user",
+                    "description": "\r\n *    password : The password of the user,\r\n *    email : The  email of the  user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12956,7 +13092,7 @@
                 "description": " delete the user account",
                 "operationId": "deleteuser",
                 "requestBody": {
-                    "description": "\n *    email : The  email of the  user,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {

@@ -92,6 +92,7 @@ class BlogSettingController extends Controller
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
+        $this->authorize('view', $blog);
         return  $this->generalResponse(new BlogSettingResource($blog));
     }
 /**
@@ -156,6 +157,13 @@ class BlogSettingController extends Controller
  *  description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)),
+ *  @OA\Response(
+ *    response=422,
+ *    description="Un Processed Data",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"The allow_ask should be boolean"})
+ *        )
+ *     ),
  *
  * @OA\Response(
  *  response=500,

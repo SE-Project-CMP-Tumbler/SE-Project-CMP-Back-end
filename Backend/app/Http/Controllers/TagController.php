@@ -93,7 +93,6 @@ class TagController extends Controller
  * description="Returns data of a specific tag",
  * operationId="getTagData",
  * tags={"Tags"},
- * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="tag_description",
  *          description="Tag Description",
