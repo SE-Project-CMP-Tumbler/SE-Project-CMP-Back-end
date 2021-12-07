@@ -2,7 +2,8 @@
 
 /**
  *  external resource from  https://github.com/SiliconArena/alphamart-backend
-*/ 
+*/
+
 namespace App\Http\Misc\Helpers;
 
 class Config
@@ -32,4 +33,7 @@ class Config
     // if laravel can fake the video type you're adding, add it as first element and increase the length
     public const NOT_VALID_FAKE_LEN = 2;
     public const NOT_VALID_VIDEO_TYPES = ["flv", "swf", "f4v"];
+
+    // avaliable post status types
+    public const POST_STATUS_TYPES = ["published", "draft", "private"];
 }

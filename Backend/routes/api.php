@@ -9,7 +9,6 @@ use App\Http\Controllers\FollowBlogController;
 use App\Http\Controllers\FollowTagController;
 use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Tests\Unit\PostFillterTest;
 
@@ -59,6 +58,11 @@ Route::get('/posts/text', [PostFilterController::class, 'getTextPosts']);
 Route::get('/posts/quote', [PostFilterController::class, 'getQuotePosts']);
 Route::get('/posts/video', [PostFilterController::class, 'getVideoPosts']);
 Route::get('/posts/audio', [PostFilterController::class, 'getAudioPosts']);
+
+Route::put('posts/pin', [PostController::class, 'pinPost'])->middleware('auth:api');
+Route::put('posts/unpin', [PostController::class, 'unpinPost'])->middleware('auth:api');
+Route::put('posts/change_status', [PostController::class, 'changePostStatus'])->middleware('auth:api');
+
 /*
 | Uploads Routes
 */
