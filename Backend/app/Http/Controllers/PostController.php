@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BlogPostRequest;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostCollection;
@@ -13,6 +14,7 @@ use App\Models\Tag;
 use App\Services\PostService;
 use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -709,174 +711,214 @@ class PostController extends Controller
  * )
  */
 
-/**
- * @OA\Put(
- * path="/post/{post_id}/{blog_id}/pinned",
- * summary="Make a post is pinned in a blog",
- * description="A blog change the post to be pinned",
- * operationId="pinnedpost",
- * tags={"Posts"},
- * security={ {"bearer": {} }},
- * @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
+    /**
+     * @OA\Put(
+     * path="/posts/pin",
+     * summary="Make a post is pinned in a blog",
+     * description="A blog change the post to be pinned",
+     * operationId="pinPost",
+     * tags={"Posts"},
+     * security={ {"bearer": {} }},
+     * @OA\RequestBody(
+     *  required=true,
+     *  description="
+     *      blog_id: is the one of the logged in user blogs
+     *      post_id: is the post id the logged in user wants to pin in that blog",
+     *  @OA\JsonContent(
+     *      @OA\Property(property="blog_id", type="int", example="12"),
+     *      @OA\Property(property="post_id", type="int", example="6"),
+     * )),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful  response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=403,
+     *    description="Forbidden",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+     *        )
+     *     )
+     * )
+     */
 
- * @OA\Response(
- *    response=200,
- *    description="Successful  response",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
- *        )
- *     )
- * )
- */
+    /**
+     * pin a post in this blog
+     *
+     * @param App\Http\Requests\BlogPostRequest $request
+     * @return json
+     **/
+    public function pinPost(BlogPostRequest $request)
+    {
+        $request->validated();
+        $isPinned = (new PostService())->pinPostService($request->blog_id, $request->post_id);
+        if ($isPinned) {
+            return $this->generalResponse("", "ok", "200");
+        } else {
+            return $this->errorResponse("Unprocessable Entity", 422);
+        }
+    }
 
-/**
- * @OA\Put(
- * path="/post/{post_id}/{blog_id}/unpinned",
- * summary="Make a post unpinned in a blog",
- * description="A blog change the post to be pinned",
- * operationId="unpinnedpost",
- * tags={"Posts"},
- * security={ {"bearer": {} }},
- * @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
+    /**
+     * @OA\Put(
+     * path="/posts/unpin",
+     * summary="Make a post unpinned in a blog",
+     * description="A blog change the post to be unpinned",
+     * operationId="unpinPost",
+     * tags={"Posts"},
+     * security={ {"bearer": {} }},
+     * @OA\RequestBody(
+     *  required=true,
+     *  description="
+     *      blog_id: is the one of the logged in user blogs
+     *      post_id: is the post id the logged in user wants to unpin in that blog",
+     *  @OA\JsonContent(
+     *      @OA\Property(property="blog_id", type="int", example="12"),
+     *      @OA\Property(property="post_id", type="int", example="6"),
+     * )),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful  response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=403,
+     *    description="Forbidden",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+     *        )
+     *     )
+     * )
+     */
 
- * @OA\Response(
- *    response=200,
- *    description="Successful  response",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
- *        )
- *     )
- * )
- */
+    /**
+     * unpin a specific post in this blog
+     *
+     * @param App\Http\Requests\BlogPostRequest $request
+     * @return json
+     **/
+    public function unpinPost(BlogPostRequest $request)
+    {
+        $request->validated();
+        $isUnpinned = (new PostService())->unpinPostService($request->blog_id, $request->post_id);
+        if ($isUnpinned) {
+            return $this->generalResponse("", "ok", "200");
+        } else {
+            return $this->errorResponse("Unprocessable Entity", 422);
+        }
+    }
 
- /**
- * @OA\Put(
- * path="/post/{post_id}/{blog_id}/change_status",
- * summary="change status of posts in a blog",
- * description="A blog delete his/her post",
- * operationId="poststatus",
- * tags={"Posts"},
- * security={ {"bearer": {} }},
- * @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\RequestBody(
- *    required=true,
- *    description="Change status of post from private/draft to be pusblished",
- *    @OA\JsonContent(
- *      required={"post_status"},
- *       @OA\Property(property="post_status", type="string", example="published"),
- *     )
- * ),
- * @OA\Response(
- *    response=200,
- *    description="Successful response",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
- *        )
- *     )
- * )
- */
+     /**
+     * @OA\Put(
+     * path="/posts/change_status",
+     * summary="change status of posts in a blog",
+     * description="A blog delete his/her post",
+     * operationId="changePostStatus",
+     * tags={"Posts"},
+     * security={ {"bearer": {} }},
+     * @OA\RequestBody(
+     *  required=true,
+     *  description="
+     *      blog_id: is the one of the logged in user blogs
+     *      post_id: is the post id the logged in user wants to change its status
+     *      post_status: is one of three types published, private or draft",
+     *  @OA\JsonContent(
+     *      @OA\Property(property="blog_id", type="int", example="12"),
+     *      @OA\Property(property="post_id", type="int", example="6"),
+            @OA\Property(property="post_status", type="string", example="draft")
+     * )),
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Change status of post from private/draft to be pusblished",
+     *    @OA\JsonContent(
+     *      required={"post_status"},
+     *       @OA\Property(property="post_status", type="string", example="published"),
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=403,
+     *    description="Forbidden",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+     *        )
+     *     )
+     * )
+     */
+
+    /**
+     * change post status to one of three types private, draft or published
+     *
+     * @param App\Http\Requests\BlogPostRequest $request
+     * @return json
+     **/
+    public function changePostStatus(BlogPostRequest $request)
+    {
+        if (!$request->filled('post_status')) {
+            return $this->errorResponse("the post_status field is required", 422);
+        }
+        $request->validated();
+        $isChanged = (new PostService())->changePostStatusService($request->blog_id, $request->post_id, $request->post_status);
+        if ($isChanged) {
+            return $this->generalResponse("", "ok", "200");
+        } else {
+            return $this->errorResponse("Unprocessable Entity", 422);
+        }
+    }
+
  /**
  * @OA\Post(
  * path="/post/submission/{blog_id}",

@@ -9,7 +9,6 @@ use App\Http\Controllers\FollowBlogController;
 use App\Http\Controllers\FollowTagController;
 use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,9 +47,14 @@ Route::post('post/{blog_id}', [PostController::class,'store'])->middleware('auth
 Route::delete('post/{post_id}', [PostController::class,'delete'])->middleware('auth:api');
 Route::put('post/{post_id}', [PostController::class,'update'])->middleware('auth:api');
 
-Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
-Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);
-Route::get('/posts/{blog_id}', [PostController::class, 'index']);
+Route::get('posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
+Route::get('posts/trending', [PostFilterController::class, 'getTrendingPosts']);
+Route::get('posts/{blog_id}', [PostController::class, 'index']);
+
+Route::put('posts/pin', [PostController::class, 'pinPost'])->middleware('auth:api');
+Route::put('posts/unpin', [PostController::class, 'unpinPost'])->middleware('auth:api');
+Route::put('posts/change_status', [PostController::class, 'changePostStatus'])->middleware('auth:api');
+
 /*
 | Uploads Routes
 */
