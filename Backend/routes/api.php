@@ -39,7 +39,7 @@ Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->
 */
 Route::get('post/{post_id}', [PostController::class,'show'])->middleware('auth:api');
 Route::post('post/{blog_id}', [PostController::class,'store'])->middleware('auth:api');
-Route::delete('post/{post_id}/{blog_id}', [PostController::class,'delete'])->middleware('auth:api');
+Route::delete('post/{post_id}', [PostController::class,'delete'])->middleware('auth:api');
 Route::put('post/{post_id}', [PostController::class,'update'])->middleware('auth:api');
 
 Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);

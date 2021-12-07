@@ -152,7 +152,7 @@ class PostController extends Controller
     }
 /**
  * @OA\Delete(
- * path="/post/{post_id}/{blog_id}",
+ * path="/post/{post_id}",
  * summary="Delete post",
  * description=" A blog delete his/her post",
  * operationId="deletepost",
