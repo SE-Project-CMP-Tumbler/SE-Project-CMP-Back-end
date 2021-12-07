@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Misc\Helpers\Config;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostCollection;
@@ -625,7 +626,7 @@ class PostController extends Controller
             return $this->generalResponse("", "This blog id is not found", "404");
         }
 
-        $publishedPosts = $blog->posts()->where('status', 'published')->paginate(10);
+        $publishedPosts = $blog->posts()->where('status', 'published')->paginate(Config::PAGINATION_LIMIT);
 
         return $this->generalResponse(new PostCollection($publishedPosts), "OK");
     }
@@ -742,7 +743,7 @@ class PostController extends Controller
 
         $this->authorize('viewDraftPosts', [Post::class, $blog]);
 
-        $draftPosts = $blog->posts()->where('status', 'draft')->paginate(10);
+        $draftPosts = $blog->posts()->where('status', 'draft')->paginate(Config::PAGINATION_LIMIT);
         return $this->generalResponse(new PostCollection($draftPosts), "OK");
     }
 /**

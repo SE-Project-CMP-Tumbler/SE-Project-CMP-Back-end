@@ -11,6 +11,7 @@ use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Tests\Unit\PostFillterTest;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,10 @@ Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts'])
 Route::get('/posts/{blogId}/published', [PostController::class, 'index']);
 Route::get('/post/{blogId}/draft', [PostController::class, 'getDraftPosts'])->middleware('auth:api');
 
+Route::get('/posts/text', [PostFilterController::class, 'getTextPosts']);
+Route::get('/posts/quote', [PostFilterController::class, 'getQuotePosts']);
+Route::get('/posts/video', [PostFilterController::class, 'getVideoPosts']);
+Route::get('/posts/audio', [PostFilterController::class, 'getAudioPosts']);
 /*
 | Uploads Routes
 */
