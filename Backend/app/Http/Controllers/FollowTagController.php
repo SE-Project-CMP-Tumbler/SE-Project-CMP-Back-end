@@ -65,7 +65,7 @@ class FollowTagController extends Controller
         ])->first();
 
         if ($tag == "") {
-            return $this->general_response("", "A Tag with the specified id was not found", "404");
+            return $this->generalResponse("", "A Tag with the specified id was not found", "404");
         }
 
         $blogFollowTag = BlogFollowTag::where([
@@ -74,14 +74,14 @@ class FollowTagController extends Controller
         ])->first();
 
         if ($blogFollowTag != "") {
-            return $this->general_response("", "The blog already follows this tag!", "422");
+            return $this->generalResponse("", "The blog already follows this tag!", "422");
         }
 
         BlogFollowTag::create([
             'blog_id' => $primaryBlog->id,
             'tag_description' => $tag_description
         ]);
-        return $this->general_response("", "OK", "200");
+        return $this->generalResponse("", "OK", "200");
     }
 /**
  * @OA\Delete(
@@ -144,18 +144,18 @@ class FollowTagController extends Controller
 
         $tag = Tag::where('description', $tag_description)->first();
         if ($tag == "") {
-            return $this->general_response("", "A Tag with the specified id was not found", "404");
+            return $this->generalResponse("", "A Tag with the specified id was not found", "404");
         }
 
-        $followRelation = BlogFollowTag::where('tag_description', '=', $tag_description)
-            ->where('blog_id', '=', $primaryBlog->id)->first();
+        $followRelation = BlogFollowTag::where('tag_description', $tag_description)
+            ->where('blog_id', $primaryBlog->id)->first();
 
         if (empty($followRelation)) {
-            return $this->general_response("", "The Blog isn't already following this tag!", "422");
+            return $this->generalResponse("", "The Blog isn't already following this tag!", "422");
         }
 
-        $followRelation->delete();
-        return $this->general_response("", "OK", "200");
+        $primaryBlog->tags()->detach($tag_description);
+        return $this->generalResponse("", "OK", "200");
     }
 /**
  * @OA\Get(
