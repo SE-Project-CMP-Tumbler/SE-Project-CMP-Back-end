@@ -1745,6 +1745,14 @@
                                                     "type": "string",
                                                     "example": "My 1st Blog"
                                                 },
+                                                "allow_ask": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "allow_submittions": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
                                                 "description": {
                                                     "type": "string",
                                                     "example": "This blog is a sketch of thoughts"
@@ -1996,6 +2004,14 @@
                                                                 "type": "string",
                                                                 "example": "My 1st Blog"
                                                             },
+                                                            "allow_ask": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "allow_submittions": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
                                                             "description": {
                                                                 "type": "string",
                                                                 "example": "This blog is a sketch of thoughts"
@@ -2085,7 +2101,7 @@
                 "description": " Creating a secondary blog",
                 "operationId": "createBlog",
                 "requestBody": {
-                    "description": "\n *    title : the title of the new blog ,\n *    blog_username : the blog_username will be used in the blog URL,\n *    password : the password of the new blog if there's a one",
+                    "description": "\r\n *    title : the title of the new blog ,\r\n *    blog_username : the blog_username will be used in the blog URL,\r\n *    password : the password of the new blog if there's a one",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -3974,7 +3990,7 @@
                     "Follow Blogs"
                 ],
                 "summary": "followed_by blog",
-                "description": " Check if the current blog is followed by another specific blog",
+                "description": " Check if I follow  another specific blog",
                 "operationId": "followingblog",
                 "parameters": [
                     {

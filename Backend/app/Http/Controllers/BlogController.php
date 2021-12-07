@@ -43,6 +43,8 @@ class BlogController extends Controller
  *          @OA\Property(property="avatar_shape", type="string", example="square"),
  *          @OA\Property(property="header_image", type="string", format="byte", example=""),
  *          @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *          @OA\Property(property="allow_ask", type="boolean", example=true),
+ *          @OA\Property(property="allow_submittions", type="boolean", example=true),
  *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
  *
  * @OA\Response(
@@ -108,6 +110,8 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *                    @OA\Property(property="allow_ask", type="boolean", example=true),
+ *                    @OA\Property(property="allow_submittions", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
  *

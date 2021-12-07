@@ -33,7 +33,7 @@ class FollowBlog extends Model
      * @var string
      */
     protected $fillable = [
-        'follwer_id',
+        'follower_id',
         'followed_id'
     ];
 }
