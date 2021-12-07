@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogSettingController;
+use App\Http\Controllers\FollowBlogController;
 use App\Http\Controllers\FollowTagController;
 use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
@@ -33,7 +34,12 @@ Route::get('blogs/likes/{blog_id}', [BlogController::class,'getLikeBlog'])->midd
 Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog'])->middleware('auth:api');
 Route::get('blog_settings/{blog_id}', [BlogSettingController::class,'show'])->middleware('auth:api');
 Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->middleware('auth:api');
-
+/*
+| Follow Blog Routes
+*/
+Route::post('follow_blog/{blog_id}', [FollowBlogController::class,'store'])->middleware('auth:api');
+Route::delete('follow_blog/{blog_id}', [FollowBlogController::class,'delete'])->middleware('auth:api');
+Route::get('followed_by/{blog_id}', [FollowBlogController::class,'checkFollowed'])->middleware('auth:api');
 /*
 | Post Routes
 */

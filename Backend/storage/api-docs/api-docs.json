@@ -1745,6 +1745,14 @@
                                                     "type": "string",
                                                     "example": "My 1st Blog"
                                                 },
+                                                "allow_ask": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "allow_submittions": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
                                                 "description": {
                                                     "type": "string",
                                                     "example": "This blog is a sketch of thoughts"
@@ -1995,6 +2003,14 @@
                                                             "title": {
                                                                 "type": "string",
                                                                 "example": "My 1st Blog"
+                                                            },
+                                                            "allow_ask": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "allow_submittions": {
+                                                                "type": "boolean",
+                                                                "example": true
                                                             },
                                                             "description": {
                                                                 "type": "string",
@@ -3974,7 +3990,7 @@
                     "Follow Blogs"
                 ],
                 "summary": "followed_by blog",
-                "description": " Check if the current blog is followed by another specific blog",
+                "description": " Check if I follow  another specific blog",
                 "operationId": "followingblog",
                 "parameters": [
                     {
