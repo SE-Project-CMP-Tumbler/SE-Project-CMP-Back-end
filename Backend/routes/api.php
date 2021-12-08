@@ -44,10 +44,10 @@ Route::get('followed_by/{blog_id}', [FollowBlogController::class,'checkFollowed'
 /*
 | Post Routes
 */
-Route::get('post/{post_id}', [PostController::class,'show']);
+Route::get('post/{postId}', [PostController::class,'show']);
 Route::post('post/{blog_id}', [PostController::class,'store'])->middleware('auth:api');
-Route::delete('post/{post_id}', [PostController::class,'delete'])->middleware('auth:api');
-Route::put('post/{post_id}', [PostController::class,'update'])->middleware('auth:api');
+Route::delete('post/{postId}', [PostController::class,'delete'])->middleware('auth:api');
+Route::put('post/{postId}', [PostController::class,'update'])->middleware('auth:api');
 
 Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
 Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);

@@ -57,6 +57,7 @@ class PostFilterController extends Controller
      * Get Text-type posts.
      * Get all posts in tumblr of type text.
      *
+     * @todo Add ordering retrieval by notes count.
      * @return \Illuminate\Http\JsonResponse
      */
     public function getTextPosts()
@@ -166,6 +167,7 @@ class PostFilterController extends Controller
      * Get Quote-type Posts.
      * Get all posts in tumblr of type quote.
      *
+     * @todo Add ordering retrieval by notes count.
      * @return \Illuminate\Http\JsonResponse
      */
     public function getQuotePosts()
@@ -273,6 +275,7 @@ class PostFilterController extends Controller
      * Get video-type posts.
      * Get all posts in tumblr of type video.
      *
+     * @todo Add ordering retrieval by notes count.
      * @return \Illuminate\Http\JsonResponse
      */
     public function getVideoPosts()
@@ -330,6 +333,7 @@ class PostFilterController extends Controller
      * Get audio-type posts.
      * Get all posts in tumblr of audio type.
      *
+     * @todo Add ordering retrieval by notes count.
      * @return \Illuminate\Http\JsonResponse
      */
     public function getAudioPosts()

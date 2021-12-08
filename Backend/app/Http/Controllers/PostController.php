@@ -21,15 +21,15 @@ class PostController extends Controller
 
 /**
  * @OA\Put(
- * path="/post/{post_id}",
+ * path="/post/{postId}",
  * summary="Edit a new post",
  * description="A blog can edit post",
  * operationId="editpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
+ *          name="postId",
+ *          description="Id of the post to be updated.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -126,21 +126,28 @@ class PostController extends Controller
     /**
      * Update an existing post
      *
-     * @param int $post_id
+     * @param int $postId
      * @param \App\Http\Requests\UpdatePostRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update($post_id, UpdatePostRequest $request)
+    public function update($postId, UpdatePostRequest $request)
     {
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        //Validate the format of the post id
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post id should be numeric.", "422");
         }
-        $post = Post::where('id', $post_id)->first();
-        if ($post == null) {
+        //Validate the existance of the post id
+        $post = Post::where('id', $postId)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post was not found", "404");
         }
 
         $this->authorize('update', $post);
+
+        //Extract tags of the unupdated post content.
+        $postService = new PostService();
+        $oldTags = $postService->extractTags($post->body);
+
         $post->update([
             'status' => $request->post_status ?? $post->status,
             'published_at' => $request->post_time ?? $post->published_at,
@@ -149,26 +156,35 @@ class PostController extends Controller
             'pinned' => $request->pinned ?? $post->pinned
         ]);
 
-        return $this->generalResponse(new PostResource($post), "ok");
+        //Extract tags of the new updated post content.
+        $newTags = $postService->extractTags($post->body);
+
+        //Modify the relation records between the post and updated tags
+        foreach ($newTags as $tag) {
+            Tag::firstOrCreate([
+                'description' => $tag
+            ]);
+            PostTag::firstOrCreate([
+                'tag_description' => $tag,
+                'post_id' => $post->id
+            ]);
+        }
+        //Remove the relation records between tags non existing in the new content and the updated post
+        $removedTags = $postService->getRemovedTags($oldTags, $newTags);
+        $post->tags()->detach($removedTags);
+        return $this->generalResponse(new PostResource($post), "OK");
     }
 /**
  * @OA\Delete(
- * path="/post/{post_id}",
+ * path="/post/{postId}",
  * summary="Delete post",
- * description=" A blog delete his/her post",
+ * description="A blog delete his/her post",
  * operationId="deletepost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
- * @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
  *  @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
+ *          name="postId",
+ *          description="Id of the post to be deleted.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -206,40 +222,36 @@ class PostController extends Controller
     /**
      * Delte a post
      *
-     * @param int $post_id
+     * @param int $postId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete($post_id)
+    public function delete($postId)
     {
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post id should be numeric.", "422");
         }
-        $post = Post::where('id', $post_id)->first();
+        $post = Post::where('id', $postId)->first();
         if (empty($post)) {
             return $this->generalResponse("", "This post doesn't exist", "404");
         }
 
         $this->authorize('delete', $post);
+
+        //Deleting the have tags relation records upon deleting the post
+        $post->tags()->detach();
         $post->delete();
         return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(
- * path="/post/{post_id}",
+ * path="/post/{postId}",
  * summary="Get specific post",
  * description="A blog get post",
  * operationId="getapost",
  * tags={"Posts"},
  *   @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *   @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
+ *          name="postId",
+ *          description="Id of the post to be retrieved.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -292,20 +304,6 @@ class PostController extends Controller
  * )
  *   ),
  *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
- *        )
- *     ),
- *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -317,16 +315,16 @@ class PostController extends Controller
     /**
      * Retrieve a specific post
      *
-     * @param int $post_id
+     * @param int $postId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($post_id, Request $request)
+    public function show($postId, Request $request)
     {
         //The regular expression describes a value where from start (^) to end ($) it matches one or more (+) digits [0-9].
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post id should be numeric.", "422");
         }
-        $post = Post::where('id', $post_id)->first();
+        $post = Post::where('id', $postId)->first();
         if ($post == null) {
             return $this->generalResponse("", "This post was not found", "404");
         }
@@ -342,7 +340,7 @@ class PostController extends Controller
  * security={ {"bearer": {} }},
  *    @OA\Parameter(
  *          name="blog_id",
- *          description="Blog_id ",
+ *          description="Id of the blog that'd create the post.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -350,13 +348,13 @@ class PostController extends Controller
  *   @OA\RequestBody(
  *    required=true,
  *    description="Post Request has different types depeneds on post type :
- *     in text type :description or title are required, at least one of them ,keep reading is optinal
- *     in image type : at least one uplaoded image,
- *     in chat type : chat_body is required, chat_title is optional
- *     in quote type:  quote_text is required, quote_body is optinal
- *     in video type:  video is required, url_videos are optinal
+ *     in text type:description or title are required, at least one of them ,keep reading is optinal
+ *     in image type: at least one uplaoded image,
+ *     in chat type: chat_body is required, chat_title is optional
+ *     in quote type: quote_text is required, quote_body is optinal
+ *     in video type: video is required, url_videos are optinal
  *     in audio type: audio is required
- *     is general : all fields can be given, to be general at least two different field of types should given",
+ *     is general: all fields can be given, to be general at least two different field of types should given",
  *    @OA\JsonContent(
  *      required={"post_status","post_type"},
  *      @OA\Property(property="post_status", type="string", example="published"),
@@ -437,7 +435,7 @@ class PostController extends Controller
             Tag::firstOrCreate(
                 ['description' => $tag]
             );
-            //if was found or wasn't create a relation recording this post with that tag
+            //if the tag was found or wasn't, create a relation recording this post with that tag
             PostTag::create([
                 'tag_description' => $tag,
                 'post_id' => $post->id

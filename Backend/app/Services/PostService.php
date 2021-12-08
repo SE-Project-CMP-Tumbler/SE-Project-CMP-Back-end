@@ -35,4 +35,21 @@ class PostService
         }
         return $tags;
     }
+    /**
+     * Extracting the removed tags from the newly updated post body.
+     *
+     * @param string[] $oldTags List of tags contained inside the old post's body.
+     * @param string[] $newTags List of tags contained inside the updated post's body.
+     * @return string[] Array of the removed tags.
+     */
+    public function getRemovedTags($oldTags, $newTags)
+    {
+        $removedTags = array();
+        foreach ($oldTags as $oldTag) {
+            if (!in_array($oldTag, $newTags)) {
+                array_push($removedTags, $oldTag);
+            }
+        }
+        return $removedTags;
+    }
 }
