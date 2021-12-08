@@ -16,8 +16,6 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
-        // $id = $this->route('blog_id');
-        // return $id == Session::get('blog_id');
         return true;
     }
 

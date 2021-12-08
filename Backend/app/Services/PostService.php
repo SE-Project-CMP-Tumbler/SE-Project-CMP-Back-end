@@ -25,7 +25,7 @@ class PostService
                 $extractedTag = '';
                 $charIndex = $bodyIndex + 1;
                 $possibleEndings = [' ', '&', '<'];
-                while (!in_array($postBody[$charIndex], $possibleEndings) && $charIndex < strlen($postBody)) {
+                while ($charIndex < strlen($postBody) && !in_array($postBody[$charIndex], $possibleEndings)) {
                     $extractedTag .= $postBody[$charIndex];
                     $charIndex += 1;
                 }
@@ -34,5 +34,22 @@ class PostService
             }
         }
         return $tags;
+    }
+    /**
+     * Extracting the removed tags from the newly updated post body.
+     *
+     * @param string[] $oldTags List of tags contained inside the old post's body.
+     * @param string[] $newTags List of tags contained inside the updated post's body.
+     * @return string[] Array of the removed tags.
+     */
+    public function getRemovedTags($oldTags, $newTags)
+    {
+        $removedTags = array();
+        foreach ($oldTags as $oldTag) {
+            if (!in_array($oldTag, $newTags)) {
+                array_push($removedTags, $oldTag);
+            }
+        }
+        return $removedTags;
     }
 }

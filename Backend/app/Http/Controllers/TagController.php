@@ -218,7 +218,6 @@ class TagController extends Controller
  * description="Returns list of  tags  which are trending",
  * operationId="gettrendingTags",
  * tags={"Tags"},
- * security={ {"bearer": {} }},
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
