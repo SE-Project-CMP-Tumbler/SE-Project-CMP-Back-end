@@ -11789,7 +11789,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11798,7 +11798,107 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "422",
-                                                "msg": "Unprocessable Entity"
+                                                "msg": "This email address is already in use."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/checkRegisterCredentials": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "check new user Credentials",
+                "description": " check if those Credentials are good to create a new user",
+                "operationId": "signupuser",
+                "requestBody": {
+                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "blog_username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user2023@gmail.com"
+                                    },
+                                    "blog_username": {
+                                        "type": "string",
+                                        "example": "CairoBlogs"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "<df1212V>"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "This email address is already in use."
                                             }
                                         }
                                     },
@@ -12023,6 +12123,25 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "your account already exists, but not linked"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -12112,7 +12231,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12121,7 +12240,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "422",
-                                                "msg": "Unprocessable Entity"
+                                                "msg": "This email address is already in use."
                                             }
                                         }
                                     },
@@ -12456,8 +12575,27 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "400",
+                                                "msg": "Password already sent"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
-                        "description": "Not found response",
+                        "description": "Not found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12478,7 +12616,7 @@
                 }
             }
         },
-        "/reset_password/{id}/{access_token}": {
+        "/reset_password/{id}/{token}": {
             "get": {
                 "tags": [
                     "User"
@@ -12585,17 +12723,22 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\r\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\r\n *    password : this is the new password,\r\n *    password_confirmation : the password of the new password ",
+                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
+                                    "token",
                                     "email",
                                     "password",
                                     "password_confirmation"
                                 ],
                                 "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"
+                                    },
                                     "email": {
                                         "type": "string",
                                         "example": "user2023@gmail.com"
@@ -12662,25 +12805,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -12719,12 +12843,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/change_password": {
@@ -12736,16 +12855,22 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\r\n *    password : The password of the  user,\r\n *    password_confirmation : The password of the user",
+                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
+                                    "current_password",
                                     "password",
                                     "password_confirmation"
                                 ],
                                 "properties": {
+                                    "current_password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "<cufe>"
+                                    },
                                     "password": {
                                         "type": "string",
                                         "format": "password",
@@ -12774,6 +12899,25 @@
                                             "example": {
                                                 "status": "200",
                                                 "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "Invalid password entered"
                                             }
                                         }
                                     },
