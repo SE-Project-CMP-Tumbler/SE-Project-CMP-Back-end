@@ -25,7 +25,7 @@ class PostService
                 $extractedTag = '';
                 $charIndex = $bodyIndex + 1;
                 $possibleEndings = [' ', '&', '<'];
-                while (!in_array($postBody[$charIndex], $possibleEndings) && $charIndex < strlen($postBody)) {
+                while ($charIndex < strlen($postBody) && !in_array($postBody[$charIndex], $possibleEndings)) {
                     $extractedTag .= $postBody[$charIndex];
                     $charIndex += 1;
                 }

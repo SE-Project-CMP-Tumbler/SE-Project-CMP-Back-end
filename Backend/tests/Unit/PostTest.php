@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Http\Misc\Helpers\Config;
 use App\Models\Blog;
+use App\Models\Post;
 use App\Models\User;
 use App\Services\PostService;
 use Faker\Factory;
@@ -95,5 +96,21 @@ class PostTest extends TestCase
                 'post_id' => ($response->json())['response']['post_id']
             ]);
         }
+    }
+
+    /**
+     * Testing the correctness of retrieving removed tags from a post whose content have been updated.
+     *
+     * @return void
+     */
+    public function testSuccessGetRemovedTags()
+    {
+        $postService = new PostService();
+        $oldPostTags = $postService->extractTags('#Laravel #is #Super #Awesome');
+        $newPostTags = $postService->extractTags('#Laravel #isnot #Cool');
+
+        $actualRemovedTags = $postService->getRemovedTags($oldPostTags, $newPostTags);
+        $expectedRemovedTags = ['Super', 'Awesome', 'is'];
+        $this->assertEqualsCanonicalizing($expectedRemovedTags, $actualRemovedTags);
     }
 }

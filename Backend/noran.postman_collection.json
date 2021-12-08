@@ -35,13 +35,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/90",
+							"raw": "{{host}}/post/205",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"90"
+								"205"
 							]
 						}
 					},
@@ -75,7 +75,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"post_body\": \"<p> This is so #frustrating !<p>\",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"draft\"\r\n}",
+							"raw": "{\r\n    \"post_body\": \"<p> #A #B #ABCCCCCCCCCC </p>\",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"published\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,13 +83,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/post/79",
+							"raw": "{{host}}/post/202",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"79"
+								"202"
 							]
 						}
 					},
@@ -122,13 +122,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/114",
+							"raw": "{{host}}/post/205",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"114"
+								"205"
 							]
 						}
 					},
@@ -162,16 +162,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"post_status\": \"draft\",\r\n    \"pinned\": false,\r\n    \"post_time\": \"2020-1-9\",\r\n    \"post_body\": \"<p>OMG!</p>\"\r\n}"
+							"raw": "{\r\n    \"pinned\": false,\r\n    \"post_time\": \"2020-1-9\",\r\n    \"post_body\": \"<p> #Another #BLANK #A </p>\"\r\n}"
 						},
 						"url": {
-							"raw": "{{host}}/post/9",
+							"raw": "{{host}}/post/291",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"9"
+								"291"
 							]
 						}
 					},
@@ -218,7 +218,7 @@
 					"response": []
 				},
 				{
-					"name": "Draft Posts",
+					"name": "draft posts",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -252,6 +252,169 @@
 								"post",
 								"79",
 								"draft"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "text posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/text",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "quote posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/quote",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"quote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/video",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"video"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "audio posts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/posts/audio",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"audio"
 							]
 						}
 					},
@@ -683,7 +846,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"my blog\",\r\n  \"blog_username\": \"RadwaAhmedttok\",\r\n    \"password\": \"123\"\r\n  \r\n\r\n}"
+							"raw": "{\r\n  \"title\": \"my blog\",\r\n  \"blog_username\": \"NoranHany\",\r\n  \"password\": \"123\"\r\n  \r\n\r\n}"
 						},
 						"url": {
 							"raw": "{{host}}/blog",
