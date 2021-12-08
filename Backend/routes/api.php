@@ -53,6 +53,7 @@ Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts'
 Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);
 Route::get('/posts/{blogId}/published', [PostController::class, 'index']);
 Route::get('/post/{blogId}/draft', [PostController::class, 'getDraftPosts'])->middleware('auth:api');
+Route::get('/posts/dashboard', [PostFilterController::class, 'getDashboardPosts'])->middleware('auth:api');
 
 Route::get('/posts/text', [PostFilterController::class, 'getTextPosts']);
 Route::get('/posts/quote', [PostFilterController::class, 'getQuotePosts']);

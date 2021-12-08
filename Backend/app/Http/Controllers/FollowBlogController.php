@@ -77,7 +77,7 @@ class FollowBlogController extends Controller
             return $this->generalResponse("", "You already follow this blog", "422");
         }
         FollowBlog::create(['follower_id' => $primaryBlog->id , 'followed_id' => $blogId]);
-        return $this->generalResponse("", "200");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Delete(
@@ -145,7 +145,7 @@ class FollowBlogController extends Controller
             return $this->generalResponse("", "You already don't follow this blog", "422");
         }
          FollowBlog::where(['follower_id' => $primaryBlog->id , 'followed_id' => $blogId])->delete();
-         return $this->generalResponse("", "200");
+         return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(

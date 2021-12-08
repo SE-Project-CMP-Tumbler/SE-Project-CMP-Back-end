@@ -75,7 +75,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"post_body\": \"<p> #A #B #ABCCCCCCCCCC </p>\",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"published\"\r\n}",
+							"raw": "{\r\n    \"post_body\": \"<p> Horaaaaaaaaaaaaaay! </p>\",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"draft\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -415,6 +415,51 @@
 							"path": [
 								"posts",
 								"audio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/dashboard?page=2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -999,6 +1044,45 @@
 							"path": [
 								"blog_settings",
 								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/follow_blog/88",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"follow_blog",
+								"88"
 							]
 						}
 					},
