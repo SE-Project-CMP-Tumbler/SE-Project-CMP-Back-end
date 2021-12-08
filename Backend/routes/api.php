@@ -34,12 +34,14 @@ Route::get('blogs/likes/{blog_id}', [BlogController::class,'getLikeBlog'])->midd
 Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog'])->middleware('auth:api');
 Route::get('blog_settings/{blog_id}', [BlogSettingController::class,'show'])->middleware('auth:api');
 Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->middleware('auth:api');
+
 /*
 | Follow Blog Routes
 */
 Route::post('follow_blog/{blog_id}', [FollowBlogController::class,'store'])->middleware('auth:api');
 Route::delete('follow_blog/{blog_id}', [FollowBlogController::class,'delete'])->middleware('auth:api');
 Route::get('followed_by/{blog_id}', [FollowBlogController::class,'checkFollowed'])->middleware('auth:api');
+
 /*
 | Post Routes
 */
@@ -58,6 +60,11 @@ Route::get('/posts/text', [PostFilterController::class, 'getTextPosts']);
 Route::get('/posts/quote', [PostFilterController::class, 'getQuotePosts']);
 Route::get('/posts/video', [PostFilterController::class, 'getVideoPosts']);
 Route::get('/posts/audio', [PostFilterController::class, 'getAudioPosts']);
+
+Route::get('posts/chat', [PostFilterController::class, 'getAllChatPosts']);
+Route::get('posts/image', [PostFilterController::class, 'getAllImagePosts']);
+Route::get('posts/ask', [PostFilterController::class, 'getAllAskPosts']);
+Route::get('posts/radar', [PostFilterController::class, 'getRadarPost']);
 
 Route::put('posts/pin', [PostController::class, 'pinPost'])->middleware('auth:api');
 Route::put('posts/unpin', [PostController::class, 'unpinPost'])->middleware('auth:api');

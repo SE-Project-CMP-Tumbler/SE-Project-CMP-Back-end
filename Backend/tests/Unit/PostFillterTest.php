@@ -17,7 +17,7 @@ class PostFillterTest extends TestCase
      *
      * @return void
      */
-    public function testUploadNullImage()
+    public function testGetRandomPosts()
     {
         $post = Post::factory()->count(10)->create();
         $user = User::factory()->create();
