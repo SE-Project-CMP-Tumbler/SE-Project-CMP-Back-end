@@ -34,6 +34,7 @@ class Config
     public const NOT_VALID_FAKE_LEN = 2;
     public const NOT_VALID_VIDEO_TYPES = ["flv", "swf", "f4v"];
 
-    // avaliable post status types
-    public const POST_STATUS_TYPES = ["published", "draft", "private"];
+    // avaliable post status and types
+    public const POST_TYPES = ['ask', 'general', 'text', 'audio', 'video', 'chat', 'link', 'image', 'quote'];
+    public const POST_STATUS_TYPES = ['published', 'draft', 'private', 'submission'];
 }
