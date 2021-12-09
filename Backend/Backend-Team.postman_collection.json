@@ -1,250 +1,10 @@
 {
 	"info": {
-		"_postman_id": "034150c1-7e5f-465c-8c80-7e97c5cc6fc1",
-		"name": "Backend-Team Copy",
+		"_postman_id": "8cd359c5-bd5a-4377-8056-62626e623d52",
+		"name": "Backend-Team",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Post",
-			"item": [
-				{
-					"name": "index",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/post/2",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"post",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "store",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"post_body\": \"<p>Faith. I believe that allah's choices for us is the best ones</p>\",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"published\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/post/342",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"post",
-								"342"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/post/377/342",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"post",
-								"377",
-								"342"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"post_status\": \"published\",\r\n    \"pinned\": false,\r\n    \"post_body\": \"<p>Bye!!</p>\"\r\n}"
-						},
-						"url": {
-							"raw": "{{host}}/post/378",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"post",
-								"378"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get_random_posts",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/posts/random_posts",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"posts",
-								"random_posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Trending Posts",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{host}}/posts/trending",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"posts",
-								"trending"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
 		{
 			"name": "Upload",
 			"item": [
@@ -281,7 +41,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/home/ahmed/Pictures/Screenshot from 2021-11-04 15-10-42.png"
+									"src": "/C:/Users/Lenovo/Pictures/Capture3.PNG"
 								}
 							]
 						},
@@ -300,16 +60,6 @@
 				{
 					"name": "upload_audio",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -337,16 +87,6 @@
 				{
 					"name": "upload_video",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -355,7 +95,7 @@
 								{
 									"key": "video",
 									"type": "file",
-									"src": "/home/ahmed/Videos/anger.mp4"
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_1080p.mp4"
 								}
 							]
 						},
@@ -374,16 +114,6 @@
 				{
 					"name": "upload_ext_photo",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -418,16 +148,6 @@
 				{
 					"name": "upload_ext_video",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -447,209 +167,6 @@
 							],
 							"path": [
 								"upload_ext_video"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "login",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"ahmedgm@gmail.com\",\r\n  \"password\": \"plzPassme123\"\r\n}"
-						},
-						"url": {
-							"raw": "{{host}}/login",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "logout",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/logout",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"logout"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "resend_verification",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/email/resend_verification",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"email",
-								"resend_verification"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "register",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"ahmedgm@gmail.com\",\r\n  \"blog_username\": \"cpphello\",\r\n  \"password\": \"plzPassme123\",\r\n  \"age\": \"22\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/register",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "verify_email",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/email/verify/1/c5e203daf59c43c62ef70298dfe98ead22176448?expires=1637116115&signature=1e6bee11b14fc00dea6c1507f6c711bd02c8c4b4374fd9d8a88c64f8ba56d145",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"email",
-								"verify",
-								"1",
-								"c5e203daf59c43c62ef70298dfe98ead22176448"
-							],
-							"query": [
-								{
-									"key": "expires",
-									"value": "1637116115"
-								},
-								{
-									"key": "signature",
-									"value": "1e6bee11b14fc00dea6c1507f6c711bd02c8c4b4374fd9d8a88c64f8ba56d145"
-								}
 							]
 						}
 					},
@@ -726,7 +243,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"my blog\",\r\n  \"blog_username\": \"cppmainblog\",\r\n   \"password\": \"123\"\r\n  \r\n\r\n}"
+							"raw": "{\r\n  \"title\": \"my blog\",\r\n \r\n    \"password\": \"123\"\r\n  \r\n\r\n}"
 						},
 						"url": {
 							"raw": "{{host}}/blog",
@@ -743,17 +260,36 @@
 				{
 					"name": "show",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog/5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Accept",
@@ -774,45 +310,6 @@
 							"path": [
 								"blog",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/blog/343",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"blog",
-								"343"
 							],
 							"query": [
 								{
@@ -902,13 +399,98 @@
 							"raw": "{\r\n\r\n  \"replies_settings\": \"Everyone can reply\",\r\n    \"allow_ask\": false,\r\n    \"ask_page_title\":\"okk\" ,\r\n    \"allow_anonymous_questions\": false,\r\n    \"allow_submittions\": false,\r\n    \"submissions_page_title\": \"Submit a post\",\r\n    \"submissions_guidelines\": \"To approve a submitted post it should be free of violence.\",\r\n  \"allow_messages\": false\r\n\r\n}"
 						},
 						"url": {
-							"raw": "{{host}}/blog_settings/342",
+							"raw": "{{host}}/blog_settings/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"blog_settings",
-								"342"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_out_blogs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blogs/check_out_blogs?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogs",
+								"check_out_blogs"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blogs-likes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blogs/likes/124",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogs",
+								"likes",
+								"124"
 							]
 						}
 					},
@@ -922,16 +504,6 @@
 				{
 					"name": "store",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -950,14 +522,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/tag/data/379/scrum",
+							"raw": "{{host}}/tag/data/3/scrum",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"tag",
 								"data",
-								"379",
+								"3",
 								"scrum"
 							]
 						}
@@ -970,16 +542,6 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -1045,6 +607,1037 @@
 							"path": [
 								"tag",
 								"trending"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Follow Blog",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/follow_blog/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"follow_blog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/follow_blog/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"follow_blog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "followed_by",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/followed_by/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"followed_by",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"miklaziz122000miklaziz122000@gmail.com\",\r\n  \"password\": \"123\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZmViNmViZDliMDBkMDlmNDBmODhjYmRiYjkzMWVhNmVhMWY0MzFiZjY0M2E2ODJkNjc5ZGUxMjljNTZkMTg0NzkzM2M0MWVhZWI1MmFmMDciLCJpYXQiOjE2MzY5Mzk4MzksIm5iZiI6MTYzNjkzOTgzOSwiZXhwIjoxNjY4NDc1ODM5LCJzdWIiOiIxOCIsInNjb3BlcyI6W119.hZ6CjusW6J3y4Z-xtjfg4Dgyy36B_jvHJOSeNPhn9KH4Ekf-JGqkmD4MRQZqQ3EH-y6RE8F_F-rla7MB5_FIXsB0kwnwmO9w-qfdCFn1Oh3hnPqHRjgiJRVIdZh-DKUkSvA8P_uForcXyqMd7QL2zxpxqhXjLRZPs9TghHyVuL8aCcKvrd_lV9qGWIZBuPN-QH6mcBi__-orHdE49GPXYBzxZeyA6dvPRQFnOjHhiiCvB-H40Iq1kneLOmroHSzetHWIzgRgY4uO8zlsFQd_Tv3HldHI9AuCg_sH2oG0nTdU0Ckk5YiOhwouvZ9caexAltSIAqLgnse7MPtGlk43ah7SBe_3JOXLWbPNd2vl0GdoQZnry9NIqGXFbZgMlnSCvrWrS7O4LTXgzNC0hqqhmKt9oV7VsW7lVqJXm5wM-EhDJWN-vy2EA1mt2wpQ0uqaczwUr7r4ywbvU1w-9SlfU0ipeuZ_UPw2DYCElt8qa55aNKivWlY3ii0KCJVI-ca2R7cyVY97Y1VVIURb7Ur_i1zRrCJih34VIMnKGzRRsxzOjIwBbZB49ZgfqzWFW5pV3DWmX7nnMAZGQ901yjqSZf0t2GtKPakzJTwsMPOLw1dJs7MAzaaUPp2IxUeSavJh-h9lP_I58tmmtJj95CxKYES4Dj3RRQzPh-MfF3hazzU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resend_verification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZmViNmViZDliMDBkMDlmNDBmODhjYmRiYjkzMWVhNmVhMWY0MzFiZjY0M2E2ODJkNjc5ZGUxMjljNTZkMTg0NzkzM2M0MWVhZWI1MmFmMDciLCJpYXQiOjE2MzY5Mzk4MzksIm5iZiI6MTYzNjkzOTgzOSwiZXhwIjoxNjY4NDc1ODM5LCJzdWIiOiIxOCIsInNjb3BlcyI6W119.hZ6CjusW6J3y4Z-xtjfg4Dgyy36B_jvHJOSeNPhn9KH4Ekf-JGqkmD4MRQZqQ3EH-y6RE8F_F-rla7MB5_FIXsB0kwnwmO9w-qfdCFn1Oh3hnPqHRjgiJRVIdZh-DKUkSvA8P_uForcXyqMd7QL2zxpxqhXjLRZPs9TghHyVuL8aCcKvrd_lV9qGWIZBuPN-QH6mcBi__-orHdE49GPXYBzxZeyA6dvPRQFnOjHhiiCvB-H40Iq1kneLOmroHSzetHWIzgRgY4uO8zlsFQd_Tv3HldHI9AuCg_sH2oG0nTdU0Ckk5YiOhwouvZ9caexAltSIAqLgnse7MPtGlk43ah7SBe_3JOXLWbPNd2vl0GdoQZnry9NIqGXFbZgMlnSCvrWrS7O4LTXgzNC0hqqhmKt9oV7VsW7lVqJXm5wM-EhDJWN-vy2EA1mt2wpQ0uqaczwUr7r4ywbvU1w-9SlfU0ipeuZ_UPw2DYCElt8qa55aNKivWlY3ii0KCJVI-ca2R7cyVY97Y1VVIURb7Ur_i1zRrCJih34VIMnKGzRRsxzOjIwBbZB49ZgfqzWFW5pV3DWmX7nnMAZGQ901yjqSZf0t2GtKPakzJTwsMPOLw1dJs7MAzaaUPp2IxUeSavJh-h9lP_I58tmmtJj95CxKYES4Dj3RRQzPh-MfF3hazzU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/email/resend_verification",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"email",
+								"resend_verification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testuser@gmail.com\",\r\n  \"password\" : \"123ASDasd\",\r\n  \"blog_username\" : \"TestBlog\",\r\n  \"age\" : 22\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email_verification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "?Content_t",
+							"query": [
+								{
+									"key": "Content_t",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot_password",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"miklaziz122000miklaziz122000@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/forgot_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"forgot_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"token\" : \"9a57334943844e087fba60b0b08913163a1e12e3a977f634c4f0c527ed99e515\",\r\n \"email\": \"miklaziz122000miklaziz122000@gmail.com\",\r\n \"password\" : \"Miisid2125151koko>\",\r\n \"password_confirmation\" : \"Miisid2125151koko>\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reset_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reset_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset_password",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/reset_password/9/9a57334943844e087fba60b0b08913163a1e12e3a977f634c4f0c527ed99e515",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reset_password",
+								"9",
+								"9a57334943844e087fba60b0b08913163a1e12e3a977f634c4f0c527ed99e515"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_with_google",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"google_token\" : \"ya29.a0ARrdaM8DtP-iNVZ_RAiWbOzUq-BRsPyVj7p8ITxu0_Yg6-eRiUzdPNp6NCIPkoJAtttASYLgbaOXXSpoCv7C_Aeg7ttXtsFCvGkey1s4JMWkraEx8vNAssoAV_0sQSD9l8cWAyRYwmtmceA4n3CABczJz4a3\",\r\n  \"blog_username\" : \"sddfddsd\",\r\n  \"age\" : 22\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/register_with_google",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register_with_google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_with_google",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"google_access_token\" : \"ya29.a0ARrdaM_O1vmPCDsBlglGPEMosnI89QbbADxYEf3bLQPelyBkN4Cadq1Jhp5acNXfbe9XGsqpctsAJ9rXmUrMQmaabcJsY4ntRpEoiSUuld3Tvd1LQ3-jzVGuBzXgy8rxI0-8JpDQfTFQXCFHRZlKOTRJtgxR\"\r\n}"
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_register_credentials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"miklaziz3112000@gmail.com\",\r\n  \"password\" : \"adfssaisASccAS2121165\",\r\n  \"blog_username\" : \"sddfddsd\",\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/check_register_credentials",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"check_register_credentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/change_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"change_password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/205",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"205"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trending Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/trending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"trending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_random_posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/random_posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"random_posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p> Horaaaaaaaaaaaaaay! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"published\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/post/255",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"255"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/205",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"205"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pinned\": false,\r\n    \"post_time\": \"2020-1-9\",\r\n    \"post_body\": \"<p> #Another #BLANK #A </p>\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/291",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"291"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/79/published",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"79",
+								"published"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "draft posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/79/draft",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"79",
+								"draft"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/dashboard?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "text posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/text",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "quote posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/quote",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"quote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/video",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"video"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "audio posts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/posts/audio",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"audio"
 							]
 						}
 					},
