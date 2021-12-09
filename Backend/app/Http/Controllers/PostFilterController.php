@@ -438,7 +438,10 @@ class PostFilterController extends Controller
         $radarPost = Post::where('status', 'published')
             ->inRandomOrder()
             ->first();
-        $res = ["post" => [new PostResource($radarPost)]];
+        $res = ["post" => []];
+        if ($radarPost) {
+            $res["post"] = new PostResource($radarPost);
+        }
         return $this->generalResponse($res, "OK");
     }
 
