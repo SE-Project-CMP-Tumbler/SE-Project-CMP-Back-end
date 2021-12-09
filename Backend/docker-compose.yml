@@ -1,0 +1,38 @@
+version: '3.1'
+services:
+
+  # Postgresql Service
+  db:
+    image: postgres
+    container_name: pgsql
+    restart: always
+    ports:
+      - "54320:5432"
+    environment:
+      POSTGRES_DB: start
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2132000
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080
+
+  # PHP Service
+  php-apache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - 8181:8181
+
+volumes:
+  postgres-data:
+

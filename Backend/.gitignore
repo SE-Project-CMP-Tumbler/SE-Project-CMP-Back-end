@@ -5,6 +5,7 @@
 /public/videos
 /public/storage
 /storage/*.key
+/storage/api-docs/*
 /vendor
 .env
 .env.backup
@@ -16,3 +17,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+composer.lock
