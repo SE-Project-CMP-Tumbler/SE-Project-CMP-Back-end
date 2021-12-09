@@ -59,15 +59,15 @@ class PostService
     /**
      * pin a post in the certain blog
      *
-     * @param int $blog_id
-     * @param int $post_id
+     * @param int $blogId
+     * @param int $postId
      * @return bool
      **/
-    public function pinPostService($blog_id, $post_id)
+    public function pinPostService($blogId, $postId)
     {
         // 1. change the current pinned post to be unpinned
         Post::where([
-            ['blog_id', '=', $blog_id],
+            ['blog_id', '=', $blogId],
             ['pinned', '=', true]
         ])->update([
             'pinned' => false
@@ -75,8 +75,8 @@ class PostService
 
         // 2. pin the post in that blog
         Post::where([
-            ['id', '=', $post_id],
-            ['blog_id', '=', $blog_id],
+            ['id', '=', $postId],
+            ['blog_id', '=', $blogId],
         ])->update([
             'pinned' => true
         ]);
@@ -87,16 +87,16 @@ class PostService
     /**
      * unpin a post in the certain blog
      *
-     * @param int $blog_id
-     * @param int $post_id
+     * @param int $blogId
+     * @param int $postId
      * @return bool
      **/
-    public function unpinPostService($blog_id, $post_id)
+    public function unpinPostService($blogId, $postId)
     {
         // 1. unpin the post in that blog
         Post::where([
-            ['id', '=', $post_id],
-            ['blog_id', '=', $blog_id],
+            ['id', '=', $postId],
+            ['blog_id', '=', $blogId],
             ['pinned', '=', true]
         ])->update([
             'pinned' => false
@@ -107,19 +107,19 @@ class PostService
     /**
      * change post status to one of three types private, draft or published
      *
-     * @param int $blog_id
-     * @param int $post_id
-     * @param string $new_status
+     * @param int $blogId
+     * @param int $postId
+     * @param string $newStatus
      * @return bool
      **/
-    public function changePostStatusService($blog_id, $post_id, $new_status)
+    public function changePostStatusService($blogId, $postId, $newStatus)
     {
         // get that post and update its status to the new one
         Post::where([
-            ['id', '=', $post_id],
-            ['blog_id', '=', $blog_id],
+            ['id', '=', $postId],
+            ['blog_id', '=', $blogId],
         ])->update([
-            'status' => $new_status,
+            'status' => $newStatus,
         ]);
         return true;
     }

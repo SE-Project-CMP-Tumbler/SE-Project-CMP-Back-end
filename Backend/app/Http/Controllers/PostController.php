@@ -359,6 +359,7 @@ class PostController extends Controller
      *     in quote type: quote_text is required, quote_body is optinal
      *     in video type: video is required, url_videos are optinal
      *     in audio type: audio is required
+     *     in link type: link is required
      *     is general: all fields can be given, to be general at least two different field of types should given",
      *    @OA\JsonContent(
      *      required={"post_status","post_type"},
@@ -422,10 +423,10 @@ class PostController extends Controller
         $blog = Blog::where('id', $request->blog_id)->first();
         $this->authorize('create', [Post::class, $blog]);
 
-        $published_at = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
+        $publishedAt = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
         $post = Post::create([
             'status' => $request->post_status,
-            'published_at' => $published_at,
+            'published_at' => $publishedAt,
             'body' => $request->post_body,
             'type' => $request->post_type,
             'blog_id' => $request->blog_id
@@ -897,7 +898,7 @@ class PostController extends Controller
      *  @OA\JsonContent(
      *      @OA\Property(property="blog_id", type="int", example="12"),
      *      @OA\Property(property="post_id", type="int", example="6"),
-            @OA\Property(property="post_status", type="string", example="draft")
+     *       @OA\Property(property="post_status", type="string", example="draft")
      * )),
      * @OA\RequestBody(
      *    required=true,
