@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Post;
+
 /**
  * PostServices handles any logic associated with posts.
  */
@@ -35,6 +37,7 @@ class PostService
         }
         return $tags;
     }
+
     /**
      * Extracting the removed tags from the newly updated post body.
      *
@@ -51,5 +54,73 @@ class PostService
             }
         }
         return $removedTags;
+    }
+
+    /**
+     * pin a post in the certain blog
+     *
+     * @param int $blog_id
+     * @param int $post_id
+     * @return bool
+     **/
+    public function pinPostService($blog_id, $post_id)
+    {
+        // 1. change the current pinned post to be unpinned
+        Post::where([
+            ['blog_id', '=', $blog_id],
+            ['pinned', '=', true]
+        ])->update([
+            'pinned' => false
+        ]);
+
+        // 2. pin the post in that blog
+        Post::where([
+            ['id', '=', $post_id],
+            ['blog_id', '=', $blog_id],
+        ])->update([
+            'pinned' => true
+        ]);
+
+        return true;
+    }
+
+    /**
+     * unpin a post in the certain blog
+     *
+     * @param int $blog_id
+     * @param int $post_id
+     * @return bool
+     **/
+    public function unpinPostService($blog_id, $post_id)
+    {
+        // 1. unpin the post in that blog
+        Post::where([
+            ['id', '=', $post_id],
+            ['blog_id', '=', $blog_id],
+            ['pinned', '=', true]
+        ])->update([
+            'pinned' => false
+        ]);
+        return true;
+    }
+
+    /**
+     * change post status to one of three types private, draft or published
+     *
+     * @param int $blog_id
+     * @param int $post_id
+     * @param string $new_status
+     * @return bool
+     **/
+    public function changePostStatusService($blog_id, $post_id, $new_status)
+    {
+        // get that post and update its status to the new one
+        Post::where([
+            ['id', '=', $post_id],
+            ['blog_id', '=', $blog_id],
+        ])->update([
+            'status' => $new_status,
+        ]);
+        return true;
     }
 }
