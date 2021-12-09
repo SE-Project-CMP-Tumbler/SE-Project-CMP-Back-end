@@ -14,18 +14,14 @@ class BlogFactory extends Factory
      */
     public function definition()
     {
-        $users = User::all();
-        $available_user_ids = $users->map(function ($user) {
-            return $user->id;
-        })->toArray();
+        $user = User::factory()->create();
 
         return [
             "username" => $this->faker->unique()->name,
             "avatar" => $this->faker->name,
             "description" => $this->faker->text(),
             "title" => $this->faker->title(),
-            "user_id" => $this->faker->randomElement($available_user_ids)
-
+            "user_id" => $user->id
 
         ];
     }

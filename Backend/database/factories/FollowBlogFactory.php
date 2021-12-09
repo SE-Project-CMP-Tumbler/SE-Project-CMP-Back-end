@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Blog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PostFactory extends Factory
+class FollowBlogFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,10 +14,11 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-        $blog = Blog::factory()->create();
+        $follower = Blog::factory()->create();
+        $followed = Blog::factory()->create();
         return [
-            'body' => $this->faker->randomHtml(4, 2),
-            'blog_id' => $blog->id
+            'follower_id' => $follower->id,
+            'followed_id' => $followed->id
         ];
     }
 }
