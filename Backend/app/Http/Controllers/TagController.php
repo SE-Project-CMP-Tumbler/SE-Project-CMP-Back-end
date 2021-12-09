@@ -66,14 +66,16 @@ class TagController extends Controller
     public function store(TagRequest $request)
     {
         if (Tag::where('description', $request->tag_description)->count() > 0) {
-            return $this->general_response("", "this tag already exists", "422");
+            return $this->generalResponse("", "this tag already exists", "422");
         }
 
-        if (Post::where('id', $request->post_id)->count() == 0) {
-            return $this->general_response("", "this post doesn't exist", "404");
+        $post = Post::where('id', $request->post_id)->first();
+        if ($post == null) {
+            return $this->generalResponse("", "this post doesn't exist", "404");
         }
 
-        $tag = Tag::create([
+        $this->authorize('create', [Tag::class, $post]);
+        Tag::create([
             'description' => $request->tag_description
         ]);
 
@@ -82,7 +84,7 @@ class TagController extends Controller
             'tag_description' => $request->tag_description
         ]);
 
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(
@@ -91,7 +93,6 @@ class TagController extends Controller
  * description="Returns data of a specific tag",
  * operationId="getTagData",
  * tags={"Tags"},
- * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="tag_description",
  *          description="Tag Description",
@@ -126,7 +127,7 @@ class TagController extends Controller
     /**
      * Get information of a tag
      *
-     * @param mixed $tag_description
+     * @param string $tag_description
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($tag_description)
@@ -134,9 +135,9 @@ class TagController extends Controller
         $tag = Tag::where('description', $tag_description)->first();
 
         if (empty($tag)) {
-            return $this->general_response("", "the tag doesn't exist", 404);
+            return $this->generalResponse("", "the tag doesn't exist", 404);
         }
-        return $this->general_response(new TagResource($tag), "ok");
+        return $this->generalResponse(new TagResource($tag), "ok");
     }
 /**
  * @OA\Get(
@@ -217,7 +218,6 @@ class TagController extends Controller
  * description="Returns list of  tags  which are trending",
  * operationId="gettrendingTags",
  * tags={"Tags"},
- * security={ {"bearer": {} }},
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
@@ -256,6 +256,6 @@ class TagController extends Controller
         ->orderBy('num_of_posts', 'desc')
         ->get();
 
-        return $this->general_response(new TagCollection($trending), "ok");
+        return $this->generalResponse(new TagCollection($trending), "ok");
     }
 }

@@ -346,7 +346,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"miklaziz311mmm200l.com\",\r\n  \"password\": \",l,l,l,l\",\r\n  \"blog_username\" : \"mikool\",\r\n  \"age\": 100\r\n}",
+							"raw": "{\r\n  \"email\": \"testuser@gmail.com\",\r\n  \"password\" : \"123ASDasd\",\r\n  \"blog_username\" : \"TestBlog\",\r\n  \"age\" : 22\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -377,6 +377,224 @@
 									"key": "Content_t",
 									"value": null
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot_password",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"miklaziz122000miklaziz122000@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/forgot_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"forgot_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"token\" : \"9a57334943844e087fba60b0b08913163a1e12e3a977f634c4f0c527ed99e515\",\r\n \"email\": \"miklaziz122000miklaziz122000@gmail.com\",\r\n \"password\" : \"Miisid2125151koko>\",\r\n \"password_confirmation\" : \"Miisid2125151koko>\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reset_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reset_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset_password",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/reset_password/9/9a57334943844e087fba60b0b08913163a1e12e3a977f634c4f0c527ed99e515",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reset_password",
+								"9",
+								"9a57334943844e087fba60b0b08913163a1e12e3a977f634c4f0c527ed99e515"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_with_google",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"google_token\" : \"ya29.a0ARrdaM8DtP-iNVZ_RAiWbOzUq-BRsPyVj7p8ITxu0_Yg6-eRiUzdPNp6NCIPkoJAtttASYLgbaOXXSpoCv7C_Aeg7ttXtsFCvGkey1s4JMWkraEx8vNAssoAV_0sQSD9l8cWAyRYwmtmceA4n3CABczJz4a3\",\r\n  \"blog_username\" : \"sddfddsd\",\r\n  \"age\" : 22\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/register_with_google",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register_with_google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_with_google",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"google_access_token\" : \"ya29.a0ARrdaM_O1vmPCDsBlglGPEMosnI89QbbADxYEf3bLQPelyBkN4Cadq1Jhp5acNXfbe9XGsqpctsAJ9rXmUrMQmaabcJsY4ntRpEoiSUuld3Tvd1LQ3-jzVGuBzXgy8rxI0-8JpDQfTFQXCFHRZlKOTRJtgxR\"\r\n}"
+						},
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "check_register_credentials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"miklaziz3112000@gmail.com\",\r\n  \"password\" : \"adfssaisASccAS2121165\",\r\n  \"blog_username\" : \"sddfddsd\",\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/check_register_credentials",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"check_register_credentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/change_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"change_password"
 							]
 						}
 					},

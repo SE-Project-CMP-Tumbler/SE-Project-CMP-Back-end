@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Misc\Helpers\Config;
 use App\Http\Misc\Helpers\Success;
 use App\Models\Blog;
+use App\Models\Like;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BlogCollection;
+use App\Http\Resources\PostCollection;
 use App\Http\Requests\BlogRequest;
 use App\Services\BlogService;
 
@@ -35,11 +37,14 @@ class BlogController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
  *          @OA\Property(property="id", type="integer", example=2026),
+ *          @OA\Property(property="is_primary", type="boolean", example=false),
  *          @OA\Property(property="username", type="string", example="newinvestigations"),
  *          @OA\Property(property="avatar", type="string", format="byte", example=""),
  *          @OA\Property(property="avatar_shape", type="string", example="square"),
  *          @OA\Property(property="header_image", type="string", format="byte", example=""),
  *          @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *          @OA\Property(property="allow_ask", type="boolean", example=true),
+ *          @OA\Property(property="allow_submittions", type="boolean", example=true),
  *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
  *
  * @OA\Response(
@@ -62,14 +67,21 @@ class BlogController extends Controller
  *
  * )
  */
- /**
-  * Get specific blog
-  * @param \Blog  $blog
-  * @return \json
- */
-    public function show(Blog $blog)
+    /**
+     * Get specific blog
+     * @param \Blog  $blog
+     * @return \json
+     */
+    public function show($blogId)
     {
-        return $this->general_response(new BlogResource($blog), "ok");
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
+        $blog = Blog::find($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
+        return $this->generalResponse(new BlogResource($blog), "ok");
     }
  /**
  * @OA\Get(
@@ -85,14 +97,21 @@ class BlogController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
+ *          @OA\Property(property="pagination",type="object",example={"total": 1,"count": 1,"per_page": 10, "current_page": 1,"total_pages": 1,"first_page_url": true,
+ *            "last_page_url": 1,
+ *           "next_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+ *           "prev_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"}),
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
+ *                    @OA\Property(property="is_primary", type="boolean", example=false),
  *                    @OA\Property(property="username", type="string", example="newinvestigations"),
  *                    @OA\Property(property="avatar", type="string", format="byte", example=""),
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *                    @OA\Property(property="allow_ask", type="boolean", example=true),
+ *                    @OA\Property(property="allow_submittions", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
  *
@@ -123,7 +142,8 @@ class BlogController extends Controller
  */
     public function index(Request $request)
     {
-        return $this->general_response(new BlogCollection($request->user()->blogs), "ok");
+        $query = $request->user()->blogs()->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new BlogCollection($query), "ok");
     }
 /**
  * @OA\Post(
@@ -160,6 +180,13 @@ class BlogController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
  *        )
  *     ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Un Processed Data",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"The blog title is required"})
+ *        )
+ *     ),
  *  @OA\Response(
  *    response=500,
  *    description="Internal Server error",
@@ -177,17 +204,17 @@ class BlogController extends Controller
     public function store(BlogRequest $request)
     {
         $blogService = new BlogService();
-        $user_id = $request->user()->id;
+        $userId = $request->user()->id;
         if (! $blogService->uniqueBlog($request->blog_username)) {
-            return $this->general_response("", "The blog username is already exists", "422");
+            return $this->generalResponse("", "The blog username is already exists", "422");
         }
 
         if ($request->has('password')) {
-            $blogService->createBlog($request->blog_username, $request->title, $user_id, $request->password);
+            $blogService->createBlog($request->blog_username, $request->title, $userId, $request->password);
         } else {
-            $blogService->createBlog($request->blog_username, $request->title, $user_id);
+            $blogService->createBlog($request->blog_username, $request->title, $userId);
         }
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Delete(
@@ -234,16 +261,26 @@ class BlogController extends Controller
  * )
  */
  /**
-  * Delte a  blog for user
+  * Delte a  blog for user which is not primary
   * @param \Blog $blog
   * @return \json
  */
-    public function delete(Request $request, Blog $blog)
+    public function delete(Request $request, $blogId)
     {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
 
+        $blog = Blog::find($blogId);
         $this->authorize('delete', $blog);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
+        if ($blog->is_primary == true) {
+            return $this->generalResponse("", "Can't delete this blog because this is primary", "422");
+        }
         $blog->delete();
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(
@@ -259,6 +296,10 @@ class BlogController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
+ *           @OA\Property(property="pagination",type="object",example={"total": 1,"count": 1,"per_page": 10, "current_page": 1,"total_pages": 1,"first_page_url": true,
+ *             "last_page_url": 1,
+ *             "next_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+ *             "prev_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"}),
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -292,12 +333,15 @@ class BlogController extends Controller
  */
   /**
   *checkout Other Blogs for user
+  * get random blogs which aren not my blogs
   * @param \Request $request
   * @return \json
  */
     public function checkOutOtherBlog(Request $request)
     {
-        return $this->general_response(new BlogCollection(Blog::all()), "ok");
+        $blogs = $request->user()->blogs->pluck('id')->toArray();
+        $query = Blog::whereNotIn('id', $blogs)->inRandomOrder()->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new BlogCollection($query), "ok");
     }
 /**
  * @OA\Get(
@@ -313,6 +357,10 @@ class BlogController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
+ *          @OA\Property(property="pagination",type="object",example={"total": 1,"count": 1,"per_page": 10, "current_page": 1,"total_pages": 1,"first_page_url": true,
+ *             "last_page_url": 1,
+ *             "next_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+ *             "prev_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"}),
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
@@ -349,16 +397,14 @@ class BlogController extends Controller
   * @param \Request $request
   * @return \json
  */
-   //PAGINAGTE??
-   //COMMENTS
-   //functional docs
-    public function getTrendingBlog(Request $request)
-    {
-        return $this->general_response(new BlogCollection(Blog::all()), "ok");
-    }
+
+    // public function getTrendingBlog(Request $request)
+    // {
+    //     return $this->generalResponse(new BlogCollection(Blog::all()), "ok");
+    // }
 /**
  * @OA\Get(
- * path="/blog/likes/{blog_id}",
+ * path="/blogs/likes/{blog_id}",
  * description="get all likes of my current blog",
  * operationId="getBlogLikes",
  * tags={"Blogs"},
@@ -376,6 +422,10 @@ class BlogController extends Controller
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
+ *        @OA\Property(property="pagination",type="object",example={"total": 1,"count": 1,"per_page": 10, "current_page": 1,"total_pages": 1,"first_page_url": true,
+ *            "last_page_url": 1,
+ *            "next_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+ *            "prev_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"}),
  *        @OA\Property(property="posts",type="array",
  *            @OA\Items(
  *               @OA\Property(property="blog_username", type="string", example="newinvestigations"),
@@ -419,8 +469,10 @@ class BlogController extends Controller
   * @param \Request $request
   * @return \json
  */
-    // public function getLikeBlog(Request $request, Blog $blog)
-    // {
-    //     return $this->general_response(new PostCollection($blog->post)), "ok");
-    // }
+    public function getLikeBlog(Request $request, $blogId)
+    {
+        $blog = Blog::find($blogId);
+
+        return $this->generalResponse(new PostCollection($blog->likes()->paginate(Config::PAGINATION_LIMIT)), "ok");
+    }
 }

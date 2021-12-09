@@ -32,11 +32,7 @@ class CreateBlogsTable extends Migration
             $table->text('ask_page_title')->nullable();
             $table->boolean('allow_anonymous_questions')->default(false);
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade');
-
+            $table->foreign('user_id') ->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

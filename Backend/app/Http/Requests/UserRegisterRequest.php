@@ -34,8 +34,8 @@ class UserRegisterRequest extends FormRequest
         return [
                 'email' => 'required_without_all:blog_username,password,age|required|email|unique:users',
                 'blog_username' => 'required_with_all:email,password',
-                'password' => ['required_with:email',Password::min(8)->mixedCase()->numbers()->uncompromised(10)],
-                'age' => 'required|size:2',
+                'password' => ['required_with:email',Password::min(8)->mixedCase()->numbers()],
+                'age' => 'required|integer|min:13|max:130',
         ];
     }
 /**
@@ -53,8 +53,10 @@ class UserRegisterRequest extends FormRequest
         'password.required_with' => Errors::MISSING_PASSWORD,
         'password.min' => Errors::PASSWORD_SHORT,
         'blog_username.required_with_all' => Errors::MISSING_BLOGNAME,
-        'age' => Errors::MISSING_AGE,
-        'age.size' => Errors::RESTRICT_AGE,
+        'age.required' => Errors::MISSING_AGE,
+        'age.integer' => Errors::INVALID_AGE,
+        'age.min' => Errors::MIN_AGE,
+        'age.max' => Errors::INVALID_AGE,
         ];
     }
 }

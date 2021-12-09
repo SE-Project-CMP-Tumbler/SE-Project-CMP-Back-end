@@ -83,9 +83,17 @@ class BlogSettingController extends Controller
  *  @param Blog $blog
  * @return Json
  */
-    public function show(Request $request, Blog $blog)
+    public function show(Request $request, $blog_id)
     {
-        return  $this->general_response(new BlogSettingResource($blog));
+        if (preg_match('([0-9]+$)', $blog_id) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
+        $blog = Blog::find($blog_id);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
+        $this->authorize('view', $blog);
+        return  $this->generalResponse(new BlogSettingResource($blog));
     }
 /**
  * @OA\Put(
@@ -149,6 +157,13 @@ class BlogSettingController extends Controller
  *  description="Not found",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog id specified was not found"}),)),
+ *  @OA\Response(
+ *    response=422,
+ *    description="Un Processed Data",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"The allow_ask should be boolean"})
+ *        )
+ *     ),
  *
  * @OA\Response(
  *  response=500,
@@ -166,10 +181,17 @@ class BlogSettingController extends Controller
  *  @param Blog $blog
  * @return Json
  */
-    public function update(BlogSettingRequest $request, Blog $blog)
+    public function update(BlogSettingRequest $request, $blog_id)
     {
+        if (preg_match('([0-9]+$)', $blog_id) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
+        $blog = Blog::find($blog_id);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
         $this->authorize('update', $blog);
         $blog->update($request->validated());
-        return  $this->general_response(new BlogSettingResource($blog));
+        return  $this->generalResponse(new BlogSettingResource($blog));
     }
 }

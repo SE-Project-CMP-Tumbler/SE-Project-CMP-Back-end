@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Blog;
 use App\Models\Post;
+use App\Models\PostTag;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,19 +17,11 @@ class PostTagFactory extends Factory
      */
     public function definition()
     {
-        $posts = Post::all();
-        $tags = Tag::all();
-
-        $available_post_ids = $posts->map(function ($post) {
-            return $post->id;
-        });
-        $available_tag_descriptions = $tags->map(function ($tag) {
-            return $tag->description;
-        });
-
+        $post = Post::factory()->create();
+        $tag = Tag::factory()->create();
         return [
-            'post_id' => $this->faker->randomElement($available_post_ids),
-            'tag_description' => $this->faker->randomElement($available_tag_descriptions)
+            'post_id' => $post->id,
+            'tag_description' => $tag['description']
         ];
     }
 }

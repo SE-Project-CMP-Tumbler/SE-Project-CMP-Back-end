@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Misc\Helpers\Config;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Blog;
 use App\Models\Post;
+use App\Models\PostTag;
+use App\Models\Tag;
+use App\Services\PostService;
 use Faker\Factory;
 use Illuminate\Http\Request;
 
@@ -16,22 +21,15 @@ class PostController extends Controller
 
 /**
  * @OA\Put(
- * path="/post/{post_id}/{blog_id}",
+ * path="/post/{postId}",
  * summary="Edit a new post",
  * description="A blog can edit post",
  * operationId="editpost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
+ *          name="postId",
+ *          description="Id of the post to be updated.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -125,11 +123,30 @@ class PostController extends Controller
  *     )
  * )
  */
-    public function update(Post $post, UpdatePostRequest $request)
+    /**
+     * Update an existing post
+     *
+     * @param int $postId
+     * @param \App\Http\Requests\UpdatePostRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($postId, UpdatePostRequest $request)
     {
-        if ($post == null) {
-            return $this->general_response("", "This post was not found", "404");
+        //Validate the format of the post id
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
+            return $this->generalResponse("", "The post id should be numeric.", "422");
         }
+        //Validate the existance of the post id
+        $post = Post::where('id', $postId)->first();
+        if (empty($post)) {
+            return $this->generalResponse("", "This post was not found", "404");
+        }
+
+        $this->authorize('update', $post);
+
+        //Extract tags of the unupdated post content.
+        $postService = new PostService();
+        $oldTags = $postService->extractTags($post->body);
 
         $post->update([
             'status' => $request->post_status ?? $post->status,
@@ -139,26 +156,35 @@ class PostController extends Controller
             'pinned' => $request->pinned ?? $post->pinned
         ]);
 
-        return $this->general_response(new PostResource($post), "ok");
+        //Extract tags of the new updated post content.
+        $newTags = $postService->extractTags($post->body);
+
+        //Modify the relation records between the post and updated tags
+        foreach ($newTags as $tag) {
+            Tag::firstOrCreate([
+                'description' => $tag
+            ]);
+            PostTag::firstOrCreate([
+                'tag_description' => $tag,
+                'post_id' => $post->id
+            ]);
+        }
+        //Remove the relation records between tags non existing in the new content and the updated post
+        $removedTags = $postService->getRemovedTags($oldTags, $newTags);
+        $post->tags()->detach($removedTags);
+        return $this->generalResponse(new PostResource($post), "OK");
     }
 /**
  * @OA\Delete(
- * path="/post/{post_id}/{blog_id}",
+ * path="/post/{postId}",
  * summary="Delete post",
- * description=" A blog delete his/her post",
+ * description="A blog delete his/her post",
  * operationId="deletepost",
  * tags={"Posts"},
  * security={ {"bearer": {} }},
- * @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
  *  @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
+ *          name="postId",
+ *          description="Id of the post to be deleted.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -196,41 +222,36 @@ class PostController extends Controller
     /**
      * Delte a post
      *
-     * @param mixed $post_id
-     * @param mixed $blog_id
+     * @param int $postId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($post_id, $blog_id)
+    public function delete($postId)
     {
-        $post = Post::where('id', $post_id)->first();
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
+            return $this->generalResponse("", "The post id should be numeric.", "422");
+        }
+        $post = Post::where('id', $postId)->first();
         if (empty($post)) {
-            return $this->general_response("", "This post doesn't exist", "404");
+            return $this->generalResponse("", "This post doesn't exist", "404");
         }
-        $blog = Blog::where('id', $blog_id)->first();
-        if (empty($blog)) {
-            return $this->general_response("", "The blog requesting this action doesn't exist", "404");
-        }
+
+        $this->authorize('delete', $post);
+
+        //Deleting the have tags relation records upon deleting the post
+        $post->tags()->detach();
         $post->delete();
-        return $this->general_response("", "ok");
+        return $this->generalResponse("", "ok");
     }
 /**
  * @OA\Get(
- * path="/post/{post_id}",
+ * path="/post/{postId}",
  * summary="Get specific post",
  * description="A blog get post",
  * operationId="getapost",
  * tags={"Posts"},
- * security={ {"bearer": {} }},
  *   @OA\Parameter(
- *          name="blog_id",
- *          description="Blog_id ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *   @OA\Parameter(
- *          name="post_id",
- *          description="post_id ",
+ *          name="postId",
+ *          description="Id of the post to be retrieved.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -283,20 +304,6 @@ class PostController extends Controller
  * )
  *   ),
  *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *       )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
- *        )
- *     ),
- *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
@@ -305,12 +312,23 @@ class PostController extends Controller
  *     )
  * )
  */
-    public function show(Post $post)
+    /**
+     * Retrieve a specific post
+     *
+     * @param int $postId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($postId, Request $request)
     {
-        if ($post == null) {
-            return $this->general_response("", "This post was not found", "404");
+        //The regular expression describes a value where from start (^) to end ($) it matches one or more (+) digits [0-9].
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
+            return $this->generalResponse("", "The post id should be numeric.", "422");
         }
-        return $this->general_response(new PostResource($post), "ok");
+        $post = Post::where('id', $postId)->first();
+        if ($post == null) {
+            return $this->generalResponse("", "This post was not found", "404");
+        }
+        return $this->generalResponse(new PostResource($post), "ok");
     }
  /**
  * @OA\Post(
@@ -322,7 +340,7 @@ class PostController extends Controller
  * security={ {"bearer": {} }},
  *    @OA\Parameter(
  *          name="blog_id",
- *          description="Blog_id ",
+ *          description="Id of the blog that'd create the post.",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -330,13 +348,13 @@ class PostController extends Controller
  *   @OA\RequestBody(
  *    required=true,
  *    description="Post Request has different types depeneds on post type :
- *     in text type :description or title are required, at least one of them ,keep reading is optinal
- *     in image type : at least one uplaoded image,
- *     in chat type : chat_body is required, chat_title is optional
- *     in quote type:  quote_text is required, quote_body is optinal
- *     in video type:  video is required, url_videos are optinal
+ *     in text type:description or title are required, at least one of them ,keep reading is optinal
+ *     in image type: at least one uplaoded image,
+ *     in chat type: chat_body is required, chat_title is optional
+ *     in quote type: quote_text is required, quote_body is optinal
+ *     in video type: video is required, url_videos are optinal
  *     in audio type: audio is required
- *     is general : all fields can be given, to be general at least two different field of types should given",
+ *     is general: all fields can be given, to be general at least two different field of types should given",
  *    @OA\JsonContent(
  *      required={"post_status","post_type"},
  *      @OA\Property(property="post_status", type="string", example="published"),
@@ -387,10 +405,18 @@ class PostController extends Controller
  *  ),
  * )
  */
+    /**
+     * Creates a new post
+     *
+     * @param \App\Http\Requests\PostRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(PostRequest $request)
     {
-        $published_at = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
+        $blog = Blog::where('id', $request->blog_id)->first();
+        $this->authorize('create', [Post::class, $blog]);
 
+        $published_at = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
         $post = Post::create([
             'status' => $request->post_status,
             'published_at' => $published_at,
@@ -399,7 +425,24 @@ class PostController extends Controller
             'blog_id' => $request->blog_id
         ]);
 
-        return $this->general_response(new PostResource($post), "ok");
+
+        $postService = new PostService();
+        $tags = $postService->extractTags($post->body);
+
+        //Iterate through the tags array
+        foreach ($tags as $tag) {
+            //if the tag was never found then create a new one
+            Tag::firstOrCreate(
+                ['description' => $tag]
+            );
+            //if the tag was found or wasn't, create a relation recording this post with that tag
+            PostTag::create([
+                'tag_description' => $tag,
+                'post_id' => $post->id
+            ]);
+        }
+
+        return $this->generalResponse(new PostResource($post), "ok");
     }
 /**
  * @OA\Get(
@@ -469,14 +512,13 @@ class PostController extends Controller
 
 /**
  * @OA\Get(
- * path="/post/{blog_id}",
+ * path="/posts/{blogId}/published",
  * summary="Get posts of blog which are published",
  * description="A blog get blog's posts",
  * operationId="getposts",
  * tags={"Posts"},
- * security={ {"bearer": {} }},
  * @OA\Parameter(
- *          name="blog_id",
+ *          name="blogId",
  *          description="Blog_id ",
  *          required=true,
  *          in="path",
@@ -488,6 +530,15 @@ class PostController extends Controller
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
+ *          @OA\Property(property="pagination",type="object",
+ *              @OA\Property(property="total",type="int",example=17),
+ *              @OA\Property(property="count",type="int",example=7),
+ *              @OA\Property(property="per_page",type="int",example=10),
+ *              @OA\Property(property="current_page",type="int",example=2),
+ *              @OA\Property(property="total_pages",type="int",example=2),
+ *              @OA\Property(property="first_page_url",type="boolean",example=false),
+ *              @OA\Property(property="next_page_url",type="string",example=null),
+ *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
  *          @OA\Property(property="posts",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="post_id", type="integer", example=5),
@@ -551,15 +602,36 @@ class PostController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"This blog id is not found"})
  *        )
  *     )
  * )
  */
+    /**
+     * Get all published posts of a specific blog.
+     *
+     * @param int $blogId The id of the blog whose published posts will be retrieved.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index($blogId)
+    {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
+
+        $blog = Blog::where('id', $blogId)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This blog id is not found", "404");
+        }
+
+        $publishedPosts = $blog->posts()->where('status', 'published')->paginate(Config::PAGINATION_LIMIT);
+
+        return $this->generalResponse(new PostCollection($publishedPosts), "OK");
+    }
 
  /**
  * @OA\Get(
- * path="/post/{blog_id}/draft",
+ * path="/post/{blogId}/draft",
  * summary="Get posts of blog which are drafted",
  * description="A blog get scheduled posts",
  * operationId="getdraftpost",
@@ -578,6 +650,15 @@ class PostController extends Controller
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
+ *          @OA\Property(property="pagination",type="object",
+ *              @OA\Property(property="total",type="int",example=17),
+ *              @OA\Property(property="count",type="int",example=7),
+ *              @OA\Property(property="per_page",type="int",example=10),
+ *              @OA\Property(property="current_page",type="int",example=2),
+ *              @OA\Property(property="total_pages",type="int",example=2),
+ *              @OA\Property(property="first_page_url",type="boolean",example=false),
+ *              @OA\Property(property="next_page_url",type="string",example=null),
+ *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
  *          @OA\Property(property="posts",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="post_id", type="integer", example=5),
@@ -628,12 +709,41 @@ class PostController extends Controller
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"This blog id is not found."})
+ *        )
+ *     ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Unprocessable Entity",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"The blog Id should be numeric."})
  *        )
  *     )
  * )
  */
+    /**
+     * Get Draft Posts.
+     * Retrieve all draft posts for any blog of the authenticated user blogs.
+     *
+     * @param int $blogId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDraftPosts($blogId)
+    {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog Id should be numeric.", "422");
+        }
 
+        $blog = Blog::where('id', $blogId)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This blog id is not found.", "404");
+        }
+
+        $this->authorize('viewDraftPosts', [Post::class, $blog]);
+
+        $draftPosts = $blog->posts()->where('status', 'draft')->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new PostCollection($draftPosts), "OK");
+    }
 /**
  * @OA\Put(
  * path="/post/{post_id}/{blog_id}/pinned",

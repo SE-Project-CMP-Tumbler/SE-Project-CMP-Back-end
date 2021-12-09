@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\Blog;
+use App\Models\FollowBlog;
 use Illuminate\Support\Facades\DB;
 use App\Http\Misc\Helpers\Errors;
 
@@ -43,5 +44,19 @@ class BlogService
             return false;
         }
         return true;
+    }
+      /**
+  * Check follow of blog
+  * @param int $followedId
+  *@param int $followerId
+  * @return boolean
+ */
+    public function checkIsFollowed(int $followerId, int $followedId)
+    {
+        $follow = FollowBlog::where(['follower_id' => $followerId , 'followed_id' => $followedId])->count();
+        if ($follow > 0) {
+            return true;
+        }
+        return false;
     }
 }

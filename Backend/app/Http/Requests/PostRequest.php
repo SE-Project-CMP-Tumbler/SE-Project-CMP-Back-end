@@ -16,13 +16,11 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
-        // $id = $this->route('blog_id');
-        // return $id == Session::get('blog_id');
         return true;
     }
 
     /**
-     * Include the query parameter blog_id in the request data inorder to apply validation on it
+     * Include the query parameter blog_id in the request body data inorder to apply validation on it
      *
      * @return array
      */
@@ -47,7 +45,7 @@ class PostRequest extends FormRequest
             'post_type' => ['required', Rule::in($types)],
             'post_time' => ['nullable', 'date'],
             'post_status' => ['required', Rule::in($statuses)], //we should specify these specific values to the front
-            'blog_id' => 'required|exists:blogs,id' //must be a blog id of the blogs of the auth user
+            'blog_id' => 'required|numeric|exists:blogs,id' //must be a blog id of the blogs of the auth user
         ];
     }
 }

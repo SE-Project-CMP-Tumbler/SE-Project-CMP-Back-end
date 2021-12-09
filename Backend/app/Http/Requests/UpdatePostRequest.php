@@ -27,6 +27,7 @@ class UpdatePostRequest extends FormRequest
         $types = array('answer', 'general', 'text', 'audio', 'video', 'chat', 'link', 'image', 'quote');
         $statuses = array('published', 'draft', 'private', 'submission');
         return [
+            'post_body' => ['sometimes', 'required'],
             'post_type' => [Rule::in($types)],
             'post_time' => ['nullable', 'date'],
             'post_status' => [Rule::in($statuses)],

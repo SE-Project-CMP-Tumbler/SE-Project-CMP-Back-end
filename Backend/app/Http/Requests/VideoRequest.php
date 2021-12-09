@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Misc\Helpers\Config;
 use Illuminate\Foundation\Http\FormRequest;
 
 class VideoRequest extends FormRequest
 {
+    protected $stopOnFirstFailure = true;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,8 +26,9 @@ class VideoRequest extends FormRequest
      */
     public function rules()
     {
+        $validTypes = implode(",", Config::VALID_VIDEO_TYPES);
         return [
-            'video' => 'required|mimes:mp4,mkv,mov,flv,avi,webm|max:102400'
+            'video' => "required|mimes:{$validTypes}|max:" . Config::FILE_UPLOAD_MAX_SIZE
         ];
     }
 
@@ -38,7 +42,7 @@ class VideoRequest extends FormRequest
         return [
             'video.required' => 'The :attribute field is required',
             'video.mimes' => 'Not supported :attribute type',
-            'video.max' => 'Allowed :attribute max size is 100MB'
+            'video.max' => 'Allowed :attribute max size is ' . Config::FILE_UPLOAD_MAX_SIZE / 1024 . "MB"
         ];
     }
 }

@@ -9,7 +9,14 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['blog_id', 'body', 'status', 'type', 'published_at', 'pinned'];
+    protected $fillable = [
+        'blog_id',
+        'body',
+        'status',
+        'type',
+        'published_at',
+        'pinned'
+    ];
     /**
      * Get the blog that owns the Post
      *

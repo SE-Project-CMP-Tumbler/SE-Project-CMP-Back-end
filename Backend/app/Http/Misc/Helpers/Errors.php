@@ -1,5 +1,9 @@
 <?php
 
+/**
+ *  external resource from https://github.com/SiliconArena/alphamart-backend
+*/
+
 namespace App\Http\Misc\Helpers;
 
 class Errors
@@ -22,12 +26,23 @@ class Errors
     const SHORT_PASSWORD = 'The password must be at least 8 characters.';
     const MISSING_BLOG_USERNAME = 'That is not a valid blog name. Someone beat you to that username.';
     const PASSWORD_SHORT = 'The password must be at least 8 characters.';
-    const RESTRICT_AGE  = 'please enter a valid age';
+    const MIN_AGE  = 'Your age must be at least 13 YO. ';
+    const INVALID_AGE  = 'Please enter a valid age. ';
 
     //signin errors (errors are ordered W.R.T it's priorities + missing only mail or only password errors are the same as the signup errors)
     const MISSING_BOTH_EMAIL_PASSWORD = 'You do have to fill this stuff out, you know.';
     const INCORRECT_EMAIL_PASSWORD = 'Your email or password were incorrect.';
 
+    //reset password errors
+    const MISSING_PASSWORD_CONFORMATION = 'you password does not match the password confirmation';
+
+    //login with google errors
+    const NOT_LINKED_BY_GOOGLE = 'your account already exists, but not linked';
+
+    //change password errors
+    const INVALID_CHANGE_PASSWORD = 'Invalid password entered';
+    const INVALID_CHANGE_PASSWORD_CONFORMATION = "Password don't match";
+    const MISSING_CHANGE_PASSWORD = 'Password is empty';
 
     //records errors
     const EXISTS = "Record already exists!";
@@ -35,7 +50,7 @@ class Errors
 
     // general errors
     const TESTING  = 'Not Found';
-    const UNAUTHENTICATED  = 'Forbidden';
+    const FORBIDDEN  = 'Forbidden';
     const UNAUTHORIZED = 'Unauthorized.';
     const GENERAL = "Internal Server error";
     const NOTALLOWED = "Method Not Allowed";
