@@ -113,7 +113,7 @@ class UserController extends Controller
     }
 /**
  * @OA\Post(
- * path="/checkRegisterCredentials",
+ * path="/check_register_credentials",
  * summary="check new user Credentials",
  * description=" check if those Credentials are good to create a new user",
  * tags={"User"},
