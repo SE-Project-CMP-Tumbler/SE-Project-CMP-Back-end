@@ -472,6 +472,9 @@ class BlogController extends Controller
  */
     public function getLikeBlog(Request $request, $blogId)
     {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
         $blog = Blog::find($blogId);
 
         return $this->generalResponse(new PostCollection($blog->likes()->paginate(Config::PAGINATION_LIMIT)), "ok");

@@ -61,9 +61,9 @@ Route::get('/posts/quote', [PostFilterController::class, 'getQuotePosts']);
 Route::get('/posts/video', [PostFilterController::class, 'getVideoPosts']);
 Route::get('/posts/audio', [PostFilterController::class, 'getAudioPosts']);
 
-Route::get('posts/chat', [PostFilterController::class, 'getAllChatPosts']);
-Route::get('posts/image', [PostFilterController::class, 'getAllImagePosts']);
-Route::get('posts/ask', [PostFilterController::class, 'getAllAskPosts']);
+Route::get('posts/chat', [PostFilterController::class, 'getChatPosts']);
+Route::get('posts/image', [PostFilterController::class, 'getImagePosts']);
+Route::get('posts/ask', [PostFilterController::class, 'getAskPosts']);
 Route::get('posts/radar', [PostFilterController::class, 'getRadarPost']);
 
 Route::put('posts/pin', [PostController::class, 'pinPost'])->middleware('auth:api');

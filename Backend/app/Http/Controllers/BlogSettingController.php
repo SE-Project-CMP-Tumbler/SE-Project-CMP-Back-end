@@ -83,12 +83,12 @@ class BlogSettingController extends Controller
  *  @param Blog $blog
  * @return Json
  */
-    public function show(Request $request, $blog_id)
+    public function show(Request $request, $blogId)
     {
-        if (preg_match('([0-9]+$)', $blog_id) == false) {
+        if (preg_match('([0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::find($blog_id);
+        $blog = Blog::find($blogId);
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
@@ -181,12 +181,12 @@ class BlogSettingController extends Controller
  *  @param Blog $blog
  * @return Json
  */
-    public function update(BlogSettingRequest $request, $blog_id)
+    public function update(BlogSettingRequest $request, $blogId)
     {
-        if (preg_match('([0-9]+$)', $blog_id) == false) {
+        if (preg_match('([0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::find($blog_id);
+        $blog = Blog::find($blogId);
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
