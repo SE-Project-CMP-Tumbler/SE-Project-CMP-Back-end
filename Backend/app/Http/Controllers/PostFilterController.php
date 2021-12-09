@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Misc\Helpers\Config;
 use App\Http\Resources\PostCollection;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
-use App\Services\PostFillterService;
 
 class PostFilterController extends Controller
 {
@@ -402,7 +402,7 @@ class PostFilterController extends Controller
      *   @OA\JsonContent(
      *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
      *      @OA\Property(property="response",type="object",
-     *          @OA\Property(property="posts",type="array",
+     *          @OA\Property(property="post",type="array",
      *              @OA\Items(
      *                  @OA\Property(property="post_id", type="integer", example=5),
      *                  @OA\Property(property="post_body", type="string", example="<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
@@ -435,8 +435,11 @@ class PostFilterController extends Controller
      **/
     public function getRadarPost()
     {
-        $radarPost = (new PostFillterService())->getRadarPostService();
-        return $this->generalResponse($radarPost, "ok", "200");
+        $radarPost = Post::where('status', 'published')
+            ->inRandomOrder()
+            ->first();
+        $res = ["post" => [new PostResource($radarPost)]];
+        return $this->generalResponse($res, "OK");
     }
 
     /**
@@ -495,8 +498,10 @@ class PostFilterController extends Controller
      **/
     public function getRandomPosts()
     {
-        $randomPosts = (new PostFillterService())->getRandomPostService();
-        return $this->generalResponse($randomPosts, "ok", "200");
+        $randomPosts = Post::where('status', 'published')
+            ->inRandomOrder()
+            ->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new PostCollection($randomPosts), "OK");
     }
 
     /**
@@ -553,8 +558,10 @@ class PostFilterController extends Controller
      **/
     public function getTrendingPosts()
     {
-        $trendingPosts = (new PostFillterService())->getTrendingPostService();
-        return $this->generalResponse($trendingPosts, "ok", "200");
+        $randomPosts = Post::where('status', 'published')
+            ->inRandomOrder()
+            ->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new PostCollection($randomPosts), "OK");
     }
 
     /**
