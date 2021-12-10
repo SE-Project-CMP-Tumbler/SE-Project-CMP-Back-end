@@ -9,6 +9,7 @@ use App\Models\Blog;
 use App\Http\Resources\BlogSettingResource;
 use App\Http\Requests\BlogSettingRequest;
 use App\Http\Requests\BlogAskSettingRequest;
+use App\Services\BlogService;
 
 class BlogSettingController extends Controller
 {
@@ -88,7 +89,8 @@ class BlogSettingController extends Controller
         if (preg_match('([0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::find($blogId);
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
@@ -186,12 +188,13 @@ class BlogSettingController extends Controller
         if (preg_match('([0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::find($blogId);
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
         $this->authorize('update', $blog);
         $blog->update($request->validated());
-        return  $this->generalResponse(new BlogSettingResource($blog));
+        return  $this->generalResponse(new BlogSettingResource($blog), "ok");
     }
 }

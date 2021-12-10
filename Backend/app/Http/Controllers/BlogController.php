@@ -77,7 +77,8 @@ class BlogController extends Controller
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::find($blogId);
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
@@ -270,8 +271,8 @@ class BlogController extends Controller
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-
-        $blog = Blog::find($blogId);
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
         $this->authorize('delete', $blog);
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
@@ -475,7 +476,8 @@ class BlogController extends Controller
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $blog = Blog::find($blogId);
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
 
         return $this->generalResponse(new PostCollection($blog->likes()->paginate(Config::PAGINATION_LIMIT)), "ok");
     }
