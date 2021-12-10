@@ -67,16 +67,16 @@ class FollowBlogController extends Controller
         if (preg_match('([0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $primaryBlog = $request->user()->blogs->where('is_primary', true)->first();
+        $BlogService = new BlogService();
+        $primaryBlog =  $BlogService->getPrimaryBlog($request->user());
         if ($primaryBlog->id == $blogId) {
             return $this->generalResponse("", "You can't follow your self", "422");
         }
-        $BlogService = new BlogService();
         $check = $BlogService->checkIsFollowed($primaryBlog->id, $blogId);
         if ($check) {
             return $this->generalResponse("", "You already follow this blog", "422");
         }
-        FollowBlog::create(['follower_id' => $primaryBlog->id , 'followed_id' => $blogId]);
+        $BlogService->creatFollowBlog($primaryBlog->id, $blogId);
         return $this->generalResponse("", "ok");
     }
 /**
@@ -135,8 +135,8 @@ class FollowBlogController extends Controller
         if (preg_match('([0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $primaryBlog = $request->user()->blogs->where('is_primary', true)->first();
         $BlogService = new BlogService();
+        $primaryBlog = $BlogService->getPrimaryBlog($request->user());
         if ($primaryBlog->id == $blogId) {
             return $this->generalResponse("", "You can't unfollow your self", "422");
         }
@@ -144,7 +144,7 @@ class FollowBlogController extends Controller
         if (!$check) {
             return $this->generalResponse("", "You already don't follow this blog", "422");
         }
-         FollowBlog::where(['follower_id' => $primaryBlog->id , 'followed_id' => $blogId])->delete();
+        $BlogService->deleteFollowBlog($primaryBlog->id, $blogId);
          return $this->generalResponse("", "ok");
     }
 /**
@@ -311,8 +311,8 @@ class FollowBlogController extends Controller
         if (preg_match('([0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $primaryBlog = $request->user()->blogs->where('is_primary', true)->first();
         $BlogService = new BlogService();
+        $primaryBlog = $BlogService->getPrimaryBlog($request->user());
         $check = $BlogService->checkIsFollowed($primaryBlog->id, $blogId);
       // check this line with TAs====>
         return $this->generalResponse(["followed" => $check], "ok");

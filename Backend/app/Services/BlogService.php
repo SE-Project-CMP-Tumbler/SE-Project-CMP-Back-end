@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\Blog;
+use App\Models\User;
 use App\Models\FollowBlog;
 use Illuminate\Support\Facades\DB;
 use App\Http\Misc\Helpers\Errors;
@@ -58,5 +59,48 @@ class BlogService
             return true;
         }
         return false;
+    }
+ /**
+  * Check primary blog
+  * @param \User $user
+  *
+  * @return \Blog
+ */
+    public function getPrimaryBlog(User $user)
+    {
+        $primaryBlog = $user->blogs->where('is_primary', true)->first();
+        return $primaryBlog;
+    }
+    /**
+  * Create follow blog
+  * @param int $followerId
+  * @param int $folllowedId
+  * @return boolean
+ */
+    public function creatFollowBlog(int $followerId, int $folllowedId)
+    {
+        FollowBlog::create(['follower_id' => $followerId , 'followed_id' => $folllowedId]);
+        return true;
+    }
+     /**
+  * Delete follow blog
+  * @param int $followerId
+  * @param int $folllowedId
+  * @return boolean
+ */
+    public function deleteFollowBlog(int $followerId, int $folllowedId)
+    {
+        FollowBlog::where(['follower_id' => $followerId , 'followed_id' => $folllowedId])->delete();
+        return true;
+    }
+      /**
+  * Find blog
+  * @param int $blogId
+  * @return \Blog
+ */
+    public function findBlog(int $blogId)
+    {
+        $blog = Blog::find($blogId);
+        return $blog;
     }
 }
