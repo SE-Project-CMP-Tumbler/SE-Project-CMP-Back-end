@@ -55,17 +55,23 @@ return [
 
         'images' => [
             'driver' => 'local',
-            'root' => storage_path('app/public') . '/images'
+            'root' => storage_path('app/public') . '/images',
+            'url' => env('APP_EXT_URL') . '/storage/images',
+            'visibility' => 'public',
         ],
 
         'audios' => [
             'driver' => 'local',
-            'root' => storage_path('app/public') . '/audios'
+            'root' => storage_path('app/public') . '/audios',
+            'url' => env('APP_EXT_URL') . '/storage/audios',
+            'visibility' => 'public',
         ],
 
         'videos' => [
             'driver' => 'local',
-            'root' => storage_path('app/public') . '/videos'
+            'root' => storage_path('app/public') . '/videos',
+            'url' => env('APP_EXT_URL') . '/storage/videos',
+            'visibility' => 'public',
         ],
     ],
 
