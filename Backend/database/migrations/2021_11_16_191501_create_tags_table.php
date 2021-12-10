@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Misc\Helpers\Config;
 
 class CreateTagsTable extends Migration
 {
@@ -15,7 +16,7 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->text('description')->primary();
-            $table->text('image')->nullable();
+            $table->text('image')->default(Config::TAG_IMAGE);
             $table->timestamps();
         });
     }
