@@ -43,7 +43,7 @@ class UploadFileService
         $newImagePath = Storage::disk('images')->getAdapter()->getPathPrefix() . $newImage;
         [$width, $height] = getimagesize($newImagePath);
         $finalImage = new Image([
-            'url' => $newImagePath,
+            'url' => Storage::disk('images')->url($newImage),
             'width' => $width,
             'height' => $height,
             'orignal_filename' => $uploadedImage->getClientOriginalName(),
@@ -108,7 +108,7 @@ class UploadFileService
             file_put_contents($newImagePath, $uploadedImage);
             [$width, $height] = getimagesize($newImagePath);
             $finalImage = new Image([
-                'url' => $newImagePath,
+                'url' => Storage::disk('images')->url($newImageName),
                 'width' => $width,
                 'height' => $height,
                 'orignal_filename' => '',
@@ -139,7 +139,7 @@ class UploadFileService
         $newAudio = $uploadedAudio->store('', 'audios');
         $newAudioPath = Storage::disk('audios')->getAdapter()->getPathPrefix() . $newAudio;
         $finalAudio = new Audio([
-            'url' => $newAudioPath,
+            'url' => Storage::disk('audios')->url($newAudio),
             'album_art_url' => false
         ]);
         return $finalAudio;
@@ -195,7 +195,7 @@ class UploadFileService
         }
 
         $finalVideo = new Video([
-            'url' => $newVideoPath,
+            'url' => Storage::disk('videos')->url($newVideo),
             'width' => $width,
             'height' => $height,
             // 'size' => $size,
