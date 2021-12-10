@@ -2,7 +2,7 @@ FROM php:8.0-apache
 
 RUN apt-get update -y && \
     apt-get install -y \
-        g++ vim openssl zip unzip git \
+        g++ vim openssl zip unzip git software-properties-common ffmpeg \
         zlib1g-dev libpng-dev libpq-dev libwebp-dev libxpm-dev \
         libcurl4-openssl-dev libxml2-dev libonig-dev \
         libjpeg-dev libfreetype6-dev libfreetype6-dev libjpeg62-turbo-dev
@@ -22,8 +22,7 @@ RUN apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # copy the custom php.ini file to the docker image
-COPY ./php.ini /etc/php/8.0/apache2/php.ini
-COPY ./php.ini /etc/php/8.0/cli/php.ini
+ADD ./custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
 
 # create a working directory
 WORKDIR /backend
