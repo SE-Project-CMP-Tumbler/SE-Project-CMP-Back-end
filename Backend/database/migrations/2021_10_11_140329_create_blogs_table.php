@@ -21,8 +21,8 @@ class CreateBlogsTable extends Migration
             $table->string('password')->nullable();
             $table->boolean('is_primary')->default(false);
             $table->text('description')->nullable();
-            $table->text('avatar')->default(Config::DEFAULT_AVATAR);
-            $table->text('header_image')->default(Config::DEFAULT_HEADER_IMAGE);
+            $table->text('avatar')->nullable();
+            $table->text('header_image')->nullable();
             $table->string('avatar_shape')->default('circle');
             $table->boolean('allow_messages')->default(false);
             $table->string('replies_settings')->default('Everyone can reply');
