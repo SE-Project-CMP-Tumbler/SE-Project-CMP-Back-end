@@ -164,12 +164,12 @@ class UploadFileService
         $newVideo = $uploadedVideo->store('', 'videos');
         $newVideoPath = Storage::disk('videos')->getAdapter()->getPathPrefix() . $newVideo;
 
-        // $ffprobe = FFMpeg::create([
-        //     'ffmpeg.binaries' => exec('which ffmpeg'),
-        //     'ffprobe.binaries' => exec('which ffprobe'),
-        // ]);
+        $ffprobe = FFMpeg::create([
+            'ffmpeg.binaries' => exec('which ffmpeg'),
+            'ffprobe.binaries' => exec('which ffprobe'),
+        ]);
 
-        $ffprobe = FFMpeg::create();
+        // $ffprobe = FFMpeg::create();
         $video = $ffprobe->open($newVideoPath);
         $video_dimensions = $video
         ->getStreams()                  // extracts streams informations
@@ -181,8 +181,18 @@ class UploadFileService
         $width = $video_dimensions->getWidth();
         $height = $video_dimensions->getHeight();
         $duration = $video->getFormat()->get('duration');
-        $video_codec = $video->getStreams()->videos()->first()->get('codec_name');
-        $audio_codec = $video->getStreams()->audios()->first()->get('codec_name');
+
+        $vtmp = $video->getStreams()->videos()->first();
+        $atmp = $video->getStreams()->audios()->first();
+        $video_codec = null;
+        $audio_codec = null;
+
+        if ($vtmp) {
+            $video_codec = $vtmp->get('codec_name');
+        }
+        if ($atmp) {
+            $audio_codec = $atmp->get('codec_name');
+        }
 
         $finalVideo = new Video([
             'url' => $newVideoPath,
