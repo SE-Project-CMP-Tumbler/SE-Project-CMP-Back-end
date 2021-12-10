@@ -21,6 +21,8 @@ class BlogPolicyTest extends TestCase
         $user = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $this->assertTrue($user->can('update', $blog));
+        $user->delete();
+        $blog->delete();
     }
     /**
      * A  test update false policy of blog
@@ -33,6 +35,8 @@ class BlogPolicyTest extends TestCase
         $userGuest = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $this->assertFalse($userGuest->can('update', $blog));
+        $user->delete();
+        $blog->delete();
     }
     /**
      * A  test update false policy of blog
@@ -45,6 +49,9 @@ class BlogPolicyTest extends TestCase
         $userGuest = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $this->assertFalse($userGuest->can('delete', $blog));
+        $user->delete();
+        $blog->delete();
+        $userGuest->delete();
     }
       /**
      * A delete policy of blog
