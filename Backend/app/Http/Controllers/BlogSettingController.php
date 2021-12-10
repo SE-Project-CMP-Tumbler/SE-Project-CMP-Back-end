@@ -195,6 +195,6 @@ class BlogSettingController extends Controller
         }
         $this->authorize('update', $blog);
         $blog->update($request->validated());
-        return  $this->generalResponse(new BlogSettingResource($blog));
+        return  $this->generalResponse(new BlogSettingResource($blog), "ok");
     }
 }

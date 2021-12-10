@@ -34,6 +34,7 @@ class BlogRequestTest extends TestCase
                 "msg" => "The blog username field is required.",
             ]
         ]);
+        $user->delete();
     }
     /**
      *  test Blog title is required
@@ -55,6 +56,7 @@ class BlogRequestTest extends TestCase
                 "msg" => "The title field is required.",
             ]
         ]);
+        $user->delete();
     }
     /**
      *  test Blog username has at least 3 chars
@@ -77,6 +79,7 @@ class BlogRequestTest extends TestCase
                 "msg" => "The blog username must be at least 3 characters.",
             ]
         ]);
+        $user->delete();
     }
       /**
      *  test Blog title has at least 3 chars
@@ -99,6 +102,7 @@ class BlogRequestTest extends TestCase
                 "msg" => "The title must be at least 3 characters.",
             ]
         ]);
+        $user->delete();
     }
     /**
      *  test Blog password has at least 3 chars
@@ -122,5 +126,6 @@ class BlogRequestTest extends TestCase
                 "msg" => "The password must be at least 3 characters.",
             ]
         ]);
+        $user->delete();
     }
 }
