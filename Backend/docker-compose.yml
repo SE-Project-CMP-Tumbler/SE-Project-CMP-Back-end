@@ -9,9 +9,9 @@ services:
     ports:
       - "54320:5432"
     environment:
-      POSTGRES_DB: start
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2132000
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       
@@ -37,9 +37,8 @@ services:
       - "30000-30009:30000-30009"
     environment:
       PUBLICHOST: "localhost"
-      FTP_USER_NAME: 
-      FTP_USER_PASS: ftptumbleruser
-      FTP_USER_PASS: plzwork1973
+      FTP_USER_NAME: ${FTP_USER_NAME}
+      FTP_USER_PASS: ${FTP_USER_PASS}
       FTP_USER_HOME: /var/www/html
     volumes:
       - './ftp/data:/var/www/html'
