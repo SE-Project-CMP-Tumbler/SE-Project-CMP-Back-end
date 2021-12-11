@@ -38,7 +38,7 @@ class Config
     public const POST_TYPES = ['ask', 'general', 'text', 'audio', 'video', 'chat', 'link', 'image', 'quote'];
     public const POST_STATUS_TYPES = ['published', 'draft', 'private', 'submission'];
     //
-    public const DEFAULT_AVATAR = "https://api.tumbler.social/storage/images/kXifXShT06enHKChwSd7efVprfKpjxemBttLfgu8.png";
-    public const DEFAULT_HEADER_IMAGE = "https://api.tumbler.social/storage/images/qdMKSUP52wERLQ8bLUeoD6BWwZ4kqvEizFKSTWGt.png";
-    public const TAG_IMAGE  = "https://api.tumbler.social/storage/images/iiq3iXi7Gr7e1dXYwinTYzZ08Xe9wUzyRc9kDqFy.png";
+    public const DEFAULT_AVATAR = "https://cdnb.artstation.com/p/assets/images/images/033/268/113/large/edmerc-d-mercadal-eren-v5.jpg?1609001111";
+    public const DEFAULT_HEADER_IMAGE = "https://cdna.artstation.com/p/assets/images/images/011/360/222/large/moraya-magdy-maro-45-1.jpg?1529180970";
+    public const TAG_IMAGE  = "https://cdnb.artstation.com/p/assets/images/images/028/144/455/large/javier-pedreno-dutch-post-9.jpg?1593610613";
 }

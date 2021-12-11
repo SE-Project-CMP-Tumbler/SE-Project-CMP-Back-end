@@ -18,7 +18,6 @@ class BlogFactory extends Factory
 
         return [
             "username" => $this->faker->unique()->name,
-            "avatar" => $this->faker->name,
             "description" => $this->faker->text(),
             "title" => $this->faker->title(),
             "user_id" => $user->id

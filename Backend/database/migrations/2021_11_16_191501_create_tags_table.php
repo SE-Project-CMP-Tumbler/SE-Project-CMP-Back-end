@@ -16,7 +16,7 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->text('description')->primary();
-            $table->text('image')->nullable();
+            $table->text('image')->default(Config::TAG_IMAGE);
             $table->timestamps();
         });
     }
