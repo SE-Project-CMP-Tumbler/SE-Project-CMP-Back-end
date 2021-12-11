@@ -10,7 +10,6 @@ use App\Http\Controllers\FollowTagController;
 use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
-use Tests\Unit\PostFillterTest;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +77,11 @@ Route::post("/upload_audio", [UploadFileController::class, 'uploadAudio'])->midd
 Route::post("/upload_video", [UploadFileController::class, 'uploadVideo'])->middleware('auth:api');
 Route::post("/upload_ext_photo", [UploadFileController::class, 'uploadExtImage'])->middleware('auth:api');
 Route::post("/upload_ext_video", [UploadFileController::class, 'uploadExtVideo'])->middleware('auth:api');
+
+Route::post("/upload_base64_photo", [UploadFileController::class, 'uploadBase64Image'])->middleware('auth:api');
+Route::post("/upload_base64_audio", [UploadFileController::class, 'uploadBase64Audio'])->middleware('auth:api');
+Route::post("/upload_base64_video", [UploadFileController::class, 'uploadBase64Video'])->middleware('auth:api');
+
 
 /*
 | User Routes
