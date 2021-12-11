@@ -208,6 +208,90 @@ class UploadFileController extends Controller
 
    /**
     * @OA\Post(
+    * path="/upload_base64_photo",
+    * summary="upload a photo in base64 format",
+    * description="upload the image in the request body and get the url for that image back in the response",
+    * operationId="uploadBase64Photo",
+    * tags={"Upload"},
+    * security={ {"bearer": {} }},
+    * @OA\RequestBody(
+    *    required=true,
+    *    description= "b64_image: is the image data encoded in base64 form according to RFC 2397" ,
+    *    @OA\JsonContent(
+    *       @OA\Property(property="b64_image", type="string", example="data:image/png;base64,this-is-the-base64-encode-string"),
+    * )),
+    * @OA\Response(
+    *    response=200,
+    *    description="Successful response",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object",example={"status":"200","msg":"OK"}),
+    *       @OA\Property(property="response",type="object",
+    *         @OA\Property(property="url", type="url", example="/storage/image_url.jpg"),
+    *         @OA\Property(property="width", type="integer", example=360),
+    *         @OA\Property(property="height", type="integer", example=168),
+    *         @OA\Property(property="orignal_filename",type="string",example="home.jpg"),
+    *         @OA\Property(property="rotation", type="boolean", example=false),
+    *         @OA\Property(property="upload_id", type="boolean", example=false),
+    *       ),
+    *   ),
+    * ),
+    * @OA\Response(
+    *    response=401,
+    *    description="Unauthorized",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=403,
+    *    description="Forbidden",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=404,
+    *    description="Not found",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=500,
+    *    description="Internal Server error",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+    *        )
+    *  )
+    * )
+    **/
+
+    /**
+     * upload a photo encoded in base64
+     *
+     * get the photo from {b64_image} key in the request body.
+     * upload a photo of type jpg,jpeg,png,bmp,gif with maximum size of 100M
+     * and store that photo in public/images/{name.ext},
+     * the {name} will consist of 40 random chars [a-z0-9],
+     * and the {ext} will be the uploaded image extension
+     *
+     * @param Reequest $request represents the incoming request body
+     * @return json
+     **/
+    public function uploadBase64Image(Request $request)
+    {
+        $rules = ['b64_image' => 'required'];
+        $request->validate($rules);
+        $finalImage = (new UploadFileService())->validateBase64ImageService($request->b64_image);
+        if ($finalImage) {
+            return $this->generalResponse(new ImageResource($finalImage), "ok", "200");
+        } else {
+            return $this->errorResponse("Unprocessable Entity", 422);
+        }
+    }
+
+   /**
+    * @OA\Post(
     * path="/upload_audio",
     * summary="upload a audio",
     * description="upload the audio in the request body and get the url for that audio back in the response",
@@ -286,6 +370,80 @@ class UploadFileController extends Controller
     {
         $request->validated();
         $finalAudio = (new UploadFileService())->validateAudioService($request->file('audio'));
+        if ($finalAudio) {
+            return $this->generalResponse(new AudioResource($finalAudio), "ok", "200");
+        } else {
+            return $this->errorResponse("Unprocessable Entity", 422);
+        }
+    }
+
+   /**
+    * @OA\Post(
+    * path="/upload_base64_audio",
+    * summary="upload a audio in base64 format",
+    * description="upload the image in the request body and get the url for that image back in the response",
+    * operationId="uploadBase64Audio",
+    * tags={"Upload"},
+    * security={ {"bearer": {} }},
+    * @OA\RequestBody(
+    *    required=true,
+    *    description= "b64_audio: is the image data encoded in base64 form according to RFC 2397" ,
+    *    @OA\JsonContent(
+    *       @OA\Property(property="b64_audio", type="string", example="data:audio/mp3;base64,this-is-the-base64-encode-string"),
+    * )),
+    * @OA\Response(
+    *    response=200,
+    *    description="Successful response",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object",example={"status":"200","msg":"OK"}),
+    *       @OA\Property(property="response",type="object",
+    *         @OA\Property(property="url", type="url", example="/storage/audio_url.jpg"),
+    *         @OA\Property(property="album_art_url",type="boolean",example=false),
+    *       ),
+    *   ),
+    * ),
+    * @OA\Response(
+    *    response=401,
+    *    description="Unauthorized",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=403,
+    *    description="Forbidden",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=404,
+    *    description="Not found",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=500,
+    *    description="Internal Server error",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+    *        )
+    *  )
+    * )
+    **/
+
+    /**
+     * upload a audio encoded in base64
+     *
+     * @param Reequest $request represents the incoming request body
+     * @return json
+     **/
+    public function uploadBase64Audio(Request $request)
+    {
+        $rules = ['b64_audio' => 'required'];
+        $request->validate($rules);
+        $finalAudio = (new UploadFileService())->validateBase64AudioService($request->b64_audio);
         if ($finalAudio) {
             return $this->generalResponse(new AudioResource($finalAudio), "ok", "200");
         } else {
@@ -473,6 +631,86 @@ class UploadFileController extends Controller
             return $this->generalResponse(new VideoResource($finalVideo[1]), "ok", "200");
         } else {
             return $this->errorResponse($finalVideo[1], 422);
+        }
+    }
+
+   /**
+    * @OA\Post(
+    * path="/upload_base64_video",
+    * summary="upload a video in base64 format",
+    * description="upload the image in the request body and get the url for that image back in the response",
+    * operationId="uploadBase64Video",
+    * tags={"Upload"},
+    * security={ {"bearer": {} }},
+    * @OA\RequestBody(
+    *    required=true,
+    *    description= "b64_video: is the image data encoded in base64 form according to RFC 2397" ,
+    *    @OA\JsonContent(
+    *       @OA\Property(property="b64_video", type="string", example="data:video/mp4;base64,this-is-the-base64-encode-string"),
+    * )),
+    * @OA\Response(
+    *    response=200,
+    *    description="Successful response",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object",example={"status":"200","msg":"OK"}),
+    *       @OA\Property(property="response",type="object",
+    *         @OA\Property(property="url", type="url", example="/storage/video_url.jpg"),
+    *         @OA\Property(property="width", type="integer", example=360),
+    *         @OA\Property(property="height", type="integer", example=168),
+    *         @OA\Property(property="size", type="integer", example=1031273),
+    *         @OA\Property(property="duration", type="float", example=13.760000),
+    *         @OA\Property(property="audio_codec", type="string", example="acc"),
+    *         @OA\Property(property="video_codec", type="string", example="h264"),
+    *         @OA\Property(property="preview_image_url",type="url",example="/storage/preview_image_url.jpg"),
+    *       ),
+    *   ),
+    * ),
+    * @OA\Response(
+    *    response=401,
+    *    description="Unauthorized",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=403,
+    *    description="Forbidden",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=404,
+    *    description="Not found",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+    *        )
+    * ),
+    * @OA\Response(
+    *    response=500,
+    *    description="Internal Server error",
+    *    @OA\JsonContent(
+    *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+    *        )
+    *  )
+    * )
+    **/
+
+    /**
+     * upload a Video encoded in base64
+     *
+     * @param Reequest $request represents the incoming request body
+     * @return json
+     **/
+    public function uploadBase64Video(Request $request)
+    {
+        $rules = ['b64_video' => 'required'];
+        $request->validate($rules);
+        $finalVideo = (new UploadFileService())->validateBase64VideoService($request->b64_video);
+        if ($finalVideo) {
+            return $this->generalResponse(new VideoResource($finalVideo), "ok", "200");
+        } else {
+            return $this->errorResponse("Unprocessable Entity", 422);
         }
     }
 }

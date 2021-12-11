@@ -37,9 +37,9 @@ RUN php artisan config:clear    # Optimizing Configuration loading
 RUN php artisan cache:clear     # Optimizing Route loading
 RUN php artisan view:cache      # RUN php artisan passport:install
 
-RUN chmod +x script.sh
+RUN chmod +x backend_start.sh
 
-CMD ./script.sh
+CMD ./backend_start.sh
 
 EXPOSE 8181
 

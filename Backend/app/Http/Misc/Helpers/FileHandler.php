@@ -2,22 +2,22 @@
 
 /**
  *  external resource from https://github.com/SiliconArena/alphamart-backend
-*/ 
+*/
+
 namespace App\Http\Misc\Helpers;
 
 use Illuminate\Support\Str;
 
 class FileHandler
 {
-    public static function store_img($image, $driver)
+    public static function storeImg($image, $driver)
     {
         $image_name = Str::random(40) . '.' . $image->extension();
         $image->storeAs('/', $image_name, $driver);
         return $image_name;
     }
 
-
-    public static function read_csv($filename = '', $delimiter = '|')
+    public static function readCSV($filename = '', $delimiter = '|')
     {
         if (!file_exists($filename) || !is_readable($filename)) {
             return false;
