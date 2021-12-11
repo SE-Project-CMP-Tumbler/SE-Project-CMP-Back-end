@@ -4,7 +4,9 @@ composer update
 
 php artisan storage:link
 
-php artisan migrate --seed
+php artisan migrate:fresh
+
+php artisan db:seed
 
 php artisan passport:install
 
