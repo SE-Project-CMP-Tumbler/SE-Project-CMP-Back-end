@@ -62,7 +62,7 @@ return [
             'ignorePassiveAddress' => true,
             'timeout' => 21,
             'port' => 21,
-            'url' => env('APP_EXT_URL') . '/images',
+            'url' => env('APP_EXT_URL'),
             # 'root' => '',
             # 'visibility' => 'public',
         ],
