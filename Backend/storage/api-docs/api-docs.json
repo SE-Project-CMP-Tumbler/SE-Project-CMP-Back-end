@@ -9284,12 +9284,12 @@
                 }
             }
         },
-        "/posts/dashboad": {
+        "/posts/dashboard": {
             "get": {
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Get dashboad post",
+                "summary": "Get dashboard post",
                 "description": "A blog get dashboad posts",
                 "operationId": "dashboardpost",
                 "responses": {

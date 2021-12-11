@@ -633,8 +633,8 @@ class PostFilterController extends Controller
 
      /**
      * @OA\Get(
-     * path="/posts/dashboad",
-     * summary="Get dashboad post",
+     * path="/posts/dashboard",
+     * summary="Get dashboard post",
      * description="A blog get dashboad posts",
      * operationId="dashboardpost",
      * tags={"Posts"},
