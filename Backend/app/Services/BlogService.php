@@ -94,13 +94,23 @@ class BlogService
         return true;
     }
       /**
-  * Find blog
+  * Find blog by id
   * @param int $blogId
   * @return \Blog
  */
     public function findBlog(int $blogId)
     {
         $blog = Blog::find($blogId);
+        return $blog;
+    }
+      /**
+  * Find blog by username
+  * @param string $blogUsername
+  * @return \Blog
+ */
+    public function findBlogByUsername(string $blogUsername)
+    {
+        $blog = Blog::where('username', $blogUsername)->first();
         return $blog;
     }
 }

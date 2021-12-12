@@ -41,6 +41,12 @@ Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->
 Route::post('follow_blog/{blog_id}', [FollowBlogController::class,'store'])->middleware('auth:api');
 Route::delete('follow_blog/{blog_id}', [FollowBlogController::class,'delete'])->middleware('auth:api');
 Route::get('followed_by/{blog_id}', [FollowBlogController::class,'checkFollowed'])->middleware('auth:api');
+Route::get('total_followers/{blog_id}', [FollowBlogController::class,'getTotalFollowers'])->middleware('auth:api');
+Route::get('total_followings/{blog_id}', [FollowBlogController::class,'getTotalFollowings'])->middleware('auth:api');
+Route::get('followings', [FollowBlogController::class,'getFollowings'])->middleware('auth:api');
+Route::get('followers', [FollowBlogController::class,'getFollowers'])->middleware('auth:api');
+Route::post('search_follow_blog/{blog_username}', [FollowBlogController::class,'followBlog'])->middleware('auth:api');
+
 
 /*
 | Post Routes

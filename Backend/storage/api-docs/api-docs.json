@@ -2592,6 +2592,10 @@
                                                                 "type": "string",
                                                                 "example": "published"
                                                             },
+                                                            "pinned": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
                                                             "post_time": {
                                                                 "type": "date_time",
                                                                 "example": "02-02-2012"
@@ -3523,6 +3527,110 @@
                 ]
             }
         },
+        "/search_follow_blog/{blog_username}": {
+            "post": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "follow blog",
+                "description": " Primary blog follow another blog",
+                "operationId": "followblogby username",
+                "parameters": [
+                    {
+                        "name": "blog username",
+                        "in": "path",
+                        "description": "blog username which my primary blog will follow ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful  response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "not found blog"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/follow_blog/{blog_id}": {
             "post": {
                 "tags": [
@@ -3729,7 +3837,7 @@
                 ]
             }
         },
-        "/followers/{blog_id}": {
+        "/followers": {
             "get": {
                 "tags": [
                     "Follow Blogs"
@@ -3737,17 +3845,6 @@
                 "summary": "follower's blog",
                 "description": " Primary blog  get all his/her followers",
                 "operationId": "followersblog",
-                "parameters": [
-                    {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "Blog_id of current blog  ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -3764,6 +3861,20 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
                                                 "followers": {
                                                     "type": "array",
                                                     "items": {
@@ -3886,6 +3997,20 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
                                                 "followings": {
                                                     "type": "array",
                                                     "items": {
@@ -5879,7 +6004,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image,\r\n *     in chat type : chat_body is required ,chat_title is optional\r\n *     in quote type:  quote_text is required, quote_body is optinal\r\n *     in video type:  video is required , url_videos are optinal\r\n *     in audio type: audio is required\r\n *     in link type:  link is required\r\n *     is general : all fields can be given , to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type : at least one uplaoded image,\r\n     *     in chat type : chat_body is required ,chat_title is optional\r\n     *     in quote type:  quote_text is required, quote_body is optinal\r\n     *     in video type:  video is required , url_videos are optinal\r\n     *     in audio type: audio is required\r\n     *     in link type:  link is required\r\n     *     is general : all fields can be given , to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -6290,7 +6415,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type:description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type: at least one uplaoded image,\r\n *     in chat type: chat_body is required, chat_title is optional\r\n *     in quote type: quote_text is required, quote_body is optinal\r\n *     in video type: video is required, url_videos are optinal\r\n *     in audio type: audio is required\r\n *     is general: all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type:description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type: at least one uplaoded image,\r\n     *     in chat type: chat_body is required, chat_title is optional\r\n     *     in quote type: quote_text is required, quote_body is optinal\r\n     *     in video type: video is required, url_videos are optinal\r\n     *     in audio type: audio is required\r\n     *     in link type: link is required\r\n     *     is general: all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -6629,7 +6754,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n *     in image type : at least one uplaoded image,\r\n *     in quote type:  quote_text is required, quote_body is optinal\r\n *     in video type:  video is required, url_videos are optinal\r\n *     in link type: link is required\r\n *     is general : all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type : at least one uplaoded image,\r\n     *     in quote type:  quote_text is required, quote_body is optinal\r\n     *     in video type:  video is required, url_videos are optinal\r\n     *     in link type: link is required\r\n     *     is general : all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -7314,34 +7439,35 @@
                 ]
             }
         },
-        "/post/{post_id}/{blog_id}/pinned": {
+        "/posts/pin": {
             "put": {
                 "tags": [
                     "Posts"
                 ],
                 "summary": "Make a post is pinned in a blog",
                 "description": "A blog change the post to be pinned",
-                "operationId": "pinnedpost",
-                "parameters": [
-                    {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "Blog_id ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "post_id",
-                        "in": "path",
-                        "description": "post_id ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "operationId": "pinPost",
+                "requestBody": {
+                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to pin in that blog",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "blog_id": {
+                                        "type": "int",
+                                        "example": "12"
+                                    },
+                                    "post_id": {
+                                        "type": "int",
+                                        "example": "6"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Successful  response",
@@ -7427,34 +7553,35 @@
                 ]
             }
         },
-        "/post/{post_id}/{blog_id}/unpinned": {
+        "/posts/unpin": {
             "put": {
                 "tags": [
                     "Posts"
                 ],
                 "summary": "Make a post unpinned in a blog",
-                "description": "A blog change the post to be pinned",
-                "operationId": "unpinnedpost",
-                "parameters": [
-                    {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "Blog_id ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "post_id",
-                        "in": "path",
-                        "description": "post_id ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "description": "A blog change the post to be unpinned",
+                "operationId": "unpinPost",
+                "requestBody": {
+                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to unpin in that blog",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "blog_id": {
+                                        "type": "int",
+                                        "example": "12"
+                                    },
+                                    "post_id": {
+                                        "type": "int",
+                                        "example": "6"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Successful  response",
@@ -7540,47 +7667,32 @@
                 ]
             }
         },
-        "/post/{post_id}/{blog_id}/change_status": {
+        "/posts/change_status": {
             "put": {
                 "tags": [
                     "Posts"
                 ],
                 "summary": "change status of posts in a blog",
                 "description": "A blog delete his/her post",
-                "operationId": "poststatus",
-                "parameters": [
-                    {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "Blog_id ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "post_id",
-                        "in": "path",
-                        "description": "post_id ",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
+                "operationId": "changePostStatus",
                 "requestBody": {
-                    "description": "Change status of post from private/draft to be pusblished",
+                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to change its status\r\n     *      post_status: is one of three types published, private or draft",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "post_status"
-                                ],
                                 "properties": {
+                                    "blog_id": {
+                                        "type": "int",
+                                        "example": "12"
+                                    },
+                                    "post_id": {
+                                        "type": "int",
+                                        "example": "6"
+                                    },
                                     "post_status": {
                                         "type": "string",
-                                        "example": "published"
+                                        "example": "draft"
                                     }
                                 },
                                 "type": "object"
@@ -8035,6 +8147,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -8299,6 +8448,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -8668,7 +8854,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "Not found"
+                                                "msg": "post is not found"
                                             }
                                         }
                                     },
@@ -8685,8 +8871,8 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Get random posts",
-                "description": "A blog get post",
+                "summary": "Get a radar post",
+                "description": "Get a radar post",
                 "operationId": "radarpost",
                 "responses": {
                     "200": {
@@ -8704,7 +8890,7 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "posts": {
+                                                "post": {
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
@@ -8762,25 +8948,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -8800,12 +8967,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/posts/random_posts": {
@@ -8813,7 +8975,7 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Get  random posts",
+                "summary": "Get random posts",
                 "description": " A blog get random posts",
                 "operationId": "randompost",
                 "responses": {
@@ -8832,6 +8994,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -8890,25 +9089,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -8928,12 +9108,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/posts/trending": {
@@ -8960,6 +9135,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -9018,25 +9230,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -9056,12 +9249,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/posts/ask": {
@@ -9071,7 +9259,7 @@
                 ],
                 "summary": "Get asked posts",
                 "description": "A blog get asked posts",
-                "operationId": "askedpost",
+                "operationId": "askedPosts",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -9088,6 +9276,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -9158,25 +9383,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -9196,12 +9402,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/posts/dashboad": {
@@ -9228,6 +9429,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -11852,7 +12090,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11892,7 +12130,7 @@
                 }
             }
         },
-        "/checkRegisterCredentials": {
+        "/check_register_credentials": {
             "post": {
                 "tags": [
                     "User"
@@ -11901,7 +12139,7 @@
                 "description": " check if those Credentials are good to create a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -11952,7 +12190,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12188,7 +12426,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "description": "Unprocessable Entity\r\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12294,7 +12532,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12786,7 +13024,7 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
+                    "description": "\r\n *    token : this is the same password reset token sent in the reset link url\r\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\r\n *    password : this is the new password,\r\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12918,7 +13156,7 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
+                    "description": "\r\n *    current_password : The current password of the  user,\r\n *    password : The new password of the  user,\r\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12971,7 +13209,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: if the current password is invalid",
                         "content": {
                             "application/json": {
                                 "schema": {
