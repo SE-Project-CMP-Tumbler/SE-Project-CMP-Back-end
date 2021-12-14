@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Misc\Helpers\Base64Handler;
 use App\Http\Misc\Helpers\Config;
 use App\Models\Audio;
 use App\Models\Image;
@@ -39,11 +40,11 @@ class UploadFileService
         } elseif (is_array($uploadedImage)) {
             $uploadedImage = $uploadedImage[0];
         }
-        $newImage = $uploadedImage->store('', 'images');
-        $newImagePath = Storage::disk('images')->getAdapter()->getPathPrefix() . $newImage;
-        [$width, $height] = getimagesize($newImagePath);
+        $dirName = Str::random(40);
+        $newImage = $uploadedImage->store($dirName, 'ftp');
+        [$width, $height] = getimagesize($uploadedImage);
         $finalImage = new Image([
-            'url' => $newImagePath,
+            'url' => Storage::disk('ftp')->url($newImage),
             'width' => $width,
             'height' => $height,
             'orignal_filename' => $uploadedImage->getClientOriginalName(),
@@ -103,12 +104,12 @@ class UploadFileService
             }
             # TODO: get the orignal_filename
             $uploadedImage = file_get_contents($imageUrl);
+            $dirName = Str::random(40);
             $newImageName = Str::random(40) . '.' . $imageExt;
-            $newImagePath = Storage::disk('images')->getAdapter()->getPathPrefix() . $newImageName;
-            file_put_contents($newImagePath, $uploadedImage);
-            [$width, $height] = getimagesize($newImagePath);
+            Storage::disk('ftp')->put($dirName . '/' . $newImageName, $uploadedImage);
+            [$width, $height] = getimagesizefromstring($uploadedImage);
             $finalImage = new Image([
-                'url' => $newImagePath,
+                'url' => env('APP_EXT_URL') . '/' . $dirName . '/' . $newImageName,
                 'width' => $width,
                 'height' => $height,
                 'orignal_filename' => '',
@@ -118,6 +119,43 @@ class UploadFileService
             return [true, $finalImage];
         }
         return [false, "image url should be valid image url"];
+    }
+
+    /**
+     * upload image from base64 service
+     *
+     * validate the type and size of an uploaded image
+     * then allow or reject that image.
+     *
+     * @param \Illuminate\Http\File $uploadedImage the user uploaded image
+     * @return \App\Models\Image|null
+     **/
+    public function validateBase64ImageService($b64Data)
+    {
+        if (is_null($b64Data)) {
+            return null;
+        }
+        $uploadedImage = Base64Handler::base64Validation(
+            $b64Data,
+            Config::VALID_IMAGE_TYPES,
+            Config::FILE_UPLOAD_MAX_SIZE
+        );
+        if ($uploadedImage == false) {
+            return null;
+        }
+        $info = getimagesize($uploadedImage);
+        $dirName = Str::random(40);
+        $newImageName = Str::random(40) . '.' . explode("/", $info["mime"])[1];
+        Storage::disk('ftp')->put($dirName . '/' . $newImageName, file_get_contents($uploadedImage));
+        $finalImage = new Image([
+            'url' => env('APP_EXT_URL') . '/' . $dirName . '/' . $newImageName,
+            'width' => $info[0],
+            'height' => $info[1],
+            'orignal_filename' => '',
+            'rotation' => false,
+            'upload_id' => false
+        ]);
+        return $finalImage;
     }
 
     /**
@@ -136,10 +174,43 @@ class UploadFileService
         } elseif (is_array($uploadedAudio)) {
             $uploadedAudio = $uploadedAudio[0];
         }
-        $newAudio = $uploadedAudio->store('', 'audios');
-        $newAudioPath = Storage::disk('audios')->getAdapter()->getPathPrefix() . $newAudio;
+        $dirName = Str::random(40);
+        $newAudio = $uploadedAudio->store($dirName, 'ftp');
         $finalAudio = new Audio([
-            'url' => $newAudioPath,
+            'url' => Storage::disk('ftp')->url($newAudio),
+            'album_art_url' => false
+        ]);
+        return $finalAudio;
+    }
+
+    /**
+     * upload audio from base64 service
+     *
+     * validate the type and size of an uploaded audio
+     * then allow or reject that audio.
+     *
+     * @param \Illuminate\Http\File $uploadedAudio the user uploaded audio
+     * @return \App\Models\Audio|null
+     **/
+    public function validateBase64AudioService($b64Data)
+    {
+        if (is_null($b64Data)) {
+            return null;
+        }
+        $uploadedAudio = Base64Handler::base64Validation(
+            $b64Data,
+            Config::VALID_AUDIO_TYPES,
+            Config::FILE_UPLOAD_MAX_SIZE
+        );
+        if ($uploadedAudio == false) {
+            return null;
+        }
+        $info = mime_content_type($b64Data);
+        $dirName = Str::random(40);
+        $newAudioName = Str::random(40) . '.' . explode("/", $info)[1];
+        Storage::disk('ftp')->put($dirName . '/' . $newAudioName, file_get_contents($uploadedAudio));
+        $finalAudio = new Audio([
+            'url' => env('APP_EXT_URL') . '/' . $dirName . '/' . $newAudioName,
             'album_art_url' => false
         ]);
         return $finalAudio;
@@ -161,16 +232,17 @@ class UploadFileService
         } elseif (is_array($uploadedVideo)) {
             $uploadedVideo = $uploadedVideo[0];
         }
-        $newVideo = $uploadedVideo->store('', 'videos');
-        $newVideoPath = Storage::disk('videos')->getAdapter()->getPathPrefix() . $newVideo;
+        $dirName = Str::random(40);
+        $newVideo = $uploadedVideo->store($dirName, 'ftp');
+        $newVideoPath = Storage::disk('ftp')->getAdapter()->getPathPrefix() . $newVideo;
 
-        // $ffprobe = FFMpeg::create([
-        //     'ffmpeg.binaries' => exec('which ffmpeg'),
-        //     'ffprobe.binaries' => exec('which ffprobe'),
-        // ]);
+        $ffprobe = FFMpeg::create([
+            'ffmpeg.binaries' => exec('which ffmpeg'),
+            'ffprobe.binaries' => exec('which ffprobe'),
+        ]);
 
-        $ffprobe = FFMpeg::create();
-        $video = $ffprobe->open($newVideoPath);
+        // $ffprobe = FFMpeg::create();
+        $video = $ffprobe->open($uploadedVideo);
         $video_dimensions = $video
         ->getStreams()                  // extracts streams informations
         ->videos()                      // filters video streams
@@ -181,11 +253,21 @@ class UploadFileService
         $width = $video_dimensions->getWidth();
         $height = $video_dimensions->getHeight();
         $duration = $video->getFormat()->get('duration');
-        $video_codec = $video->getStreams()->videos()->first()->get('codec_name');
-        $audio_codec = $video->getStreams()->audios()->first()->get('codec_name');
+
+        $vtmp = $video->getStreams()->videos()->first();
+        $atmp = $video->getStreams()->audios()->first();
+        $video_codec = null;
+        $audio_codec = null;
+
+        if ($vtmp) {
+            $video_codec = $vtmp->get('codec_name');
+        }
+        if ($atmp) {
+            $audio_codec = $atmp->get('codec_name');
+        }
 
         $finalVideo = new Video([
-            'url' => $newVideoPath,
+            'url' => Storage::disk('ftp')->url($newVideo),
             'width' => $width,
             'height' => $height,
             // 'size' => $size,
@@ -225,5 +307,75 @@ class UploadFileService
             return [true, $finalVideo];
         }
         return [false, "video url should be valid video url"];
+    }
+
+    /**
+     * upload video from base64 service
+     *
+     * validate the type and size of an uploaded video
+     * then allow or reject that Video.
+     *
+     * @param \Illuminate\Http\File $uploadedVideo the user uploaded vieo
+     * @return \App\Models\Video|null
+     **/
+    public function validateBase64VideoService($b64Data)
+    {
+        if (is_null($b64Data)) {
+            return null;
+        }
+        $uploadedVideo = Base64Handler::base64Validation(
+            $b64Data,
+            Config::VALID_VIDEO_TYPES,
+            Config::FILE_UPLOAD_MAX_SIZE
+        );
+        if ($uploadedVideo == false) {
+            return null;
+        }
+        $info = mime_content_type($b64Data);
+        $dirName = Str::random(40);
+        $newVideoName = Str::random(40) . '.' . explode("/", $info)[1];
+        Storage::disk('ftp')->put($dirName . '/' . $newVideoName, file_get_contents($uploadedVideo));
+
+        $ffprobe = FFMpeg::create([
+            'ffmpeg.binaries' => exec('which ffmpeg'),
+            'ffprobe.binaries' => exec('which ffprobe'),
+        ]);
+
+        // $ffprobe = FFMpeg::create();
+        $video = $ffprobe->open($uploadedVideo);
+        $video_dimensions = $video
+        ->getStreams()                  // extracts streams informations
+        ->videos()                      // filters video streams
+        ->first()                       // returns the first video stream
+        ->getDimensions();              // returns a FFMpeg\Coordinate\Dimension object
+
+        // $size = $newVideoObj->getSize();
+        $width = $video_dimensions->getWidth();
+        $height = $video_dimensions->getHeight();
+        $duration = $video->getFormat()->get('duration');
+
+        $vtmp = $video->getStreams()->videos()->first();
+        $atmp = $video->getStreams()->audios()->first();
+        $video_codec = null;
+        $audio_codec = null;
+
+        if ($vtmp) {
+            $video_codec = $vtmp->get('codec_name');
+        }
+        if ($atmp) {
+            $audio_codec = $atmp->get('codec_name');
+        }
+
+        $finalVideo = new Video([
+            'url' => env('APP_EXT_URL') . '/' . $dirName . '/' . $newVideoName,
+            'width' => $width,
+            'height' => $height,
+            // 'size' => $size,
+            'duration' => $duration,
+            'audio_codec' => $audio_codec,
+            'video_codec' => $video_codec,
+            'preview_image_url' => ''
+        ]);
+        return $finalVideo;
     }
 }

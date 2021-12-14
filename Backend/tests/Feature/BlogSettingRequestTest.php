@@ -34,6 +34,8 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The allow messages field must be true or false."
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
     /**
      *  test Blog submissions_guidelines  has at least 3 chars
@@ -57,6 +59,8 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The submissions guidelines must be a string."
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
     /**
      *  test Blog submissions_page_title has at least 3 chars and string
@@ -79,6 +83,8 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The submissions page title must be a string."
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
       /**
      *  test Blog allow_ask must be boolean
@@ -101,6 +107,8 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The allow ask field must be true or false."
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
     /**
      *  test Blog ask_page_title has at least 3 chars
@@ -123,6 +131,8 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The ask page title must be at least 3 characters.",
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
     /**
      *  test Blog allow_anonymous_questions must be boolean
@@ -145,6 +155,8 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The allow anonymous questions field must be true or false.",
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
     /**
      *  test Blog allow_submittions must be boolean
@@ -168,6 +180,8 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The allow submittions field must be true or false."
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
     /**
      *  test Blog replies_settings must contain specific values
@@ -190,22 +204,84 @@ class BlogSettingRequestTest extends TestCase
                 "msg" => "The selected replies settings is invalid.",
             ]
         ]);
+        $user->delete();
+        $blog->delete();
     }
      /**
-     *  test Blog blog_settings are correct
+     *  test update  blog setting as success
      *
      * @return void
      */
-    public function testTrueSetting()
+    public function testupdateBlogSetting()
     {
         $user = User::factory()->create();
-        $blog = Blog::factory()->create(['user_id' => $user->id]);
         $token = $user->createToken('Auth Token')->accessToken;
-        $setting = [
+        $blog = Blog::factory()->create(["user_id" => $user->id]);
+        $newSettings = [
+            "replies_settings" => "Everyone can reply",
+            "allow_ask" => false,
+            "ask_page_title" => "okk",
+            "allow_messages" => true,
             "allow_anonymous_questions" => true
         ];
+
         $response = $this
-        ->json('PUT', 'api/blog_settings/' . $blog->id, $setting, ['Authorization' => 'Bearer ' . $token], Config::JSON)
-        ->assertStatus(200);
+        ->json('PUT', 'api/blog_settings/' . $blog->id, $newSettings, ['Authorization' => 'Bearer ' . $token], Config::JSON)
+        ->assertJson([
+            "meta" => [
+                "status" => "200",
+                "msg" => "ok",
+            ],
+            "response" => [
+                "blog_id" => $blog->id,
+            "blog_username" => $blog->username,
+            "replies_settings" => "Everyone can reply",
+            "ask_settings" => [
+            "allow_ask" => false,
+            "ask_page_title" => "okk",
+            "allow_anonymous_questions" => true
+                ],
+                "submissions_settings" => [
+                "allow_submittions" => $blog->allow_submittions,
+                "submissions_page_title" => $blog->submissions_page_title,
+                "submissions_guidelines" => $blog->submissions_guidelines
+                ],
+                "allow_messages" => true
+            ]
+        ]);
+        $user->delete();
+        $blog->delete();
+    }
+     /**
+     *  test update  blog setting as failure
+     *
+     * @return void
+     */
+    public function testupdateAnotherBlogSetting()
+    {
+        $user = User::factory()->create();
+        $anotherUser = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
+        $blog = Blog::factory()->create(["user_id" => $user->id]);
+        $anotherBlog = Blog::factory()->create(["user_id" => $anotherUser->id]);
+        $newSettings = [
+            "replies_settings" => "Everyone can reply",
+            "allow_ask" => false,
+            "ask_page_title" => "okk",
+            "allow_messages" => true,
+            "allow_anonymous_questions" => true
+        ];
+
+        $response = $this
+        ->json('PUT', 'api/blog_settings/' . $anotherBlog->id, $newSettings, ['Authorization' => 'Bearer ' . $token], Config::JSON)
+        ->assertJson([
+            "meta" => [
+                "status" => "403",
+                "msg" => "Forbidden",
+            ] ]);
+        $user->delete();
+        $blog->delete();
+        $anotherUser->delete();
+        $anotherBlog->delete();
     }
 }

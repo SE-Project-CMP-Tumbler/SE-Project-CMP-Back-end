@@ -198,16 +198,16 @@ class UserService
     }
      /**
   * get the google_id and email of a certain user
-  * @param string $google_access_token
+  * @param string $googleAccessToken
   * @return array
  */
 
-    public function getGoogleData(string $google_access_token)
+    public function getGoogleData(string $googleAccessToken)
     {
         $google_id = "";
         $email = "";
         try {
-            $user = Socialite::driver('google')->userFromToken($google_access_token);
+            $user = Socialite::driver('google')->userFromToken($googleAccessToken);
             $google_id = $user->id;
             $email = $user->email;
         } catch (\Throwable $th) {

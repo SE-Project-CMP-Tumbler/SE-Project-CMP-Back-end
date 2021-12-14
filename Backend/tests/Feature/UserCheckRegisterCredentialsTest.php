@@ -8,7 +8,7 @@ use App\Http\Misc\Helpers\Config;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UserRegisterRequestTest extends TestCase
+class UserCheckRegisterCredentialsTest extends TestCase
 {
     use WithFaker;
 
@@ -26,7 +26,7 @@ class UserRegisterRequestTest extends TestCase
             "age" => 22
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -48,7 +48,7 @@ class UserRegisterRequestTest extends TestCase
             "age" => 22
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -70,33 +70,11 @@ class UserRegisterRequestTest extends TestCase
             "age" => 22
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
                 "msg" => Errors::MISSING_BLOGNAME,
-            ]
-        ]);
-    }
-    /**
-     *  test age is required
-     *
-     * @return void
-     */
-
-    public function testRequiredAge()
-    {
-        $request = [
-            "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
-            "password" => "Mm123sdsd455",
-        ];
-        $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
-        ->assertJson([
-            "meta" => [
-                "status" => "422",
-                "msg" => Errors::MISSING_AGE,
             ]
         ]);
     }
@@ -115,7 +93,7 @@ class UserRegisterRequestTest extends TestCase
             "age" => 22
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -140,57 +118,11 @@ class UserRegisterRequestTest extends TestCase
             "age" => 22
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
                 "msg" => Errors::EMAIL_TAKEN,
-            ]
-        ]);
-    }
-    /**
-     *  test invalid age (above 130)
-     *
-     * @return void
-     */
-
-    public function testInvalidAge()
-    {
-        $request = [
-            "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
-            "password" => "Mm123sdsd455",
-            "age" => 500
-        ];
-        $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
-        ->assertJson([
-            "meta" => [
-                "status" => "422",
-                "msg" => Errors::INVALID_AGE,
-            ]
-        ]);
-    }
-    /**
-     *  test illegal age (under 13)
-     *
-     * @return void
-     */
-
-    public function testIllegalAge()
-    {
-        $request = [
-            "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
-            "password" => "Mm123sdsd455",
-            "age" => 12
-        ];
-        $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
-        ->assertJson([
-            "meta" => [
-                "status" => "422",
-                "msg" => Errors::MIN_AGE,
             ]
         ]);
     }
@@ -209,7 +141,7 @@ class UserRegisterRequestTest extends TestCase
             "age" => 14
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -232,7 +164,7 @@ class UserRegisterRequestTest extends TestCase
             "age" => 14
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
@@ -255,7 +187,7 @@ class UserRegisterRequestTest extends TestCase
             "age" => 14
         ];
         $response = $this
-        ->json('POST', 'api/register', $request, Config::JSON)
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",

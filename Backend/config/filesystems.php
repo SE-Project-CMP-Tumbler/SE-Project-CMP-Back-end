@@ -53,20 +53,20 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
-        'images' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public') . '/images'
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_HOST'),
+            'username' => env('FTP_USER_NAME'),
+            'password' => env('FTP_USER_PASS'),
+            'passive' => false,
+            'ignorePassiveAddress' => true,
+            'timeout' => 21,
+            'port' => 21,
+            'url' => env('APP_EXT_URL'),
+            # 'root' => '',
+            # 'visibility' => 'public',
         ],
 
-        'audios' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public') . '/audios'
-        ],
-
-        'videos' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public') . '/videos'
-        ],
     ],
 
     /*

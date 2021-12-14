@@ -113,7 +113,7 @@ class UserController extends Controller
     }
 /**
  * @OA\Post(
- * path="/checkRegisterCredentials",
+ * path="/check_register_credentials",
  * summary="check new user Credentials",
  * description=" check if those Credentials are good to create a new user",
  * tags={"User"},
@@ -283,17 +283,17 @@ class UserController extends Controller
     public function loginWithGoogle(UserGoogleLoginRequest $request)
     {
         $userService = new UserService();
-        $google_data = $userService->getGoogleData($request->google_access_token);
-        if (is_null($google_data)) {
+        $googleData = $userService->getGoogleData($request->google_access_token);
+        if (is_null($googleData)) {
             return $this->errorResponse('not found', '404');
         }
 
-        if ($userService->uniqueEmail($google_data["email"])) {
+        if ($userService->uniqueEmail($googleData["email"])) {
             return $this->errorResponse('not found', '404');
         }
 
 
-        $user = $userService->checkGoogleLoginCredentials($google_data["email"], $google_data["google_id"]);
+        $user = $userService->checkGoogleLoginCredentials($googleData["email"], $googleData["google_id"]);
 
         if (!$user) {
             return $this->errorResponse(Errors::NOT_LINKED_BY_GOOGLE, '422');
@@ -373,24 +373,24 @@ class UserController extends Controller
         }
 
 
-        $google_data = $userService->getGoogleData($request->google_access_token);
+        $googleData = $userService->getGoogleData($request->google_access_token);
 
-        if (is_null($google_data)) {
+        if (is_null($googleData)) {
             return $this->errorResponse('not found', '404');
         }
 
 
-        if (!($userService->uniqueEmail($google_data["email"]))) {
+        if (!($userService->uniqueEmail($googleData["email"]))) {
             return $this->errorResponse(Errors::EMAIL_TAKEN, '422');
         }
 
         $user = $userService->register(
-            $google_data["email"],
+            $googleData["email"],
             "",
             $request->age,
             true,
             $request->blog_username,
-            $google_data["google_id"]
+            $googleData["google_id"]
         );
         if (!$user) {
             return $this->errorResponse('not found', '404');

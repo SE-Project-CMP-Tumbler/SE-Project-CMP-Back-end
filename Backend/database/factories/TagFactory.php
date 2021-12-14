@@ -14,8 +14,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->unique()->text(),
-            'image' => $this->faker->text()
+            'description' => $this->faker->unique()->text()
         ];
     }
 }

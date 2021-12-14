@@ -9284,12 +9284,12 @@
                 }
             }
         },
-        "/posts/dashboad": {
+        "/posts/dashboard": {
             "get": {
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Get dashboad post",
+                "summary": "Get dashboard post",
                 "description": "A blog get dashboad posts",
                 "operationId": "dashboardpost",
                 "responses": {
@@ -11446,6 +11446,164 @@
                 ]
             }
         },
+        "/upload_base64_photo": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "upload a photo in base64 format",
+                "description": "upload the image in the request body and get the url for that image back in the response",
+                "operationId": "uploadBase64Photo",
+                "requestBody": {
+                    "description": "b64_image: is the image data encoded in base64 form according to RFC 2397",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "b64_image": {
+                                        "type": "string",
+                                        "example": "data:image/png;base64,this-is-the-base64-encode-string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "url": {
+                                                    "type": "url",
+                                                    "example": "/storage/image_url.jpg"
+                                                },
+                                                "width": {
+                                                    "type": "integer",
+                                                    "example": 360
+                                                },
+                                                "height": {
+                                                    "type": "integer",
+                                                    "example": 168
+                                                },
+                                                "orignal_filename": {
+                                                    "type": "string",
+                                                    "example": "home.jpg"
+                                                },
+                                                "rotation": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "upload_id": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/upload_audio": {
             "post": {
                 "tags": [
@@ -11466,6 +11624,148 @@
                                     "audio": {
                                         "description": "file to upload",
                                         "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "url": {
+                                                    "type": "url",
+                                                    "example": "/storage/audio_url.jpg"
+                                                },
+                                                "album_art_url": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/upload_base64_audio": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "upload a audio in base64 format",
+                "description": "upload the image in the request body and get the url for that image back in the response",
+                "operationId": "uploadBase64Audio",
+                "requestBody": {
+                    "description": "b64_audio: is the image data encoded in base64 form according to RFC 2397",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "b64_audio": {
+                                        "type": "string",
+                                        "example": "data:audio/mp3;base64,this-is-the-base64-encode-string"
                                     }
                                 },
                                 "type": "object"
@@ -11923,6 +12223,172 @@
                 ]
             }
         },
+        "/upload_base64_video": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "upload a video in base64 format",
+                "description": "upload the image in the request body and get the url for that image back in the response",
+                "operationId": "uploadBase64Video",
+                "requestBody": {
+                    "description": "b64_video: is the image data encoded in base64 form according to RFC 2397",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "b64_video": {
+                                        "type": "string",
+                                        "example": "data:video/mp4;base64,this-is-the-base64-encode-string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "url": {
+                                                    "type": "url",
+                                                    "example": "/storage/video_url.jpg"
+                                                },
+                                                "width": {
+                                                    "type": "integer",
+                                                    "example": 360
+                                                },
+                                                "height": {
+                                                    "type": "integer",
+                                                    "example": 168
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 1031273
+                                                },
+                                                "duration": {
+                                                    "type": "float",
+                                                    "example": 13.76
+                                                },
+                                                "audio_codec": {
+                                                    "type": "string",
+                                                    "example": "acc"
+                                                },
+                                                "video_codec": {
+                                                    "type": "string",
+                                                    "example": "h264"
+                                                },
+                                                "preview_image_url": {
+                                                    "type": "url",
+                                                    "example": "/storage/preview_image_url.jpg"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/register": {
             "post": {
                 "tags": [
@@ -12054,7 +12520,7 @@
                 }
             }
         },
-        "/checkRegisterCredentials": {
+        "/check_register_credentials": {
             "post": {
                 "tags": [
                     "User"
