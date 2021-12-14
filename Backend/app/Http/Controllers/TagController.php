@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Misc\Helpers\Config;
 use App\Http\Requests\TagRequest;
 use App\Http\Resources\TagCollection;
 use App\Http\Resources\TagResource;
@@ -132,7 +133,9 @@ class TagController extends Controller
      */
     public function show($tag_description)
     {
-        $tag = Tag::where('description', $tag_description)->first();
+        $tag = Tag::withCount('posts')
+            ->where('description', $tag_description)
+            ->first();
 
         if (empty($tag)) {
             return $this->generalResponse("", "the tag doesn't exist", 404);
@@ -215,7 +218,7 @@ class TagController extends Controller
  * @OA\Get(
  * path="/tag/trending",
  * summary="Get all tags which are trending",
- * description="Returns list of  tags  which are trending",
+ * description="Returns list of tags which are trending. The trending metric used is the count of posts this tag was mentioned inside.",
  * operationId="gettrendingTags",
  * tags={"Tags"},
  *  @OA\Response(
@@ -224,10 +227,21 @@ class TagController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *       @OA\Property(property="response",type="object",
+     *          @OA\Property(property="pagination",type="object",
+     *              @OA\Property(property="total",type="int",example=120),
+     *              @OA\Property(property="count",type="int",example=10),
+     *              @OA\Property(property="per_page",type="int",example=10),
+     *              @OA\Property(property="current_page",type="int",example=2),
+     *              @OA\Property(property="total_pages",type="int",example=12),
+     *              @OA\Property(property="first_page_url",type="boolean",example=false),
+     *              @OA\Property(property="last_page_url",type="int",example=12),
+     *              @OA\Property(property="next_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=3"),
+     *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=1"),),
  *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example="")))))),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),
+ *                  @OA\Property(property="posts_count",type="int",example=12)))))),
  *
  *  @OA\Response(
  *    response=404,
@@ -248,13 +262,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $trending = DB::table('tags')
-        ->join('post_tag', 'tags.description', '=', 'post_tag.tag_description')
-        ->join('posts', 'post_tag.post_id', '=', 'posts.id')
-        ->select(DB::raw('count(description) as num_of_posts, description, image'))
-        ->groupBy('tags.description')
-        ->orderBy('num_of_posts', 'desc')
-        ->get();
+        $trending = Tag::withCount(['posts'])
+            ->orderBy('posts_count', 'desc')
+            ->paginate(Config::PAGINATION_LIMIT);
 
         return $this->generalResponse(new TagCollection($trending), "ok");
     }
