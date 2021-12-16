@@ -38,12 +38,21 @@ class Post extends Model
     }
 
     /**
-     * Get the mentioned Blogs mentioned in this post's content
+     * Get the Blogs mentioned in this post's content
      *
      * @return \Blog[]
      */
     public function mentionedBlogs()
     {
         return $this->belongsToMany(Blog::class, 'post_mention_blog', 'post_id', 'blog_id');
+    }
+    /**
+     * Get the List of Blogs liked this post.
+     *
+     * @return \Blog[]
+     */
+    public function getLikerBlogs()
+    {
+        return $this->belongsToMany(Blog::class, 'likes', 'post_id', 'blog_id');
     }
 }

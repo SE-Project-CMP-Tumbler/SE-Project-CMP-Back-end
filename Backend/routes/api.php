@@ -106,6 +106,8 @@ Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'stor
 Route::get('/tag/data/{tag_description}', [TagController::class,'show']);
 Route::get('/tag/trending', [TagController::class,'index']);
 
+Route::get('/tag/posts/{tag_description}', [TagController::class, 'getTagPosts']);
+
 /*
 | Follow Tag Routes
 */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Misc\Helpers\Config;
 use App\Http\Requests\TagRequest;
+use App\Http\Resources\PostCollection;
 use App\Http\Resources\TagCollection;
 use App\Http\Resources\TagResource;
 use App\Models\Post;
@@ -160,53 +161,47 @@ class TagController extends Controller
  *
  * @OA\Parameter(
  *          name="sort",
- *          description="The sort method to retrieve the posts",
+ *          description="The sort method to retrieve the posts by. Allowed values for sort_type are:
+ *          recent: the posts are retrieved sorted by the most recently published,
+ *          top: the posts are retrieved sorted descendingly by the number of engagments and notes they got.
+ * By default if no sort_type is specified, posts will be retrieved by the most recent order.
+ * If sort_type took any value other than recent or top, be default the posts will be retrieved by the most recent order",
  *          required=false,
  *          in="query",
  *          @OA\Schema(
  *              type="string")),
- *
  *  @OA\Response(
  *    response=200,
  *    description="Successful response",
  *     @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
- *          @OA\Property(property="tag_description",type="string",example="books"),
+ *          @OA\Property(property="pagination",type="object",
+ *                  @OA\Property(property="total",type="int",example=17),
+ *                  @OA\Property(property="count",type="int",example=7),
+ *                  @OA\Property(property="per_page",type="int",example=10),
+ *                  @OA\Property(property="current_page",type="int",example=2),
+ *                  @OA\Property(property="total_pages",type="int",example=2),
+ *                  @OA\Property(property="first_page_url",type="boolean",example=false),
+ *                  @OA\Property(property="next_page_url",type="string",example=null),
+ *                  @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/tag/posts/books?sort=top"),),
  *          @OA\Property(property="posts",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="post_status", type="string", example="published"),
- *                  @OA\Property(property="title", type="string", example="New post"),
- *                  @OA\Property(property="description", type="string", example="new post"),
- *                  @OA\Property(property="chat_title", type="string", example="New post"),
- *                  @OA\Property(property="chat_body", type="string", example="My post"),
- *                  @OA\Property(property="quote_text", type="string", example="New post"),
- *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
- *                  @OA\Property(property="keep_reading", type="integer", example=1),
- *                  @OA\Property(property="images ", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", format="byte",example="/storage/imgname2.extension"),
- *                          @OA\Property(property="1", type="string", format="byte", example="/storage/imgname2.extension"),
- *                          @OA\Property(property="2", type="string", format="byte", example="/storage/imgname2.extension"),)),
- *                  @OA\Property(property="video ", type="string", format="byte", example=""),
- *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
- *                  @OA\Property(property="post_type ", type="string", example="text"),
- *                  @OA\Property(property="url_videos ", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", example="facebook.com"),
- *                          @OA\Property(property="1", type="string", example="google.com"),
- *                          @OA\Property(property="2", type="string", example="yahoo.com"),),),
- *                  @OA\Property(property="post_tags", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", example="books"),
- *                          @OA\Property(property="1", type="string", example="reading"),
- *                          @OA\Property(property="2", type="string", example="stay positive"),)),),),)),),
- *
+ *                  @OA\Property(property="post_body", type="string", example="<p>This is so frustrating. #books #reading</p>"),
+ *                  @OA\Property(property="post_type", type="string", example="text"),
+ *                  @OA\Property(property="post_id", type="integer", example=5),
+ *                  @OA\Property(property="blog_id", type="integer", example=5),
+ *                  @OA\Property(property="blog_username", type="string", example=""),
+ *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+ *                  @OA\Property(property="blog_avatar_shape", type="string", example="square"),
+ *                  @OA\Property(property="blog_title", type="string", example="Untitled"),
+ *                  @OA\Property(property="post_time",type="date_time",example="02-02-2021"),),),)),),
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Tag description or sort type was not found"}))),
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Tag description provided was not found."}))),
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -214,6 +209,36 @@ class TagController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */
+    /**
+     * Retrieve the posts having a specific tag within them.
+     * The posts retrieval is either by the most recent or by the top engaging post.
+     *
+     * @var string $tag_description
+     * @var string $sort_type
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTagPosts(string $tag_description, Request $request)
+    {
+        //check the existence of the tag
+        $tag = Tag::where('description', $tag_description)->first();
+        if (empty($tag)) {
+            return $this->generalResponse("", "Tag description provided was not found.", "404");
+        }
+        //direct to the corresponding sort method
+        switch ($request->sort) {
+            case 'top':
+                # return the tag's posts sorted by the most engaging
+                break;
+
+            default:
+                # return the tag's posts sorted by the most recently published
+                $posts = $tag->posts()
+                    ->where('status', 'published')
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate(Config::PAGINATION_LIMIT);
+                return $this->generalResponse(new PostCollection($posts), "OK");
+        }
+    }
 /**
  * @OA\Get(
  * path="/tag/trending",
@@ -227,21 +252,21 @@ class TagController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *       @OA\Property(property="response",type="object",
-     *          @OA\Property(property="pagination",type="object",
-     *              @OA\Property(property="total",type="int",example=120),
-     *              @OA\Property(property="count",type="int",example=10),
-     *              @OA\Property(property="per_page",type="int",example=10),
-     *              @OA\Property(property="current_page",type="int",example=2),
-     *              @OA\Property(property="total_pages",type="int",example=12),
-     *              @OA\Property(property="first_page_url",type="boolean",example=false),
-     *              @OA\Property(property="last_page_url",type="int",example=12),
-     *              @OA\Property(property="next_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=3"),
-     *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=1"),),
+ *              @OA\Property(property="pagination",type="object",
+ *                  @OA\Property(property="total",type="int",example=120),
+ *                  @OA\Property(property="count",type="int",example=10),
+ *                  @OA\Property(property="per_page",type="int",example=10),
+ *                  @OA\Property(property="current_page",type="int",example=2),
+ *                  @OA\Property(property="total_pages",type="int",example=12),
+ *                  @OA\Property(property="first_page_url",type="boolean",example=false),
+ *                  @OA\Property(property="last_page_url",type="int",example=12),
+ *                  @OA\Property(property="next_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=3"),
+ *                  @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=1"),),
  *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),
- *                  @OA\Property(property="posts_count",type="int",example=12)))))),
+ *                  @OA\Property(property="posts_count",type="int",example=12),),),),),),
  *
  *  @OA\Response(
  *    response=404,
