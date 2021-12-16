@@ -51,7 +51,7 @@ class Post extends Model
      *
      * @return \Blog[]
      */
-    public function getLikerBlogs()
+    public function postLikers()
     {
         return $this->belongsToMany(Blog::class, 'likes', 'post_id', 'blog_id');
     }

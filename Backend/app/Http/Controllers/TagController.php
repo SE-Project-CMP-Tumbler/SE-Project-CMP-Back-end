@@ -228,6 +228,11 @@ class TagController extends Controller
         switch ($request->sort) {
             case 'top':
                 # return the tag's posts sorted by the most engaging
+                $posts = $tag->posts()
+                        ->withCount(['postLikers'])
+                        ->orderBy('post_likers_count', 'desc')
+                        ->paginate(Config::PAGINATION_LIMIT);
+                return $this->generalResponse(new PostCollection($posts), "OK");
                 break;
 
             default:
