@@ -86,7 +86,7 @@ class BlogSettingController extends Controller
  */
     public function show(Request $request, $blogId)
     {
-        if (preg_match('([0-9]+$)', $blogId) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blogService = new BlogService();
@@ -185,7 +185,7 @@ class BlogSettingController extends Controller
  */
     public function update(BlogSettingRequest $request, $blogId)
     {
-        if (preg_match('([0-9]+$)', $blogId) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blogService = new BlogService();
