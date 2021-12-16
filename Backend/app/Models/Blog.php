@@ -49,7 +49,7 @@ class Blog extends Model
         return $this->belongsToMany(Post::class, 'likes', 'blog_id', 'post_id');
     }
     /**
-     * This is follow relation between post and blog
+     * This is follow relation between blog and blog
      * @return Blog
      */
     public function followers()
