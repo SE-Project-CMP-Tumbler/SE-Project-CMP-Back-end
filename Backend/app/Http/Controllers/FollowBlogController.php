@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\User;
 use App\Models\FollowBlog;
 use App\Http\Misc\Helpers\Config;
 use App\Services\BlogService;
@@ -11,20 +12,21 @@ use App\Http\Resources\FollowBlogCollection;
 use App\Http\Resources\FollowingBlogCollection;
 use App\Http\Resources\CheckFollowBlogResource;
 use Illuminate\Http\Request;
+use App\Http\Requests\BlogFollowRequest;
 
 class FollowBlogController extends Controller
 {
  /**
- * @OA\Post(
+ * @OA\GET(
  * path="/search_follow_blog/{blog_username}",
  * summary="follow blog",
- * description=" Primary blog follow another blog",
+ * description=" Primary blog search about blog is in followers or not",
  * operationId="followblogby username",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
  *  @OA\Parameter(
  *          name="blog username",
- *          description="blog username which my primary blog will follow ",
+ *          description=" ",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -33,7 +35,14 @@ class FollowBlogController extends Controller
  *    response=200,
  *    description="Successful  response",
  *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"X follows you!"}),
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=422,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"X does not follow you"})
  *        )
  *     ),
  *  @OA\Response(
@@ -65,12 +74,101 @@ class FollowBlogController extends Controller
   * @param  $blogUsername
   * @return \json
  */
-    public function followBlog(Request $request, $blogUsername)
+    public function searchFollowBlog(Request $request, $blogUsername)
     {
         $blogService = new BlogService();
         $blog = $blogService->findBlogByUsername($blogUsername);
         if ($blog == null) {
             return $this->generalResponse("", "This blog username is not found", "404");
+        }
+        $primaryBlog =  $blogService->getPrimaryBlog($request->user());
+        if ($primaryBlog->id == $blog->id) {
+            return $this->generalResponse("", "You can't follow your self", "422");
+        }
+        $check = $primaryBlog->followers()->where('username', $blogUsername)->first();
+        if ($check == null) {
+            return $this->generalResponse("", $blogUsername . " does not follow you.", "422");
+        }
+        return $this->generalResponse("", $blogUsername . " follows you!");
+    }
+    /**
+ * @OA\POST(
+ * path="follow_blog_search",
+ * summary="follow blog",
+ * description=" Primary blog search about blog  and follow it",
+ * operationId="followblogby username search",
+ * tags={"Follow Blogs"},
+ * security={ {"bearer": {} }},
+ *  @OA\Parameter(
+ *          name="blog username",
+ *          description=" ",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="string")),
+ *   @OA\RequestBody(
+ *    required=true,
+ *    description=  " The user can send blog username or  User email to follow another blog
+ *    blog_value : blog_username or blog_email",
+ *    @OA\JsonContent(
+ *      required={"blog_value"},
+ *      @OA\Property(property="blog_value", type="string", example="CairoBlogs"),
+ *                )
+ *               ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful  response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"X follows you!"}),
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=422,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"The input is required"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found blog"})
+ *        )
+ *     ),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
+ * )
+ */
+  /**
+  *follow  specific blog by search about username or email
+  * @param \BlogFollowRequest $request
+  * @return \json
+ */
+    public function followBlog(BlogFollowRequest $request)
+    {
+        $blogService = new BlogService();
+        $user = User::where('email', $request->blog_value)->first();
+
+        if ($user == null) {
+            $blog = Blog::where('username', $request->blog_value)->first();
+            if ($blog == null) {
+                return $this->generalResponse("", "The blog is not found", "404");
+            }
+        } else {
+            $blog = $blogService->getPrimaryBlog($user);
         }
         $primaryBlog =  $blogService->getPrimaryBlog($request->user());
         if ($primaryBlog->id == $blog->id) {

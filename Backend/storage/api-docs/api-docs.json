@@ -3528,18 +3528,18 @@
             }
         },
         "/search_follow_blog/{blog_username}": {
-            "post": {
+            "get": {
                 "tags": [
                     "Follow Blogs"
                 ],
                 "summary": "follow blog",
-                "description": " Primary blog follow another blog",
+                "description": " Primary blog search about blog is in followers or not",
                 "operationId": "followblogby username",
                 "parameters": [
                     {
                         "name": "blog username",
                         "in": "path",
-                        "description": "blog username which my primary blog will follow ",
+                        "description": " ",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -3557,7 +3557,169 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "200",
-                                                "msg": "ok"
+                                                "msg": "X follows you!"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "X does not follow you"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "not found blog"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "follow_blog_search": {
+            "post": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "follow blog",
+                "description": " Primary blog search about blog  and follow it",
+                "operationId": "followblogby username search",
+                "parameters": [
+                    {
+                        "name": "blog username",
+                        "in": "path",
+                        "description": " ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": " The user can send blog username or email to follow another blog\n *    blog_value : blog_username or blog_email",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "blog_value"
+                                ],
+                                "properties": {
+                                    "blog_value": {
+                                        "type": "string",
+                                        "example": "CairoBlogs"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful  response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "X follows you!"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "The input is required"
                                             }
                                         }
                                     },

@@ -45,8 +45,8 @@ Route::get('total_followers/{blog_id}', [FollowBlogController::class,'getTotalFo
 Route::get('total_followings/{blog_id}', [FollowBlogController::class,'getTotalFollowings'])->middleware('auth:api');
 Route::get('followings', [FollowBlogController::class,'getFollowings'])->middleware('auth:api');
 Route::get('followers', [FollowBlogController::class,'getFollowers'])->middleware('auth:api');
-Route::post('search_follow_blog/{blog_username}', [FollowBlogController::class,'followBlog'])->middleware('auth:api');
-
+Route::get('search_follow_blog/{blog_username}', [FollowBlogController::class,'searchFollowBlog'])->middleware('auth:api');
+Route::post('follow_blog_search', [FollowBlogController::class,'followBlog'])->middleware('auth:api');
 
 /*
 | Post Routes
