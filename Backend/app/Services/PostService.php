@@ -12,7 +12,7 @@ class PostService
     /**
      * Extracting the tags from the post body.
      *
-     * @param string $post_body the content of the post.
+     * @param string $postBody the content of the post.
      *
      * @return string[] Array of the tags extracted.
      */
@@ -36,6 +36,31 @@ class PostService
             }
         }
         return $tags;
+    }
+
+    /**
+     * Extract the blogs mentioned inside a posts' content.
+     *
+     * @var string $postBody The content of the post.
+     *
+     * @return string[] Array of the mentioned blogs.
+     */
+    public function extractMentionedBlogs($postBody)
+    {
+        $mentionedBlogs = array();
+        for ($bodyIndex = 0; $bodyIndex < strlen($postBody); $bodyIndex++) {
+            if ($postBody[$bodyIndex] == '@') {
+                $blogUsernameTrackingIndex = $bodyIndex + 1;
+                $mentionedBlog = "";
+                $possibleEndings = [' ', '&', '<'];
+                while ($blogUsernameTrackingIndex < strlen($postBody) && !in_array($postBody[$blogUsernameTrackingIndex], $possibleEndings)) {
+                    $mentionedBlog .= $postBody[$blogUsernameTrackingIndex];
+                    $blogUsernameTrackingIndex += 1;
+                }
+                array_push($mentionedBlogs, $mentionedBlog);
+            }
+        }
+        return $mentionedBlogs;
     }
 
     /**
