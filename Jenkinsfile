@@ -12,7 +12,7 @@ pipeline {
     stage('Build The Docker Image') {
       steps {
         sh '''docker build . \\
--f backend.dockerfile \\
+-f Backend/backend.dockerfile \\
 -t tumbler-backend-api;'''
       }
     }
