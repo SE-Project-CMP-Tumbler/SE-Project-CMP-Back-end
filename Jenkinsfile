@@ -47,14 +47,13 @@ docker build . \\
     stage('Stop The Docker Container') {
       steps {
         sh 'docker container stop tumbler-backend-api'
+        sh 'docker image remove tumbler-backend-api;'
       }
     }
 
     stage('List Docker Images & Containers') {
       steps {
-        sh 'docker image ls;'
         sh 'docker image ls -a;'
-        sh 'docker container ls;'
         sh 'docker container ls -a;'
       }
     }
@@ -70,6 +69,8 @@ docker build . \\
         sh '''hostname;
 whoami;
 uptime;'''
+        sh '''cd Backend;
+#docker-compose up;'''
       }
     }
 
