@@ -31,13 +31,13 @@ docker build . \\
       parallel {
         stage('Lint') {
           steps {
-            sh 'docker exec tumbler-backend-api bash -c ./lint.sh;'
+            sh 'docker exec tumbler-backend-api bash -c \' bash lint.sh\';'
           }
         }
 
         stage('Test') {
           steps {
-            sh 'docker exec tumbler-backend-api bash -c ./test.sh;'
+            sh 'docker exec tumbler-backend-api bash -c \' bash test.sh\';'
           }
         }
 
