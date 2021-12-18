@@ -10515,7 +10515,7 @@
                     {
                         "name": "sort",
                         "in": "query",
-                        "description": "The sort method to retrieve the posts",
+                        "description": "The sort method to retrieve the posts by. Allowed values for sort_type are:\r\n *          recent: the posts are retrieved sorted by the most recently published,\r\n *          top: the posts are retrieved sorted descendingly by the number of engagments and notes they got.\r\n * By default if no sort_type is specified, posts will be retrieved by the most recent order.\r\n * If sort_type took any value other than recent or top, be default the posts will be retrieved by the most recent order",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -10538,9 +10538,42 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "tag_description": {
-                                                    "type": "string",
-                                                    "example": "books"
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/posts/books?sort=top"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 },
                                                 "posts": {
                                                     "type": "array",
@@ -10550,110 +10583,42 @@
                                                                 "type": "string",
                                                                 "example": "published"
                                                             },
-                                                            "title": {
+                                                            "post_body": {
                                                                 "type": "string",
-                                                                "example": "New post"
+                                                                "example": "<p>This is so frustrating. #books #reading</p>"
                                                             },
-                                                            "description": {
-                                                                "type": "string",
-                                                                "example": "new post"
-                                                            },
-                                                            "chat_title": {
-                                                                "type": "string",
-                                                                "example": "New post"
-                                                            },
-                                                            "chat_body": {
-                                                                "type": "string",
-                                                                "example": "My post"
-                                                            },
-                                                            "quote_text": {
-                                                                "type": "string",
-                                                                "example": "New post"
-                                                            },
-                                                            "quote_resouce": {
-                                                                "type": "string",
-                                                                "example": "My post"
-                                                            },
-                                                            "keep_reading": {
-                                                                "type": "integer",
-                                                                "example": 1
-                                                            },
-                                                            "images ": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            },
-                                                            "video ": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            },
-                                                            "audio ": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            },
-                                                            "post_type ": {
+                                                            "post_type": {
                                                                 "type": "string",
                                                                 "example": "text"
                                                             },
-                                                            "url_videos ": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "example": "facebook.com"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "example": "google.com"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "example": "yahoo.com"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "post_id": {
+                                                                "type": "integer",
+                                                                "example": 5
                                                             },
-                                                            "post_tags": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "example": "books"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "example": "reading"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "example": "stay positive"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "square"
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": "Untitled"
+                                                            },
+                                                            "post_time": {
+                                                                "type": "date_time",
+                                                                "example": "02-02-2021"
                                                             }
                                                         },
                                                         "type": "object"
@@ -10720,7 +10685,7 @@
                     "Tags"
                 ],
                 "summary": "Get all tags which are trending",
-                "description": "Returns list of  tags  which are trending",
+                "description": "Returns list of tags which are trending. The trending metric used is the count of posts this tag was mentioned inside.",
                 "operationId": "gettrendingTags",
                 "responses": {
                     "200": {
@@ -10738,6 +10703,47 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 120
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "last_page_url": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=3"
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "tags": {
                                                     "type": "array",
                                                     "items": {
@@ -10750,6 +10756,10 @@
                                                                 "type": "string",
                                                                 "format": "byte",
                                                                 "example": ""
+                                                            },
+                                                            "posts_count": {
+                                                                "type": "int",
+                                                                "example": 12
                                                             }
                                                         },
                                                         "type": "object"

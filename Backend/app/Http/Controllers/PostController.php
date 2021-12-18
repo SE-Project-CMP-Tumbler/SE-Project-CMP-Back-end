@@ -10,6 +10,7 @@ use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Blog;
 use App\Models\Post;
+use App\Models\PostMentionBlog;
 use App\Models\PostTag;
 use App\Models\Tag;
 use App\Services\PostService;
@@ -147,7 +148,7 @@ class PostController extends Controller
         //Extract tags of the unupdated post content.
         $postService = new PostService();
         $oldTags = $postService->extractTags($post->body);
-
+        
         $post->update([
             'status' => $request->post_status ?? $post->status,
             'published_at' => $request->post_time ?? $post->published_at,
@@ -158,7 +159,22 @@ class PostController extends Controller
 
         //Extract tags of the new updated post content.
         $newTags = $postService->extractTags($post->body);
+        //Extract the mentioned blogs from the new updated post content.
+        $newMentionedBlogUsernames = $postService->extractMentionedBlogs($post->body);
 
+        //Iterate through the mentioned blogs array
+        foreach ($newMentionedBlogUsernames as $mentionedBlogUsername) {
+            $mentionedBlog = Blog::where('username', $mentionedBlogUsername)->first();
+
+            //check if that mention refers to an existing blog
+            if (!empty($mentionedBlog)) {
+                //create a record recording the relation between this post and the blog being mentioned
+                PostMentionBlog::firstOrCreate([
+                    'post_id' => $post->id,
+                    'blog_id' => $mentionedBlog->id
+                ]);
+            }
+        }
         //Modify the relation records between the post and updated tags
         foreach ($newTags as $tag) {
             Tag::firstOrCreate([
@@ -172,6 +188,12 @@ class PostController extends Controller
         //Remove the relation records between tags non existing in the new content and the updated post
         $removedTags = $postService->getRemovedTags($oldTags, $newTags);
         $post->tags()->detach($removedTags);
+        //Detaching the blogs' who were mentioned in the old post content, but not mentioned in the new post content.
+        foreach ($post->mentionedBlogs as $mentionedBlog) {
+            if (!in_array($mentionedBlog->username, $newMentionedBlogUsernames)) {
+                $post->mentionedBlogs()->detach($mentionedBlog->id);
+            }
+        }
         return $this->generalResponse(new PostResource($post), "OK");
     }
 
@@ -241,6 +263,9 @@ class PostController extends Controller
 
         //Deleting the have tags relation records upon deleting the post
         $post->tags()->detach();
+        //Deleting the post mention blog relation records upon deleting the post
+        $post->mentionedBlogs()->detach();
+
         $post->delete();
         return $this->generalResponse("", "ok");
     }
@@ -332,6 +357,7 @@ class PostController extends Controller
         if ($post == null) {
             return $this->generalResponse("", "This post was not found", "404");
         }
+
         return $this->generalResponse(new PostResource($post), "ok");
     }
 
@@ -433,8 +459,24 @@ class PostController extends Controller
         ]);
 
 
+
         $postService = new PostService();
         $tags = $postService->extractTags($post->body);
+        $mentionedBlogUsernames = $postService->extractMentionedBlogs($post->body);
+
+        //Iterate through the mentioned blogs array
+        foreach ($mentionedBlogUsernames as $mentionedBlogUsername) {
+            $mentionedBlog = Blog::where('username', $mentionedBlogUsername)->first();
+
+            //check if that mention refers to an existing blog
+            if (!empty($mentionedBlog)) {
+                //create a record recording the relation between this post and the blog being mentioned
+                PostMentionBlog::firstOrCreate([
+                    'post_id' => $post->id,
+                    'blog_id' => $mentionedBlog->id
+                ]);
+            }
+        }
 
         //Iterate through the tags array
         foreach ($tags as $tag) {
