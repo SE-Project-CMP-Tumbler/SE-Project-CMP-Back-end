@@ -44,13 +44,6 @@ docker build . \\
       }
     }
 
-    stage('Stop The Docker Container') {
-      steps {
-        sh 'docker container stop tumbler-backend-api'
-        sh 'docker image remove tumbler-backend-api;'
-      }
-    }
-
     stage('List Docker Images & Containers') {
       steps {
         sh 'docker image ls -a;'
@@ -74,5 +67,13 @@ uptime;'''
       }
     }
 
+  }
+
+  post {
+    always {
+      sh 'docker container stop tumbler-backend-api;'
+      sh 'docker image remove tumbler-backend-api;'
+      deleteDir()
+    }
   }
 }
