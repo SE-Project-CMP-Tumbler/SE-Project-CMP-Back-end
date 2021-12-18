@@ -73,7 +73,7 @@ docker build . \\
           discordSend(
             title: JOB_NAME,
             link: env.BUILD_URL,
-            description: '${JOB_NAME} DEV Deployment Status: ${currentBuild.currentResult}',
+            description: "${JOB_NAME} DEV Deployment Status: ${currentBuild.currentResult}",
             result: currentBuild.currentResult,
             thumbnail: 'https://jenkins.tumbler.social/static/85d2ac1f/images/jenkins-header-logo-v2.svg',
             webhookURL: 'https://discord.com/api/webhooks/921772869782994994/mi4skhArIoT6heXWebPiWLn6Xc95rZgUqtW7qriBOYvnl0sTdfn16we7yPY-n-DJYRmH'
@@ -82,7 +82,7 @@ docker build . \\
 
         unsuccessful {
           sh '''cd Backend;
-#some mechanism to roll back to the latest working images, we shall tag them and not to prune them if they were unused'''
+#some mechanism to roll back to the latest working image, we shall tag them and not to prune them if they were unused'''
         }
       }
     }
