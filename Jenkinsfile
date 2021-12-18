@@ -27,7 +27,7 @@ docker build . \\
       }
     }
 
-    stage('Lint') {
+    stage('Lint & Test') {
       parallel {
         stage('Lint') {
           steps {
