@@ -63,10 +63,9 @@ docker build . \\
       steps {
         sh 'whoami;hostname;uptime'
         sh '''cd Backend;
-#docker-compose down;
 #az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.env --dest .env;
-#docker system prune -af;
-#docker-compose up -d;'''
+#docker-compose up -d --build;
+#docker system prune -af;'''
       }
       post {
         always {
@@ -75,14 +74,9 @@ docker build . \\
             link: env.BUILD_URL,
             description: "${JOB_NAME} DEV Deployment Status: ${currentBuild.currentResult}",
             result: currentBuild.currentResult,
-            thumbnail: 'https://jenkins.tumbler.social/static/85d2ac1f/images/jenkins-header-logo-v2.svg',
+            thumbnail: 'https://i.dlpng.com/static/png/6378770_preview.png',
             webhookURL: 'https://discord.com/api/webhooks/921772869782994994/mi4skhArIoT6heXWebPiWLn6Xc95rZgUqtW7qriBOYvnl0sTdfn16we7yPY-n-DJYRmH'
           )
-        }
-
-        unsuccessful {
-          sh '''cd Backend;
-#some mechanism to roll back to the latest working image, we shall tag them and not to prune them if they were unused'''
         }
       }
     }
