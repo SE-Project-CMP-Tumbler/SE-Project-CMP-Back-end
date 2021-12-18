@@ -3,9 +3,7 @@ pipeline {
   stages {
     stage('Debug Info') {
       steps {
-        sh 'whoami'
-        sh 'hostname'
-        sh 'uptime'
+        sh 'whoami;hostname;uptime'
       }
     }
 
@@ -63,26 +61,38 @@ docker build . \\
         branch 'devops'
       }
       steps {
-        sh '''hostname;
-whoami;
-uptime;'''
+        sh 'whoami;hostname;uptime'
         sh '''cd Backend;
 #docker-compose down;
 #az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.env --dest .env;
-#docker system prune -f;
-#docker-compose up -d;
-'''
+#docker system prune -af;
+#docker-compose up -d;'''
+      }
+      post {
+        always {
+          discordSend(
+            title: JOB_NAME,
+            link: env.BUILD_URL,
+            result: currentBuild.currentResult,
+            webhookURL: 'https://discord.com/api/webhooks/921772869782994994/mi4skhArIoT6heXWebPiWLn6Xc95rZgUqtW7qriBOYvnl0sTdfn16we7yPY-n-DJYRmH'
+          )
+        }
+
+        unsuccessful {
+          sh '''cd Backend;
+#some mechanism to roll back to the latest working images, we shall tag them and not to prune them if they were unused'''
+        }
       }
     }
   }
 
   post {
-    failure {
+    unsuccessful {
       sh 'docker container stop tumbler-backend-api && true'
       sh 'docker image remove tumbler-backend-api && true'
     }
 
-    always {
+    cleanup {
       cleanWs()
     }
   }
