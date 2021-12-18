@@ -9,45 +9,47 @@ pipeline {
       }
     }
 
-    stage('Build The Docker Image') {
+    stage('Build Docker Image') {
       steps {
         sh '''cd Backend;
 docker build . \\
 -f backend.dockerfile \\
--t tumbler-backend-api;'''
+-t tumbler-backend-api'''
       }
     }
 
-    stage('Run The Docker Container') {
+    stage('Run Container') {
       steps {
         sh '''docker run \\
 --name tumbler-backend-api \\
 --entrypoint /bin/bash \\
--dt --rm tumbler-backend-api;'''
+-dt --rm tumbler-backend-api'''
       }
     }
 
-    stage('Lint & Test') {
-      parallel {
-        stage('Lint') {
-          steps {
-            sh 'docker exec tumbler-backend-api bash -c \' bash lint.sh\';'
-          }
-        }
+    stage('Lint') {
+      steps {
+        sh 'docker exec tumbler-backend-api bash -c \' bash lint.sh\''
+      }
+    }
 
-        stage('Test') {
-          steps {
-            sh 'docker exec tumbler-backend-api bash -c \' bash test.sh\';'
-          }
-        }
+    stage('Test') {
+      steps {
+        sh 'docker exec tumbler-backend-api bash -c \' bash test.sh\''
+      }
+    }
 
+    stage('Stop Container & Remove Image') {
+      steps {
+        sh 'docker container stop tumbler-backend-api'
+        sh 'docker image remove tumbler-backend-api'
       }
     }
 
     stage('List Docker Images & Containers') {
       steps {
-        sh 'docker image ls -a;'
-        sh 'docker container ls -a;'
+        sh 'docker image ls -a'
+        sh 'docker container ls -a'
       }
     }
 
@@ -56,24 +58,32 @@ docker build . \\
         node {
           label 'dev-server'
         }
-
+      }
+      when {
+        branch 'backendteam'
       }
       steps {
         sh '''hostname;
 whoami;
 uptime;'''
         sh '''cd Backend;
-#docker-compose up;'''
+#az storage file download -s SHARE_NAME -p FILE_PATH_ON_FILE_SHARE --dest FILE_PATH_ON_LOCAL_MACHINE;
+#docker-compose down;
+#docker system prune -f;
+#docker-compose up;
+'''
       }
     }
-
   }
 
   post {
+    failure {
+      sh 'docker container stop tumbler-backend-api && true'
+      sh 'docker image remove tumbler-backend-api && true'
+    }
+
     always {
-      sh 'docker container stop tumbler-backend-api;'
-      sh 'docker image remove tumbler-backend-api;'
-      deleteDir()
+      cleanWs()
     }
   }
 }
