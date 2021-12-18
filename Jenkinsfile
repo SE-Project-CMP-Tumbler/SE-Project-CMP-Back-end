@@ -21,7 +21,7 @@ docker build . \\
     stage('Run The Docker Container') {
       steps {
         sh '''docker run \\
---name backend-api \\
+--name tumbler-backend-api \\
 --entrypoint /bin/bash \\
 -dt --rm tumbler-backend-api;'''
       }
@@ -31,13 +31,13 @@ docker build . \\
       parallel {
         stage('Lint') {
           steps {
-            sh 'docker exec backend-api bash -c ./lint.sh;'
+            sh 'docker exec tumbler-backend-api bash -c ./lint.sh;'
           }
         }
 
         stage('Test') {
           steps {
-            sh 'docker exec backend-api bash -c ./test.sh;'
+            sh 'docker exec tumbler-backend-api bash -c ./test.sh;'
           }
         }
 
