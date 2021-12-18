@@ -29,13 +29,13 @@ docker build . \\
 
     stage('Lint') {
       steps {
-        sh 'docker exec tumbler-backend-api bash -c \' bash lint.sh\''
+        sh 'docker exec tumbler-backend-api bash -c \'bash lint.sh\''
       }
     }
 
     stage('Test') {
       steps {
-        sh 'docker exec tumbler-backend-api bash -c \' bash test.sh\''
+        sh 'docker exec tumbler-backend-api bash -c \'bash test.sh\''
       }
     }
 
@@ -60,17 +60,17 @@ docker build . \\
         }
       }
       when {
-        branch 'backendteam'
+        branch 'devops'
       }
       steps {
         sh '''hostname;
 whoami;
 uptime;'''
         sh '''cd Backend;
-#az storage file download -s SHARE_NAME -p FILE_PATH_ON_FILE_SHARE --dest FILE_PATH_ON_LOCAL_MACHINE;
 #docker-compose down;
+#az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.env --dest .env;
 #docker system prune -f;
-#docker-compose up;
+#docker-compose up -d;
 '''
       }
     }
