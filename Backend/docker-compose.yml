@@ -7,7 +7,7 @@ services:
     container_name: pgsql
     restart: always
     ports:
-      - "54320:5432"
+      - "54320:5432" # THIS SHOULD CHANGE
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
@@ -21,7 +21,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8888:8080
+      - 8888:8080 # THIS SHOULD BE 2001
 
   # FTP Apache Service -- to simulate uploading files to external place
   apache-ftpd:
@@ -31,10 +31,10 @@ services:
     container_name: apache-ftpd
     restart: unless-stopped
     ports:
-      - "8080:80"
-      - "21:21"
-      - "20:20"
-      - "30000-30009:30000-30009"
+      - "8080:80" # THIS SHOULD BE 2002
+      - "21:21" # ??
+      - "20:20" # ??
+      - "30000-30009:30000-30009" # ??
     environment:
       PUBLICHOST: "localhost"
       FTP_USER_NAME: ${FTP_USER_NAME}
@@ -55,7 +55,7 @@ services:
       - db
       - apache-ftpd
     ports:
-      - 8181:8181
+      - 8181:8181 # THIS SHOULD BE 2000
 
 volumes:
   postgres-data:
