@@ -84,8 +84,8 @@ docker system prune -af;'''
 
   post {
     unsuccessful {
-      sh 'docker container stop tumbler-backend-api && true'
-      sh 'docker image remove tumbler-backend-api && true'
+      sh 'docker container stop tumbler-backend-api || true'
+      sh 'docker image remove tumbler-backend-api || true'
     }
 
     cleanup {

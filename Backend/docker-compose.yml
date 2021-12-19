@@ -49,4 +49,4 @@ services:
       - db
       - apache-ftpd
     ports:
-      - "${API_PORT}:8181"
+      - "${APP_PORT}:8181"
