@@ -58,7 +58,7 @@ docker build . \\
         }
       }
       when {
-        branch 'devops'
+        branch 'backendteam'
       }
       steps {
         sh 'whoami;hostname;uptime'
