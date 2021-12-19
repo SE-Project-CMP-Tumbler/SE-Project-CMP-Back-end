@@ -65,7 +65,7 @@ docker build . \\
         sh '''cd Backend;
 az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.dev.env --dest .env;
 docker-compose up -d --build;
-docker system prune -af;'''
+docker system prune -f;'''
       }
       post {
         always {
