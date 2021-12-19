@@ -63,9 +63,9 @@ docker build . \\
       steps {
         sh 'whoami;hostname;uptime'
         sh '''cd Backend;
-#az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.env --dest .env;
-#docker-compose up -d --build;
-#docker system prune -af;'''
+az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.dev.env --dest .env;
+docker-compose up -d --build;
+docker system prune -af;'''
       }
       post {
         always {
