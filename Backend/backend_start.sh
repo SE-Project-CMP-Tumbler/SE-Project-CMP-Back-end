@@ -4,9 +4,7 @@ composer update
 
 php artisan storage:link
 
-# php artisan migrate:fresh
-
-php artisan db:seed
+php artisan migrate --seed
 
 php artisan l5-swagger:generate
 
