@@ -4,9 +4,11 @@ composer update
 
 php artisan storage:link
 
-php artisan migrate:fresh
+# php artisan migrate:fresh
 
 php artisan db:seed
+
+php artisan l5-swagger:generate
 
 php artisan passport:install
 
