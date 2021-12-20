@@ -41,6 +41,7 @@ docker build . \\
       steps {
         sh 'docker container stop tumbler-backend-api'
         sh 'docker image remove tumbler-backend-api'
+        sh 'docker system prune -f'
       }
     }
 
@@ -86,6 +87,7 @@ docker system prune -f;'''
     unsuccessful {
       sh 'docker container stop tumbler-backend-api || true'
       sh 'docker image remove tumbler-backend-api || true'
+      sh 'docker system prune -f'
     }
 
     cleanup {
