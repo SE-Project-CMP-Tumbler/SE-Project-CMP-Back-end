@@ -19,8 +19,10 @@ class UserResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'blog_id' => $blog->id,
             'blog_username' => $blog->username,
             'email' => $this->email,
+            'is_verified' => ($this->email_verified_at != null),
             'blog_avatar' => $blog->avatar,
             'access_token' =>  $this->token(),
         ];
