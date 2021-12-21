@@ -10345,8 +10345,48 @@
                                             }
                                         },
                                         "response": {
-                                            "properties": {
+                                            "type": "object",
+                                            "example": {
                                                 "posts": {
+                                                    "property": "pagination",
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "0": {
+                                                    "property": "posts",
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
@@ -10354,132 +10394,124 @@
                                                                 "type": "integer",
                                                                 "example": 5
                                                             },
-                                                            "blog_id": {
-                                                                "type": "integer",
-                                                                "example": 5
-                                                            },
-                                                            "post_tags": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "example": "books"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "example": "reading"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "example": "stay positive"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            },
                                                             "post_status": {
                                                                 "type": "string",
                                                                 "example": "published"
                                                             },
-                                                            "title": {
+                                                            "post_type": {
                                                                 "type": "string",
-                                                                "example": "New post"
+                                                                "example": "general"
                                                             },
-                                                            "description": {
+                                                            "post_body": {
                                                                 "type": "string",
-                                                                "example": "new post"
+                                                                "example": "<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
                                                             },
-                                                            "chat_title": {
-                                                                "type": "string",
-                                                                "example": "New post"
-                                                            },
-                                                            "chat_body": {
-                                                                "type": "string",
-                                                                "example": "My post"
-                                                            },
-                                                            "quote_text": {
-                                                                "type": "string",
-                                                                "example": "New post"
-                                                            },
-                                                            "quote_resouce": {
-                                                                "type": "string",
-                                                                "example": "My post"
-                                                            },
-                                                            "keep_reading": {
+                                                            "blog_id": {
                                                                 "type": "integer",
-                                                                "example": 1
+                                                                "example": 5
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": ""
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
-                                                            },
-                                                            "link": {
+                                                                "example": "2012-02-30"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tags": {
+                                                    "property": "pagination",
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 120
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "last_page_url": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=3"
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "1": {
+                                                    "property": "tags",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "tag_description": {
                                                                 "type": "string",
-                                                                "example": "facebook.com"
+                                                                "example": "books"
                                                             },
-                                                            "images ": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/images.png"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/images.png"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/images.png"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            },
-                                                            "video ": {
+                                                            "tag_image": {
                                                                 "type": "string",
                                                                 "format": "byte",
                                                                 "example": ""
-                                                            },
-                                                            "audio ": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            },
-                                                            "post_type ": {
-                                                                "type": "string",
-                                                                "example": "text"
-                                                            },
-                                                            "url_videos ": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "example": "facebook.com"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "example": "google.com"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "example": "yahoo.com"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
                                                             }
                                                         },
                                                         "type": "object"
                                                     }
                                                 },
                                                 "blogs": {
+                                                    "property": "pagination",
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
+                                                "2": {
+                                                    "property": "blogs",
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
@@ -10517,8 +10549,7 @@
                                                         "type": "object"
                                                     }
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -10583,6 +10614,43 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -10591,164 +10659,42 @@
                                                                 "type": "integer",
                                                                 "example": 5
                                                             },
-                                                            "blog_id": {
-                                                                "type": "integer",
-                                                                "example": 5
-                                                            },
-                                                            "post_tags": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "example": "books"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "example": "reading"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "example": "stay positive"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            },
                                                             "post_status": {
                                                                 "type": "string",
                                                                 "example": "published"
                                                             },
-                                                            "title": {
+                                                            "post_type": {
                                                                 "type": "string",
-                                                                "example": "New post"
+                                                                "example": "general"
                                                             },
-                                                            "description": {
+                                                            "post_body": {
                                                                 "type": "string",
-                                                                "example": "new post"
+                                                                "example": "<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
                                                             },
-                                                            "chat_title": {
-                                                                "type": "string",
-                                                                "example": "New post"
-                                                            },
-                                                            "chat_body": {
-                                                                "type": "string",
-                                                                "example": "My post"
-                                                            },
-                                                            "quote_text": {
-                                                                "type": "string",
-                                                                "example": "New post"
-                                                            },
-                                                            "quote_resouce": {
-                                                                "type": "string",
-                                                                "example": "My post"
-                                                            },
-                                                            "keep_reading": {
+                                                            "blog_id": {
                                                                 "type": "integer",
-                                                                "example": 1
+                                                                "example": 5
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": ""
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
-                                                            },
-                                                            "link": {
-                                                                "type": "string",
-                                                                "example": "facebook.com"
-                                                            },
-                                                            "images ": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/images.png"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/images.png"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "format": "byte",
-                                                                            "example": "/images.png"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            },
-                                                            "video ": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            },
-                                                            "audio ": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            },
-                                                            "post_type ": {
-                                                                "type": "string",
-                                                                "example": "text"
-                                                            },
-                                                            "url_videos ": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "0": {
-                                                                            "type": "string",
-                                                                            "example": "facebook.com"
-                                                                        },
-                                                                        "1": {
-                                                                            "type": "string",
-                                                                            "example": "google.com"
-                                                                        },
-                                                                        "2": {
-                                                                            "type": "string",
-                                                                            "example": "yahoo.com"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    }
-                                                },
-                                                "blogs": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 2026
-                                                            },
-                                                            "username": {
-                                                                "type": "string",
-                                                                "example": "newinvestigations"
-                                                            },
-                                                            "avatar": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            },
-                                                            "avatar_shape": {
-                                                                "type": "string",
-                                                                "example": "square"
-                                                            },
-                                                            "header_image": {
-                                                                "type": "string",
-                                                                "format": "byte",
-                                                                "example": ""
-                                                            },
-                                                            "title": {
-                                                                "type": "string",
-                                                                "example": "My 1st Blog"
-                                                            },
-                                                            "description": {
-                                                                "type": "string",
-                                                                "example": "This blog is a sketch of thoughts"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"

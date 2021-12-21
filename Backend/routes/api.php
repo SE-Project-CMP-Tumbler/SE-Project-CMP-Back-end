@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('search/{blog_id}/{word}', [SearchController::class,'searchBlog'])->middleware('auth:api');
+Route::get('search/{word}', [SearchController::class,'search']);
+
 /*
 | Blog Routes
 */

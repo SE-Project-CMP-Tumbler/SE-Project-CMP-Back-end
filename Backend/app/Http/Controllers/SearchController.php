@@ -9,6 +9,7 @@ use App\Http\Misc\Helpers\Config;
 use App\Http\Misc\Helpers\Success;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BlogCollection;
+use App\Http\Resources\TagCollection;
 use App\Http\Resources\PostCollection;
 use App\Http\Requests\BlogRequest;
 use App\Services\BlogService;
@@ -17,8 +18,7 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    //
-    /**
+     /**
  * @OA\Get(
  * path="/search/{word}",
  * summary="Search about word in blogs or in posts",
@@ -38,43 +38,52 @@ class SearchController extends Controller
  *    description="Successful  response",
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
- *      @OA\Property(property="response",type="object",
+ *      @OA\Property(property="response",type="object", example={"posts":
+ * 
+ *        
+ *                  @OA\Property(property="pagination",type="object",
+ *                  @OA\Property(property="total",type="int",example=17),
+ *                  @OA\Property(property="count",type="int",example=7),
+ *                  @OA\Property(property="per_page",type="int",example=10),
+ *                  @OA\Property(property="current_page",type="int",example=2),
+ *                  @OA\Property(property="total_pages",type="int",example=2),
+ *                  @OA\Property(property="first_page_url",type="boolean",example=false),
+ *                  @OA\Property(property="next_page_url",type="string",example=null),
+ *                  @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
  *          @OA\Property(property="posts",type="array",
+ *                  @OA\Items(
+ *                    @OA\Property(property="post_id", type="integer", example=5),
+ *                     @OA\Property(property="post_status", type="string", example="published"),
+ *                     @OA\Property(property="post_type", type="string", example="general"),
+ *                     @OA\Property(property="post_body", type="string", example="<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
+ *                     @OA\Property(property="blog_id", type="integer", example=5),
+ *                     @OA\Property(property="blog_username", type="string", example=""),   
+ *                     @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+ *                     @OA\Property(property="blog_avatar_shape", type="string", example=""),
+ *                     @OA\Property(property="blog_title", type="string", example=""),
+ *                     @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),)
+ *          ,"tags": 
+ *                @OA\Property(property="pagination",type="object",
+ *                  @OA\Property(property="total",type="int",example=120),
+ *                  @OA\Property(property="count",type="int",example=10),
+ *                  @OA\Property(property="per_page",type="int",example=10),
+ *                  @OA\Property(property="current_page",type="int",example=2),
+ *                  @OA\Property(property="total_pages",type="int",example=12),
+ *                  @OA\Property(property="first_page_url",type="boolean",example=false),
+ *                  @OA\Property(property="last_page_url",type="int",example=12),
+ *                  @OA\Property(property="next_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=3"),
+ *                  @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=1"),),
+ *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
- *                  @OA\Property(property="post_id", type="integer", example=5),
- *                  @OA\Property(property="blog_id", type="integer", example=5),
- *                  @OA\Property(property="post_tags", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", example="books"),
- *                          @OA\Property(property="1", type="string", example="reading"),
- *                          @OA\Property(property="2", type="string", example="stay positive"),)),
- *                  @OA\Property(property="post_status", type="string", example="published"),
- *                  @OA\Property(property="title", type="string", example="New post"),
- *                  @OA\Property(property="description", type="string", example="new post"),
- *                  @OA\Property(property="chat_title", type="string", example="New post"),
- *                  @OA\Property(property="chat_body", type="string", example="My post"),
- *                  @OA\Property(property="quote_text", type="string", example="New post"),
- *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
- *                  @OA\Property(property="keep_reading", type="integer", example=1),
- *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
- *                  @OA\Property(property="link",type="string",example="facebook.com"),
- *                  @OA\Property(property="images ", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", format="byte",example="/images.png"),
- *                          @OA\Property(property="1", type="string", format="byte", example="/images.png"),
- *                          @OA\Property(property="2", type="string", format="byte", example="/images.png"),
- *                  )
- *           ),
- *                  @OA\Property(property="video ", type="string", format="byte", example=""),
- *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
- *                  @OA\Property(property="post_type ", type="string", example="text"),
- *                  @OA\Property(property="url_videos ", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", example="facebook.com"),
- *                          @OA\Property(property="1", type="string", example="google.com"),
- *                          @OA\Property(property="2", type="string", example="yahoo.com"),))) ),
- *                 @OA\Property(property="blogs",type="array",
- *                   @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),),)
+ *     ,"blogs":
+ *         @OA\Property(property="pagination",type="object",example={"total": 1,"count": 1,"per_page": 10, "current_page": 1,"total_pages": 1,"first_page_url": true,
+ *             "last_page_url": 1,
+ *             "next_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+ *             "prev_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"}),
+ *           @OA\Property(property="blogs",type="array",
+ *             @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=2026),
  *                    @OA\Property(property="username", type="string", example="newinvestigations"),
  *                    @OA\Property(property="avatar", type="string", format="byte", example=""),
@@ -82,9 +91,12 @@ class SearchController extends Controller
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))
+ * 
+ *   }
  *        ),
  *     ),
  * ),
+ * 
  *  @OA\Response(
  *    response=404,
  *    description="Not found",
@@ -95,7 +107,19 @@ class SearchController extends Controller
  * )
  *
  */
-   //
+    public function search(Request $request, $word)
+    {
+        $posts = Post::all();
+        $searchService =  new SearchService();
+        $foundPosts = $searchService->search($posts, $word);
+        $tags = $searchService->searchTag($word);
+        $blogs = $searchService->searchBlog($word);
+        return $this->generalResponse([
+            "posts" => new PostCollection($foundPosts),
+            "blogs" => new BlogCollection($blogs),
+            "tags" => new TagCollection($tags)
+        ], "ok");
+    }
     /**
  * @OA\Get(
  * path="/search/{blog_id}/{word}",
@@ -117,49 +141,27 @@ class SearchController extends Controller
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
+ *           @OA\Property(property="pagination",type="object",
+ *                  @OA\Property(property="total",type="int",example=17),
+ *                  @OA\Property(property="count",type="int",example=7),
+ *                  @OA\Property(property="per_page",type="int",example=10),
+ *                  @OA\Property(property="current_page",type="int",example=2),
+ *                  @OA\Property(property="total_pages",type="int",example=2),
+ *                  @OA\Property(property="first_page_url",type="boolean",example=false),
+ *                  @OA\Property(property="next_page_url",type="string",example=null),
+ *                  @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
  *          @OA\Property(property="posts",type="array",
- *              @OA\Items(
- *                  @OA\Property(property="post_id", type="integer", example=5),
- *                  @OA\Property(property="blog_id", type="integer", example=5),
- *                  @OA\Property(property="post_tags", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", example="books"),
- *                          @OA\Property(property="1", type="string", example="reading"),
- *                          @OA\Property(property="2", type="string", example="stay positive"),)),
- *                  @OA\Property(property="post_status", type="string", example="published"),
- *                  @OA\Property(property="title", type="string", example="New post"),
- *                  @OA\Property(property="description", type="string", example="new post"),
- *                  @OA\Property(property="chat_title", type="string", example="New post"),
- *                  @OA\Property(property="chat_body", type="string", example="My post"),
- *                  @OA\Property(property="quote_text", type="string", example="New post"),
- *                  @OA\Property(property="quote_resouce", type="string", example="My post"),
- *                  @OA\Property(property="keep_reading", type="integer", example=1),
- *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
- *                  @OA\Property(property="link",type="string",example="facebook.com"),
- *                  @OA\Property(property="images ", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", format="byte",example="/images.png"),
- *                          @OA\Property(property="1", type="string", format="byte", example="/images.png"),
- *                          @OA\Property(property="2", type="string", format="byte", example="/images.png"),
- *                  )
- *           ),
- *                  @OA\Property(property="video ", type="string", format="byte", example=""),
- *                  @OA\Property(property="audio ", type="string", format="byte", example=""),
- *                  @OA\Property(property="post_type ", type="string", example="text"),
- *                  @OA\Property(property="url_videos ", type="array",
- *                      @OA\Items(
- *                          @OA\Property(property="0", type="string", example="facebook.com"),
- *                          @OA\Property(property="1", type="string", example="google.com"),
- *                          @OA\Property(property="2", type="string", example="yahoo.com"),))) ),
- *                 @OA\Property(property="blogs",type="array",
- *                   @OA\Items(
- *                    @OA\Property(property="id", type="integer", example=2026),
- *                    @OA\Property(property="username", type="string", example="newinvestigations"),
- *                    @OA\Property(property="avatar", type="string", format="byte", example=""),
- *                    @OA\Property(property="avatar_shape", type="string", example="square"),
- *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
- *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))
+ *                  @OA\Items(
+ *                    @OA\Property(property="post_id", type="integer", example=5),
+ *                     @OA\Property(property="post_status", type="string", example="published"),
+ *                     @OA\Property(property="post_type", type="string", example="general"),
+ *                     @OA\Property(property="post_body", type="string", example="<div><h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
+ *                     @OA\Property(property="blog_id", type="integer", example=5),
+ *                     @OA\Property(property="blog_username", type="string", example=""),   
+ *                     @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+ *                     @OA\Property(property="blog_avatar_shape", type="string", example=""),
+ *                     @OA\Property(property="blog_title", type="string", example=""),
+ *                     @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),)
  *        ),
  *     ),
  * ),
@@ -173,20 +175,6 @@ class SearchController extends Controller
  * )
  *
  */
-    public function search(Request $request, $word)
-    {
-        if (preg_match('(^[0-9]+$)', $blogId) == false) {
-            return $this->generalResponse("", "The blog id should be numeric.", "422");
-        }
-        $posts = Post::all();
-        $searchService =  new SearchService();
-        $matchedResult = $searchService->search($posts, $word);
-        $matchedResult = [];
-        if (sizeof($matchedResult) == 0) {
-            return $this->generalResponse("", "Not  Matched Results", "422");
-        }
-        return $this->generalResponse(new PostCollection(Post::whereIn('id', $matchedResult)->paginate(Config::PAGINATION_LIMIT)), "ok");
-    }
 
     public function searchBlog(Request $request, $blogId, $word)
     {
@@ -210,9 +198,6 @@ class SearchController extends Controller
         }
         $searchService =  new SearchService();
         $matchedResult = $searchService->search($posts, $word);
-        if (sizeof($matchedResult) == 0) {
-            return $this->generalResponse("", "Not  Matched Results", "422");
-        }
-        return $this->generalResponse(new PostCollection(Post::whereIn('id', $matchedResult)->paginate(Config::PAGINATION_LIMIT)), "ok");
+        return $this->generalResponse(new PostCollection($matchedResult), "ok");
     }
 }

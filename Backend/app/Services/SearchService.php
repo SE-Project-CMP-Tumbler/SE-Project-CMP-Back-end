@@ -4,9 +4,12 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\Blog;
+use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\FollowBlog;
+use App\Http\Misc\Helpers\Config;
+use App\Http\Misc\Helpers\Success;
 use Illuminate\Support\Facades\DB;
 use App\Http\Misc\Helpers\Errors;
 use App\Models\Block;
@@ -28,18 +31,19 @@ class SearchService
                 array_push($matchedResult, $post->id);
             }
         }
-        return $matchedResult;
+        $posts = Post::whereIn('id', $matchedResult)->paginate(Config::PAGINATION_LIMIT);
+        return $posts;
     }
-    public function searchTag($posts, $word)
+    public function searchTag($word)
     {
         $word = strtolower($word);
-        $result = Tag::where('description', 'like', '%' . $word . '%');
+        $result = Tag::where('description', 'like', '%' . $word . '%')->paginate(Config::PAGINATION_LIMIT);
         return $result;
     }
-    public function searchBlogs($posts, $word)
+    public function searchBlog($word)
     {
         $word = strtolower($word);
-        $result = Blog::where('username', 'like', '%' . $word . '%');
+        $result = Blog::where('username', 'like', '%' . $word . '%')->paginate(Config::PAGINATION_LIMIT);
         return $result;
     }
 }
