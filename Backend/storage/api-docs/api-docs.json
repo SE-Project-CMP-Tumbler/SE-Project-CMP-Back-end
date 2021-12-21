@@ -1512,7 +1512,7 @@
                     {
                         "name": "blocked_id",
                         "in": "path",
-                        "description": "The id of the blog on which the block may be done.",
+                        "description": "The id of the blog on which the block may have been done.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1780,7 +1780,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "One of the blog ids was not found"
+                                                "msg": "One or Both blog ids were not found"
                                             }
                                         }
                                     },
@@ -1894,7 +1894,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "Not found"
+                                                "msg": "The blog was not found"
                                             }
                                         }
                                     },

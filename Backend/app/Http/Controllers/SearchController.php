@@ -12,6 +12,7 @@ use App\Http\Resources\BlogCollection;
 use App\Http\Resources\PostCollection;
 use App\Http\Requests\BlogRequest;
 use App\Services\BlogService;
+use App\Services\SearchService;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -172,41 +173,15 @@ class SearchController extends Controller
  * )
  *
  */
-    public function search(Request $request, $blogId, $word)
+    public function search(Request $request, $word)
     {
-        $word = strtolower($word);
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $blogService = new BlogService();
-        if ($request->user() != null) {
-            $user = $request->user();
-        }
-        $postStatus = ['published','private'];
-        $blog = $blogService->findBlog($blogId);
-        if ($blog == null) {
-            return $this->generalResponse("", "Not Found blog", "404");
-        }
-        if ($user == null || $user->id != $blog->user->id) {
-            $posts = $blog->posts->where('status', 'published');
-        } elseif ($user->id == $blog->user->id) {
-            $posts = $blog->posts->where('status', $postStatus);
-            return $posts;
-        }
-
-        if ($posts == null) {
-            return $this->generalResponse("", "Not  Matched Results", "422");
-        }
+        $posts = Post::all();
+        $searchService =  new SearchService();
+        $matchedResult = $searchService->search($posts, $word);
         $matchedResult = [];
-        foreach ($posts as $post) {
-            $tags =  $post->tags;
-            if ($tags != null) {
-                $result = $tags->where('description', $word);
-                if (sizeof($result) > 0) {
-                    array_push($matchedResult, $post->id);
-                }
-            }
-        }
         if (sizeof($matchedResult) == 0) {
             return $this->generalResponse("", "Not  Matched Results", "422");
         }
@@ -215,7 +190,6 @@ class SearchController extends Controller
 
     public function searchBlog(Request $request, $blogId, $word)
     {
-        $word = strtolower($word);
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
@@ -234,16 +208,8 @@ class SearchController extends Controller
         if ($posts == null) {
             return $this->generalResponse("", "Not  Matched Results", "422");
         }
-        $matchedResult = [];
-        foreach ($posts as $post) {
-            $tags =  $post->tags;
-            if ($tags != null) {
-                $result = $tags->where('description', $word);
-                if (sizeof($result) > 0) {
-                    array_push($matchedResult, $post->id);
-                }
-            }
-        }
+        $searchService =  new SearchService();
+        $matchedResult = $searchService->search($posts, $word);
         if (sizeof($matchedResult) == 0) {
             return $this->generalResponse("", "Not  Matched Results", "422");
         }
