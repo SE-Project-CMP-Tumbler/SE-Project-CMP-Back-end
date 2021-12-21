@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Blog;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -23,15 +24,15 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the user can view the follow relation between a blog and a tag.
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Tag $tag)
+    public function viewFollowRelation(User $user, Blog $blog)
     {
-        //
+        return $user->id == $blog->user_id;
     }
 
     /**

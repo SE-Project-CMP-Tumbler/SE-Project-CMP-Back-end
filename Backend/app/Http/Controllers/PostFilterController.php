@@ -43,7 +43,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),),),),
      *  @OA\Response(
      *    response=404,
      *    description="Not found",
@@ -104,7 +104,7 @@ class PostFilterController extends Controller
      *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *              @OA\Property(property="blog_title", type="string", example=""),
-     *              @OA\Property(property="post_time",type="date_time",example="02-02-2012"),
+     *              @OA\Property(property="post_time",type="date_time",example="2012-02-30"),
      *          ),
      *
      *       ),
@@ -176,7 +176,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),),),),
      *  @OA\Response(
      *    response=404,
      *    description="Not found",
@@ -236,7 +236,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),
      *
      *      ),),
      *  ),
@@ -304,7 +304,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),),),),
      *  @OA\Response(
      *    response=404,
      *    description="Not found",
@@ -363,7 +363,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),),),),
      *  @OA\Response(
      *    response=404,
      *    description="Not found",
@@ -413,7 +413,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),
      *     ),),
      *  ),
      *  @OA\Response(
@@ -478,7 +478,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),
      *
      *     ),),
      *  ),
@@ -540,7 +540,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),
      *     ),),
      *  ),
      *  @OA\Response(
@@ -605,7 +605,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="question_body", type="string", example="<h1>How are you?</h1>"),
      *                  @OA\Property(property="question_id", type="integer", example=3),
      *                  @OA\Property(property="question_flag", type="boolean", example=false),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),
      *     ),),
      *  ),
      *  @OA\Response(
@@ -665,7 +665,7 @@ class PostFilterController extends Controller
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *                  @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *                  @OA\Property(property="blog_title", type="string", example=""),
-     *                  @OA\Property(property="post_time",type="date_time",example="02-02-2012"),),),),),),
+     *                  @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),),),),),
      *  @OA\Response(
      *    response=401,
      *    description="Unauthorized",

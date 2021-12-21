@@ -9,6 +9,7 @@ use App\Models\FollowBlog;
 use Illuminate\Support\Facades\DB;
 use App\Http\Misc\Helpers\Errors;
 use App\Models\Block;
+use App\Models\BlogFollowTag;
 
 class BlogService
 {
@@ -127,5 +128,20 @@ class BlogService
             ->where('blocked_id', $blockedId)
             ->first();
         return !empty($block);
+    }
+    /**
+     * Check if a blog is following a specific tag.
+     *
+     * @param int $blogId The id of the blog.
+     * @param int $tagDescription The description of the tag to check if following.
+     * @return bool
+     */
+    public function checkIsFollowingTag($tagDescription)
+    {
+        $primaryBlog = $this->getPrimaryBlog(auth()->user());
+        $followRelation = BlogFollowTag::where('blog_id', $primaryBlog->id)
+            ->where('tag_description', $tagDescription)
+            ->first();
+        return !empty($followRelation);
     }
 }
