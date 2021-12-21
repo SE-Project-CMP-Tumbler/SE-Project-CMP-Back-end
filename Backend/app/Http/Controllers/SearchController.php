@@ -21,11 +21,11 @@ class SearchController extends Controller
      /**
  * @OA\Get(
  * path="/search/{word}",
- * summary="Search about word in blogs or in posts",
- * description=" Get all blogs which contains word or posts which contains word",
- * operationId="search",
+ * summary="Search about word in blogs or in posts or tags",
+ * description=" Get all blogs which contains word or posts which contains word or tags or simailr word",
+ * operationId="searchall",
  * tags={"Search"},
- * *  @OA\Parameter(
+ *   @OA\Parameter(
  *          name="word",
  *          description="Word to Search about",
  *          required=true,
@@ -38,9 +38,8 @@ class SearchController extends Controller
  *    description="Successful  response",
  *    @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
- *      @OA\Property(property="response",type="object", example={"posts":
- * 
- *        
+ *      @OA\Property(property="response",type="object",
+ *         @OA\Property(property="posts" ,type= "object",
  *                  @OA\Property(property="pagination",type="object",
  *                  @OA\Property(property="total",type="int",example=17),
  *                  @OA\Property(property="count",type="int",example=7),
@@ -61,8 +60,8 @@ class SearchController extends Controller
  *                     @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
  *                     @OA\Property(property="blog_avatar_shape", type="string", example=""),
  *                     @OA\Property(property="blog_title", type="string", example=""),
- *                     @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),)
- *          ,"tags": 
+ *                     @OA\Property(property="post_time",type="date_time",example="2012-02-30"),),), ),
+ *          @OA\Property(property="tags" ,type="object",
  *                @OA\Property(property="pagination",type="object",
  *                  @OA\Property(property="total",type="int",example=120),
  *                  @OA\Property(property="count",type="int",example=10),
@@ -76,8 +75,8 @@ class SearchController extends Controller
  *          @OA\Property(property="tags",type="array",
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
- *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),),)
- *     ,"blogs":
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),),),),
+ *   @OA\Property(property="blogs", type="object" ,
  *         @OA\Property(property="pagination",type="object",example={"total": 1,"count": 1,"per_page": 10, "current_page": 1,"total_pages": 1,"first_page_url": true,
  *             "last_page_url": 1,
  *             "next_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
@@ -90,9 +89,8 @@ class SearchController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
- *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),))
- * 
- *   }
+ *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)),
+ *      ),
  *        ),
  *     ),
  * ),
@@ -123,17 +121,25 @@ class SearchController extends Controller
     /**
  * @OA\Get(
  * path="/search/{blog_id}/{word}",
- * summary="Search about word in blogs or in posts",
- * description=" Get all blogs which contains word or posts which contains word",
+ * summary="Search about word in blog",
+ * description=" Get  word in posts of blog",
  * operationId="search",
  * tags={"Search"},
- * *  @OA\Parameter(
+ *   security={ {"bearer": {} }},
+ *   @OA\Parameter(
  *          name="word",
  *          description="Word to Search about",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
  *              type="string")),
+ *   @OA\Parameter(
+ *          name="blog_id",
+ *          description="blog id which is searched in",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
  *
  * @OA\Response(
  *    response=200,
