@@ -121,7 +121,9 @@ Route::put('/change_password', [UserController::class,'changePassword'])->name('
 */
 Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store'])->middleware('auth:api');
 Route::get('/tag/data/{tag_description}', [TagController::class,'show']);
+Route::get('/tag/is_following/{tagDescription}', [TagController::class,'checkIsFollowing'])->middleware('auth:api');
 Route::get('/tag/trending', [TagController::class,'index']);
+Route::get('/tag/suggesting', [TagController::class,'getSuggestions'])->middleware('auth:api');
 
 Route::get('/tag/posts/{tag_description}', [TagController::class, 'getTagPosts']);
 

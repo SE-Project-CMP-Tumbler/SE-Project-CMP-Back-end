@@ -314,7 +314,7 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							]
@@ -360,7 +360,7 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							]
@@ -657,6 +657,45 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Suggestings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/tag/suggesting",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"suggesting"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -942,7 +981,7 @@
 							"query": [
 								{
 									"key": "Content_t",
-									"value": null
+									"value": ""
 								}
 							]
 						}
@@ -1313,7 +1352,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"post_body\": \"<p> Horaaaaaaaaaaaaaay! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"published\"\r\n}",
+							"raw": "{\r\n    \"post_body\": \"<p> Horaaaaaaaaaaaaaay! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"published\",\r\n    \"post_time\": \"2021-12-21\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2088,13 +2127,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/follow_tag/really",
+							"raw": "{{host}}/follow_tag/This",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"follow_tag",
-								"really"
+								"This"
 							]
 						}
 					},
@@ -2136,6 +2175,219 @@
 								"rocks"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Following",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/tag/is_following/framework",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"is_following",
+								"framework"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Block Blog",
+			"item": [
+				{
+					"name": "Is Blocking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/block/202/202",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"block",
+								"202",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/block/202/202",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"block",
+								"202",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Blockings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/block/202",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"block",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/block/202/401",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"block",
+								"202",
+								"401"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "www.social-tumblr",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
 					},
 					"response": []
 				}

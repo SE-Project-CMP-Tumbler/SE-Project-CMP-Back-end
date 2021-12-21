@@ -1512,7 +1512,7 @@
                     {
                         "name": "blocked_id",
                         "in": "path",
-                        "description": "The id of the blog on which the block may be done.",
+                        "description": "The id of the blog on which the block may have been done.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1780,7 +1780,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "One of the blog ids was not found"
+                                                "msg": "One or Both blog ids were not found"
                                             }
                                         }
                                     },
@@ -1894,7 +1894,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "Not found"
+                                                "msg": "The blog was not found"
                                             }
                                         }
                                     },
@@ -6265,7 +6265,7 @@
                                                 },
                                                 "post_time": {
                                                     "type": "date_time",
-                                                    "example": "02-02-2012"
+                                                    "example": "2012-02-30"
                                                 },
                                                 "question_body": {
                                                     "type": "string",
@@ -6339,7 +6339,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2011"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -6510,7 +6510,7 @@
                                                 },
                                                 "post_time": {
                                                     "type": "date_time",
-                                                    "example": "02-02-2012"
+                                                    "example": "2012-02-30"
                                                 },
                                                 "question_body": {
                                                     "type": "string",
@@ -6584,7 +6584,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2011"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -6862,7 +6862,7 @@
                                     },
                                     "post_time": {
                                         "type": "date_time",
-                                        "example": "02-02-2012"
+                                        "example": "2012-02-30"
                                     },
                                     "post_type": {
                                         "type": "string",
@@ -6925,7 +6925,7 @@
                                                 },
                                                 "post_time": {
                                                     "type": "date_time",
-                                                    "example": "02-02-2012"
+                                                    "example": "2012-02-30"
                                                 },
                                                 "post_type": {
                                                     "type": "string",
@@ -7079,7 +7079,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -7201,7 +7201,7 @@
                                     },
                                     "post_time": {
                                         "type": "date_time",
-                                        "example": "02-02-2012"
+                                        "example": "2012-02-30"
                                     },
                                     "post_type": {
                                         "type": "string",
@@ -7413,7 +7413,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "question_body": {
                                                                 "type": "string",
@@ -7483,7 +7483,7 @@
                                                                         },
                                                                         "post_time": {
                                                                             "type": "date_time",
-                                                                            "example": "02-02-2011"
+                                                                            "example": "2012-02-30"
                                                                         },
                                                                         "post_type": {
                                                                             "type": "string",
@@ -7706,7 +7706,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -7730,7 +7730,7 @@
                                                                         },
                                                                         "post_time": {
                                                                             "type": "date_time",
-                                                                            "example": "02-02-2011"
+                                                                            "example": "2012-02-30"
                                                                         },
                                                                         "post_type": {
                                                                             "type": "string",
@@ -8517,7 +8517,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -8658,7 +8658,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -8818,7 +8818,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -8959,7 +8959,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9119,7 +9119,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9260,7 +9260,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9364,7 +9364,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9505,7 +9505,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9646,7 +9646,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9799,7 +9799,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9940,7 +9940,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -10548,6 +10548,81 @@
                 }
             }
         },
+        "/tag/is_following/{tag_description}": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Check if primary blog follows a tag.",
+                "description": "Check whether the primary blog is following a specific tag or not.",
+                "operationId": "checkFollowTag",
+                "parameters": [
+                    {
+                        "name": "tag_description",
+                        "in": "path",
+                        "description": "The name of the tag to check if the primary blog follows or not.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "is_following": {
+                                                    "type": "bool",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/tag/data/{post_id}/{tag_description}": {
             "post": {
                 "tags": [
@@ -11082,6 +11157,147 @@
                         }
                     }
                 }
+            }
+        },
+        "/tag/suggesting": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get suggestions for tags to follow",
+                "description": "Returns list of tags which are trending but the primary blog doesn't follow. The trending metric used is the count of posts this tag was mentioned inside.",
+                "operationId": "getSuggestionTags",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 120
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "last_page_url": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=3"
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "tags": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "tag_description": {
+                                                                "type": "string",
+                                                                "example": "books"
+                                                            },
+                                                            "tag_image": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "posts_count": {
+                                                                "type": "int",
+                                                                "example": 12
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/blog/{blog_id}/theme": {

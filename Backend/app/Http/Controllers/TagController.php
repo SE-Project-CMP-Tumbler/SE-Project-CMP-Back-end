@@ -7,14 +7,61 @@ use App\Http\Requests\TagRequest;
 use App\Http\Resources\PostCollection;
 use App\Http\Resources\TagCollection;
 use App\Http\Resources\TagResource;
+use App\Models\Blog;
+use App\Models\BlogFollowTag;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
+use App\Services\BlogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
+/**
+ * @OA\Get(
+ * path="/tag/is_following/{tag_description}",
+ * summary="Check if primary blog follows a tag.",
+ * description="Check whether the primary blog is following a specific tag or not.",
+ * operationId="checkFollowTag",
+ * tags={"Tags"},
+ * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *     name="tag_description",
+ *     description="The name of the tag to check if the primary blog follows or not.",
+ *     required=true,
+ *     in="path",
+ *     @OA\Schema(
+ *         type="string")),
+ *
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response", type="object",
+ *          @OA\Property(property="is_following", type="bool", example=false),))),
+ *   @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))
+ * ),
+ * )
+ */
+    /**
+     * Check whether the primary blog follows a specific tag.
+     *
+     * @param string $tagDescription tag to check if the primary blog follows
+     * @return @return \Illuminate\Http\JsonResponse
+     */
+    public function checkIsFollowing($tagDescription)
+    {
+        $blogService = new BlogService();
+
+        $isFollowing = $blogService->checkIsFollowingTag($tagDescription);
+        return $this->generalResponse(['is_following' => $isFollowing], "ok");
+    }
 /**
  * @OA\Post(
  * path="/tag/data/{post_id}/{tag_description}",
@@ -297,5 +344,61 @@ class TagController extends Controller
             ->paginate(Config::PAGINATION_LIMIT);
 
         return $this->generalResponse(new TagCollection($trending), "ok");
+    }
+/**
+ * @OA\Get(
+ * path="/tag/suggesting",
+ * summary="Get suggestions for tags to follow",
+ * description="Returns list of tags which are trending but the primary blog doesn't follow. The trending metric used is the count of posts this tag was mentioned inside.",
+ * operationId="getSuggestionTags",
+ * security={ {"bearer": {} }},
+ * tags={"Tags"},
+ *  @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+ *       @OA\Property(property="response",type="object",
+ *              @OA\Property(property="pagination",type="object",
+ *                  @OA\Property(property="total",type="int",example=120),
+ *                  @OA\Property(property="count",type="int",example=10),
+ *                  @OA\Property(property="per_page",type="int",example=10),
+ *                  @OA\Property(property="current_page",type="int",example=2),
+ *                  @OA\Property(property="total_pages",type="int",example=12),
+ *                  @OA\Property(property="first_page_url",type="boolean",example=false),
+ *                  @OA\Property(property="last_page_url",type="int",example=12),
+ *                  @OA\Property(property="next_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=3"),
+ *                  @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/tag/trending?page=1"),),
+ *          @OA\Property(property="tags",type="array",
+ *              @OA\Items(
+ *                  @OA\Property(property="tag_description",type="string",example="books"),
+ *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),
+ *                  @OA\Property(property="posts_count",type="int",example=12),),),),),),
+ *
+ *  @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
+ * )
+ */
+    /**
+     * Get tags ordered descendingly by their post counts
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSuggestions()
+    {
+        $blogService = new BlogService();
+        $primaryBlog = $blogService->getPrimaryBlog(auth()->user());
+
+        $followingTags = BlogFollowTag::where('blog_id', $primaryBlog->id)->get(['tag_description']);
+
+        $suggestings = Tag::whereNotIn('description', $followingTags)
+            ->withCount(['posts'])
+            ->orderBy('posts_count', 'desc')
+            ->paginate(Config::PAGINATION_LIMIT);
+
+        return $this->generalResponse(new TagCollection($suggestings), "ok");
     }
 }
