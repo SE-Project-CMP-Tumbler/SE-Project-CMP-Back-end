@@ -3670,7 +3670,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": " The user can send blog username or email to follow another blog\n *    blog_value : blog_username or blog_email",
+                    "description": " The user can send blog username or  User email to follow another blog\r\n *    blog_value : blog_username or blog_email",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -10643,7 +10643,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "Tag description or sort type was not found"
+                                                "msg": "Tag description provided was not found."
                                             }
                                         }
                                     },
@@ -12646,7 +12646,7 @@
                 "description": " Creating a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user,\r\n *    age : The age of the new user",
+                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user,\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12683,7 +12683,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12701,6 +12701,10 @@
                                                     "type": "string",
                                                     "example": "12151"
                                                 },
+                                                "blog_id": {
+                                                    "type": "string",
+                                                    "example": "6584"
+                                                },
                                                 "blog_username": {
                                                     "type": "string",
                                                     "example": "MyFirstBlog"
@@ -12708,6 +12712,10 @@
                                                 "email": {
                                                     "type": "string",
                                                     "example": "user2023@gmail.com"
+                                                },
+                                                "is_verified": {
+                                                    "type": "boolean",
+                                                    "example": "true"
                                                 },
                                                 "blog_avatar": {
                                                     "type": "string",
@@ -12728,7 +12736,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12777,7 +12785,7 @@
                 "description": " check if those Credentials are good to create a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user",
+                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12828,7 +12836,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12877,7 +12885,7 @@
                 "description": "user login",
                 "operationId": "loginuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The email of the user ,\r\n *    password : The password of the user",
+                    "description": "\n *    email : The email of the user ,\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12904,7 +12912,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12922,6 +12930,10 @@
                                                     "type": "string",
                                                     "example": "12151"
                                                 },
+                                                "blog_id": {
+                                                    "type": "string",
+                                                    "example": "6584"
+                                                },
                                                 "blog_username": {
                                                     "type": "string",
                                                     "example": "MyFirstBlog"
@@ -12929,6 +12941,10 @@
                                                 "email": {
                                                     "type": "string",
                                                     "example": "user2023@gmail.com"
+                                                },
+                                                "is_verified": {
+                                                    "type": "boolean",
+                                                    "example": "true"
                                                 },
                                                 "blog_avatar": {
                                                     "type": "string",
@@ -12941,6 +12957,25 @@
                                                 }
                                             },
                                             "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to login with a wrong email or password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "Your email or password were incorrect."
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -12979,7 +13014,7 @@
                 "description": " login using google ",
                 "operationId": "loginuserwithgoogle",
                 "requestBody": {
-                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account",
+                    "description": "\n *    google_access_token : The access_token of the user's gmail account",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13000,7 +13035,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13018,6 +13053,10 @@
                                                     "type": "string",
                                                     "example": "12151"
                                                 },
+                                                "blog_id": {
+                                                    "type": "string",
+                                                    "example": "6584"
+                                                },
                                                 "blog_username": {
                                                     "type": "string",
                                                     "example": "MyFirstBlog"
@@ -13025,6 +13064,10 @@
                                                 "email": {
                                                     "type": "string",
                                                     "example": "user2023@gmail.com"
+                                                },
+                                                "is_verified": {
+                                                    "type": "boolean",
+                                                    "example": "true"
                                                 },
                                                 "blog_avatar": {
                                                     "type": "string",
@@ -13064,7 +13107,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13094,7 +13137,7 @@
                 "description": "Creating a new user using google",
                 "operationId": "signupuserwithgoogle",
                 "requestBody": {
-                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    age : The age of the new user",
+                    "description": "\n *    google_access_token : The access_token of the user's gmail account,\n *    blog_username : The blog_username will be used in the primary blog,\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13125,7 +13168,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13143,6 +13186,10 @@
                                                     "type": "string",
                                                     "example": "12151"
                                                 },
+                                                "blog_id": {
+                                                    "type": "string",
+                                                    "example": "6584"
+                                                },
                                                 "blog_username": {
                                                     "type": "string",
                                                     "example": "MyFirstBlog"
@@ -13150,6 +13197,10 @@
                                                 "email": {
                                                     "type": "string",
                                                     "example": "user2023@gmail.com"
+                                                },
+                                                "is_verified": {
+                                                    "type": "boolean",
+                                                    "example": "true"
                                                 },
                                                 "blog_avatar": {
                                                     "type": "string",
@@ -13170,7 +13221,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13475,7 +13526,7 @@
                 "description": "sending an email with a password reset link to the user",
                 "operationId": "emailverification",
                 "requestBody": {
-                    "description": "\r\n *    email : this is the same email that the user used to signup ",
+                    "description": "\n *    email : this is the same email that the user used to signup ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13662,7 +13713,7 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\r\n *    token : this is the same password reset token sent in the reset link url\r\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\r\n *    password : this is the new password,\r\n *    password_confirmation : the password of the new password ",
+                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13700,7 +13751,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13718,6 +13769,10 @@
                                                     "type": "string",
                                                     "example": "12151"
                                                 },
+                                                "blog_id": {
+                                                    "type": "string",
+                                                    "example": "6584"
+                                                },
                                                 "blog_username": {
                                                     "type": "string",
                                                     "example": "MyFirstBlog"
@@ -13725,6 +13780,10 @@
                                                 "email": {
                                                     "type": "string",
                                                     "example": "user2023@gmail.com"
+                                                },
+                                                "is_verified": {
+                                                    "type": "boolean",
+                                                    "example": "true"
                                                 },
                                                 "blog_avatar": {
                                                     "type": "string",
@@ -13794,7 +13853,7 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\r\n *    current_password : The current password of the  user,\r\n *    password : The new password of the  user,\r\n *    password_confirmation : The new password of the user",
+                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13847,7 +13906,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: if the current password is invalid",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13901,7 +13960,7 @@
                 "description": " Change a email of user",
                 "operationId": "changeemail",
                 "requestBody": {
-                    "description": "\r\n *    password : The password of the user,\r\n *    email : The  email of the  user",
+                    "description": "\n *    password : The password of the user,\n *    email : The  email of the  user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14031,7 +14090,7 @@
                 "description": " delete the user account",
                 "operationId": "deleteuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
+                    "description": "\n *    email : The  email of the  user,\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {

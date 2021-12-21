@@ -52,13 +52,17 @@ class UserController extends Controller
  *
  * @OA\Response(
  *    response=200,
- *    description="Successful response",
+ *    description="Successful response,
+ *    id : is the user's id,
+ *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
+ *       @OA\Property(property="blog_id", type="string", example="6584"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
  *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *       @OA\Property(property="is_verified", type="boolean", example="true"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
  *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
@@ -192,16 +196,29 @@ class UserController extends Controller
  *               ),
  * @OA\Response(
  *    response=200,
- *    description="Successful response",
+ *    description="Successful response,
+ *    id : is the user's id,
+ *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
+ *       @OA\Property(property="blog_id", type="string", example="6584"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
  *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *       @OA\Property(property="is_verified", type="boolean", example="true"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
  *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=422,
+ *    description="Unprocessable Entity
+ *    The msg in this response depends on the wrong parameters sent in the request
+ *    For example here: the user wants to login with a wrong email or password",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"Your email or password were incorrect."})
  *        )
  *     ),
  *  @OA\Response(
@@ -246,13 +263,17 @@ class UserController extends Controller
  *               ),
  * @OA\Response(
  *    response=200,
- *    description="Successful response",
+ *    description="Successful response,
+ *    id : is the user's id,
+ *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
+ *       @OA\Property(property="blog_id", type="string", example="6584"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
  *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *       @OA\Property(property="is_verified", type="boolean", example="true"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
  *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
@@ -326,13 +347,17 @@ class UserController extends Controller
  *
  * @OA\Response(
  *    response=200,
- *    description="Successful response",
+ *    description="Successful response,
+ *    id : is the user's id,
+ *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
+ *       @OA\Property(property="blog_id", type="string", example="6584"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
  *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *       @OA\Property(property="is_verified", type="boolean", example="true"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
  *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),
@@ -704,13 +729,17 @@ class UserController extends Controller
  *
  * @OA\Response(
  *    response=200,
- *    description="Successful response",
+ *    description="Successful response,
+ *    id : is the user's id,
+ *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response",type="object",
  *       @OA\Property(property="id", type="string", example="12151"),
+ *       @OA\Property(property="blog_id", type="string", example="6584"),
  *       @OA\Property(property="blog_username", type="string", example="MyFirstBlog"),
  *       @OA\Property(property="email", type="string", example="user2023@gmail.com"),
+ *       @OA\Property(property="is_verified", type="boolean", example="true"),
  *       @OA\Property(property="blog_avatar", type="string", format="byte",example="/storage/mypicture.extension"),
  *       @OA\Property(property="access_token", type="string", example="IRN6UNk4bIDqStMb6OkfF6lYCIMufnEoJQZkE0wo"),
  *         ),

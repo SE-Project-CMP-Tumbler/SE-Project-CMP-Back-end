@@ -34,7 +34,7 @@ class UserCheckRegisterCredentials extends FormRequest
         return [
                 'email' => 'required_without_all:blog_username,password,age|required|email|unique:users',
                 'blog_username' => 'required_with_all:email,password',
-                'password' => ['required_with:email',Password::min(8)->mixedCase()->numbers()->uncompromised(10)],
+                'password' => ['required_with:email',Password::min(8)->mixedCase()->numbers()],
         ];
     }
 /**
