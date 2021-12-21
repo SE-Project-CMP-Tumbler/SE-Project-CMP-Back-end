@@ -30,10 +30,16 @@ class SearchService
         }
         return $matchedResult;
     }
-    public function searchTags($posts, $word)
+    public function searchTag($posts, $word)
     {
         $word = strtolower($word);
-        $result = $tags->where('description', 'like', '%' . $word . '%');
+        $result = Tag::where('description', 'like', '%' . $word . '%');
+        return $result;
+    }
+    public function searchBlogs($posts, $word)
+    {
+        $word = strtolower($word);
+        $result = Blog::where('username', 'like', '%' . $word . '%');
         return $result;
     }
 }

@@ -10548,7 +10548,6 @@
                 }
             }
         },
-<<<<<<< HEAD
         "/search/{blog_id}/{word}": {
             "get": {
                 "tags": [
@@ -10562,21 +10561,6 @@
                         "name": "word",
                         "in": "path",
                         "description": "Word to Search about",
-=======
-        "/tag/is_following/{tag_description}": {
-            "get": {
-                "tags": [
-                    "Tags"
-                ],
-                "summary": "Check if primary blog follows a tag.",
-                "description": "Check whether the primary blog is following a specific tag or not.",
-                "operationId": "checkFollowTag",
-                "parameters": [
-                    {
-                        "name": "tag_description",
-                        "in": "path",
-                        "description": "The name of the tag to check if the primary blog follows or not.",
->>>>>>> backendteam
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -10585,11 +10569,7 @@
                 ],
                 "responses": {
                     "200": {
-<<<<<<< HEAD
                         "description": "Successful  response",
-=======
-                        "description": "Successful response",
->>>>>>> backendteam
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -10598,16 +10578,11 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "200",
-<<<<<<< HEAD
                                                 "msg": "OK"
-=======
-                                                "msg": "ok"
->>>>>>> backendteam
                                             }
                                         },
                                         "response": {
                                             "properties": {
-<<<<<<< HEAD
                                                 "posts": {
                                                     "type": "array",
                                                     "items": {
@@ -10778,11 +10753,6 @@
                                                         },
                                                         "type": "object"
                                                     }
-=======
-                                                "is_following": {
-                                                    "type": "bool",
-                                                    "example": false
->>>>>>> backendteam
                                                 }
                                             },
                                             "type": "object"
@@ -10793,13 +10763,8 @@
                             }
                         }
                     },
-<<<<<<< HEAD
                     "404": {
                         "description": "Not found",
-=======
-                    "401": {
-                        "description": "Unauthorized",
->>>>>>> backendteam
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -10807,13 +10772,8 @@
                                         "meta": {
                                             "type": "object",
                                             "example": {
-<<<<<<< HEAD
                                                 "status": "404",
                                                 "msg": "post is not found"
-=======
-                                                "status": "401",
-                                                "msg": "Unauthorized"
->>>>>>> backendteam
                                             }
                                         }
                                     },
@@ -10822,16 +10782,82 @@
                             }
                         }
                     }
-<<<<<<< HEAD
                 }
-=======
+            }
+        },
+        "/tag/is_following/{tag_description}": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Check if primary blog follows a tag.",
+                "description": "Check whether the primary blog is following a specific tag or not.",
+                "operationId": "checkFollowTag",
+                "parameters": [
+                    {
+                        "name": "tag_description",
+                        "in": "path",
+                        "description": "The name of the tag to check if the primary blog follows or not.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "is_following": {
+                                                    "type": "bool",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
                 },
                 "security": [
                     {
                         "bearer": []
                     }
                 ]
->>>>>>> backendteam
             }
         },
         "/tag/data/{post_id}/{tag_description}": {
@@ -11458,25 +11484,6 @@
                                                 }
                                             },
                                             "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "404",
-                                                "msg": "Not found"
-                                            }
                                         }
                                     },
                                     "type": "object"
