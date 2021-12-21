@@ -340,8 +340,11 @@ class BlogController extends Controller
  */
     public function checkOutOtherBlog(Request $request)
     {
-        $blogs = $request->user()->blogs->pluck('id')->toArray();
-        $query = Blog::whereNotIn('id', $blogs)->inRandomOrder()->paginate(Config::PAGINATION_LIMIT);
+        $myblogs = $request->user()->blogs->pluck('id')->toArray();
+        $blogService = new BlogService();
+        $primaryBlog = $blogService->getPrimaryBlog($request->user());
+        $followings = $primaryBlog->followings->pluck('id')->toArray();
+        $query = Blog::whereNotIn('id', $myblogs)->whereNotIn('id', $followings) ->inRandomOrder()->paginate(Config::PAGINATION_LIMIT);
         return $this->generalResponse(new BlogCollection($query), "ok");
     }
 /**
@@ -399,10 +402,13 @@ class BlogController extends Controller
   * @return \json
  */
 
-    // public function getTrendingBlog(Request $request)
-    // {
-    //     return $this->generalResponse(new BlogCollection(Blog::all()), "ok");
-    // }
+    public function getTrendingBlog(Request $request)
+    {
+        $trending = Blog::withCount(['followers'])
+            ->orderBy('followers_count', 'desc')
+            ->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new BlogCollection($trending), "ok");
+    }
 /**
  * @OA\Get(
  * path="/blogs/likes/{blog_id}",
@@ -478,7 +484,9 @@ class BlogController extends Controller
         }
         $blogService = new BlogService();
         $blog = $blogService->findBlog($blogId);
-
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
         return $this->generalResponse(new PostCollection($blog->likes()->paginate(Config::PAGINATION_LIMIT)), "ok");
     }
 }

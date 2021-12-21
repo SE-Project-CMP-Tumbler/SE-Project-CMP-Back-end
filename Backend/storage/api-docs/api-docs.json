@@ -31,7 +31,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -40,7 +40,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -301,7 +301,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -310,7 +310,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -559,7 +559,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -568,7 +568,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -789,6 +789,135 @@
                                             "example": {
                                                 "status": "500",
                                                 "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/blog_activity/{blog_id}": {
+            "get": {
+                "tags": [
+                    "Activity"
+                ],
+                "summary": "get number of likes ,posts, drafts ",
+                "description": " return total_followings number, followings , likes of blog",
+                "operationId": "get blog activity",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "The id of current blog",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "followers": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "followings": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "likes": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "posts": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "drafts": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
                                             }
                                         }
                                     },
@@ -2101,7 +2230,7 @@
                 "description": " Creating a secondary blog",
                 "operationId": "createBlog",
                 "requestBody": {
-                    "description": "\r\n *    title : the title of the new blog ,\r\n *    blog_username : the blog_username will be used in the blog URL,\r\n *    password : the password of the new blog if there's a one",
+                    "description": "\n *    title : the title of the new blog ,\n *    blog_username : the blog_username will be used in the blog URL,\n *    password : the password of the new blog if there's a one",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12646,7 +12775,7 @@
                 "description": " Creating a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user,\n *    age : The age of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12683,7 +12812,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12736,7 +12865,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12785,7 +12914,7 @@
                 "description": " check if those Credentials are good to create a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12836,7 +12965,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12885,7 +13014,7 @@
                 "description": "user login",
                 "operationId": "loginuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the user ,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The email of the user ,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12912,7 +13041,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12965,7 +13094,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to login with a wrong email or password",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to login with a wrong email or password",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13014,7 +13143,7 @@
                 "description": " login using google ",
                 "operationId": "loginuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13035,7 +13164,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13107,7 +13236,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "description": "Unprocessable Entity\r\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13137,7 +13266,7 @@
                 "description": "Creating a new user using google",
                 "operationId": "signupuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account,\n *    blog_username : The blog_username will be used in the primary blog,\n *    age : The age of the new user",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13168,7 +13297,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13221,7 +13350,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13526,7 +13655,7 @@
                 "description": "sending an email with a password reset link to the user",
                 "operationId": "emailverification",
                 "requestBody": {
-                    "description": "\n *    email : this is the same email that the user used to signup ",
+                    "description": "\r\n *    email : this is the same email that the user used to signup ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13713,7 +13842,7 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
+                    "description": "\r\n *    token : this is the same password reset token sent in the reset link url\r\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\r\n *    password : this is the new password,\r\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13751,7 +13880,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13853,7 +13982,7 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
+                    "description": "\r\n *    current_password : The current password of the  user,\r\n *    password : The new password of the  user,\r\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13906,7 +14035,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: if the current password is invalid",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13960,7 +14089,7 @@
                 "description": " Change a email of user",
                 "operationId": "changeemail",
                 "requestBody": {
-                    "description": "\n *    password : The password of the user,\n *    email : The  email of the  user",
+                    "description": "\r\n *    password : The password of the user,\r\n *    email : The  email of the  user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14090,7 +14219,7 @@
                 "description": " delete the user account",
                 "operationId": "deleteuser",
                 "requestBody": {
-                    "description": "\n *    email : The  email of the  user,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
