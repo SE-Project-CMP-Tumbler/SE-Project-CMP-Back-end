@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlockBlogController;
 use App\Http\Controllers\UploadFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
@@ -46,6 +47,14 @@ Route::get('followings', [FollowBlogController::class,'getFollowings'])->middlew
 Route::get('followers', [FollowBlogController::class,'getFollowers'])->middleware('auth:api');
 Route::get('search_follow_blog/{blog_username}', [FollowBlogController::class,'searchFollowBlog'])->middleware('auth:api');
 Route::post('follow_blog_search', [FollowBlogController::class,'followBlog'])->middleware('auth:api');
+
+/*
+| Block Blog Routes
+*/
+Route::post('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'block'])->middleware('auth:api');
+Route::delete('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'unblock'])->middleware('auth:api');
+Route::get('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'checkIsBlocking'])->middleware('auth:api');
+Route::get('block/{blogId}', [BlockBlogController::class, 'getBlockings'])->middleware('auth:api');
 
 /*
 | Post Routes

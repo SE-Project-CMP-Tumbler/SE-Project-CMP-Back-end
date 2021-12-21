@@ -81,4 +81,24 @@ class Blog extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Retrieve the list of blogs that the current blog is blocking.
+     *
+     * @return \Blog[]
+     */
+    public function blockings()
+    {
+        return $this->belongsToMany(Blog::class, 'blocks', 'blocker_id', 'blocked_id');
+    }
+
+    /**
+     * Retrieve the list of blogs that have blocked the current blog.
+     *
+     * @return \Blog[]
+     */
+    public function blockers()
+    {
+        return $this->belongsToMany(Blog::class, 'blocks', 'blocked_id', 'blocker_id');
+    }
 }
