@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\FollowBlog;
 use Illuminate\Support\Facades\DB;
 use App\Http\Misc\Helpers\Errors;
+use App\Models\Block;
 
 class BlogService
 {
@@ -112,5 +113,19 @@ class BlogService
     {
         $blog = Blog::where('username', $blogUsername)->first();
         return $blog;
+    }
+    /**
+     * Check if a blog is blocking another.
+     *
+     * @param int $blockerId The id of the blog that may have done the block action.
+     * @param int $blockedId The id of the blog on which the block may be done.
+     * @return bool
+     */
+    public function checkIsBlocking($blockerId, $blockedId)
+    {
+        $block = Block::where('blocker_id', $blockerId)
+            ->where('blocked_id', $blockedId)
+            ->first();
+        return !empty($block);
     }
 }

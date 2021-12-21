@@ -19,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
         //Blog::class => BlogPolicy::class,
         'App\Models\Blog' => 'App\Policies\BlogPolicy',
         'App\Models\Post' => 'App\Policies\PostPolicy',
-        'App\Models\Tag' => 'App\Policies\TagPolicy'
+        'App\Models\Tag' => 'App\Policies\TagPolicy',
+        'App\Models\Block' => 'App\Policies\BlockPolicy'
         //'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
