@@ -31,7 +31,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -40,7 +40,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -301,7 +301,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -310,7 +310,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -559,7 +559,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -568,7 +568,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -2230,7 +2230,7 @@
                 "description": " Creating a secondary blog",
                 "operationId": "createBlog",
                 "requestBody": {
-                    "description": "\n *    title : the title of the new blog ,\n *    blog_username : the blog_username will be used in the blog URL,\n *    password : the password of the new blog if there's a one",
+                    "description": "\r\n *    title : the title of the new blog ,\r\n *    blog_username : the blog_username will be used in the blog URL,\r\n *    password : the password of the new blog if there's a one",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -10172,6 +10172,243 @@
             }
         },
         "/search/{word}": {
+            "get": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Search about word in blogs or in posts",
+                "description": " Get all blogs which contains word or posts which contains word",
+                "operationId": "search",
+                "parameters": [
+                    {
+                        "name": "word",
+                        "in": "path",
+                        "description": "Word to Search about",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful  response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "posts": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "post_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "post_tags": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "0": {
+                                                                            "type": "string",
+                                                                            "example": "books"
+                                                                        },
+                                                                        "1": {
+                                                                            "type": "string",
+                                                                            "example": "reading"
+                                                                        },
+                                                                        "2": {
+                                                                            "type": "string",
+                                                                            "example": "stay positive"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "post_status": {
+                                                                "type": "string",
+                                                                "example": "published"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "New post"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "new post"
+                                                            },
+                                                            "chat_title": {
+                                                                "type": "string",
+                                                                "example": "New post"
+                                                            },
+                                                            "chat_body": {
+                                                                "type": "string",
+                                                                "example": "My post"
+                                                            },
+                                                            "quote_text": {
+                                                                "type": "string",
+                                                                "example": "New post"
+                                                            },
+                                                            "quote_resouce": {
+                                                                "type": "string",
+                                                                "example": "My post"
+                                                            },
+                                                            "keep_reading": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "post_time": {
+                                                                "type": "date_time",
+                                                                "example": "02-02-2012"
+                                                            },
+                                                            "link": {
+                                                                "type": "string",
+                                                                "example": "facebook.com"
+                                                            },
+                                                            "images ": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "0": {
+                                                                            "type": "string",
+                                                                            "format": "byte",
+                                                                            "example": "/images.png"
+                                                                        },
+                                                                        "1": {
+                                                                            "type": "string",
+                                                                            "format": "byte",
+                                                                            "example": "/images.png"
+                                                                        },
+                                                                        "2": {
+                                                                            "type": "string",
+                                                                            "format": "byte",
+                                                                            "example": "/images.png"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "video ": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "audio ": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "post_type ": {
+                                                                "type": "string",
+                                                                "example": "text"
+                                                            },
+                                                            "url_videos ": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "0": {
+                                                                            "type": "string",
+                                                                            "example": "facebook.com"
+                                                                        },
+                                                                        "1": {
+                                                                            "type": "string",
+                                                                            "example": "google.com"
+                                                                        },
+                                                                        "2": {
+                                                                            "type": "string",
+                                                                            "example": "yahoo.com"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "blogs": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 2026
+                                                            },
+                                                            "username": {
+                                                                "type": "string",
+                                                                "example": "newinvestigations"
+                                                            },
+                                                            "avatar": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "square"
+                                                            },
+                                                            "header_image": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "My 1st Blog"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "This blog is a sketch of thoughts"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "post is not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search/{blog_id}/{word}": {
             "get": {
                 "tags": [
                     "Search"
