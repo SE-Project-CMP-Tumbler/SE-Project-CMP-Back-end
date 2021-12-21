@@ -1383,7 +1383,7 @@
                     {
                         "name": "blocked_id",
                         "in": "path",
-                        "description": "The id of the blog on which the block may be done.",
+                        "description": "The id of the blog on which the block may have been done.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1651,7 +1651,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "One of the blog ids was not found"
+                                                "msg": "One or Both blog ids were not found"
                                             }
                                         }
                                     },
@@ -1765,7 +1765,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "Not found"
+                                                "msg": "The blog was not found"
                                             }
                                         }
                                     },
@@ -6136,7 +6136,7 @@
                                                 },
                                                 "post_time": {
                                                     "type": "date_time",
-                                                    "example": "02-02-2012"
+                                                    "example": "2012-02-30"
                                                 },
                                                 "question_body": {
                                                     "type": "string",
@@ -6210,7 +6210,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2011"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -6381,7 +6381,7 @@
                                                 },
                                                 "post_time": {
                                                     "type": "date_time",
-                                                    "example": "02-02-2012"
+                                                    "example": "2012-02-30"
                                                 },
                                                 "question_body": {
                                                     "type": "string",
@@ -6455,7 +6455,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2011"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -6733,7 +6733,7 @@
                                     },
                                     "post_time": {
                                         "type": "date_time",
-                                        "example": "02-02-2012"
+                                        "example": "2012-02-30"
                                     },
                                     "post_type": {
                                         "type": "string",
@@ -6796,7 +6796,7 @@
                                                 },
                                                 "post_time": {
                                                     "type": "date_time",
-                                                    "example": "02-02-2012"
+                                                    "example": "2012-02-30"
                                                 },
                                                 "post_type": {
                                                     "type": "string",
@@ -6950,7 +6950,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -7072,7 +7072,7 @@
                                     },
                                     "post_time": {
                                         "type": "date_time",
-                                        "example": "02-02-2012"
+                                        "example": "2012-02-30"
                                     },
                                     "post_type": {
                                         "type": "string",
@@ -7284,7 +7284,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "question_body": {
                                                                 "type": "string",
@@ -7354,7 +7354,7 @@
                                                                         },
                                                                         "post_time": {
                                                                             "type": "date_time",
-                                                                            "example": "02-02-2011"
+                                                                            "example": "2012-02-30"
                                                                         },
                                                                         "post_type": {
                                                                             "type": "string",
@@ -7577,7 +7577,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             },
                                                             "post_type": {
                                                                 "type": "string",
@@ -7601,7 +7601,7 @@
                                                                         },
                                                                         "post_time": {
                                                                             "type": "date_time",
-                                                                            "example": "02-02-2011"
+                                                                            "example": "2012-02-30"
                                                                         },
                                                                         "post_type": {
                                                                             "type": "string",
@@ -8388,7 +8388,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -8529,7 +8529,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -8689,7 +8689,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -8830,7 +8830,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -8990,7 +8990,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9131,7 +9131,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9235,7 +9235,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9376,7 +9376,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9517,7 +9517,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9670,7 +9670,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -9811,7 +9811,7 @@
                                                             },
                                                             "post_time": {
                                                                 "type": "date_time",
-                                                                "example": "02-02-2012"
+                                                                "example": "2012-02-30"
                                                             }
                                                         },
                                                         "type": "object"
@@ -10419,6 +10419,81 @@
                 }
             }
         },
+        "/tag/is_following/{tag_description}": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Check if primary blog follows a tag.",
+                "description": "Check whether the primary blog is following a specific tag or not.",
+                "operationId": "checkFollowTag",
+                "parameters": [
+                    {
+                        "name": "tag_description",
+                        "in": "path",
+                        "description": "The name of the tag to check if the primary blog follows or not.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "is_following": {
+                                                    "type": "bool",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/tag/data/{post_id}/{tag_description}": {
             "post": {
                 "tags": [
@@ -10953,6 +11028,147 @@
                         }
                     }
                 }
+            }
+        },
+        "/tag/suggesting": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get suggestions for tags to follow",
+                "description": "Returns list of tags which are trending but the primary blog doesn't follow. The trending metric used is the count of posts this tag was mentioned inside.",
+                "operationId": "getSuggestionTags",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 120
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "last_page_url": {
+                                                            "type": "int",
+                                                            "example": 12
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=3"
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/tag/trending?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "tags": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "tag_description": {
+                                                                "type": "string",
+                                                                "example": "books"
+                                                            },
+                                                            "tag_image": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "posts_count": {
+                                                                "type": "int",
+                                                                "example": 12
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/blog/{blog_id}/theme": {
@@ -12786,7 +13002,7 @@
                 "description": " Creating a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user,\n *    age : The age of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12823,7 +13039,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12876,7 +13092,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12925,7 +13141,7 @@
                 "description": " check if those Credentials are good to create a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12976,7 +13192,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13025,7 +13241,7 @@
                 "description": "user login",
                 "operationId": "loginuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the user ,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The email of the user ,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13052,7 +13268,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13105,7 +13321,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to login with a wrong email or password",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to login with a wrong email or password",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13154,7 +13370,7 @@
                 "description": " login using google ",
                 "operationId": "loginuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13175,7 +13391,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13247,7 +13463,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "description": "Unprocessable Entity\r\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13277,7 +13493,7 @@
                 "description": "Creating a new user using google",
                 "operationId": "signupuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account,\n *    blog_username : The blog_username will be used in the primary blog,\n *    age : The age of the new user",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13308,7 +13524,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13361,7 +13577,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13666,7 +13882,7 @@
                 "description": "sending an email with a password reset link to the user",
                 "operationId": "emailverification",
                 "requestBody": {
-                    "description": "\n *    email : this is the same email that the user used to signup ",
+                    "description": "\r\n *    email : this is the same email that the user used to signup ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13853,7 +14069,7 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
+                    "description": "\r\n *    token : this is the same password reset token sent in the reset link url\r\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\r\n *    password : this is the new password,\r\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13891,7 +14107,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13993,7 +14209,7 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
+                    "description": "\r\n *    current_password : The current password of the  user,\r\n *    password : The new password of the  user,\r\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14046,7 +14262,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: if the current password is invalid",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14100,7 +14316,7 @@
                 "description": " Change a email of user",
                 "operationId": "changeemail",
                 "requestBody": {
-                    "description": "\n *    password : The password of the user,\n *    email : The  email of the  user",
+                    "description": "\r\n *    password : The password of the user,\r\n *    email : The  email of the  user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14230,7 +14446,7 @@
                 "description": " delete the user account",
                 "operationId": "deleteuser",
                 "requestBody": {
-                    "description": "\n *    email : The  email of the  user,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
