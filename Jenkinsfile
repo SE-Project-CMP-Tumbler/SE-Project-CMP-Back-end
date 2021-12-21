@@ -65,6 +65,9 @@ pipeline {
         sh 'whoami;hostname;uptime'
         sh '''cd Backend;
 az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.dev.env --dest .env;
+#Key files for passport
+az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p oauth-private.dev.key --dest storage/oauth-private.key;
+az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p oauth-public.dev.key --dest storage/oauth-public.key;
 docker-compose up -d --build;
 #docker system prune -f;'''
       }
