@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Blog;
+use App\Models\Like;
+use App\Http\Resources\BlogResource;
+use App\Http\Resources\BlogCollection;
+use App\Http\Resources\PostCollection;
+use App\Http\Requests\BlogRequest;
+use App\Services\BlogService;
 
 class ActivityController extends Controller
 {
@@ -303,4 +310,89 @@ class ActivityController extends Controller
  * ),
  *
  */
+/**
+ * @OA\Get(
+ * path="/blog_activity/{blog_id}",
+ * summary="get number of likes ,posts, drafts ",
+ * description=" return total_followings number, followings , likes of blog",
+ * operationId="get blog activity",
+ * tags={"Activity"},
+ * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *          name="blog_id",
+ *          description="The id of current blog",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ *
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful response",
+ *    @OA\JsonContent(
+ *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *         @OA\Property(property="response", type="object",
+ *               @OA\Property(property="followers",type="integer",example=5),
+ *               @OA\Property(property="followings",type="integer",example=5),
+ *               @OA\Property(property="likes",type="integer",example=5),
+ *                @OA\Property(property="posts",type="integer",example=5),
+ *                @OA\Property(property="drafts",type="integer",example=5),
+ *              ),
+ *       )
+ *     ),
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
+ * )
+ */
+ /**
+  *get activity numbers of blog
+  * @param \Request $request
+   * @param  $blogId
+  * @return \json
+ */
+
+    public function getActivityBlog(Request $request, $blogId)
+    {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
+        $this->authorize('view', $blog);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
+        $followers = $blog->followers()->count();
+        $followings =  $blog->followings()->count();
+        $posts = $blog->posts()->where('status', 'published')->count();
+        $drafts = $blog->posts()->where('status', 'draft')->count();
+        $likes = $blog->likes()->count();
+        $reponse = [
+            "followers" => $followers ,
+            "followings" => $followings ,
+            "posts" => $posts,
+            "drafts" => $drafts,
+            "likes" => $likes
+        ];
+        return  $this->generalResponse($reponse, "ok");
+    }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\FollowBlogController;
 use App\Http\Controllers\FollowTagController;
 use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,9 +33,10 @@ Route::get('blog/{blog_id}', [BlogController::class,'show'])->middleware('auth:a
 Route::delete('blog/{blog_id}', [BlogController::class,'delete'])->middleware('auth:api');
 Route::get('blogs/likes/{blog_id}', [BlogController::class,'getLikeBlog'])->middleware('auth:api');
 Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog'])->middleware('auth:api');
+Route::get('blogs/trending', [BlogController::class,'getTrendingBlog'])->middleware('auth:api');
 Route::get('blog_settings/{blog_id}', [BlogSettingController::class,'show'])->middleware('auth:api');
 Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->middleware('auth:api');
-
+Route::get('blog_activity/{blog_id}', [ActivityController::class,'getActivityBlog'])->middleware('auth:api');
 /*
 | Follow Blog Routes
 */
