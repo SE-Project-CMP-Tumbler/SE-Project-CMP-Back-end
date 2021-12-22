@@ -83,7 +83,7 @@ class FollowBlogController extends Controller
         }
         $primaryBlog =  $blogService->getPrimaryBlog($request->user());
         if ($primaryBlog->id == $blog->id) {
-            return $this->generalResponse("", "You can't follow your self", "422");
+            return $this->generalResponse("", "You can not follow your self", "422");
         }
         $check = $primaryBlog->followers()->where('username', $blogUsername)->first();
         if ($check == null) {
@@ -172,7 +172,7 @@ class FollowBlogController extends Controller
         }
         $primaryBlog =  $blogService->getPrimaryBlog($request->user());
         if ($primaryBlog->id == $blog->id) {
-            return $this->generalResponse("", "You can't follow your self", "422");
+            return $this->generalResponse("", "You can not follow your self", "422");
         }
         $check = $blogService->checkIsFollowed($primaryBlog->id, $blog->id);
         if ($check) {
@@ -380,7 +380,7 @@ class FollowBlogController extends Controller
         $blogService = new BlogService();
         $blog = $blogService->getPrimaryBlog($request->user());
         $followers = $blog->followers()->paginate(Config::PAGINATION_LIMIT);
-        return $this->generalResponse(new FollowBlogCollection($followers), "200");
+        return $this->generalResponse(new FollowBlogCollection($followers), "ok");
     }
 
 /**
@@ -579,7 +579,7 @@ class FollowBlogController extends Controller
         $blog = $blogService->findBlog($blogId);
         $this->authorize('view', $blog);
         $followers = $blog->followers()->count();
-        return $this->generalResponse(["followers" => $followers], "200");
+        return $this->generalResponse(["followers" => $followers], "ok");
     }
  /**
  * @OA\Get(
@@ -645,6 +645,6 @@ class FollowBlogController extends Controller
         $blog = $blogService->findBlog($blogId);
         $this->authorize('view', $blog);
         $followings = $blog->followings()->count();
-        return $this->generalResponse(["followings" => $followings], "200");
+        return $this->generalResponse(["followings" => $followings], "ok");
     }
 }

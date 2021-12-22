@@ -105,6 +105,12 @@ class SearchController extends Controller
  * )
  *
  */
+/**
+  * Search word in  blogs ,tags ,posts of all users
+  * @param $word
+  * @param \Request $request
+  * @return \json
+ */
     public function search(Request $request, $word)
     {
         $posts = Post::all();
@@ -182,6 +188,13 @@ class SearchController extends Controller
  *
  */
 
+  /**
+  * Search word in blog page
+  * @param $blogId
+  * @param $word
+  * @param \Request $request
+  * @return \json
+ */
     public function searchBlog(Request $request, $blogId, $word)
     {
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
