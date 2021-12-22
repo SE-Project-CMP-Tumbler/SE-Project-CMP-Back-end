@@ -23,15 +23,15 @@ class BlogService
   * @return \Blog
  */
 
-    public function createBlog(string $username, string $title, int $user_id, string $password = null, $is_primary = false)
+    public function createBlog(string $username, string $title, int $userId, string $password = null, $isPrimary = false)
     {
         $password = md5($password);
         Blog::create([
            'username' => $username ,
            'title' => $title ,
             'password' => $password ,
-            'user_id' => $user_id,
-            'is_primary' => $is_primary
+            'user_id' => $userId,
+            'is_primary' => $isPrimary
         ]);
         return true;
     }

@@ -128,4 +128,45 @@ class BlogRequestTest extends TestCase
         ]);
         $user->delete();
     }
+     /**
+     *  test delete  blog
+     *
+     * @return void
+     */
+    public function testDeleteBlog()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
+        $blog = Blog::factory()->create(['user_id' => $user->id ,'is_primary' => true]);
+        $anotherBlog = Blog::factory()->create(['user_id' => $user->id ]);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+        ->json('delete', 'api/blog/' . $anotherBlog->id, Config::JSON)
+        ->assertJson([
+            "meta" => [
+                "status" => "200",
+                "msg" => "ok",
+            ]
+        ]);
+        $user->delete();
+    }
+     /**
+     *  test delete primary blog
+     *
+     * @return void
+     */
+    public function testDeletePrimaryBlog()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('Auth Token')->accessToken;
+        $blog = Blog::factory()->create(['user_id' => $user->id ,'is_primary' => true]);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+        ->json('delete', 'api/blog/' . $blog->id, Config::JSON)
+        ->assertJson([
+            "meta" => [
+                "status" => "422",
+                "msg" => "Can't delete this blog because this is primary",
+            ]
+        ]);
+        $user->delete();
+    }
 }

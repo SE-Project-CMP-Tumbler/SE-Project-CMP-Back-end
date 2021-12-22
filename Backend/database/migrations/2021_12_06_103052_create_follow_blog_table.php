@@ -17,8 +17,8 @@ class CreateFollowBlogTable extends Migration
             $table->primary(['follower_id','followed_id']);
             $table->unsignedInteger('follower_id');
             $table->unsignedInteger('followed_id');
-            $table->foreign('follower_id')->references('id')->on('blogs');
-            $table->foreign('followed_id')->references('id')->on('blogs');
+            $table->foreign('follower_id')->references('id')->on('blogs') ->onDelete('cascade');
+            $table->foreign('followed_id')->references('id')->on('blogs')  ->onDelete('cascade');
             $table->timestamps();
         });
     }

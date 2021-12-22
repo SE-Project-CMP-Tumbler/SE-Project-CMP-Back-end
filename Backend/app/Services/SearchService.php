@@ -16,6 +16,12 @@ use App\Models\Block;
 
 class SearchService
 {
+  /**
+  * Search word in posts with their tags
+  * @param $posts
+  * @param $word
+  * @return \Post 
+ */
     public function search($posts, $word)
     {
         $matchedResult = [];
@@ -34,12 +40,22 @@ class SearchService
         $posts = Post::whereIn('id', $matchedResult)->paginate(Config::PAGINATION_LIMIT);
         return $posts;
     }
+    /**
+  * Search word in tags
+  * @param $word
+  * @return \Tag
+ */
     public function searchTag($word)
     {
         $word = strtolower($word);
         $result = Tag::where('description', 'like', '%' . $word . '%')->paginate(Config::PAGINATION_LIMIT);
         return $result;
     }
+     /**
+  * Search word in blogs
+  * @param $word
+  * @return \Tag
+ */
     public function searchBlog($word)
     {
         $word = strtolower($word);
