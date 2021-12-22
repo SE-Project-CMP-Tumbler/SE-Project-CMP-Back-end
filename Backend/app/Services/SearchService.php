@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Search;
 use App\Models\FollowBlog;
 use App\Http\Misc\Helpers\Config;
 use App\Http\Misc\Helpers\Success;
@@ -20,7 +21,7 @@ class SearchService
   * Search word in posts with their tags
   * @param $posts
   * @param $word
-  * @return \Post 
+  * @return \Post
  */
     public function search($posts, $word)
     {
@@ -61,5 +62,19 @@ class SearchService
         $word = strtolower($word);
         $result = Blog::where('username', 'like', '%' . $word . '%')->paginate(Config::PAGINATION_LIMIT);
         return $result;
+    }
+       /**
+  * add new word to search
+  * @param $word
+  * @return bool
+ */
+    public function createWord($word)
+    {
+        $word = strtolower($word);
+        if (Search::where('word', $word)->count() > 0) {
+              return true;
+        }
+        Search::create(['word' => $word]);
+        return true;
     }
 }
