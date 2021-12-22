@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FollowBlogSeeder::class);
         $this->call(PostMentionBlogSeeder::class);
         $this->call(SearchSeeder::class);
+        $this->call(ChatMessageSeeder::class);
     }
 }
