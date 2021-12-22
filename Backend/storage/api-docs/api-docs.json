@@ -3979,7 +3979,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": " The user can send blog username or  User email to follow another blog\n *    blog_value : blog_username or blog_email",
+                    "description": " The user can send blog username or  User email to follow another blog\r\n *    blog_value : blog_username or blog_email",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -11844,10 +11844,6 @@
                                                                 "type": "string",
                                                                 "example": "CPP Programming"
                                                             },
-                                                            "show": {
-                                                                "type": "boolean",
-                                                                "example": "true"
-                                                            },
                                                             "color": {
                                                                 "type": "string",
                                                                 "example": "#000000"
@@ -11871,10 +11867,6 @@
                                                             "text": {
                                                                 "type": "string",
                                                                 "example": "Just for cpp nurds"
-                                                            },
-                                                            "show": {
-                                                                "type": "boolean",
-                                                                "example": "true"
                                                             }
                                                         },
                                                         "type": "object"
@@ -11899,14 +11891,6 @@
                                                             "url": {
                                                                 "type": "url",
                                                                 "example": "/storage/example_image.jpg"
-                                                            },
-                                                            "reset": {
-                                                                "type": "boolean",
-                                                                "example": "true"
-                                                            },
-                                                            "stretch": {
-                                                                "type": "boolean",
-                                                                "example": "true"
                                                             }
                                                         },
                                                         "type": "object"
@@ -11923,10 +11907,6 @@
                                                             "shape": {
                                                                 "type": "string",
                                                                 "example": "circle"
-                                                            },
-                                                            "show_avatar": {
-                                                                "type": "boolean",
-                                                                "example": "true"
                                                             }
                                                         },
                                                         "type": "object"
@@ -12045,10 +12025,6 @@
                                                     "type": "string",
                                                     "example": "CPP Programming"
                                                 },
-                                                "show": {
-                                                    "type": "boolean",
-                                                    "example": "true"
-                                                },
                                                 "color": {
                                                     "type": "string",
                                                     "example": "#000000"
@@ -12072,10 +12048,6 @@
                                                 "text": {
                                                     "type": "string",
                                                     "example": "Just for cpp nurds"
-                                                },
-                                                "show": {
-                                                    "type": "boolean",
-                                                    "example": "true"
                                                 }
                                             },
                                             "type": "object"
@@ -12101,14 +12073,6 @@
                                                     "type": "string",
                                                     "format": "byte",
                                                     "example": "assksineuug"
-                                                },
-                                                "reset": {
-                                                    "type": "boolean",
-                                                    "example": "true"
-                                                },
-                                                "stretch": {
-                                                    "type": "boolean",
-                                                    "example": "true"
                                                 }
                                             },
                                             "type": "object"
@@ -12126,10 +12090,6 @@
                                                 "shape": {
                                                     "type": "string",
                                                     "example": "circle"
-                                                },
-                                                "show_avatar": {
-                                                    "type": "boolean",
-                                                    "example": "true"
                                                 }
                                             },
                                             "type": "object"
@@ -12173,10 +12133,6 @@
                                                                 "type": "string",
                                                                 "example": "CPP Programming"
                                                             },
-                                                            "show": {
-                                                                "type": "boolean",
-                                                                "example": "true"
-                                                            },
                                                             "color": {
                                                                 "type": "string",
                                                                 "example": "#000000"
@@ -12200,10 +12156,6 @@
                                                             "text": {
                                                                 "type": "string",
                                                                 "example": "Just for cpp nurds"
-                                                            },
-                                                            "show": {
-                                                                "type": "boolean",
-                                                                "example": "true"
                                                             }
                                                         },
                                                         "type": "object"
@@ -12228,14 +12180,6 @@
                                                             "url": {
                                                                 "type": "url",
                                                                 "example": "/storage/example_image.jpg"
-                                                            },
-                                                            "reset": {
-                                                                "type": "boolean",
-                                                                "example": "true"
-                                                            },
-                                                            "stretch": {
-                                                                "type": "boolean",
-                                                                "example": "true"
                                                             }
                                                         },
                                                         "type": "object"
@@ -12252,10 +12196,6 @@
                                                             "shape": {
                                                                 "type": "string",
                                                                 "example": "circle"
-                                                            },
-                                                            "show_avatar": {
-                                                                "type": "boolean",
-                                                                "example": "true"
                                                             }
                                                         },
                                                         "type": "object"

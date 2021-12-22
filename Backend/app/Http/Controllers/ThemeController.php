@@ -31,7 +31,6 @@ class ThemeController extends Controller
  *       @OA\Property(property="title", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="CPP Programming"),
- *           @OA\Property(property="show", type="boolean", example="true"),
  *           @OA\Property(property="color", type="string", example="#000000"),
  *           @OA\Property(property="font", type="string", example="Gibson"),
  *           @OA\Property(property="font_weight", type="string", example="bold"),
@@ -40,7 +39,6 @@ class ThemeController extends Controller
  *       @OA\Property(property="description", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
- *           @OA\Property(property="show", type="boolean", example="true"),
  *         )
  *       ),
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
@@ -49,15 +47,12 @@ class ThemeController extends Controller
  *       @OA\Property(property="header_image", type="array",
  *         @OA\Items(
  *            @OA\Property(property="url", type="string",format="byte", example="assksineuug"),
- *            @OA\Property(property="reset", type="boolean", example="true"),
- *            @OA\Property(property="stretch", type="boolean", example="true"),
  *         )
  *       ),
  *       @OA\Property(property="avater", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="string",format="byte", example="aksmdnurjrj"),
  *              @OA\Property(property="shape", type="string", example="circle"),
- *              @OA\Property(property="show_avatar", type="boolean", example="true"),
  *           )
  *       ),
  *    )
@@ -73,7 +68,6 @@ class ThemeController extends Controller
  *       @OA\Property(property="title", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="CPP Programming"),
- *           @OA\Property(property="show", type="boolean", example="true"),
  *           @OA\Property(property="color", type="string", example="#000000"),
  *           @OA\Property(property="font", type="string", example="Gibson"),
  *           @OA\Property(property="font_weight", type="string", example="bold"),
@@ -82,7 +76,6 @@ class ThemeController extends Controller
  *       @OA\Property(property="description", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
- *           @OA\Property(property="show", type="boolean", example="true"),
  *         )
  *       ),
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
@@ -91,15 +84,12 @@ class ThemeController extends Controller
  *       @OA\Property(property="header_image", type="array",
  *         @OA\Items(
  *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
- *            @OA\Property(property="reset", type="boolean", example="true"),
- *            @OA\Property(property="stretch", type="boolean", example="true"),
  *         )
  *       ),
  *       @OA\Property(property="avater", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
  *              @OA\Property(property="shape", type="string", example="circle"),
- *              @OA\Property(property="show_avatar", type="boolean", example="true"),
  *           )
  *        )
  *     )
@@ -158,7 +148,6 @@ class ThemeController extends Controller
  *       @OA\Property(property="title", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="CPP Programming"),
- *           @OA\Property(property="show", type="boolean", example="true"),
  *           @OA\Property(property="color", type="string", example="#000000"),
  *           @OA\Property(property="font", type="string", example="Gibson"),
  *           @OA\Property(property="font_weight", type="string", example="bold"),
@@ -167,7 +156,6 @@ class ThemeController extends Controller
  *       @OA\Property(property="description", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
- *           @OA\Property(property="show", type="boolean", example="true"),
  *         )
  *       ),
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
@@ -176,15 +164,12 @@ class ThemeController extends Controller
  *       @OA\Property(property="header_image", type="array",
  *         @OA\Items(
  *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
- *            @OA\Property(property="reset", type="boolean", example="true"),
- *            @OA\Property(property="stretch", type="boolean", example="true"),
  *         )
  *       ),
  *       @OA\Property(property="avater", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
  *              @OA\Property(property="shape", type="string", example="circle"),
- *              @OA\Property(property="show_avatar", type="boolean", example="true"),
  *           )
  *        )
  *      )
