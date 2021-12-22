@@ -30,7 +30,9 @@ class Blog extends Model
         'allow_submittions',
         'submissions_page_title',
         'submissions_guidelines',
-        'user_id'
+        'user_id',
+        'share_likes',
+        'share_followings'
     ];
     /**
      * This is has relation between user and blog

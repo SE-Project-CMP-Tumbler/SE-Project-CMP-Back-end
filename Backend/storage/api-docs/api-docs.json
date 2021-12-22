@@ -1984,6 +1984,14 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "share_likes": {
+                                                    "type": "bool",
+                                                    "example": true
+                                                },
+                                                "share_followings": {
+                                                    "type": "bool",
+                                                    "example": true
+                                                },
                                                 "id": {
                                                     "type": "integer",
                                                     "example": 2026
@@ -2243,6 +2251,14 @@
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
+                                                            "share_likes": {
+                                                                "type": "bool",
+                                                                "example": true
+                                                            },
+                                                            "share_followings": {
+                                                                "type": "bool",
+                                                                "example": true
+                                                            },
                                                             "id": {
                                                                 "type": "integer",
                                                                 "example": 2026
@@ -2999,6 +3015,14 @@
                                         },
                                         "response": {
                                             "properties": {
+                                                "share_likes": {
+                                                    "type": "bool",
+                                                    "example": true
+                                                },
+                                                "share_followings": {
+                                                    "type": "bool",
+                                                    "example": true
+                                                },
                                                 "blog_id": {
                                                     "type": "integer",
                                                     "example": 2
@@ -3178,6 +3202,14 @@
                                     "allow_messages": {
                                         "type": "bool",
                                         "example": true
+                                    },
+                                    "share_likes": {
+                                        "type": "bool",
+                                        "example": true
+                                    },
+                                    "share_followings": {
+                                        "type": "bool",
+                                        "example": true
                                     }
                                 },
                                 "type": "object"
@@ -3204,6 +3236,14 @@
                                                 "blog_id": {
                                                     "type": "integer",
                                                     "example": 2
+                                                },
+                                                "share_likes": {
+                                                    "type": "bool",
+                                                    "example": true
+                                                },
+                                                "share_followings": {
+                                                    "type": "bool",
+                                                    "example": true
                                                 },
                                                 "blog_username": {
                                                     "type": "string",
@@ -3939,7 +3979,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": " The user can send blog username or  User email to follow another blog\r\n *    blog_value : blog_username or blog_email",
+                    "description": " The user can send blog username or  User email to follow another blog\n *    blog_value : blog_username or blog_email",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -4815,6 +4855,157 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/followings/{blog_id}": {
+            "get": {
+                "tags": [
+                    "Follow Blogs"
+                ],
+                "summary": "followings's blog",
+                "description": " get followings of blog",
+                "operationId": "following specificblog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "The id of the blog to check if he/she is following the current blog",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful  response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "total": 1,
+                                                        "count": 1,
+                                                        "per_page": 10,
+                                                        "current_page": 1,
+                                                        "total_pages": 1,
+                                                        "first_page_url": true,
+                                                        "last_page_url": 1,
+                                                        "next_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+                                                        "prev_page_url": "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"
+                                                    }
+                                                },
+                                                "followings": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.extension"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 1032
+                                                            },
+                                                            "is_followed": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
                                                 "msg": "Unauthorized"
                                             }
                                         }

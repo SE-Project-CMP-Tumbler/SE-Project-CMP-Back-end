@@ -28,7 +28,9 @@ class BlogSettingResource extends JsonResource
             "submissions_page_title" => $this->submissions_page_title,
             "submissions_guidelines" => $this->submissions_guidelines
          ],
-         "allow_messages" => $this->allow_messages
+         "allow_messages" => $this->allow_messages,
+         'share_likes' => $this->share_likes,
+         'share_followings' => $this->share_followings
 
         ];
     }

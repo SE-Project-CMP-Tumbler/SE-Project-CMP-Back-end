@@ -24,7 +24,9 @@ class BlogResource extends JsonResource
             'description' => $this->description,
             'is_primary' => $this->is_primary,
             'allow_ask' => $this->allow_ask ,
-            'allow_submittions' => $this->allow_submittions 
+            'allow_submittions' => $this->allow_submittions ,
+            'share_likes' => $this->share_likes,
+            'share_followings' => $this->share_followings
         ];
     }
 }

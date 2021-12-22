@@ -10,6 +10,7 @@ use App\Services\BlogService;
 use App\Http\Resources\BlogCollection;
 use App\Http\Resources\FollowBlogCollection;
 use App\Http\Resources\FollowingBlogCollection;
+use App\Http\Resources\FollowingOfBlogCollection ;
 use App\Http\Resources\CheckFollowBlogResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\BlogFollowRequest;
@@ -646,5 +647,80 @@ class FollowBlogController extends Controller
         $this->authorize('view', $blog);
         $followings = $blog->followings()->count();
         return $this->generalResponse(["followings" => $followings], "ok");
+    }
+    /**
+ * @OA\Get(
+ * path="/followings/{blog_id}",
+ * summary="followings's blog",
+ * description=" get followings of blog",
+ * operationId="following specificblog",
+ * tags={"Follow Blogs"},
+ * security={ {"bearer": {} }},
+ * @OA\Parameter(
+ *          name="blog_id",
+ *          description="The id of the blog to check if he/she is following the current blog",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="integer")),
+ * @OA\Response(
+ *    response=200,
+ *    description="Successful  response",
+ *    @OA\JsonContent(
+ *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *        @OA\Property(property="response", type="object",
+ *         @OA\Property(property="pagination",type="object",example={"total": 1,"count": 1,"per_page": 10, "current_page": 1,"total_pages": 1,"first_page_url": true,
+ *            "last_page_url": 1,
+ *           "next_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=3",
+ *           "prev_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"}),
+ *        @OA\Property(property="followings", type="array",
+ *                  @OA\Items(
+ *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
+ *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
+ *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
+ *                      @OA\Property(property="blog_id", type="integer", example=1032),
+ *                      @OA\Property(property="is_followed", type="boolean", example=true),
+ *                  )
+ *              ),
+ *    )
+ *       )
+ *     ),
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorized",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Unauthorized"})
+ *        )
+ *     ),
+ *   *  @OA\Response(
+ *    response=404,
+ *    description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+ *        )
+ *     ),
+ *  @OA\Response(
+ *    response=403,
+ *    description="Forbidden",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+ *        )
+ *     )
+ * )
+ */
+/**
+ * get  another followings of another blog
+  * @param \Request $request
+  * @param $blogId
+  * @return \json
+  */
+    public function getanotherFollowings(Request $request, $blogId)
+    {
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
+        $this->authorize('shareFollowings', $blog);
+        $followings = $blog->followings()->paginate(Config::PAGINATION_LIMIT);
+        $primaryBlog = $blogService->getPrimaryBlog($request->user());
+        return $this->generalResponse(new FollowingOfBlogCollection($followings, $primaryBlog->id), "200");
     }
 }

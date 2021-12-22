@@ -43,6 +43,8 @@ class BlogSettingController extends Controller
  *  @OA\JsonContent(
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
+ *           @OA\Property(property="share_likes", type="bool", example=true),
+ *          @OA\Property(property="share_followings", type="bool", example=true),
  *          @OA\Property(property="blog_id",type="integer", example=2),
  *          @OA\Property(property="blog_username",type="string", example="radwa"),
  *          @OA\Property(property="replies_settings", type="string", example="Everyone can reply"),
@@ -127,6 +129,8 @@ class BlogSettingController extends Controller
  *              @OA\Property(property="submissions_page_title", type="string", example="Submit a post"),
  *              @OA\Property(property="submissions_guidelines", type="string", example="To approve a submitted post it should be free of violence."),
  *              @OA\Property(property="allow_messages", type="bool", example=true),
+ *              @OA\Property(property="share_likes", type="bool", example=true),
+ *             @OA\Property(property="share_followings", type="bool", example=true),
  *     )),
  * @OA\Response(
  *  response=200,
@@ -135,6 +139,8 @@ class BlogSettingController extends Controller
  *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
  *      @OA\Property(property="response",type="object",
  *          @OA\Property(property="blog_id",type="integer", example=2),
+ *         @OA\Property(property="share_likes", type="bool", example=true),
+ *          @OA\Property(property="share_followings", type="bool", example=true),
  *          @OA\Property(property="blog_username",type="string", example="radwa"),
  *          @OA\Property(property="replies_settings", type="string", example="Everyone can reply"),
  *          @OA\Property(property="ask_settings", type="object",

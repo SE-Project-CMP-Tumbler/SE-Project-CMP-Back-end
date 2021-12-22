@@ -35,6 +35,8 @@ class BlogSettingRequest extends FormRequest
             'allow_ask' => 'boolean',
             'allow_anonymous_questions' => 'boolean',
             'ask_page_title' => 'string|min:3',
+            'share_likes' => 'boolean',
+            'share_followings' => 'boolean'
         ];
     }
 }

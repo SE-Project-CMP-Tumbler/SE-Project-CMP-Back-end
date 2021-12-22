@@ -36,6 +36,8 @@ class BlogController extends Controller
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *       @OA\Property(property="response", type="object",
+ *          @OA\Property(property="share_likes", type="bool", example=true),
+ *          @OA\Property(property="share_followings", type="bool", example=true),
  *          @OA\Property(property="id", type="integer", example=2026),
  *          @OA\Property(property="is_primary", type="boolean", example=false),
  *          @OA\Property(property="username", type="string", example="newinvestigations"),
@@ -104,6 +106,8 @@ class BlogController extends Controller
  *           "prev_page_url":  "http://127.0.0.1:8000/api/blogs/check_out_blogs?page=1"}),
  *           @OA\Property(property="blogs",type="array",
  *             @OA\Items(
+ *                      @OA\Property(property="share_likes", type="bool", example=true),
+ *                     @OA\Property(property="share_followings", type="bool", example=true),
  *                    @OA\Property(property="id", type="integer", example=2026),
  *                    @OA\Property(property="is_primary", type="boolean", example=false),
  *                    @OA\Property(property="username", type="string", example="newinvestigations"),
@@ -487,6 +491,7 @@ class BlogController extends Controller
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
+        $this->authorize('shareLikes', $blog);
         return $this->generalResponse(new PostCollection($blog->likes()->paginate(Config::PAGINATION_LIMIT)), "ok");
     }
 }

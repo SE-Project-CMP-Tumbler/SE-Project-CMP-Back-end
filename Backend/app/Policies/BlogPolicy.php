@@ -83,6 +83,28 @@ class BlogPolicy
     }
 
     /**
+     * Determine whether the user can get likes  models.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Blog  $blog
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function shareLikes(User $user, Blog $blog)
+    {
+        return $user->id == $blog->user_id || $blog->share_likes;
+    }
+    /**
+     * Determine whether the user can get followings  models.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Blog  $blog
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function shareFollowings(User $user, Blog $blog)
+    {
+        return $user->id == $blog->user_id || $blog->share_followings;
+    }
+    /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user

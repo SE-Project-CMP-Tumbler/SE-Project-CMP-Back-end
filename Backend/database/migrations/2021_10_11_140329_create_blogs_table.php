@@ -32,6 +32,8 @@ class CreateBlogsTable extends Migration
             $table->boolean('allow_ask')->default(false);
             $table->text('ask_page_title')->default("");
             $table->boolean('allow_anonymous_questions')->default(false);
+            $table->boolean('share_followings')->default(true);
+            $table->boolean('share_likes')->default(true);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id') ->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
