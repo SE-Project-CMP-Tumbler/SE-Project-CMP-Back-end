@@ -20,8 +20,6 @@ class Base64Handler
         if (strpos($base64data, ';base64') !== false) {
             list(, $base64data) = explode(';', $base64data);
             list(, $base64data) = explode(',', $base64data);
-        } else {
-            return false;
         }
 
         // strict mode filters for non-base64 alphabet characters

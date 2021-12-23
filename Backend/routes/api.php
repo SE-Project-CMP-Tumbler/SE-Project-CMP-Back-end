@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlockBlogController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\UploadFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
@@ -104,6 +105,16 @@ Route::post("/upload_base64_photo", [UploadFileController::class, 'uploadBase64I
 Route::post("/upload_base64_audio", [UploadFileController::class, 'uploadBase64Audio'])->middleware('auth:api');
 Route::post("/upload_base64_video", [UploadFileController::class, 'uploadBase64Video'])->middleware('auth:api');
 
+/*
+| Chat Routes
+*/
+Route::get("/chat/messages/{chat_room_id}", [ChatController::class, 'getAllMessages'])->middleware('auth:api');
+Route::post("/chat/new_message/{chat_room_id}", [ChatController::class, 'sendMessage'])->middleware('auth:api');
+Route::delete("/chat/clear_chat/{chat_room_id}", [ChatController::class, 'clearChat'])->middleware('auth:api');
+
+Route::get("/chat/chat_search", [ChatController::class, 'chatSearch'])->middleware('auth:api');
+Route::get("/chat/chat_id", [ChatController::class, 'getChatRoomGID'])->middleware('auth:api');
+Route::get("/chat/all_chats", [ChatController::class, 'getLastMessages'])->middleware('auth:api');
 
 /*
 | User Routes

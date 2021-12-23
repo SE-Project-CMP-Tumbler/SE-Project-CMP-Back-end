@@ -19,6 +19,7 @@
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
         "php-ffmpeg/php-ffmpeg": "^0.18.0",
+        "pusher/pusher-php-server": "^7.0",
         "zircote/swagger-php": "^3.2"
     },
     "require-dev": {
