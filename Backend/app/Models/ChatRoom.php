@@ -10,8 +10,8 @@ class ChatRoom extends Model
     use HasFactory;
 
      protected $fillable = [
-        'from_blog_username',
-        'to_blog_username',
+        'from_blog_id',
+        'to_blog_id',
         'last_cleared_id',
         'last_sent_id',
      ];
@@ -24,12 +24,12 @@ class ChatRoom extends Model
 
      public function sender()
      {
-         return $this->belongsTo(Blog::class, 'from_blog_username', 'username');
+         return $this->belongsTo(Blog::class, 'from_blog_id', 'id');
      }
 
      public function receiver()
      {
-         return $this->belongsTo(Blog::class, 'to_blog_username', 'username');
+         return $this->belongsTo(Blog::class, 'to_blog_id', 'id');
      }
 
      public function messages()

@@ -24,6 +24,8 @@ use Throwable;
 class UploadFileService
 {
 
+    protected $storageDriver = 'ftp';
+
     /**
      * upload image service
      *
@@ -41,10 +43,10 @@ class UploadFileService
             $uploadedImage = $uploadedImage[0];
         }
         $dirName = Str::random(40);
-        $newImage = $uploadedImage->store($dirName, 'ftp');
+        $newImage = $uploadedImage->store($dirName, $this->storageDriver);
         [$width, $height] = getimagesize($uploadedImage);
         $finalImage = new Image([
-            'url' => Storage::disk('ftp')->url($newImage),
+            'url' => Storage::disk($this->storageDriver)->url($newImage),
             'width' => $width,
             'height' => $height,
             'orignal_filename' => $uploadedImage->getClientOriginalName(),
@@ -106,7 +108,7 @@ class UploadFileService
             $uploadedImage = file_get_contents($imageUrl);
             $dirName = Str::random(40);
             $newImageName = Str::random(40) . '.' . $imageExt;
-            Storage::disk('ftp')->put($dirName . '/' . $newImageName, $uploadedImage);
+            Storage::disk($this->storageDriver)->put($dirName . '/' . $newImageName, $uploadedImage);
             [$width, $height] = getimagesizefromstring($uploadedImage);
             $finalImage = new Image([
                 'url' => env('APP_EXT_URL') . '/' . $dirName . '/' . $newImageName,
@@ -146,7 +148,7 @@ class UploadFileService
         $info = getimagesize($uploadedImage);
         $dirName = Str::random(40);
         $newImageName = Str::random(40) . '.' . explode("/", $info["mime"])[1];
-        Storage::disk('ftp')->put($dirName . '/' . $newImageName, file_get_contents($uploadedImage));
+        Storage::disk($this->storageDriver)->put($dirName . '/' . $newImageName, file_get_contents($uploadedImage));
         $finalImage = new Image([
             'url' => env('APP_EXT_URL') . '/' . $dirName . '/' . $newImageName,
             'width' => $info[0],
@@ -175,9 +177,9 @@ class UploadFileService
             $uploadedAudio = $uploadedAudio[0];
         }
         $dirName = Str::random(40);
-        $newAudio = $uploadedAudio->store($dirName, 'ftp');
+        $newAudio = $uploadedAudio->store($dirName, $this->storageDriver);
         $finalAudio = new Audio([
-            'url' => Storage::disk('ftp')->url($newAudio),
+            'url' => Storage::disk($this->storageDriver)->url($newAudio),
             'album_art_url' => false
         ]);
         return $finalAudio;
@@ -208,7 +210,7 @@ class UploadFileService
         $info = mime_content_type($b64Data);
         $dirName = Str::random(40);
         $newAudioName = Str::random(40) . '.' . explode("/", $info)[1];
-        Storage::disk('ftp')->put($dirName . '/' . $newAudioName, file_get_contents($uploadedAudio));
+        Storage::disk($this->storageDriver)->put($dirName . '/' . $newAudioName, file_get_contents($uploadedAudio));
         $finalAudio = new Audio([
             'url' => env('APP_EXT_URL') . '/' . $dirName . '/' . $newAudioName,
             'album_art_url' => false
@@ -233,8 +235,8 @@ class UploadFileService
             $uploadedVideo = $uploadedVideo[0];
         }
         $dirName = Str::random(40);
-        $newVideo = $uploadedVideo->store($dirName, 'ftp');
-        $newVideoPath = Storage::disk('ftp')->getAdapter()->getPathPrefix() . $newVideo;
+        $newVideo = $uploadedVideo->store($dirName, $this->storageDriver);
+        $newVideoPath = Storage::disk($this->storageDriver)->getAdapter()->getPathPrefix() . $newVideo;
 
         $ffprobe = FFMpeg::create([
             'ffmpeg.binaries' => exec('which ffmpeg'),
@@ -267,7 +269,7 @@ class UploadFileService
         }
 
         $finalVideo = new Video([
-            'url' => Storage::disk('ftp')->url($newVideo),
+            'url' => Storage::disk($this->storageDriver)->url($newVideo),
             'width' => $width,
             'height' => $height,
             // 'size' => $size,
@@ -334,7 +336,7 @@ class UploadFileService
         $info = mime_content_type($b64Data);
         $dirName = Str::random(40);
         $newVideoName = Str::random(40) . '.' . explode("/", $info)[1];
-        Storage::disk('ftp')->put($dirName . '/' . $newVideoName, file_get_contents($uploadedVideo));
+        Storage::disk($this->storageDriver)->put($dirName . '/' . $newVideoName, file_get_contents($uploadedVideo));
 
         $ffprobe = FFMpeg::create([
             'ffmpeg.binaries' => exec('which ffmpeg'),

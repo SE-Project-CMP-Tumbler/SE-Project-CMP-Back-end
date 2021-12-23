@@ -47,24 +47,24 @@ class NewChatMessageRequest extends FormRequest
                 'exists:chat_room_gids,id'
              ],
              // to set specificlly which of the logged in user blogs to be the sender else primary is used
-            'from_blog_username' => [
+            'from_blog_id' => [
                 "sometimes",
                 "string",
                 // this rule ensures that this blog belongs to the current loged in user
-                Rule::exists('blogs', 'username')->where(function ($query) {
+                Rule::exists('blogs', 'id')->where(function ($query) {
                     $query->where('user_id', Auth::user()->id)
-                        ->where('username', request()->from_blog_username);
+                        ->where('id', request()->from_blog_id);
                 })
             ],
             'text' => [
                 'sometimes',
                 "string"
             ],
-            'image_url' => [
+            'photo' => [
                 'sometimes',
                 "url"
             ],
-            'gif_url' => [
+            'gif' => [
                 'sometimes',
                 "url"
             ]

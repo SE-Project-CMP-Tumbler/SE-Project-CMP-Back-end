@@ -108,10 +108,10 @@ class Blog extends Model
     */
     public function chatRooms()
     {
-        return $this->hasMany(ChatRooms::class, 'from_blog_username', 'username');
+        return $this->hasMany(ChatRooms::class, 'from_blog_id', 'id');
     }
     /**
-    * the relation between blogs and chat message
+    * TODO the relation between blogs and chat message
     */
     public function messages()
     {

@@ -16,8 +16,8 @@ class ChatRoomGIDFactory extends Factory
     {
         $charRoomOne = ChatRoom::factory()->create();
         $charRoomTwo = ChatRoom::create([
-            "from_blog_username" => $charRoomOne->to_blog_username,
-            "to_blog_username" => $charRoomOne->from_blog_username,
+            "from_blog_id" => $charRoomOne->to_blog_id,
+            "to_blog_id" => $charRoomOne->from_blog_id,
             "last_cleared_id" => 0,
             "last_sent_id" => 0,
         ]);

@@ -17,8 +17,8 @@ class ChatRoomFactory extends Factory
         $fromBlog = Blog::factory()->create();
         $toBlog = Blog::factory()->create();
         return [
-            "from_blog_username" => $fromBlog->username,
-            "to_blog_username" => $toBlog->username,
+            "from_blog_id" => $fromBlog->id,
+            "to_blog_id" => $toBlog->id,
             "last_cleared_id" => 0,
             "last_sent_id" => 0,
         ];

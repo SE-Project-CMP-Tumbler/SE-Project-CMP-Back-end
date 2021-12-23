@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class ChatRoomRequest extends FormRequest
+class ChatSearchRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
 
@@ -28,6 +28,7 @@ class ChatRoomRequest extends FormRequest
     public function rules()
     {
         return [
+            "blog_username" => "required|string",
             'from_blog_id' => [
                 "required",
                 "integer",
@@ -36,12 +37,6 @@ class ChatRoomRequest extends FormRequest
                     $query->where('user_id', Auth::user()->id)
                         ->where('id', request()->from_blog_id);
                 })
-            ],
-            'to_blog_id' => [
-                "required",
-                "integer",
-                "different:from_blog_id",
-                "exists:blogs,id",
             ],
         ];
     }

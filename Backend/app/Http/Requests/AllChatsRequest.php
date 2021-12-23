@@ -28,13 +28,13 @@ class AllChatsRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_blog_username' => [
+            'from_blog_id' => [
                 "sometimes",
-                "string",
+                "integer",
                 // this rule ensures that this blog belongs to the current loged in user
-                Rule::exists('blogs', 'username')->where(function ($query) {
+                Rule::exists('blogs', 'id')->where(function ($query) {
                     $query->where('user_id', Auth::user()->id)
-                        ->where('username', request()->from_blog_username);
+                        ->where('id', request()->from_blog_id);
                 })
             ],
         ];

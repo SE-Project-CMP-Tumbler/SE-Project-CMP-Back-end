@@ -17,8 +17,8 @@ class ChatMessageResource extends JsonResource
         $sender = $this->chatRoom()->first()->sender;
         return [
             "text" => $this->text,
-            "image_url" => $this->image_url,
-            "gif_url" => $this->gif_url,
+            "photo" => $this->image_url,
+            "gif" => $this->gif_url,
             "read" => $this->read,
             "from_blog_username" => $sender->username,
             "from_blog_id" => $sender->id,
