@@ -31,7 +31,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -40,7 +40,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -301,7 +301,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -310,7 +310,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -559,7 +559,7 @@
                     {
                         "name": "period",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -568,7 +568,7 @@
                     {
                         "name": "rate",
                         "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\n *  ( 0 -> hourly) , (1 -> daily),\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1116,7 +1116,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post/Answer Request has different types depeneds on answer type :\n *     \n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "description": "Post/Answer Request has different types depeneds on answer type :\r\n *     \r\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2386,7 +2386,7 @@
                 "description": " Creating a secondary blog",
                 "operationId": "createBlog",
                 "requestBody": {
-                    "description": "\n *    title : the title of the new blog ,\n *    blog_username : the blog_username will be used in the blog URL,\n *    password : the password of the new blog if there's a one",
+                    "description": "\r\n *    title : the title of the new blog ,\r\n *    blog_username : the blog_username will be used in the blog URL,\r\n *    password : the password of the new blog if there's a one",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2986,7 +2986,7 @@
                     "Blogs"
                 ],
                 "summary": "Get the settings of a specific blog",
-                "description": "Returns list of blog settings\n * Note that: Response may have 1 or 2 attributes changing based on whether it's primary or secondry\n *  Extra Attributes for a primary blog settings:\n *      share_likes: bool to whether allow or not sharing likes on a specific blog's website,\n *      share_followings: bool to whether allow or not sharing followings on a specific blog's website\n *  Extra Attributes for a secondry blog settings:\n *      allow_password: bool to whether or not allow having a password on a specific secondry blog",
+                "description": "Returns list of blog settings\r\n * Note that: Response may have 1 or 2 attributes changing based on whether it's primary or secondry\r\n *  Extra Attributes for a primary blog settings:\r\n *      share_likes: bool to whether allow or not sharing likes on a specific blog's website,\r\n *      share_followings: bool to whether allow or not sharing followings on a specific blog's website\r\n *  Extra Attributes for a secondry blog settings:\r\n *      allow_password: bool to whether or not allow having a password on a specific secondry blog",
                 "operationId": "getBlogSettings",
                 "parameters": [
                     {
@@ -3165,7 +3165,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "The Request Body can have one or more key:value pairs, i.e the route can update a single settings option or many settings options via 1 request.\n *  The Request Body need to contain any of the following key value pairs, i.e the request body doesn't need to contain all the following example's key: value pairs.\n *  A request body containing 1 key: value pair will update its corresponding settings' option only.\n *  The key: value pairs specified in the request body are the pairs whose corresponding settings option will be updated only.",
+                    "description": "The Request Body can have one or more key:value pairs, i.e the route can update a single settings option or many settings options via 1 request.\r\n *  The Request Body need to contain any of the following key value pairs, i.e the request body doesn't need to contain all the following example's key: value pairs.\r\n *  A request body containing 1 key: value pair will update its corresponding settings' option only.\r\n *  The key: value pairs specified in the request body are the pairs whose corresponding settings option will be updated only.",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -3392,7 +3392,7 @@
                 "description": "retrieve all the blogs that start with given input",
                 "operationId": "chatSearch",
                 "requestBody": {
-                    "description": "\n     *     from_blog_id: the blog id that perform that search\n     *     blog_username: the blog username that sends the message",
+                    "description": "\r\n     *     from_blog_id: the blog id that perform that search\r\n     *     blog_username: the blog username that sends the message",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -3481,18 +3481,18 @@
                 "description": "retrieve the chat room id between two blogs",
                 "operationId": "getChatRoomGID",
                 "requestBody": {
-                    "description": "\n     *   from_blog_id: the blog id that sends the message\n     *   to_blog_id: the blog id to chat with",
+                    "description": "\r\n     *   from_blog_id: the blog id that sends the message\r\n     *   to_blog_id: the blog id to chat with",
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
                                     "from_blog_id": {
-                                        "type": "string",
-                                        "example": "helloblog"
+                                        "type": "int",
+                                        "example": "64"
                                     },
                                     "to_blog_id": {
-                                        "type": "string",
-                                        "example": "tumblerblog"
+                                        "type": "int",
+                                        "example": "73"
                                     }
                                 },
                                 "type": "object"
@@ -3602,15 +3602,15 @@
                 "description": "retrieve all the last messages ok two blogs -- in the notification bar",
                 "operationId": "getAllChats",
                 "requestBody": {
-                    "description": "\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
+                    "description": "\r\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
                     "required": false,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
                                     "from_blog_id": {
-                                        "type": "string",
-                                        "example": "helloblog"
+                                        "type": "int",
+                                        "example": "64"
                                     }
                                 },
                                 "type": "object"
@@ -3761,15 +3761,15 @@
                 "description": "retrieve all messages sent between the current user blog and the other chat_participant",
                 "operationId": "getAllMessages",
                 "requestBody": {
-                    "description": "\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
+                    "description": "\r\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
                     "required": false,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
                                     "from_blog_id": {
-                                        "type": "string",
-                                        "example": "helloblog"
+                                        "type": "int",
+                                        "example": "64"
                                     }
                                 },
                                 "type": "object"
@@ -3920,7 +3920,7 @@
                 "description": "send messages to the other chat_participant.",
                 "operationId": "sendMessage",
                 "requestBody": {
-                    "description": "\n     *   send one of the following types {text | gif | photo | text + gif | text + photo}\n     *   text: send a text message or empty\n     *   gif: the url of the sent gif\n     *   photo: the url of the sent photo\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
+                    "description": "\r\n     *   send one of the following types {text | gif | photo | text + gif | text + photo}\r\n     *   text: send a text message or empty\r\n     *   gif: the url of the sent gif\r\n     *   photo: the url of the sent photo\r\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -4083,15 +4083,15 @@
                 "description": "delete all messages in the chat room between this blog and the other chat_participant",
                 "operationId": "clearChatRoom",
                 "requestBody": {
-                    "description": "\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
+                    "description": "\r\n     *   from_blog_id: the blog id the user is using right now and default is its primary blog",
                     "required": false,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
                                     "from_blog_id": {
-                                        "type": "string",
-                                        "example": "helloblog"
+                                        "type": "int",
+                                        "example": "75"
                                     }
                                 },
                                 "type": "object"
@@ -4327,7 +4327,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": " The user can send blog username or  User email to follow another blog\n *    blog_value : blog_username or blog_email",
+                    "description": " The user can send blog username or  User email to follow another blog\r\n *    blog_value : blog_username or blog_email",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -5797,7 +5797,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "type: is a string parameter indicates which notification type to be recieved:\n *     like: a like on your post\n *     reply: a reply on your post\n *     follow: a new follower\n *     reblog: a reblog of your post\n *     ask: a new ask recieved\n *     answer: an answered ask that you had sent\n *     mentions_posts: get mentions in posts\n *     mentions_replies: get mentions in replies\n *     all: to get all type of notifications",
+                    "description": "type: is a string parameter indicates which notification type to be recieved:\r\n *     like: a like on your post\r\n *     reply: a reply on your post\r\n *     follow: a new follower\r\n *     reblog: a reblog of your post\r\n *     ask: a new ask recieved\r\n *     answer: an answered ask that you had sent\r\n *     mentions_posts: get mentions in posts\r\n *     mentions_replies: get mentions in replies\r\n *     all: to get all type of notifications",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -6974,7 +6974,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\n     *     in image type : at least one uplaoded image,\n     *     in chat type : chat_body is required ,chat_title is optional\n     *     in quote type:  quote_text is required, quote_body is optinal\n     *     in video type:  video is required , url_videos are optinal\n     *     in audio type: audio is required\n     *     in link type:  link is required\n     *     is general : all fields can be given , to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type : at least one uplaoded image,\r\n     *     in chat type : chat_body is required ,chat_title is optional\r\n     *     in quote type:  quote_text is required, quote_body is optinal\r\n     *     in video type:  video is required , url_videos are optinal\r\n     *     in audio type: audio is required\r\n     *     in link type:  link is required\r\n     *     is general : all fields can be given , to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -7385,7 +7385,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\n     *     in text type:description or title are required, at least one of them ,keep reading is optinal\n     *     in image type: at least one uplaoded image,\n     *     in chat type: chat_body is required, chat_title is optional\n     *     in quote type: quote_text is required, quote_body is optinal\n     *     in video type: video is required, url_videos are optinal\n     *     in audio type: audio is required\n     *     in link type: link is required\n     *     is general: all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type:description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type: at least one uplaoded image,\r\n     *     in chat type: chat_body is required, chat_title is optional\r\n     *     in quote type: quote_text is required, quote_body is optinal\r\n     *     in video type: video is required, url_videos are optinal\r\n     *     in audio type: audio is required\r\n     *     in link type: link is required\r\n     *     is general: all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -7724,7 +7724,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\n     *     in image type : at least one uplaoded image,\n     *     in quote type:  quote_text is required, quote_body is optinal\n     *     in video type:  video is required, url_videos are optinal\n     *     in link type: link is required\n     *     is general : all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type : <br>\r\n     *     text type :description or title are required, at least one of them ,keep reading is optinal <br>\r\n     *     image type : at least one uplaoded image, <br>\r\n     *     quote type:  quote_text is required, quote_body is optinal <br>\r\n     *     video type:  video is required, url_videos are optinal <br>\r\n     *     link type: link is required <br>\r\n     *     general type : all fields can be given, to be general at least two different field of types should given <br>",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -8418,7 +8418,7 @@
                 "description": "A blog change the post to be pinned",
                 "operationId": "pinPost",
                 "requestBody": {
-                    "description": "\n     *      blog_id: is the one of the logged in user blogs\n     *      post_id: is the post id the logged in user wants to pin in that blog",
+                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to pin in that blog",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -8532,7 +8532,7 @@
                 "description": "A blog change the post to be unpinned",
                 "operationId": "unpinPost",
                 "requestBody": {
-                    "description": "\n     *      blog_id: is the one of the logged in user blogs\n     *      post_id: is the post id the logged in user wants to unpin in that blog",
+                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to unpin in that blog",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -8646,7 +8646,7 @@
                 "description": "A blog delete his/her post",
                 "operationId": "changePostStatus",
                 "requestBody": {
-                    "description": "\n     *      blog_id: is the one of the logged in user blogs\n     *      post_id: is the post id the logged in user wants to change its status\n     *      post_status: is one of three types published, private or draft",
+                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to change its status\r\n     *      post_status: is one of three types published, private or draft",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -11719,7 +11719,7 @@
                     {
                         "name": "sort",
                         "in": "query",
-                        "description": "The sort method to retrieve the posts by. Allowed values for sort_type are:\n *          recent: the posts are retrieved sorted by the most recently published,\n *          top: the posts are retrieved sorted descendingly by the number of engagments and notes they got.\n * By default if no sort_type is specified, posts will be retrieved by the most recent order.\n * If sort_type took any value other than recent or top, be default the posts will be retrieved by the most recent order",
+                        "description": "The sort method to retrieve the posts by. Allowed values for sort_type are:\r\n *          recent: the posts are retrieved sorted by the most recently published,\r\n *          top: the posts are retrieved sorted descendingly by the number of engagments and notes they got.\r\n * By default if no sort_type is specified, posts will be retrieved by the most recent order.\r\n * If sort_type took any value other than recent or top, be default the posts will be retrieved by the most recent order",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -12789,7 +12789,7 @@
                     "Upload"
                 ],
                 "summary": "upload an external photo",
-                "description": "upload the image from imageUrl\n    * in the request body and get the url for that image back in the response",
+                "description": "upload the image from imageUrl\r\n    * in the request body and get the url for that image back in the response",
                 "operationId": "uploadExtPhoto",
                 "requestBody": {
                     "description": "imageUrl: is the url to fetch the image from",
@@ -13578,7 +13578,7 @@
                     "Upload"
                 ],
                 "summary": "upload an external video",
-                "description": "upload the video from videoUrl\n    * in the request body and get the url for that vidoe back in the response",
+                "description": "upload the video from videoUrl\r\n    * in the request body and get the url for that vidoe back in the response",
                 "operationId": "uploadExtVideo",
                 "requestBody": {
                     "description": "videoUrl: is the url to fetch the video from",
@@ -13912,7 +13912,7 @@
                 "description": " Creating a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user,\n *    age : The age of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -13949,7 +13949,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14002,7 +14002,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14051,7 +14051,7 @@
                 "description": " check if those Credentials are good to create a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
+                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14102,7 +14102,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14151,7 +14151,7 @@
                 "description": "user login",
                 "operationId": "loginuser",
                 "requestBody": {
-                    "description": "\n *    email : The email of the user ,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The email of the user ,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14178,7 +14178,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14231,7 +14231,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to login with a wrong email or password",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to login with a wrong email or password",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14280,7 +14280,7 @@
                 "description": " login using google ",
                 "operationId": "loginuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14301,7 +14301,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14373,7 +14373,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "description": "Unprocessable Entity\r\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14403,7 +14403,7 @@
                 "description": "Creating a new user using google",
                 "operationId": "signupuserwithgoogle",
                 "requestBody": {
-                    "description": "\n *    google_access_token : The access_token of the user's gmail account,\n *    blog_username : The blog_username will be used in the primary blog,\n *    age : The age of the new user",
+                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14434,7 +14434,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14487,7 +14487,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14792,7 +14792,7 @@
                 "description": "sending an email with a password reset link to the user",
                 "operationId": "emailverification",
                 "requestBody": {
-                    "description": "\n *    email : this is the same email that the user used to signup ",
+                    "description": "\r\n *    email : this is the same email that the user used to signup ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14979,7 +14979,7 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
+                    "description": "\r\n *    token : this is the same password reset token sent in the reset link url\r\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\r\n *    password : this is the new password,\r\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -15017,7 +15017,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -15119,7 +15119,7 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
+                    "description": "\r\n *    current_password : The current password of the  user,\r\n *    password : The new password of the  user,\r\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -15172,7 +15172,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
+                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: if the current password is invalid",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -15226,7 +15226,7 @@
                 "description": " Change a email of user",
                 "operationId": "changeemail",
                 "requestBody": {
-                    "description": "\n *    password : The password of the user,\n *    email : The  email of the  user",
+                    "description": "\r\n *    password : The password of the user,\r\n *    email : The  email of the  user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -15356,7 +15356,7 @@
                 "description": " delete the user account",
                 "operationId": "deleteuser",
                 "requestBody": {
-                    "description": "\n *    email : The  email of the  user,\n *    password : The password of the user",
+                    "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
