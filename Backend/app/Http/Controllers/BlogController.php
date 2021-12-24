@@ -528,4 +528,58 @@ class BlogController extends Controller
         $this->authorize('shareLikes', $blog);
         return $this->generalResponse(new PostCollection($blog->likes()->paginate(Config::PAGINATION_LIMIT)), "ok");
     }
+/**
+ * @OA\Get(
+ * path="/blog/info/{blog_username}",
+ * summary="Get general information of a specific blog",
+ * description="Returns the general information of a specific blog by specifying his/her username",
+ * operationId="getBlogInfo",
+ * tags={"Blogs"},
+ * @OA\Parameter(
+ *          name="blog_username",
+ *          description="The username of the blog whose information will be retrieved",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="string")),
+ * @OA\Response(
+ *  response=200,
+ *  description="Successful response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+ *       @OA\Property(property="response", type="object",
+ *          @OA\Property(property="share_likes", type="bool", example=true),
+ *          @OA\Property(property="share_followings", type="bool", example=true),
+ *          @OA\Property(property="id", type="integer", example=2026),
+ *          @OA\Property(property="is_primary", type="boolean", example=false),
+ *          @OA\Property(property="username", type="string", example="newinvestigations"),
+ *          @OA\Property(property="avatar", type="string", format="byte", example=""),
+ *          @OA\Property(property="avatar_shape", type="string", example="square"),
+ *          @OA\Property(property="header_image", type="string", format="byte", example=""),
+ *          @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *          @OA\Property(property="allow_ask", type="boolean", example=true),
+ *          @OA\Property(property="allow_submittions", type="boolean", example=true),
+ *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
+ *
+ * @OA\Response(
+ *  response=404,
+ *  description="Not found",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The blog username specified was not found"}),)),
+ * )
+ */
+    /**
+     * Retrieve information of a blog by his/her username
+     *
+     * @param string $blogUsername
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBlogByUsername($blogUsername)
+    {
+        $blog = Blog::where('username', $blogUsername)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "The blog username specified was not found", "404");
+        }
+        return $this->generalResponse(new BlogResource($blog), "ok");
+    }
 }
