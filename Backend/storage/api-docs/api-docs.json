@@ -2026,6 +2026,10 @@
                                                     "type": "boolean",
                                                     "example": true
                                                 },
+                                                "followed": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
                                                 "allow_submittions": {
                                                     "type": "boolean",
                                                     "example": true
@@ -2100,12 +2104,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -2290,6 +2289,10 @@
                                                                 "example": "My 1st Blog"
                                                             },
                                                             "allow_ask": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "followed": {
                                                                 "type": "boolean",
                                                                 "example": true
                                                             },
@@ -2568,6 +2571,10 @@
                                                                 "type": "string",
                                                                 "example": "My 1st Blog"
                                                             },
+                                                            "followed": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
                                                             "description": {
                                                                 "type": "string",
                                                                 "example": "This blog is a sketch of thoughts"
@@ -2717,6 +2724,10 @@
                                                             "title": {
                                                                 "type": "string",
                                                                 "example": "My 1st Blog"
+                                                            },
+                                                            "followed": {
+                                                                "type": "boolean",
+                                                                "example": true
                                                             },
                                                             "description": {
                                                                 "type": "string",
@@ -2978,6 +2989,122 @@
                         "bearer": []
                     }
                 ]
+            }
+        },
+        "/blog/info/{blog_username}": {
+            "get": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Get general information of a specific blog",
+                "description": "Returns the general information of a specific blog by specifying his/her username",
+                "operationId": "getBlogInfo",
+                "parameters": [
+                    {
+                        "name": "blog_username",
+                        "in": "path",
+                        "description": "The username of the blog whose information will be retrieved",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "share_likes": {
+                                                    "type": "bool",
+                                                    "example": true
+                                                },
+                                                "share_followings": {
+                                                    "type": "bool",
+                                                    "example": true
+                                                },
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2026
+                                                },
+                                                "is_primary": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "newinvestigations"
+                                                },
+                                                "avatar": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": ""
+                                                },
+                                                "avatar_shape": {
+                                                    "type": "string",
+                                                    "example": "square"
+                                                },
+                                                "header_image": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": ""
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "My 1st Blog"
+                                                },
+                                                "allow_ask": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "allow_submittions": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "This blog is a sketch of thoughts"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "The blog username specified was not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/blog_settings/{blog_id}": {
@@ -7724,7 +7851,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type : <br>\r\n     *     text type :description or title are required, at least one of them ,keep reading is optinal <br>\r\n     *     image type : at least one uplaoded image, <br>\r\n     *     quote type:  quote_text is required, quote_body is optinal <br>\r\n     *     video type:  video is required, url_videos are optinal <br>\r\n     *     link type: link is required <br>\r\n     *     general type : all fields can be given, to be general at least two different field of types should given <br>",
+                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type : at least one uplaoded image,\r\n     *     in quote type:  quote_text is required, quote_body is optinal\r\n     *     in video type:  video is required, url_videos are optinal\r\n     *     in link type: link is required\r\n     *     is general : all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
