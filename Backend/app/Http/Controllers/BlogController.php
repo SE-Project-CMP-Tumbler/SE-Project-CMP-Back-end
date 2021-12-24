@@ -23,6 +23,7 @@ class BlogController extends Controller
  * description="Returns the general information of a specific blog",
  * operationId="getBlog",
  * tags={"Blogs"},
+ *  security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="blog_id",
  *          description="The id of the blog whose information will be retrieved",

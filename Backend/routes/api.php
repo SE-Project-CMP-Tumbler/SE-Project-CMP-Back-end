@@ -34,7 +34,7 @@ Route::get('search_auto_complete/{word}', [SearchController::class,'recommendedW
 */
 Route::get('blog', [BlogController::class,'index'])->middleware('auth:api');
 Route::post('blog', [BlogController::class,'store'])->middleware('auth:api');
-Route::get('blog/{blog_id}', [BlogController::class,'show']);
+Route::get('blog/{blog_id}', [BlogController::class,'show'])->middleware('auth:api');
 Route::delete('blog/{blog_id}', [BlogController::class,'delete'])->middleware('auth:api');
 Route::get('blogs/likes/{blog_id}', [BlogController::class,'getLikeBlog'])->middleware('auth:api');
 Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog'])->middleware('auth:api');
