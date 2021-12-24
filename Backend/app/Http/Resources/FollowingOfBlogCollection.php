@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class FollowingOfBlogCollection extends ResourceCollection
@@ -27,7 +28,7 @@ class FollowingOfBlogCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return ['followings' => FollowingBlogResource::Collection($this->collection, $this->followerId),
+        return ['followings' => FollowingBlogResource::Collection($this->collection, $this->follow),
         'pagination' => [
             'total' => $this->total(),
             'count' => $this->count(),
@@ -41,4 +42,11 @@ class FollowingOfBlogCollection extends ResourceCollection
         ]
         ];
     }
+    protected $follow;
+
+    public function follow( $follow ){
+        $this->follow = $follow;
+        return $this;
+    }
+
 }

@@ -13,6 +13,7 @@ use App\Http\Resources\FollowingBlogCollection;
 use App\Http\Resources\FollowingOfBlogCollection ;
 use App\Http\Resources\CheckFollowBlogResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogFollowRequest;
 
 class FollowBlogController extends Controller
