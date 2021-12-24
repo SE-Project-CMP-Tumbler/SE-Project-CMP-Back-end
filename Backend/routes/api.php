@@ -14,6 +14,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,13 +116,13 @@ Route::post("/upload_base64_video", [UploadFileController::class, 'uploadBase64V
 /*
 | Chat Routes
 */
-Route::get("/chat/messages/{chat_room_id}", [ChatController::class, 'getAllMessages'])->middleware('auth:api');
+Route::post("/chat/messages/{chat_room_id}", [ChatController::class, 'getAllMessages'])->middleware('auth:api');
 Route::post("/chat/new_message/{chat_room_id}", [ChatController::class, 'sendMessage'])->middleware('auth:api');
 Route::delete("/chat/clear_chat/{chat_room_id}", [ChatController::class, 'clearChat'])->middleware('auth:api');
 
-Route::get("/chat/chat_search", [ChatController::class, 'chatSearch'])->middleware('auth:api');
-Route::get("/chat/chat_id", [ChatController::class, 'getChatRoomGID'])->middleware('auth:api');
-Route::get("/chat/all_chats", [ChatController::class, 'getLastMessages'])->middleware('auth:api');
+Route::post("/chat/chat_search", [ChatController::class, 'chatSearch'])->middleware('auth:api');
+Route::post("/chat/chat_id", [ChatController::class, 'getChatRoomGID'])->middleware('auth:api');
+Route::post("/chat/all_chats", [ChatController::class, 'getLastMessages'])->middleware('auth:api');
 
 /*
 | User Routes
