@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ChatMessageResource;
+use App\Http\Resources\LastChatMessageResource;
 use App\Http\Resources\BlogResource;
 use App\Http\Requests\ChatMessageRequest;
 use App\Http\Requests\ChatRoomRequest;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
 class ChatController extends Controller
 {
     /**
-     * @OA\Get(
+     * @OA\Post(
      *  path="/chat/chat_search",
      *  operationId="chatSearch",
      *  tags={"Chatting"},
@@ -97,7 +98,7 @@ class ChatController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *  path="/chat/chat_id",
      *  operationId="getChatRoomGID",
      *  tags={"Chatting"},
@@ -197,7 +198,7 @@ class ChatController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *  path="/chat/all_chats",
      *  operationId="getAllChats",
      *  tags={"Chatting"},
@@ -213,7 +214,10 @@ class ChatController extends Controller
      *  ),
      *  @OA\Response(
      *    response=200,
-     *    description="Successful Retrieval",
+     *    description="
+     *      Successful Retrieval
+     *      blog: is for the sender
+     *      freind: is for the receiver",
      *    @OA\JsonContent(
      *     @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
      *      @OA\Property(property="response", type="object",
@@ -227,7 +231,12 @@ class ChatController extends Controller
      *             @oA\property(property="blog_username", type="string", example="helloeverywhere"),
      *             @oA\property(property="blog_avatar", type="string", format="byte", example=""),
      *             @oA\property(property="blog_avatar_shape", type="string", example=""),
-     *             @oA\property(property="blog_title", type="string", example=""),),),
+     *             @oA\property(property="blog_title", type="string", example=""),
+     *             @oA\property(property="friend_id", type="integer", example=6),
+     *             @oA\property(property="friend_username", type="string", example="cppmainblog"),
+     *             @oA\property(property="friend_avatar", type="string", format="byte", example=""),
+     *             @oA\property(property="friend_avatar_shape", type="string", example=""),
+     *             @oA\property(property="friend_title", type="string", example=""),),),
      *         ),
      *        ),
      *  ),
@@ -280,14 +289,14 @@ class ChatController extends Controller
         foreach ($userBlogChatRooms as $chatRoom) {
             $lastchatRoomMessage = ChatMessage::where('id', $chatRoom->last_sent_id)->first();
             if ($lastchatRoomMessage) {
-                array_push($res["chat_messages"], new ChatMessageResource($lastchatRoomMessage));
+                array_push($res["chat_messages"], new LastChatMessageResource($lastchatRoomMessage));
             }
         }
         return $this->generalResponse($res, "ok", "200");
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *  path="/chat/messages/{chat_room_id}",
      *  operationId="getAllMessages",
      *  tags={"Chatting"},
@@ -520,7 +529,8 @@ class ChatController extends Controller
         ]);
 
         broadcast(new ChatMessageEvent($chatMessage, $request->chat_room_id))->toOthers();
-        return $this->generalResponse(new ChatMessageResource($chatMessage), "ok");
+        $res = ["chat_messages" => [new ChatMessageResource($chatMessage)]];
+        return $this->generalResponse($res, "ok");
     }
 
     /**
