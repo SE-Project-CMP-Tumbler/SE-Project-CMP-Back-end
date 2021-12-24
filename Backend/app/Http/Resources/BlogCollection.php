@@ -18,7 +18,7 @@ class BlogCollection extends ResourceCollection
      * @param  mixed  $resource
      * @return void
      */
-    public function __construct($resource, $followerId)
+    public function __construct($resource, $followerId = null)
     {
         // Ensure you call the parent constructor
         parent::__construct($resource);
