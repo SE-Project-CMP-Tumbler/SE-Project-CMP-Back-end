@@ -83,17 +83,10 @@ class BlogController extends Controller
         }
         $blogService = new BlogService();
         $blog = $blogService->findBlog($blogId);
-        $user = Auth::user();
-        if ($user != null) {
-            $primaryBlog =   $blogService->getPrimaryBlog($user);
-            $followerId = $primaryBlog->id;
-        } else {
-             $followerId = null;
-        }
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
-        return $this->generalResponse(new BlogResource($blog, $followerId), "ok");
+        return $this->generalResponse(new BlogResource($blog), "ok");
     }
  /**
  * @OA\Get(
@@ -159,14 +152,8 @@ class BlogController extends Controller
     {
         $user = Auth::user();
         $blogService = new BlogService();
-        if ($user != null) {
-            $primaryBlog =   $blogService->getPrimaryBlog($user);
-            $followerId = $primaryBlog->id;
-        } else {
-             $followerId = null;
-        }
         $query = $request->user()->blogs()->paginate(Config::PAGINATION_LIMIT);
-        return $this->generalResponse(new BlogCollection($query, $followerId), "ok");
+        return $this->generalResponse(new BlogCollection($query), "ok");
     }
 /**
  * @OA\Post(
@@ -368,14 +355,7 @@ class BlogController extends Controller
         $primaryBlog = $blogService->getPrimaryBlog($request->user());
         $followings = $primaryBlog->followings->pluck('id')->toArray();
         $query = Blog::whereNotIn('id', $myblogs)->whereNotIn('id', $followings) ->inRandomOrder()->paginate(Config::PAGINATION_LIMIT);
-        $user = Auth::user();
-        if ($user != null) {
-            $primaryBlog =   $blogService->getPrimaryBlog($user);
-            $followerId = $primaryBlog->id;
-        } else {
-             $primaryBlog = null;
-        }
-        return $this->generalResponse(new BlogCollection($query, $followerId), "ok");
+        return $this->generalResponse(new BlogCollection($query), "ok");
     }
 /**
  * @OA\Get(
@@ -440,13 +420,7 @@ class BlogController extends Controller
             ->paginate(Config::PAGINATION_LIMIT);
         $user = Auth::user();
         $blogService = new BlogService();
-        if ($user != null) {
-            $primaryBlog =   $blogService->getPrimaryBlog($user);
-            $followerId = $primaryBlog->id;
-        } else {
-             $primaryBlog = null;
-        }
-        return $this->generalResponse(new BlogCollection($trending, $followerId), "ok");
+        return $this->generalResponse(new BlogCollection($trending), "ok");
     }
 /**
  * @OA\Get(

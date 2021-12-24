@@ -722,6 +722,6 @@ class FollowBlogController extends Controller
         $this->authorize('shareFollowings', $blog);
         $followings = $blog->followings()->paginate(Config::PAGINATION_LIMIT);
         $primaryBlog = $blogService->getPrimaryBlog($request->user());
-        return $this->generalResponse(new FollowingOfBlogCollection($followings, $primaryBlog->id), "200");
+        return $this->generalResponse(new FollowingOfBlogCollection($followings), "200");
     }
 }

@@ -14,12 +14,11 @@ class FollowingBlogResource extends JsonResource
      * @param  mixed  $resource
      * @return void
      */
-    public function __construct($resource, $followerId)
+    public function __construct($resource)
     {
         // Ensure you call the parent constructor
         parent::__construct($resource);
         $this->resource = $resource;
-        $this->followerId = $followerId;
     }
     /**
      * Transform the resource into an array.

@@ -18,17 +18,16 @@ class BlogCollection extends ResourceCollection
      * @param  mixed  $resource
      * @return void
      */
-    public function __construct($resource, $followerId = null)
+    public function __construct($resource)
     {
         // Ensure you call the parent constructor
         parent::__construct($resource);
         $this->resource = $resource;
-        $this->followerId = $followerId;
     }
     public function toArray($request)
     {
         return [
-            "blogs" => BlogResource::Collection($this->collection, $this->followerId),
+            "blogs" => BlogResource::Collection($this->collection),
             'pagination' => [
                 'total' => $this->total(),
                 'count' => $this->count(),
