@@ -12,10 +12,23 @@ class BlogCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+    /**
+     * Create a new resource instance.
+     *
+     * @param  mixed  $resource
+     * @return void
+     */
+    public function __construct($resource, $followerId)
+    {
+        // Ensure you call the parent constructor
+        parent::__construct($resource);
+        $this->resource = $resource;
+        $this->followerId = $followerId;
+    }
     public function toArray($request)
     {
         return [
-            "blogs" => BlogResource::Collection($this->collection),
+            "blogs" => BlogResource::Collection($this->collection, $this->followerId),
             'pagination' => [
                 'total' => $this->total(),
                 'count' => $this->count(),

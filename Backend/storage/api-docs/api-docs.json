@@ -2026,6 +2026,10 @@
                                                     "type": "boolean",
                                                     "example": true
                                                 },
+                                                "followed": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
                                                 "allow_submittions": {
                                                     "type": "boolean",
                                                     "example": true
@@ -2100,12 +2104,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -2290,6 +2289,10 @@
                                                                 "example": "My 1st Blog"
                                                             },
                                                             "allow_ask": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "followed": {
                                                                 "type": "boolean",
                                                                 "example": true
                                                             },
@@ -2568,6 +2571,10 @@
                                                                 "type": "string",
                                                                 "example": "My 1st Blog"
                                                             },
+                                                            "followed": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
                                                             "description": {
                                                                 "type": "string",
                                                                 "example": "This blog is a sketch of thoughts"
@@ -2717,6 +2724,10 @@
                                                             "title": {
                                                                 "type": "string",
                                                                 "example": "My 1st Blog"
+                                                            },
+                                                            "followed": {
+                                                                "type": "boolean",
+                                                                "example": true
                                                             },
                                                             "description": {
                                                                 "type": "string",
