@@ -7,6 +7,7 @@ use App\Http\Misc\Helpers\Config;
 use App\Http\Misc\Helpers\Success;
 use App\Models\Blog;
 use App\Models\Like;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BlogCollection;
 use App\Http\Resources\PostCollection;
@@ -22,7 +23,6 @@ class BlogController extends Controller
  * description="Returns the general information of a specific blog",
  * operationId="getBlog",
  * tags={"Blogs"},
- * security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="blog_id",
  *          description="The id of the blog whose information will be retrieved",
@@ -46,6 +46,7 @@ class BlogController extends Controller
  *          @OA\Property(property="header_image", type="string", format="byte", example=""),
  *          @OA\Property(property="title", type="string", example="My 1st Blog"),
  *          @OA\Property(property="allow_ask", type="boolean", example=true),
+ *          @OA\Property(property="followed", type="boolean", example=true),
  *          @OA\Property(property="allow_submittions", type="boolean", example=true),
  *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
  *
@@ -81,10 +82,17 @@ class BlogController extends Controller
         }
         $blogService = new BlogService();
         $blog = $blogService->findBlog($blogId);
+        $user = Auth::user();
+        if ($user != null) {
+            $primaryBlog =   $blogService->getPrimaryBlog($user);
+            $followerId = $primaryBlog->id;
+        } else {
+             $followerId = null;
+        }
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
-        return $this->generalResponse(new BlogResource($blog), "ok");
+        return $this->generalResponse(new BlogResource($blog, $followerId), "ok");
     }
  /**
  * @OA\Get(
@@ -116,6 +124,7 @@ class BlogController extends Controller
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
  *                    @OA\Property(property="allow_ask", type="boolean", example=true),
+ *                    @OA\Property(property="followed", type="boolean", example=true),
  *                    @OA\Property(property="allow_submittions", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
@@ -147,8 +156,16 @@ class BlogController extends Controller
  */
     public function index(Request $request)
     {
+        $user = Auth::user();
+        $blogService = new BlogService();
+        if ($user != null) {
+            $primaryBlog =   $blogService->getPrimaryBlog($user);
+            $followerId = $primaryBlog->id;
+        } else {
+             $followerId = null;
+        }
         $query = $request->user()->blogs()->paginate(Config::PAGINATION_LIMIT);
-        return $this->generalResponse(new BlogCollection($query), "ok");
+        return $this->generalResponse(new BlogCollection($query, $followerId), "ok");
     }
 /**
  * @OA\Post(
@@ -313,6 +330,7 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *                    @OA\Property(property="followed", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
  *
@@ -349,7 +367,14 @@ class BlogController extends Controller
         $primaryBlog = $blogService->getPrimaryBlog($request->user());
         $followings = $primaryBlog->followings->pluck('id')->toArray();
         $query = Blog::whereNotIn('id', $myblogs)->whereNotIn('id', $followings) ->inRandomOrder()->paginate(Config::PAGINATION_LIMIT);
-        return $this->generalResponse(new BlogCollection($query), "ok");
+        $user = Auth::user();
+        if ($user != null) {
+            $primaryBlog =   $blogService->getPrimaryBlog($user);
+            $followerId = $primaryBlog->id;
+        } else {
+             $primaryBlog = null;
+        }
+        return $this->generalResponse(new BlogCollection($query, $followerId), "ok");
     }
 /**
  * @OA\Get(
@@ -377,6 +402,7 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *                    @OA\Property(property="followed", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
  *
@@ -411,7 +437,15 @@ class BlogController extends Controller
         $trending = Blog::withCount(['followers'])
             ->orderBy('followers_count', 'desc')
             ->paginate(Config::PAGINATION_LIMIT);
-        return $this->generalResponse(new BlogCollection($trending), "ok");
+        $user = Auth::user();
+        $blogService = new BlogService();
+        if ($user != null) {
+            $primaryBlog =   $blogService->getPrimaryBlog($user);
+            $followerId = $primaryBlog->id;
+        } else {
+             $primaryBlog = null;
+        }
+        return $this->generalResponse(new BlogCollection($trending, $followerId), "ok");
     }
 /**
  * @OA\Get(
