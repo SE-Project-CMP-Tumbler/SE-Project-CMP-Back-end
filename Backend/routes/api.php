@@ -42,6 +42,8 @@ Route::get('blogs/trending', [BlogController::class,'getTrendingBlog'])->middlew
 Route::get('blog_settings/{blog_id}', [BlogSettingController::class,'show'])->middleware('auth:api');
 Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->middleware('auth:api');
 Route::get('blog_activity/{blog_id}', [ActivityController::class,'getActivityBlog'])->middleware('auth:api');
+Route::get('blog/info/{blog_username}', [BlogController::class, 'getBlogByUsername']);
+
 /*
 | Follow Blog Routes
 */
@@ -91,6 +93,11 @@ Route::get('posts/radar', [PostFilterController::class, 'getRadarPost']);
 Route::put('posts/pin', [PostController::class, 'pinPost'])->middleware('auth:api');
 Route::put('posts/unpin', [PostController::class, 'unpinPost'])->middleware('auth:api');
 Route::put('posts/change_status', [PostController::class, 'changePostStatus'])->middleware('auth:api');
+
+/*
+| Submissions Routes
+*/
+Route::post('post/submission/{blog_id}', [PostController::class, 'createSubmission'])->middleware('auth:api');
 
 /*
 | Uploads Routes
