@@ -124,4 +124,13 @@ class Blog extends Model
     {
         return $this->hasMany(Reply::class, 'blog_id', 'id');
     }
+    /**
+     * Retrieve list of submissions posts requested to the blog.
+     *
+     * @return \Post[]
+     */
+    public function submissionPosts()
+    {
+        return $this->belongsToMany(Post::class, 'submissions', 'reciever_id', 'post_id');
+    }
 }

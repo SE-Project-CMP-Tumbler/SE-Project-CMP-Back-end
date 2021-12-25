@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\BlogService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TagResource extends JsonResource
@@ -14,10 +15,14 @@ class TagResource extends JsonResource
      */
     public function toArray($request)
     {
+        $blogService = new BlogService();
+        $isFollowed = $blogService->checkIsFollowingTag($this->description);
         return [
             'tag_description' => $this->description,
             'tag_image' => $this->image,
-            'posts_count' => $this->posts_count
+            'posts_count' => $this->posts_count,
+            "followed" => $isFollowed,
+            "followers_number" => $this->followers()->count()
         ];
     }
 }

@@ -45,7 +45,7 @@ Route::get('blogs/trending', [BlogController::class,'getTrendingBlog'])->middlew
 Route::get('blog_settings/{blog_id}', [BlogSettingController::class,'show'])->middleware('auth:api');
 Route::put('blog_settings/{blog_id}', [BlogSettingController::class,'update'])->middleware('auth:api');
 Route::get('blog_activity/{blog_id}', [ActivityController::class,'getActivityBlog'])->middleware('auth:api');
-Route::get('blog/info/{blog_username}', [BlogController::class, 'getBlogByUsername']);
+Route::get('blog/info/{blog_username}', [BlogController::class, 'getBlogByUsername'])->middleware('auth:api');
 
 /*
 | Follow Blog Routes
@@ -101,6 +101,7 @@ Route::put('posts/change_status', [PostController::class, 'changePostStatus'])->
 | Submissions Routes
 */
 Route::post('post/submission/{blog_id}', [PostController::class, 'createSubmission'])->middleware('auth:api');
+Route::get('post/submission/{blog_id}', [PostController::class, 'getSubmissions'])->middleware('auth:api');
 
 /*
 | Uploads Routes
@@ -146,8 +147,8 @@ Route::put('/change_password', [UserController::class,'changePassword'])->name('
 | Tags Routes
 */
 Route::post('/tag/data/{post_id}/{tag_description}', [TagController::class,'store'])->middleware('auth:api');
-Route::get('/tag/data/{tag_description}', [TagController::class,'show']);
-Route::get('/tag/is_following/{tagDescription}', [TagController::class,'checkIsFollowing'])->middleware('auth:api');
+Route::get('/tag/data/{tag_description}', [TagController::class,'show'])->middleware('auth:api');
+Route::get('/tag/is_following/{tag_description}', [TagController::class,'checkIsFollowing'])->middleware('auth:api');
 Route::get('/tag/trending', [TagController::class,'index']);
 Route::get('/tag/suggesting', [TagController::class,'getSuggestions'])->middleware('auth:api');
 

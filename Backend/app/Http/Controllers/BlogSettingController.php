@@ -96,7 +96,6 @@ class BlogSettingController extends Controller
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
-        $this->authorize('view', $blog);
         return  $this->generalResponse(new BlogSettingResource($blog));
     }
 /**

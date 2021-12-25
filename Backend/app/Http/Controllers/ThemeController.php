@@ -63,7 +63,6 @@ class ThemeController extends Controller
  *    @OA\JsonContent(
  *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
- *       @OA\Property(property="name", type="string", example="mycppblog"),
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
  *       @OA\Property(property="title", type="array",
  *         @OA\Items(
@@ -143,7 +142,6 @@ class ThemeController extends Controller
  *    @OA\JsonContent(
  *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
- *       @OA\Property(property="name", type="string", example="mycppblog"),
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
  *       @OA\Property(property="title", type="array",
  *         @OA\Items(
