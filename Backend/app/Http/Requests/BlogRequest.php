@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Misc\Traits\WebServiceResponse;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Misc\Helpers\Errors;
 
 class BlogRequest extends FormRequest
 {
@@ -26,9 +27,20 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'blog_username' => 'required|min:3',
+            'blog_username' => 'required|min:3|regex:/^[a-zA-Z0-9-]+$/u',
             'title' => 'required|min:3',
             'password' => 'min:3'
+        ];
+    }
+    /**
+ * Get the error messages for the defined validation rules.
+ *
+ * @return array
+ */
+    public function messages()
+    {
+        return [
+        'blog_username.regex' => Errors::EMAIL_INVALID_FORMAT,
         ];
     }
 }

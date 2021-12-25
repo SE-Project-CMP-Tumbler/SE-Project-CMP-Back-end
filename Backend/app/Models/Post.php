@@ -55,4 +55,20 @@ class Post extends Model
     {
         return $this->belongsToMany(Blog::class, 'likes', 'post_id', 'blog_id');
     }
+    /**
+     * Get the List of Blogs liked this post.
+     *
+     * @return \Blog[]
+     */
+    public function likes($limit)
+    {
+        return Like::where('post_id', $this->id)->latest()->paginate($limit);
+    }
+    /**
+    * the relation between post and replies
+    */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'post_id', 'id');
+    }
 }

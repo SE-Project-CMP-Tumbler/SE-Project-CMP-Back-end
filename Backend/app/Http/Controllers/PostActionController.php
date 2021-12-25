@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Blog;
+use App\Models\Reply;
+use App\Models\Like;
+use App\Http\Resources\ReplyResource;
 
 class PostActionController extends Controller
 {
@@ -44,9 +49,9 @@ class PostActionController extends Controller
  *            @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
  *            @OA\Property(property="blog_id", type="integer", example=1032),
  *            @OA\Property(property="followed", type="boolean", example=false),
- *            @OA\Property(property="reply_text", type="string", example="this is my last reply"),
- *            @OA\Property(property="reply_time", type="date-time", example="02-02-2021"),
  *            @OA\Property(property="reply_id", type="integer", example=5),
+ *             @OA\Property(property="reply_time", type="date-time", example="02-02-2012"),
+ *              @OA\Property(property="reply_text", type="string", example="What an amazing post!"), 
  *          )
  *       ),
  *    ),
@@ -74,6 +79,32 @@ class PostActionController extends Controller
  * )
  */
 
+    /**
+     * add a reply on a post
+     *
+     * @param int $post_id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addReply($post_id, Request $request)
+    {
+        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+            return $this->generalResponse("", "The post Id should be numeric.", "422");
+        }
+
+        $blog = Post::where('id', $post_id)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This post id is not found.", "404");
+        }
+
+        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
+        $reply = Reply::create([
+            'post_id' => $post_id,
+            'blog_id' => $blog_id,
+            'description' => $request->reply_text
+        ]);
+        return $this->generalResponse(["blog_object" => new ReplyResource($reply)], "ok");
+    }
 
  /**
  * @OA\Post(
@@ -116,6 +147,35 @@ class PostActionController extends Controller
  * )
  */
 
+    /**
+     * add a like on a post
+     *
+     * @param int $post_id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addLike($post_id, Request $request)
+    {
+        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+            return $this->generalResponse("", "The post Id should be numeric.", "422");
+        }
+
+        $blog = Post::where('id', $post_id)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This post id is not found.", "404");
+        }
+
+        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
+        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->first();
+        if ($like) {
+            return $this->generalResponse("", "Forbidden", "403");
+        }
+        Like::create([
+            'post_id' => $post_id,
+            'blog_id' => $blog_id
+        ]);
+        return $this->generalResponse("", "ok");
+    }
  /**
  * @OA\Get(
  * path="/post/like/{blog_id}/{post_id}",
@@ -168,7 +228,39 @@ class PostActionController extends Controller
  *  ),
  * )
  */
+    /**
+     * check if a blog likes a post
+     *
+     * @param int $blog_id
+     * @param int $post_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkLiked($blog_id, $post_id)
+    {
+        if (preg_match('(^[0-9]+$)', $blog_id) == false) {
+            return $this->generalResponse("", "The blog Id should be numeric.", "422");
+        }
 
+        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+            return $this->generalResponse("", "The post Id should be numeric.", "422");
+        }
+
+        $blog = Blog::where('id', $blog_id)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This blog id is not found.", "404");
+        }
+
+        $blog = Post::where('id', $post_id)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This post id is not found.", "404");
+        }
+
+        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->first();
+        if (empty($like)) {
+            return $this->generalResponse(["like_status" => false], "ok", "200");
+        }
+        return $this->generalResponse(["like_status" => true], "ok", "200");
+    }
  /**
  * @OA\Delete(
  * path="/post/reply/{reply_id}",
@@ -216,7 +308,30 @@ class PostActionController extends Controller
  *  ),
  * )
  */
+    /**
+     * delete a reply on a post
+     *
+     * @param int $reply_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteReply($reply_id)
+    {
+        if (preg_match('(^[0-9]+$)', $reply_id) == false) {
+            return $this->generalResponse("", "The reply Id should be numeric.", "422");
+        }
 
+        $reply = Reply::where('id', $reply_id)->first();
+        if (empty($reply)) {
+            return $this->generalResponse("", "This reply id is not found.", "404");
+        }
+
+
+        $reply = Reply::find($reply_id)->delete();
+        if (empty($reply)) {
+            return $this->generalResponse("", "not found", "404");
+        }
+        return $this->generalResponse("", "ok", "200");
+    }
 
  /**
  * @OA\Delete(
@@ -264,4 +379,29 @@ class PostActionController extends Controller
  *  )
  * )
  */
+    /**
+     * delete a like on a post
+     *
+     * @param int $post_id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteLike($post_id, Request $request)
+    {
+        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+            return $this->generalResponse("", "The post Id should be numeric.", "422");
+        }
+
+        $blog = Post::where('id', $post_id)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This post id is not found.", "404");
+        }
+
+        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
+        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->delete();
+        if (empty($like)) {
+            return $this->generalResponse("", "not found", "404");
+        }
+        return $this->generalResponse("", "ok", "200");
+    }
 }

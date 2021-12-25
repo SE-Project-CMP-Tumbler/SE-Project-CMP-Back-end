@@ -91,4 +91,26 @@ class PostPolicy
     {
         return $post->blog->user_id == $user->id;
     }
+
+    /**
+     *
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function caReply(User $user, Post $post)
+    {
+        //check if he is the owner
+        
+        //check everyone
+
+        //check 2-way follow in 1-week
+
+        //check he follows me
+
+
+
+        return $post->blog->user_id == $user->id;
+    }
 }

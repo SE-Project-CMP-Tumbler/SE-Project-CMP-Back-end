@@ -26,7 +26,7 @@ class UserGoogleRegisterRequest extends FormRequest
     {
         return [
             'google_access_token' => 'required',
-            'blog_username' => 'required',
+            'blog_username' => 'required|regex:/^[a-zA-Z0-9-]+$/u',
             'age' => 'required|integer|min:13|max:130',
         ];
     }
@@ -39,6 +39,7 @@ class UserGoogleRegisterRequest extends FormRequest
     {
         return [
         'blog_username.required' => Errors::MISSING_BLOGNAME,
+        'blog_username.regex' => Errors::EMAIL_INVALID_FORMAT,
         'age.required' => Errors::MISSING_AGE,
         'age.integer' => Errors::INVALID_AGE,
         'age.min' => Errors::MIN_AGE,
