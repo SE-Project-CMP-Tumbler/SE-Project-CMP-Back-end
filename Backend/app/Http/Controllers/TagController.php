@@ -141,6 +141,7 @@ class TagController extends Controller
  * summary="Get data of a specific tag",
  * description="Returns data of a specific tag",
  * operationId="getTagData",
+ * security={ {"bearer": {} }},
  * tags={"Tags"},
  * @OA\Parameter(
  *          name="tag_description",
@@ -159,7 +160,8 @@ class TagController extends Controller
  *          @OA\Property(property="tag_description",type="string",example="books"),
  *          @OA\Property(property="tag_image",type="string", format="byte", example=""),
  *          @OA\Property(property="followed",type="bool", example=false),
- *          @OA\Property(property="followers_number",type="integer", example=1026),)),),
+ *          @OA\Property(property="followers_number",type="integer", example=1026),
+ *          @OA\Property(property="posts_count",type="integer", example=16),)),),
  *
  *  @OA\Response(
  *    response=404,
@@ -179,10 +181,10 @@ class TagController extends Controller
      * @param string $tag_description
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($tag_description)
+    public function show($tagDescription)
     {
         $tag = Tag::withCount('posts')
-            ->where('description', $tag_description)
+            ->where('description', $tagDescription)
             ->first();
 
         if (empty($tag)) {
@@ -318,7 +320,9 @@ class TagController extends Controller
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),
- *                  @OA\Property(property="posts_count",type="int",example=12),),),),),),
+ *                  @OA\Property(property="posts_count",type="int",example=12),
+ *                  @OA\Property(property="followed",type="bool", example=false),
+ *                  @OA\Property(property="followers_number",type="integer", example=1026),),),),),),
  *
  *  @OA\Response(
  *    response=404,
@@ -373,7 +377,9 @@ class TagController extends Controller
  *              @OA\Items(
  *                  @OA\Property(property="tag_description",type="string",example="books"),
  *                  @OA\Property(property="tag_image",type="string",format="byte",example=""),
- *                  @OA\Property(property="posts_count",type="int",example=12),),),),),),
+ *                  @OA\Property(property="posts_count",type="int",example=12),
+ *                  @OA\Property(property="followed",type="bool", example=false),
+ *                  @OA\Property(property="followers_number",type="integer", example=1026),),),),),),
  *
  *  @OA\Response(
  *    response=401,

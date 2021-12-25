@@ -138,7 +138,13 @@ class BlogService
      */
     public function checkIsFollowingTag($tagDescription)
     {
-        $primaryBlog = $this->getPrimaryBlog(auth()->user());
+        $user = auth('api')->user();
+        if (empty($user)) {
+            // if non authenticated route is using this function
+            // We'll return then that the guest is not following the tag
+            return false;
+        }
+        $primaryBlog = $this->getPrimaryBlog($user);
         $followRelation = BlogFollowTag::where('blog_id', $primaryBlog->id)
             ->where('tag_description', $tagDescription)
             ->first();

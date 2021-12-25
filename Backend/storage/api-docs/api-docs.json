@@ -2104,7 +2104,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -3104,7 +3109,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/blog_settings/{blog_id}": {
@@ -3512,7 +3522,7 @@
             }
         },
         "/chat/chat_search": {
-            "get": {
+            "post": {
                 "tags": [
                     "Chatting"
                 ],
@@ -3601,7 +3611,7 @@
             }
         },
         "/chat/chat_id": {
-            "get": {
+            "post": {
                 "tags": [
                     "Chatting"
                 ],
@@ -3722,7 +3732,7 @@
             }
         },
         "/chat/all_chats": {
-            "get": {
+            "post": {
                 "tags": [
                     "Chatting"
                 ],
@@ -3747,7 +3757,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful Retrieval",
+                        "description": "\r\n     *      Successful Retrieval\r\n     *      blog: is for the sender\r\n     *      freind: is for the receiver",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3799,6 +3809,27 @@
                                                                 "example": ""
                                                             },
                                                             "blog_title": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "friend_id": {
+                                                                "type": "integer",
+                                                                "example": 6
+                                                            },
+                                                            "friend_username": {
+                                                                "type": "string",
+                                                                "example": "cppmainblog"
+                                                            },
+                                                            "friend_avatar": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "friend_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "friend_title": {
                                                                 "type": "string",
                                                                 "example": ""
                                                             }
@@ -3881,7 +3912,7 @@
             }
         },
         "/chat/messages/{chat_room_id}": {
-            "get": {
+            "post": {
                 "tags": [
                     "Chatting"
                 ],
@@ -7680,14 +7711,14 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Get posts of blog which are submitted",
-                "description": "A blog get submitted posts",
+                "summary": "Get posts submitted to one of the authenticated user's blogs",
+                "description": "A blog gets the posts requested from other blogs to be submitted on his/her profile.",
                 "operationId": "getsubmissionposts",
                 "parameters": [
                     {
                         "name": "blog_id",
                         "in": "path",
-                        "description": "Blog_id ",
+                        "description": "The id of the blog who will retrieve the submissions requested on his/her profile.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -7816,7 +7847,7 @@
                                             "type": "object",
                                             "example": {
                                                 "status": "404",
-                                                "msg": "post is not found"
+                                                "msg": "The Specified Blog id was not found"
                                             }
                                         }
                                     },
@@ -7836,14 +7867,14 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "sumbit new post to another blog",
-                "description": "A blog can submit a post",
-                "operationId": "createpost",
+                "summary": "Sumbit new post to another blog",
+                "description": "The authenticated user's primary blog requests to submit a post on another's blog profile",
+                "operationId": "createSubmissionPost",
                 "parameters": [
                     {
                         "name": "blog_id",
                         "in": "path",
-                        "description": "blog_id who is submited ",
+                        "description": "The id of the blog who recieves the submission request.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -7851,23 +7882,24 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type : at least one uplaoded image,\r\n     *     in quote type:  quote_text is required, quote_body is optinal\r\n     *     in video type:  video is required, url_videos are optinal\r\n     *     in link type: link is required\r\n     *     is general : all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type : <br>\r\n     *     text type :description or title are required, at least one of them ,keep reading is optinal <br>\r\n     *     image type : at least one uplaoded image <br>\r\n     *     quote type:  quote_text is required, quote_body is optinal <br>\r\n     *     video type:  video is required, url_videos are optinal <br>\r\n     *     link type: link is required <br>\r\n     *     general type : all fields can be given, to be general at least two different field of types should given <br>",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
                                     "post_status",
-                                    "post_type"
+                                    "post_type",
+                                    "post_body"
                                 ],
                                 "properties": {
                                     "post_status": {
                                         "type": "string",
-                                        "example": "published"
+                                        "example": "submission"
                                     },
                                     "post_time": {
                                         "type": "date_time",
-                                        "example": "2012-02-30"
+                                        "example": "2021-02-15"
                                     },
                                     "post_type": {
                                         "type": "string",
@@ -11774,6 +11806,10 @@
                                                 "followers_number": {
                                                     "type": "integer",
                                                     "example": 1026
+                                                },
+                                                "posts_count": {
+                                                    "type": "integer",
+                                                    "example": 16
                                                 }
                                             },
                                             "type": "object"
@@ -11822,7 +11858,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/tag/posts/{tag_description}?sort=sort_type": {
@@ -12091,6 +12132,14 @@
                                                             "posts_count": {
                                                                 "type": "int",
                                                                 "example": 12
+                                                            },
+                                                            "followed": {
+                                                                "type": "bool",
+                                                                "example": false
+                                                            },
+                                                            "followers_number": {
+                                                                "type": "integer",
+                                                                "example": 1026
                                                             }
                                                         },
                                                         "type": "object"
@@ -12227,6 +12276,14 @@
                                                             "posts_count": {
                                                                 "type": "int",
                                                                 "example": 12
+                                                            },
+                                                            "followed": {
+                                                                "type": "bool",
+                                                                "example": false
+                                                            },
+                                                            "followers_number": {
+                                                                "type": "integer",
+                                                                "example": 1026
                                                             }
                                                         },
                                                         "type": "object"
@@ -12303,10 +12360,6 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "name": {
-                                                    "type": "string",
-                                                    "example": "mycppblog"
-                                                },
                                                 "theme-id": {
                                                     "type": "int",
                                                     "example": "123456789"
@@ -12592,10 +12645,6 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "name": {
-                                                    "type": "string",
-                                                    "example": "mycppblog"
-                                                },
                                                 "theme-id": {
                                                     "type": "int",
                                                     "example": "123456789"
