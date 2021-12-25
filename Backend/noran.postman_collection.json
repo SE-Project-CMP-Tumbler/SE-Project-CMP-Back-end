@@ -495,6 +495,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "show by username",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog/info/NoranHany",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"info",
+								"NoranHany"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -504,6 +544,16 @@
 				{
 					"name": "store",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -522,14 +572,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/tag/data/3/scrum",
+							"raw": "{{host}}/tag/data/295/scrum",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"tag",
 								"data",
-								"3",
+								"295",
 								"scrum"
 							]
 						}
@@ -537,11 +587,18 @@
 					"response": []
 				},
 				{
-					"name": "index",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "show",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -555,10 +612,6 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{host}}/tag/data/scrum",
 							"host": [
@@ -600,13 +653,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/tag/trending",
+							"raw": "{{host}}/tag/trending?page=3",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"tag",
 								"trending"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3"
+								}
 							]
 						}
 					},
@@ -1352,7 +1411,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"post_body\": \"<p> Horaaaaaaaaaaaaaay! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"published\",\r\n    \"post_time\": \"2021-12-21\"\r\n}",
+							"raw": "{\r\n    \"post_body\": \"<p> This post is private </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"private\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1360,13 +1419,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/post/202",
+							"raw": "{{host}}/post/90000",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"202"
+								"90000"
 							]
 						}
 					},
@@ -2388,6 +2447,95 @@
 						"method": "GET",
 						"header": [],
 						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Submissions",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p> mega gega kilo! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"submission\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/submission/407",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"submission",
+								"407"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/submission/407",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"submission",
+								"407"
+							]
+						}
 					},
 					"response": []
 				}

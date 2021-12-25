@@ -117,4 +117,13 @@ class Blog extends Model
     {
         return $this->hasMany(ChatMessage::class, 'from_blog_username', 'username');
     }
+    /**
+     * Retrieve list of submissions posts requested to the blog.
+     *
+     * @return \Post[]
+     */
+    public function submissionPosts()
+    {
+        return $this->belongsToMany(Post::class, 'submissions', 'reciever_id', 'post_id');
+    }
 }

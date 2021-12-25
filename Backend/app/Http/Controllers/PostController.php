@@ -12,7 +12,9 @@ use App\Models\Blog;
 use App\Models\Post;
 use App\Models\PostMentionBlog;
 use App\Models\PostTag;
+use App\Models\Submission;
 use App\Models\Tag;
+use App\Services\BlogService;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 
@@ -485,7 +487,7 @@ class PostController extends Controller
                 ['description' => $tag]
             );
             //if the tag was found or wasn't, create a relation recording this post with that tag
-            PostTag::create([
+            PostTag::firstOrCreate([
                 'tag_description' => $tag,
                 'post_id' => $post->id
             ]);
@@ -497,14 +499,14 @@ class PostController extends Controller
     /**
      * @OA\Get(
      * path="/post/submission/{blog_id}",
-     * summary="Get posts of blog which are submitted",
-     * description="A blog get submitted posts",
+     * summary="Get posts submitted to one of the authenticated user's blogs",
+     * description="A blog gets the posts requested from other blogs to be submitted on his/her profile.",
      * operationId="getsubmissionposts",
      * tags={"Posts"},
      * security={ {"bearer": {} }},
      *   @OA\Parameter(
      *          name="blog_id",
-     *          description="Blog_id ",
+     *          description="The id of the blog who will retrieve the submissions requested on his/her profile.",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -550,12 +552,37 @@ class PostController extends Controller
      *    response=404,
      *    description="Not found",
      *    @OA\JsonContent(
-     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"post is not found"})
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The Specified Blog id was not found"})
      *        )
      *     )
      * )
      */
+    /**
+     * Get posts submitted to one of the authenticated user's blogs.
+     *
+     * @param int $blogId The id of the blog who will retrieve the submissions requested on his/her profile.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSubmissions($blogId)
+    {
+        //The regular expression describes a value where from start (^) to end ($) it matches one or more (+) digits [0-9].
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
 
+        $blog = Blog::where('id', $blogId)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "The Specified Blog id was not found", "404");
+        }
+
+        $this->authorize('viewSubmissionPosts', [Post::class, $blog]);
+
+        $submissionPosts = $blog->submissionPosts()
+            ->orderBy('created_at', 'desc')
+            ->paginate(Config::PAGINATION_LIMIT);
+
+        return $this->generalResponse(new PostCollection($submissionPosts), "OK");
+    }
     /**
      * @OA\Get(
      * path="/posts/{blogId}/published",
@@ -671,7 +698,22 @@ class PostController extends Controller
             return $this->generalResponse("", "This blog id is not found", "404");
         }
 
-        $publishedPosts = $blog->posts()->where('status', 'published')->paginate(Config::PAGINATION_LIMIT);
+        $authUser = auth('api')->user();
+        $publishedPosts = [];
+        //If the blog viewing hiself/herself profile
+        if (!empty($authUser) && $authUser->id == $blog->user_id) {
+            $publishedPosts = $blog->posts()
+                ->where('status', 'published')
+                ->orWhere('status', 'private')
+                ->orderBy('published_at', 'desc')
+                ->paginate(Config::PAGINATION_LIMIT);
+        } else {
+            //If a guest or a blog is viewing another blog's profile
+            $publishedPosts = $blog->posts()
+                ->where('status', 'published')
+                ->orderBy('published_at', 'desc')
+                ->paginate(Config::PAGINATION_LIMIT);
+        }
 
         return $this->generalResponse(new PostCollection($publishedPosts), "OK");
     }
@@ -1004,31 +1046,31 @@ class PostController extends Controller
      /**
      * @OA\Post(
      * path="/post/submission/{blog_id}",
-     * summary="sumbit new post to another blog",
-     * description="A blog can submit a post",
-     * operationId="createpost",
+     * summary="Sumbit new post to another blog",
+     * description="The authenticated user's primary blog requests to submit a post on another's blog profile",
+     * operationId="createSubmissionPost",
      * tags={"Posts"},
      * security={ {"bearer": {} }},
      *  @OA\Parameter(
      *          name="blog_id",
-     *          description="blog_id who is submited ",
+     *          description="The id of the blog who recieves the submission request.",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
      *              type="integer")),
      *   @OA\RequestBody(
      *    required=true,
-     *    description="Post Request has different types depeneds on post type :
-     *     in text type :description or title are required, at least one of them ,keep reading is optinal
-     *     in image type : at least one uplaoded image,
-     *     in quote type:  quote_text is required, quote_body is optinal
-     *     in video type:  video is required, url_videos are optinal
-     *     in link type: link is required
-     *     is general : all fields can be given, to be general at least two different field of types should given",
+     *    description="Post Request has different types depeneds on post type : <br>
+     *     text type :description or title are required, at least one of them ,keep reading is optinal <br>
+     *     image type : at least one uplaoded image <br>
+     *     quote type:  quote_text is required, quote_body is optinal <br>
+     *     video type:  video is required, url_videos are optinal <br>
+     *     link type: link is required <br>
+     *     general type : all fields can be given, to be general at least two different field of types should given <br>",
      *    @OA\JsonContent(
-     *       required={"post_status","post_type"},
-     *       @OA\Property(property="post_status", type="string", example="published"),
-     *       @OA\Property(property="post_time",type="date_time",example="2012-02-30"),
+     *       required={"post_status","post_type","post_body"},
+     *       @OA\Property(property="post_status", type="string", example="submission"),
+     *       @OA\Property(property="post_time", type="date_time",example="2021-02-15"),
      *       @OA\Property(property="post_type", type="string", example="general"),
      *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
      *    ),
@@ -1063,7 +1105,39 @@ class PostController extends Controller
      *  ),
      * )
      */
+    public function createSubmission(PostRequest $request)
+    {
+        //check if the post status is submission
+        if ($request->post_status != 'submission') {
+            return $this->generalResponse("", "post_status should be 'submission'.", "422");
+        }
 
+        $blogService = new BlogService();
+        $recieverBlog = Blog::where('id', $request->blog_id)->first();
+        $submitterBlog = $blogService->getPrimaryBlog(auth()->user());
+
+        //check if the reciever blog allows to have submissions or no
+        $this->authorize('createSubmission', [Post::class, $recieverBlog]);
+
+        //create the post
+        $post = Post::create([
+            'status' => 'submission',
+            'published_at' => now(),
+            'body' => $request->post_body,
+            'type' => $request->post_type,
+            'blog_id' => $submitterBlog->id
+        ]);
+
+        //create the submission relation
+        $submission = Submission::create([
+            'submitter_id' => $submitterBlog->id,
+            'reciever_id' => $recieverBlog->id,
+            'post_id' => $post->id,
+        ]);
+        //TODO: There should be a niotification sent here
+
+        return $this->generalResponse("", "OK", "200");
+    }
     /**
      * @OA\Delete(
      * path="/post/submission/{post_id}",
