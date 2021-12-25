@@ -29,8 +29,17 @@ class FollowingBlogResource extends JsonResource
     public function toArray($request)
     {
         $blogService = new BlogService();
-        $primaryBlog = $blogService->getPrimaryBlog(Auth::user());
-        $check = $blogService->checkIsFollowed($primaryBlog->id, $this->id);
+        if (Auth::user() != null) {
+            $primaryBlog = $blogService->getPrimaryBlog(Auth::user());
+        } else {
+            $primaryBlog = null;
+        }
+        if ($primaryBlog != null) {
+            $check = $blogService->checkIsFollowed($primaryBlog->id, $this->id);
+        } else {
+            $check = false;
+        }
+
         return [
             "blog_avatar" => $this->avatar,
             "blog_avatar_shape" =>  $this->avatar_shape,
