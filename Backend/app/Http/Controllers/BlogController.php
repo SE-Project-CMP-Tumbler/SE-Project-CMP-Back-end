@@ -509,6 +509,7 @@ class BlogController extends Controller
  * summary="Get general information of a specific blog",
  * description="Returns the general information of a specific blog by specifying his/her username",
  * operationId="getBlogInfo",
+ * security={ {"bearer": {} }},
  * tags={"Blogs"},
  * @OA\Parameter(
  *          name="blog_username",
@@ -534,7 +535,8 @@ class BlogController extends Controller
  *          @OA\Property(property="title", type="string", example="My 1st Blog"),
  *          @OA\Property(property="allow_ask", type="boolean", example=true),
  *          @OA\Property(property="allow_submittions", type="boolean", example=true),
- *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
+ *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),
+ *          @OA\Property(property="followed", type="boolean", example=true),),)),
  *
  * @OA\Response(
  *  response=404,
