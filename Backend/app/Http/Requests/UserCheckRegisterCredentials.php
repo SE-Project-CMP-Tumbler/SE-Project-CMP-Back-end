@@ -33,7 +33,7 @@ class UserCheckRegisterCredentials extends FormRequest
     {
         return [
                 'email' => 'required_without_all:blog_username,password,age|required|email|unique:users',
-                'blog_username' => 'required_with_all:email,password',
+                'blog_username' => 'required_with_all:email,password|regex:/^[a-zA-Z0-9-]+$/u',
                 'password' => ['required_with:email',Password::min(8)->mixedCase()->numbers()],
         ];
     }
@@ -52,6 +52,7 @@ class UserCheckRegisterCredentials extends FormRequest
         'password.required_with' => Errors::MISSING_PASSWORD,
         'password.min' => Errors::PASSWORD_SHORT,
         'blog_username.required_with_all' => Errors::MISSING_BLOGNAME,
+        'blog_username.regex' => Errors::EMAIL_INVALID_FORMAT,
         ];
     }
 }
