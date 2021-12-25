@@ -63,6 +63,8 @@ class BlogPolicyTest extends TestCase
         $user = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $this->assertTrue($user->can('delete', $blog));
+        $user->delete();
+        $blog->delete();
     }
       /**
      * A  test View true policy of blog
@@ -91,5 +93,73 @@ class BlogPolicyTest extends TestCase
         $user->delete();
         $blog->delete();
         $userGuest->delete();
+    }
+      /**
+     * A  test Share likes false policy of blog
+     *
+     * @return void
+     */
+    public function testShareLikesFalsePolicy()
+    {
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id ,'share_likes'  => false]);
+        $userGuest = User::factory()->create();
+        $blogGuest = Blog::factory()->create(['user_id' => $userGuest->id ]);
+        $this->assertFalse($user->can('shareLikes', $blogGuest));
+        $user->delete();
+        $blog->delete();
+        $userGuest->delete();
+        $blogGuest->delete();
+    }
+    /**
+     * A  test Share likes true policy of blog
+     *
+     * @return void
+     */
+    public function testShareLikesTruePolicy()
+    {
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id ,'share_likes'  => true]);
+        $userGuest = User::factory()->create();
+        $blogGuest = Blog::factory()->create(['user_id' => $userGuest->id ]);
+        $this->assertFalse($user->can('shareLikes', $blogGuest));
+        $user->delete();
+        $blog->delete();
+        $userGuest->delete();
+        $blogGuest->delete();
+    }
+    /**
+     * A  test Share followings false policy of blog
+     *
+     * @return void
+     */
+    public function testShareFollowingsFalsePolicy()
+    {
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id ,'share_likes'  => false]);
+        $userGuest = User::factory()->create();
+        $blogGuest = Blog::factory()->create(['user_id' => $userGuest->id ]);
+        $this->assertFalse($user->can('shareFollowings', $blogGuest));
+        $user->delete();
+        $blog->delete();
+        $userGuest->delete();
+        $blogGuest->delete();
+    }
+    /**
+     * A  test Share followings true policy of blog
+     *
+     * @return void
+     */
+    public function testShareFollowingsTruePolicy()
+    {
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id ,'share_likes'  => true]);
+        $userGuest = User::factory()->create();
+        $blogGuest = Blog::factory()->create(['user_id' => $userGuest->id ]);
+        $this->assertFalse($user->can('shareFollowings', $blogGuest));
+        $user->delete();
+        $blog->delete();
+        $userGuest->delete();
+        $blogGuest->delete();
     }
 }

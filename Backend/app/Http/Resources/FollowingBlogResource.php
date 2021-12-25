@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Services\BlogService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FollowingBlogResource extends JsonResource
@@ -13,12 +14,11 @@ class FollowingBlogResource extends JsonResource
      * @param  mixed  $resource
      * @return void
      */
-    public function __construct($resource, $followerId)
+    public function __construct($resource)
     {
         // Ensure you call the parent constructor
         parent::__construct($resource);
         $this->resource = $resource;
-        $this->followerId = $followerId;
     }
     /**
      * Transform the resource into an array.
@@ -29,7 +29,8 @@ class FollowingBlogResource extends JsonResource
     public function toArray($request)
     {
         $blogService = new BlogService();
-        $check = $blogService->checkIsFollowed($this->followerId, $this->id);
+        $primaryBlog = $blogService->getPrimaryBlog(Auth::user());
+        $check = $blogService->checkIsFollowed($primaryBlog->id, $this->id);
         return [
             "blog_avatar" => $this->avatar,
             "blog_avatar_shape" =>  $this->avatar_shape,

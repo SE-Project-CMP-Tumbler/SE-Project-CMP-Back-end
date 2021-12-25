@@ -13,6 +13,7 @@ use App\Http\Resources\FollowingBlogCollection;
 use App\Http\Resources\FollowingOfBlogCollection ;
 use App\Http\Resources\CheckFollowBlogResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogFollowRequest;
 
 class FollowBlogController extends Controller
@@ -721,6 +722,6 @@ class FollowBlogController extends Controller
         $this->authorize('shareFollowings', $blog);
         $followings = $blog->followings()->paginate(Config::PAGINATION_LIMIT);
         $primaryBlog = $blogService->getPrimaryBlog($request->user());
-        return $this->generalResponse(new FollowingOfBlogCollection($followings, $primaryBlog->id), "200");
+        return $this->generalResponse(new FollowingOfBlogCollection($followings), "200");
     }
 }

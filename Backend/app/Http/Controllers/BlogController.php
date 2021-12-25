@@ -7,6 +7,7 @@ use App\Http\Misc\Helpers\Config;
 use App\Http\Misc\Helpers\Success;
 use App\Models\Blog;
 use App\Models\Like;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BlogCollection;
 use App\Http\Resources\PostCollection;
@@ -22,7 +23,7 @@ class BlogController extends Controller
  * description="Returns the general information of a specific blog",
  * operationId="getBlog",
  * tags={"Blogs"},
- * security={ {"bearer": {} }},
+ *  security={ {"bearer": {} }},
  * @OA\Parameter(
  *          name="blog_id",
  *          description="The id of the blog whose information will be retrieved",
@@ -46,6 +47,7 @@ class BlogController extends Controller
  *          @OA\Property(property="header_image", type="string", format="byte", example=""),
  *          @OA\Property(property="title", type="string", example="My 1st Blog"),
  *          @OA\Property(property="allow_ask", type="boolean", example=true),
+ *          @OA\Property(property="followed", type="boolean", example=true),
  *          @OA\Property(property="allow_submittions", type="boolean", example=true),
  *          @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),),)),
  *
@@ -116,6 +118,7 @@ class BlogController extends Controller
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
  *                    @OA\Property(property="allow_ask", type="boolean", example=true),
+ *                    @OA\Property(property="followed", type="boolean", example=true),
  *                    @OA\Property(property="allow_submittions", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
@@ -147,6 +150,8 @@ class BlogController extends Controller
  */
     public function index(Request $request)
     {
+        $user = Auth::user();
+        $blogService = new BlogService();
         $query = $request->user()->blogs()->paginate(Config::PAGINATION_LIMIT);
         return $this->generalResponse(new BlogCollection($query), "ok");
     }
@@ -313,6 +318,7 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *                    @OA\Property(property="followed", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
  *
@@ -377,6 +383,7 @@ class BlogController extends Controller
  *                    @OA\Property(property="avatar_shape", type="string", example="square"),
  *                    @OA\Property(property="header_image", type="string", format="byte", example=""),
  *                    @OA\Property(property="title", type="string", example="My 1st Blog"),
+ *                    @OA\Property(property="followed", type="boolean", example=true),
  *                    @OA\Property(property="description", type="string", example="This blog is a sketch of thoughts"),)))
  *      )),
  *
@@ -411,6 +418,8 @@ class BlogController extends Controller
         $trending = Blog::withCount(['followers'])
             ->orderBy('followers_count', 'desc')
             ->paginate(Config::PAGINATION_LIMIT);
+        $user = Auth::user();
+        $blogService = new BlogService();
         return $this->generalResponse(new BlogCollection($trending), "ok");
     }
 /**
