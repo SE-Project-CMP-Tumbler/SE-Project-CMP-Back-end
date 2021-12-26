@@ -23,18 +23,20 @@ class SearchService
   * @param $word
   * @return \Post
  */
-    public function search($posts, $word)
+    public function search($posts, $wordNeed)
     {
         $matchedResult = [];
-        $word = strtolower($word);
+        $word = strtolower($wordNeed);
         foreach ($posts as $post) {
               $tags =  $post->tags;
               $postBody = strip_tags($post->body);
               $foundWord = strstr($postBody, $word);
+              $foundwithSame = strstr($postBody, $wordNeed);
             if ($tags != null) {
                 $result = $tags->where('description', 'like', '%' . $word . '%');
+                $resultWithSame = $tags->where('description', 'like', '%' . $wordNeed . '%');
             }
-            if (sizeof($result) > 0 || !empty($foundWord)) {
+            if (sizeof($result) > 0 || !empty($foundWord) || !empty($foundwithSame) || sizeof($resultWithSame) > 0) {
                 array_push($matchedResult, $post->id);
             }
         }
@@ -46,10 +48,12 @@ class SearchService
   * @param $word
   * @return \Tag
  */
-    public function searchTag($word)
+    public function searchTag($wordNeed)
     {
-        $word = strtolower($word);
-        $result = Tag::where('description', 'like', '%' . $word . '%')->paginate(Config::PAGINATION_LIMIT);
+        $word = strtolower($wordNeed);
+        $result = Tag::where('description', 'like', '%' . $word . '%')
+        ->orWhere('description', 'like', '%' . $wordNeed . '%')
+         ->paginate(Config::PAGINATION_LIMIT);
         return $result;
     }
      /**
@@ -57,10 +61,12 @@ class SearchService
   * @param $word
   * @return \Tag
  */
-    public function searchBlog($word)
+    public function searchBlog($wordNeed)
     {
-        $word = strtolower($word);
-        $result = Blog::where('username', 'like', '%' . $word . '%')->paginate(Config::PAGINATION_LIMIT);
+        $word = strtolower($wordNeed);
+        $result = Blog::where('username', 'like', '%' . $word . '%')
+        ->orWhere('username', 'like', '%' . $wordNeed . '%')
+        ->paginate(Config::PAGINATION_LIMIT);
         return $result;
     }
        /**
