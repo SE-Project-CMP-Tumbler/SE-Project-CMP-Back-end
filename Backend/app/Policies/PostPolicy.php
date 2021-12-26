@@ -22,6 +22,17 @@ class PostPolicy
     {
         return $blog->user_id == $user->id;
     }
+    /**
+     * Determine whether the user can view submission posts.
+     *
+     * @param  \App\Models\User $user
+     * @param \App\Models\Blog $blog
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewSubmissionPosts(User $user, Blog $blog)
+    {
+        return $blog->user_id == $user->id;
+    }
 
     /**
      * Determine whether the user can view the model.
@@ -39,11 +50,22 @@ class PostPolicy
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user, Blog $blog)
     {
         return $blog->user_id == $user->id;
+    }
+    /**
+     * Determine whether the user can create submission post request to a specific blog.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function createSubmission(User $user, Blog $blog)
+    {
+        return $blog->allow_submittions == true;
     }
 
     /**

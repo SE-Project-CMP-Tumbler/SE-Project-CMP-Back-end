@@ -46,4 +46,11 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class, 'post_tag', 'tag_description', 'post_id');
     }
+    /**
+     * Get blogs following this tag
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(Blog::class, 'blog_follow_tag', 'tag_description', 'blog_id');
+    }
 }
