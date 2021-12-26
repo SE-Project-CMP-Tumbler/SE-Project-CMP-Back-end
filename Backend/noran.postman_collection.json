@@ -523,14 +523,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/blog/info/NoranHany",
+							"raw": "{{host}}/blog/info/basel",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"blog",
 								"info",
-								"NoranHany"
+								"basel"
 							]
 						}
 					},
@@ -653,19 +653,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/tag/trending?page=3",
+							"raw": "{{host}}/tag/trending",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"tag",
 								"trending"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "3"
-								}
 							]
 						}
 					},
@@ -1303,12 +1297,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/trending",
+							"raw": "{{host}}/posts/trending",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"post",
+								"posts",
 								"trending"
 							]
 						}
@@ -1371,13 +1365,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/334",
+							"raw": "{{host}}/post/76",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"334"
+								"76"
 							]
 						}
 					},
@@ -1411,7 +1405,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"post_body\": \"<p> This post is private </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"private\"\r\n}",
+							"raw": "{\r\n    \"post_body\": \"<p> #Tags #This #piko #noran #sleep </p> #scrum #scrum\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"private\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1419,13 +1413,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/post/90000",
+							"raw": "{{host}}/post/407",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"90000"
+								"407"
 							]
 						}
 					},
@@ -1458,13 +1452,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/205",
+							"raw": "{{host}}/post/59",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"205"
+								"59"
 							]
 						}
 					},
@@ -2186,13 +2180,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/follow_tag/This",
+							"raw": "{{host}}/follow_tag/piko",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"follow_tag",
-								"This"
+								"piko"
 							]
 						}
 					},
@@ -2225,13 +2219,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/follow_tag/rocks",
+							"raw": "{{host}}/follow_tag/rawan",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"follow_tag",
-								"rocks"
+								"rawan"
 							]
 						}
 					},
@@ -2264,14 +2258,52 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/tag/is_following/framework",
+							"raw": "{{host}}/tag/is_following/piko",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"tag",
 								"is_following",
-								"framework"
+								"piko"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "followed tags",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/follow_tag",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"follow_tag"
 							]
 						}
 					},
@@ -2483,17 +2515,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"post_body\": \"<p> mega gega kilo! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"submission\"\r\n}"
+							"raw": "{\r\n    \"post_body\": \"<p> first Submission! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"submission\"\r\n}"
 						},
 						"url": {
-							"raw": "{{host}}/post/submission/407",
+							"raw": "{{host}}/post/submission/202",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
 								"submission",
-								"407"
+								"202"
 							]
 						}
 					},
@@ -2526,14 +2558,137 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/submission/407",
+							"raw": "{{host}}/post/submission/202",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
 								"submission",
-								"407"
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p> This post is published </p>\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"private\",\r\n    \"post_time\": \"2021-3-7\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/approve/82",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"approve",
+								"82"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/submission/106",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"submission",
+								"106"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/submission",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"submission"
 							]
 						}
 					},
