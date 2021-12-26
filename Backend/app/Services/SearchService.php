@@ -27,16 +27,19 @@ class SearchService
     {
         $matchedResult = [];
         $word = strtolower($wordNeed);
+        $captialWord = strtoupper($wordNeed);
         foreach ($posts as $post) {
               $tags =  $post->tags;
               $postBody = strip_tags($post->body);
               $foundWord = strstr($postBody, $word);
               $foundwithSame = strstr($postBody, $wordNeed);
+              $foundCaptial = strstr($postBody, $captialWord);
             if ($tags != null) {
                 $result = $tags->where('description', 'like', '%' . $word . '%');
                 $resultWithSame = $tags->where('description', 'like', '%' . $wordNeed . '%');
+                $resultCaptial = $tags->where('description', 'like', '%' . $captialWord . '%');
             }
-            if (sizeof($result) > 0 || !empty($foundWord) || !empty($foundwithSame) || sizeof($resultWithSame) > 0) {
+            if (sizeof($result) > 0 || sizeof($resultCaptial) > 0 || !empty($foundWord) || !empty($foundwithSame) || sizeof($resultWithSame) > 0 || !empty($foundCaptial)) {
                 array_push($matchedResult, $post->id);
             }
         }
@@ -51,8 +54,10 @@ class SearchService
     public function searchTag($wordNeed)
     {
         $word = strtolower($wordNeed);
+        $captialWord = strtoupper($wordNeed);
         $result = Tag::where('description', 'like', '%' . $word . '%')
         ->orWhere('description', 'like', '%' . $wordNeed . '%')
+        ->orWhere('description', 'like', '%' . $captialWord . '%')
          ->paginate(Config::PAGINATION_LIMIT);
         return $result;
     }
@@ -64,8 +69,10 @@ class SearchService
     public function searchBlog($wordNeed)
     {
         $word = strtolower($wordNeed);
+        $captialWord = strtoupper($wordNeed);
         $result = Blog::where('username', 'like', '%' . $word . '%')
         ->orWhere('username', 'like', '%' . $wordNeed . '%')
+        ->orWhere('username', 'like', '%' . $captialWord . '%')
         ->paginate(Config::PAGINATION_LIMIT);
         return $result;
     }
