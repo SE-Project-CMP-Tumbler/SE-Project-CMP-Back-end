@@ -20,8 +20,9 @@ class PostResource extends JsonResource
         // $question = Question::where(['answer_id' => $this->id])
         // $quesion->sender->username
         $like_status = false;
-        if ($request->user()) {
-            $blog_id =  Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()->id;
+        $user = Auth('api')->user();
+        if ($user) {
+            $blog_id =  Blog::where([['user_id',$user->id],['is_primary', true]])->first()->id;
             $like_status = ((Like::where([['blog_id', $blog_id] , ['post_id', $this->id]])->first()) != null);
         }
         $blog = $this->blog;
