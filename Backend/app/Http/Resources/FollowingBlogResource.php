@@ -29,8 +29,8 @@ class FollowingBlogResource extends JsonResource
     public function toArray($request)
     {
         $blogService = new BlogService();
-        if (Auth::user() != null) {
-            $primaryBlog = $blogService->getPrimaryBlog(Auth::user());
+        if (Auth('api')->user() != null) {
+            $primaryBlog = $blogService->getPrimaryBlog(Auth('api')->user());
         } else {
             $primaryBlog = null;
         }
