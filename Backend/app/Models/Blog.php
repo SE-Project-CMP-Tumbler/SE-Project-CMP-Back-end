@@ -118,6 +118,13 @@ class Blog extends Model
         return $this->hasMany(ChatMessage::class, 'from_blog_username', 'username');
     }
     /**
+    * the relation between blogs and replies
+    */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'blog_id', 'id');
+    }
+    /**
      * Retrieve list of submissions posts requested to the blog.
      *
      * @return \Post[]

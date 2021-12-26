@@ -3,6 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Reply;
+use App\Models\Like;
+use App\Models\Blog;
 
 class PostResource extends JsonResource
 {
@@ -16,6 +19,12 @@ class PostResource extends JsonResource
     {
         // $question = Question::where(['answer_id' => $this->id])
         // $quesion->sender->username
+        $like_status = false;
+        $user = Auth('api')->user();
+        if ($user) {
+            $blog_id =  Blog::where([['user_id',$user->id],['is_primary', true]])->first()->id;
+            $like_status = ((Like::where([['blog_id', $blog_id] , ['post_id', $this->id]])->first()) != null);
+        }
         $blog = $this->blog;
         return [
             "post_id" => $this->id,
@@ -33,7 +42,9 @@ class PostResource extends JsonResource
             "blog_avatar_asking" => "",
             "blog_avatar_shape_asking" => "",
             "blog_title_asking" => "",
-            "approving_blog_id" => $this->approving_blog_id
+            "approving_blog_id" => $this->approving_blog_id,
+            "notes_count" => (Reply::where('post_id', $this->id)->count() + Like::where('post_id', $this->id)->count()),
+            "is_liked" => $like_status
         ];
     }
 }
