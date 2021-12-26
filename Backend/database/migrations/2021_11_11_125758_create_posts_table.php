@@ -22,6 +22,12 @@ class CreatePostsTable extends Migration
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
 
+            $table->unsignedBigInteger('approving_blog_id')->nullable(); //The id of the blog that have approved this post if it was a submission status.
+            $table->foreign('approving_blog_id')
+                ->references('id')
+                ->on('blogs')
+                ->onDelete('cascade');
+
             $table->unsignedBigInteger('blog_id');
             $table->foreign('blog_id')
                 ->references('id')

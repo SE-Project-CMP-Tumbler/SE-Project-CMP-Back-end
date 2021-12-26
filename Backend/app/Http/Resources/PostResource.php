@@ -33,6 +33,7 @@ class PostResource extends JsonResource
             "blog_avatar_asking" => "",
             "blog_avatar_shape_asking" => "",
             "blog_title_asking" => "",
+            "approving_blog_id" => $this->approving_blog_id
         ];
     }
 }
