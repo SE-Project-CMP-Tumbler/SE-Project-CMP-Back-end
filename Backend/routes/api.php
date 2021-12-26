@@ -13,6 +13,8 @@ use App\Http\Controllers\PostFilterController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\PostActionController;
+use App\Http\Controllers\PostNoteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -157,3 +159,13 @@ Route::get('/tag/posts/{tag_description}', [TagController::class, 'getTagPosts']
 */
 Route::post('/follow_tag/{tag_description}', [FollowTagController::class,'store'])->middleware('auth:api');
 Route::delete('/follow_tag/{tag_description}', [FollowTagController::class,'destroy'])->middleware('auth:api');
+
+/*
+| Post Notes Routes
+*/
+Route::post('/post/reply/{post_id}', [PostActionController::class,'addReply'])->middleware('auth:api');
+Route::post('/post/like/{post_id}', [PostActionController::class,'addLike'])->middleware('auth:api');
+Route::get('/post/like/{blog_id}/{post_id}', [PostActionController::class,'checkLiked'])->middleware('auth:api');
+Route::delete('/post/like/{post_id}', [PostActionController::class,'deleteLike'])->middleware('auth:api');
+Route::delete('/post/reply/{reply_id}', [PostActionController::class,'deletereply'])->middleware('auth:api');
+Route::get('/post_notes/{post_id}', [PostNoteController::class,'getNotes'])->middleware('auth:api');

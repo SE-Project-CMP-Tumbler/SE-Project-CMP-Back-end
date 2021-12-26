@@ -28,6 +28,7 @@ class Errors
     const PASSWORD_SHORT = 'The password must be at least 8 characters.';
     const MIN_AGE  = 'Your age must be at least 13 YO. ';
     const INVALID_AGE  = 'Please enter a valid age. ';
+    const EMAIL_INVALID_FORMAT ='Letters, numbers, and dashes only please.';
 
     //signin errors (errors are ordered W.R.T it's priorities + missing only mail or only password errors are the same as the signup errors)
     const MISSING_BOTH_EMAIL_PASSWORD = 'You do have to fill this stuff out, you know.';
