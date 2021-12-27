@@ -42,6 +42,7 @@ class PostResource extends JsonResource
             "blog_avatar_asking" => "",
             "blog_avatar_shape_asking" => "",
             "blog_title_asking" => "",
+            "approving_blog_id" => $this->approving_blog_id,
             "notes_count" => (Reply::where('post_id', $this->id)->count() + Like::where('post_id', $this->id)->count()),
             "is_liked" => $like_status
         ];

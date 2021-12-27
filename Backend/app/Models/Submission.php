@@ -37,4 +37,22 @@ class Submission extends Model
         'reciever_id',
         'post_id'
     ];
+    /**
+     * Get the post related to a submission.
+     *
+     * @return \Post
+     */
+    public function post()
+    {
+        return $this->hasOne(Post::class, 'id', 'post_id');
+    }
+    /**
+     * Get the reciever related to a submission.
+     *
+     * @return \Post
+     */
+    public function reciever()
+    {
+        return $this->belongsTo(Blog::class, 'reciever_id', 'id');
+    }
 }

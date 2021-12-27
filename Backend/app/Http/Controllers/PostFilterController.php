@@ -653,7 +653,7 @@ class PostFilterController extends Controller
      *              @OA\Property(property="total_pages",type="int",example=2),
      *              @OA\Property(property="first_page_url",type="boolean",example=false),
      *              @OA\Property(property="next_page_url",type="string",example=null),
-     *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
+     *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/dashboard?page=1"),),
      *          @OA\Property(property="posts",type="array",
      *              @OA\Items(
      *                  @OA\Property(property="post_id", type="integer", example=5),

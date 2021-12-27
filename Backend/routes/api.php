@@ -102,6 +102,10 @@ Route::put('posts/change_status', [PostController::class, 'changePostStatus'])->
 */
 Route::post('post/submission/{blog_id}', [PostController::class, 'createSubmission'])->middleware('auth:api');
 Route::get('post/submission/{blog_id}', [PostController::class, 'getSubmissions'])->middleware('auth:api');
+Route::post('post/approve/{post_id}', [PostController::class, 'approveSubmission'])->middleware('auth:api');
+Route::delete('post/submission/{post_id}', [PostController::class, 'delete'])->middleware('auth:api');
+
+Route::delete('posts/submission', [PostController::class, 'deleteAllSubmissions'])->middleware('auth:api');
 
 /*
 | Uploads Routes
@@ -151,7 +155,6 @@ Route::get('/tag/data/{tag_description}', [TagController::class,'show'])->middle
 Route::get('/tag/is_following/{tag_description}', [TagController::class,'checkIsFollowing'])->middleware('auth:api');
 Route::get('/tag/trending', [TagController::class,'index']);
 Route::get('/tag/suggesting', [TagController::class,'getSuggestions'])->middleware('auth:api');
-
 Route::get('/tag/posts/{tag_description}', [TagController::class, 'getTagPosts']);
 
 /*
@@ -159,6 +162,8 @@ Route::get('/tag/posts/{tag_description}', [TagController::class, 'getTagPosts']
 */
 Route::post('/follow_tag/{tag_description}', [FollowTagController::class,'store'])->middleware('auth:api');
 Route::delete('/follow_tag/{tag_description}', [FollowTagController::class,'destroy'])->middleware('auth:api');
+
+Route::get('/follow_tag', [FollowTagController::class, 'getTagsFollowed'])->middleware('auth:api');
 
 /*
 | Post Notes Routes

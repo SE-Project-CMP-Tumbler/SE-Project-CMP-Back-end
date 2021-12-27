@@ -133,4 +133,13 @@ class Blog extends Model
     {
         return $this->belongsToMany(Post::class, 'submissions', 'reciever_id', 'post_id');
     }
+    /**
+     * Retrieve list of submissions posts that have been approved by the blog.
+     *
+     * @return \Post[]
+     */
+    public function approvedSubmissionPosts()
+    {
+        return $this->hasMany(Post::class, 'approving_blog_id', 'id');
+    }
 }

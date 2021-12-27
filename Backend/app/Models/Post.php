@@ -15,7 +15,8 @@ class Post extends Model
         'status',
         'type',
         'published_at',
-        'pinned'
+        'pinned',
+        'approving_blog_id'
     ];
     /**
      * Get the blog that owns the Post
@@ -25,6 +26,16 @@ class Post extends Model
     public function blog()
     {
         return $this->belongsTo(Blog::class, 'blog_id', 'id');
+    }
+    /**
+     * Get the blog that approved the Post if it were once a submission post on him.
+     * Posts that weren't a submission, will have null approver.
+     *
+     * @return \Blog
+     */
+    public function approver()
+    {
+        return $this->belongsTo(Blog::class, 'approving_blog_id', 'id');
     }
 
     /**

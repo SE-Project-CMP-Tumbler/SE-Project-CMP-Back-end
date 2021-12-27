@@ -25,11 +25,12 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules()
     {
+        $postStatuses = ['published', 'draft', 'private'];
         return [
             'post_body' => ['sometimes', 'required'],
             'post_type' => [Rule::in(Config::POST_TYPES)],
             'post_time' => ['nullable', 'date'],
-            'post_status' => [Rule::in(Config::POST_STATUS_TYPES)],
+            'post_status' => [Rule::in($postStatuses)], //shouldn't update to a type 'submission'
             'pinned' => ['sometimes', 'boolean']
         ];
     }
