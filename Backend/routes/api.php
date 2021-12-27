@@ -6,6 +6,7 @@ use App\Http\Controllers\UploadFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\BlogSettingController;
 use App\Http\Controllers\FollowBlogController;
 use App\Http\Controllers\FollowTagController;
@@ -28,10 +29,16 @@ use Illuminate\Support\Facades\Broadcast;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+/*
+| Search Routes
+*/
 Route::get('search/{blog_id}/{word}', [SearchController::class,'searchBlog'])->middleware('auth:api');
 Route::get('search/{word}', [SearchController::class,'search']);
 Route::get('search_auto_complete/{word}', [SearchController::class,'recommendedWord']);
-
+/*
+| Theme Routes
+ */
+Route::get('/blog/{blog_id}/theme', [ThemeController::class,'show'])->middleware('auth:api');
 /*
 | Blog Routes
 */

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\Blog;
+use App\Models\Theme;
 use App\Models\User;
 use App\Models\FollowBlog;
 use Illuminate\Support\Facades\DB;
@@ -26,13 +27,21 @@ class BlogService
     public function createBlog(string $username, string $title, int $userId, string $password = null, $isPrimary = false)
     {
         $password = md5($password);
-        Blog::create([
-           'username' => $username ,
-           'title' => $title ,
+        DB::beginTransaction();
+        try {
+            $blog = Blog::create([
+            'username' => $username ,
+            'title' => $title ,
             'password' => $password ,
             'user_id' => $userId,
             'is_primary' => $isPrimary
-        ]);
+            ]);
+            Theme::create(['blog_id' => $blog->id]);
+            DB::commit();
+        } catch (\Illuminate\Database\QueryException $ex) {
+            DB::rollback();
+             return null;
+        }
         return true;
     }
      /**

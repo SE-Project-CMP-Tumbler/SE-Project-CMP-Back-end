@@ -3,6 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Misc\Helpers\Config;
+use App\Http\Misc\Helpers\Success;
+use App\Models\Blog;
+use App\Models\Theme;
+use App\Models\Like;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\ThemeResource;
+use App\Http\Resources\BlogCollection;
+use App\Http\Resources\PostCollection;
+use App\Http\Requests\BlogRequest;
+use App\Services\BlogService;
 
 class ThemeController extends Controller
 {
@@ -118,7 +129,23 @@ class ThemeController extends Controller
  * )
  */
 
-
+  /**
+     * Get specific theme of blog
+     * @param integer $blogI
+     * @return \json
+     */
+    public function update($blogId)
+    {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
+        return $this->generalResponse(new ThemeResource($blog->theme), "ok");
+    }
  /**
  * @OA\Get(
  * path="/blog/{blog_id}/theme",
@@ -196,4 +223,21 @@ class ThemeController extends Controller
  *     ),
  * )
  */
+  /**
+     * Get specific theme of blog
+     * @param integer $blogI
+     * @return \json
+     */
+    public function show($blogId)
+    {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
+        return $this->generalResponse(new ThemeResource($blog->theme), "ok");
+    }
 }
