@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ThemeRequest extends FormRequest
@@ -11,46 +12,35 @@ class ThemeRequest extends FormRequest
      *
      * @return bool
      */
-public function authorize()
-{
-    return true;
-}
+    public function authorize()
+    {
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
-     */
-public function rules()
-{
-    return [
-        "theme-id" => 123456789,
-        "title" => [
-            [
-            "text" =>  'string',
-            "color" => "#000000",
-            "font" => "Gibson",
-            "font_weight" => "bold"
-            ]
-        ],
-        "description" => [
-            [
-            "text" => "Just for cpp nurds"
-            ]
-        ],
-        "background_color" => "#FFFFFF",
-        "accent_color" => "#e17e66",
-        "body_font" => "Helvetica Neue",
-        "header_image" => [
-            [
-            "url" => "assksineuug"
-            ]
-        ],
-        "avater" => [
-           [
-            "url" => "aksmdnurjrj",
-            "shape" => "circle"
-           ]
-        ]
-    ];
+     */ 
+    public function rules()
+    {
+        $shapes = array('square' ,'circle');
+        return [
+        "title" => 'array',
+        "title.*.text" => 'string|min:3' ,
+        "title.*.color" => 'string|min:3|regex:/^[a-zA-Z0-9]+$/u',
+        "title.*.font" => 'string|min:3|regex:/^[a-zA-Z ]+$/u',
+        "title.*.font_weight" => 'string|min:3|regex:/^[a-zA-Z0-9]+$/u',
+        "description" => 'array' ,
+        "description.*.text" => 'string|min:3',
+        "background_color" => 'string|min:3|regex:/^[a-zA-Z0-9]+$/u',
+        "accent_color" => 'string|min:3|regex:/^[a-zA-Z0-9]+$/u',
+        "body_font" => 'string|min:3|regex:/^[a-zA-Z0-9]+$/u',
+        "header_image" => 'array',
+        "header_image.*.url" => 'string|min:3|url',
+        "avatar" => 'array',
+        "avatar.*.url" => 'string|min:3|url' ,
+        "avatar.*.shape" => ['string',Rule::in($shapes)]
+        ];
+    }
 }

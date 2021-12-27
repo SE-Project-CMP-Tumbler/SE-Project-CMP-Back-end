@@ -40,7 +40,7 @@ class ThemeResource extends JsonResource
                   "url" => $blog->header_image
                 ]
               ],
-              "avater" => [
+              "avatar" => [
                 [
                   "url" => $blog->avatar,
                   "shape" =>  $blog->avatar_shape

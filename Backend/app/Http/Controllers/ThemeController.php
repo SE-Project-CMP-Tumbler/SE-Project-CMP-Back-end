@@ -8,8 +8,10 @@ use App\Http\Misc\Helpers\Success;
 use App\Models\Blog;
 use App\Models\Theme;
 use App\Models\Like;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ThemeResource;
+use App\Http\Requests\ThemeRequest;
 use App\Http\Resources\BlogCollection;
 use App\Http\Resources\PostCollection;
 use App\Http\Requests\BlogRequest;
@@ -128,11 +130,11 @@ class ThemeController extends Controller
  */
 
   /**
-     * Get specific theme of blog
+     * update specific theme of blog
      * @param integer $blogI
      * @return \json
      */
-    public function update($blogId)
+    public function update(ThemeRequest $request, $blogId)
     {
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
@@ -142,7 +144,30 @@ class ThemeController extends Controller
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
-        return $this->generalResponse(new ThemeResource($blog->theme), "ok");
+        $this->authorize('update', $blog);
+        $theme = $blog->theme;
+        DB::beginTransaction();
+        try {
+            $theme->update([
+            'color_title' => $request->title[0]['color'] ?? $theme->color_title,
+            'font_title' => $request->title[0]['font'] ?? $theme->font_title,
+            'font_weight_title' => $request->title[0]['font_weight'] ?? $theme->font_weight_title,
+            'background_color' => $request->background_color ?? $theme->background_color,
+            'accent_color' => $request->accent_color ?? $theme->accent_color,
+            'body_font' => $request->body_font ?? $theme->body_font
+            ]);
+            $blog->update([
+            'description' => $request->description[0]['text'] ?? $blog->description,
+            'title' => $request->title[0]['text'] ?? $blog->title,
+            'header_image' => $request->header_image[0]['url'] ?? $blog->header_image,
+            'avatar' => $request->avatar[0]['url'] ?? $blog->avatar
+            ]);
+            DB::commit();
+        } catch (\Illuminate\Database\QueryException $ex) {
+            DB::rollback();
+            return $this->generalResponse("", "Internal Server Erorr", "500");
+        }
+        return $this->generalResponse(new ThemeResource($theme), "ok");
     }
  /**
  * @OA\Get(

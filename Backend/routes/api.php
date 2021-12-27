@@ -39,6 +39,8 @@ Route::get('search_auto_complete/{word}', [SearchController::class,'recommendedW
 | Theme Routes
  */
 Route::get('/blog/{blog_id}/theme', [ThemeController::class,'show'])->middleware('auth:api');
+Route::put('/blog/{blog_id}/theme', [ThemeController::class,'update'])->middleware('auth:api');
+
 /*
 | Blog Routes
 */
