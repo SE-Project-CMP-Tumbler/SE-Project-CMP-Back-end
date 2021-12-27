@@ -3080,6 +3080,10 @@
                                                 "description": {
                                                     "type": "string",
                                                     "example": "This blog is a sketch of thoughts"
+                                                },
+                                                "followed": {
+                                                    "type": "boolean",
+                                                    "example": true
                                                 }
                                             },
                                             "type": "object"
@@ -12554,7 +12558,7 @@
                                                         "type": "object"
                                                     }
                                                 },
-                                                "avater": {
+                                                "avatar": {
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
@@ -12667,14 +12671,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "mycppblog"
-                                    },
-                                    "theme-id": {
-                                        "type": "int",
-                                        "example": "123456789"
-                                    },
                                     "title": {
                                         "type": "array",
                                         "items": {
@@ -12736,7 +12732,7 @@
                                             "type": "object"
                                         }
                                     },
-                                    "avater": {
+                                    "avatar": {
                                         "type": "array",
                                         "items": {
                                             "properties": {
@@ -12839,7 +12835,7 @@
                                                         "type": "object"
                                                     }
                                                 },
-                                                "avater": {
+                                                "avatar": {
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
