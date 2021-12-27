@@ -15,6 +15,7 @@ use App\Models\PostTag;
 use App\Models\Submission;
 use App\Models\Tag;
 use App\Services\BlogService;
+use App\Notifications\MentionNotification;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 
@@ -127,7 +128,6 @@ class PostController extends Controller
      */
 
     /**
-     * Update an existing post
      *
      * @param int $postId
      * @param \App\Http\Requests\UpdatePostRequest $request
@@ -165,16 +165,27 @@ class PostController extends Controller
         $newMentionedBlogUsernames = $postService->extractMentionedBlogs($post->body);
 
         //Iterate through the mentioned blogs array
+        $blog = $post->blog()->first();
         foreach ($newMentionedBlogUsernames as $mentionedBlogUsername) {
             $mentionedBlog = Blog::where('username', $mentionedBlogUsername)->first();
 
             //check if that mention refers to an existing blog
             if (!empty($mentionedBlog)) {
                 //create a record recording the relation between this post and the blog being mentioned
-                PostMentionBlog::firstOrCreate([
+                $check = PostMentionBlog::firstOrCreate([
                     'post_id' => $post->id,
                     'blog_id' => $mentionedBlog->id
                 ]);
+
+                // notify the new mentioned blogs
+                if ($check->wasRecentlyCreated) {
+                    $mentionedBlogUser = $mentionedBlog->user()->first();
+                    $mentionedBlogUser->notify(new MentionNotification(
+                        mentioner:$blog,
+                        mentionedBlog:$mentionedBlog,
+                        post:$post
+                    ));
+                }
             }
         }
         //Modify the relation records between the post and updated tags
@@ -477,6 +488,14 @@ class PostController extends Controller
                     'post_id' => $post->id,
                     'blog_id' => $mentionedBlog->id
                 ]);
+
+                // add the notification for post create mentions
+                $mentionedBlogUser = $mentionedBlog->user()->first();
+                $mentionedBlogUser->notify(new MentionNotification(
+                    mentioner:$blog,
+                    mentionedBlog:$mentionedBlog,
+                    post:$post
+                ));
             }
         }
 
