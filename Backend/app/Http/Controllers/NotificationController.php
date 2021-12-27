@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\NotificationRequest;
+use App\Http\Resources\NotificationCollection;
 
 class NotificationController extends Controller
 {
-/** 
+/**
  *  @OA\Get(
  *  path="/blog/{blog_id}/notifications",
  *  operationId="getNotifications",
@@ -206,4 +207,27 @@ class NotificationController extends Controller
  * ),
  * ),
  */
+
+
+    /**
+     * get all the notificaions for the current logged in user
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
+    public function notificaions(NotificationRequest $request)
+    {
+        $request->validated();
+        $curUser = $request->user();
+        $curUnreadUserNotification = $curUser->unreadNotifications();
+        if ($request->filled('type') && $request->type !== 'all') {
+            $curUnreadUserNotification->whereJsonContains("data", ["type" => $request->type]);
+        }
+        if ($request->filled('for_blog_id')) {
+            $curUnreadUserNotification->whereJsonContains("data", ["target_blog_id" => $request->for_blog_id]);
+        }
+        $curUnreadUserNotification = $curUnreadUserNotification->get();
+        return $this->generalResponse(new NotificationCollection($curUnreadUserNotification), "ok", "200");
+    }
 }
