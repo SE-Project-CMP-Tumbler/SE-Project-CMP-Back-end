@@ -6,7 +6,7 @@ php artisan storage:link
 
 php artisan migrate:fresh #--seed
 
-php artisan dbLseed
+php artisan db:seed
 
 php artisan l5-swagger:generate
 
