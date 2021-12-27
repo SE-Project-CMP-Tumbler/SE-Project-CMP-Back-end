@@ -5763,8 +5763,8 @@
                 "tags": [
                     "Tags"
                 ],
-                "summary": "Get all tags the blog follows",
-                "description": "Returns list of all tags the blog follow",
+                "summary": "Get all tags the primary blog follows",
+                "description": "Returns list of all tags the primary blog follow",
                 "operationId": "getfollowingTags",
                 "responses": {
                     "200": {
@@ -7864,7 +7864,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "\r\n     *        Successful credentials response\r\n     *        Notes\r\n     *        If it was a submission, it will have the approving_blog_id with the same id of the blog to retrieve submissions done on him.\r\n     *        If it was a submission, all information of the submitter (the blog who have submitted the post) will be blog_id, blog_username, blog_avatar, etc.",
+                        "description": "\r\n     *        If a post refers to a submission, it will have the approving_blog_id with the same id of the blog to retrieve submissions done on him.\r\n     *        If a post refers to a submission, all information blog_id, blog_username, blog_avatar, etc. belongs to the submitter (the blog who have submitted the post) will be, not the blog we're calling this route for.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -9159,13 +9159,13 @@
                 ]
             }
         },
-        "/post/submission": {
+        "/posts/submission": {
             "delete": {
                 "tags": [
                     "Submission Posts"
                 ],
                 "summary": "delete all submissions",
-                "description": "deleting all recieved submission posts",
+                "description": "Deleting all submission posts that were submitted to any of the authenticated user's blogs",
                 "operationId": "deleteAllSubmissions",
                 "responses": {
                     "200": {
