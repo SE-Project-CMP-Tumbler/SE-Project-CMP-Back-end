@@ -37,8 +37,6 @@ class ThemeController extends Controller
  * @OA\RequestBody(
  *   required=true,
  *    @OA\JsonContent(
- *       @OA\Property(property="name", type="string", example="mycppblog"),
- *       @OA\Property(property="theme-id", type="int", example="123456789"),
  *       @OA\Property(property="title", type="array",
  *         @OA\Items(
  *           @OA\Property(property="text", type="string", example="CPP Programming"),
@@ -60,7 +58,7 @@ class ThemeController extends Controller
  *            @OA\Property(property="url", type="string",format="byte", example="assksineuug"),
  *         )
  *       ),
- *       @OA\Property(property="avater", type="array",
+ *       @OA\Property(property="avatar", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="string",format="byte", example="aksmdnurjrj"),
  *              @OA\Property(property="shape", type="string", example="circle"),
@@ -96,7 +94,7 @@ class ThemeController extends Controller
  *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
  *         )
  *       ),
- *       @OA\Property(property="avater", type="array",
+ *       @OA\Property(property="avatar", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
  *              @OA\Property(property="shape", type="string", example="circle"),
@@ -191,7 +189,7 @@ class ThemeController extends Controller
  *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
  *         )
  *       ),
- *       @OA\Property(property="avater", type="array",
+ *       @OA\Property(property="avatar", type="array",
  *           @OA\Items(
  *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
  *              @OA\Property(property="shape", type="string", example="circle"),
