@@ -142,4 +142,12 @@ class Blog extends Model
     {
         return $this->hasMany(Post::class, 'approving_blog_id', 'id');
     }
+    /** 
+     * This is has relation between Theme and blog
+     * @return Theme
+     */
+    public function theme()
+    {
+        return $this->hasOne(Theme::class);
+    }
 }
