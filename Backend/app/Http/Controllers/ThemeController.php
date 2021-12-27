@@ -132,6 +132,7 @@ class ThemeController extends Controller
   /**
      * update specific theme of blog
      * @param integer $blogI
+     * @param \ThemeReques $request
      * @return \json
      */
     public function update(ThemeRequest $request, $blogId)
