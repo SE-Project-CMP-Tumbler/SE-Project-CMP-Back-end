@@ -9,7 +9,6 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use App\Http\Resources\BlogResource;
 
 class UserFollowedNotification extends Notification implements ShouldQueue
 {
@@ -18,6 +17,12 @@ class UserFollowedNotification extends Notification implements ShouldQueue
     // is the user id --
     // as the user can followe other blogs with only his primary blog
     protected $follower;
+
+    // the followed user
+    protected $followed;
+
+    // the blog id of the followed user
+    protected $followedBlog;
 
     // the type of the notification
     protected $type = 'follow';
@@ -30,9 +35,11 @@ class UserFollowedNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(User $follower)
+    public function __construct(User $follower, User $followed, Blog $followedBlog)
     {
         $this->follower = $follower;
+        $this->followed = $followed;
+        $this->followedBlog = $followedBlog;
         $this->data = $this->prepareData();
     }
 
@@ -64,7 +71,7 @@ class UserFollowedNotification extends Notification implements ShouldQueue
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-' . auth()->user()->id);
+        return new PrivateChannel('channel-' . $this->followed->id);
     }
 
     /**
@@ -96,7 +103,7 @@ class UserFollowedNotification extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        $res = ["notification_id" => $this->id, "timestamp" => now()];
+        $res = ["notification_id" => $this->id, "timestamp" => now(), "read_at" => null];
         $res += $this->data;
         return $res;
     }
@@ -110,13 +117,12 @@ class UserFollowedNotification extends Notification implements ShouldQueue
     public function prepareData()
     {
         $from_blog = Blog::where('user_id', $this->follower->id)->first();
-        $curUserPrimaryBlogID = auth()->user()->blogs()->first()->id;
         $blogService = new BlogService();
-        $check = $blogService->checkIsFollowed($curUserPrimaryBlogID, $from_blog->id);
+        $check = $blogService->checkIsFollowed($this->followedBlog->id, $from_blog->id);
         return [
             'follower_id' => $this->follower->id,
             'type' => $this->type,
-            'target_blog_id' => $curUserPrimaryBlogID,
+            'target_blog_id' => $this->followedBlog->id,
             'from_blog_id' => $from_blog->id,
             'from_blog_username' => $from_blog->username,
             'from_blog_avatar' => $from_blog->avatar,

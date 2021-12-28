@@ -253,8 +253,9 @@ class FollowBlogController extends Controller
         $blogService->creatFollowBlog($primaryBlog->id, $blogId);
 
         // add the notifications
-        $followedUser = Blog::where('id', $blogId)->first()->user()->first();
-        $followedUser->notify(new UserFollowedNotification($followerUser));
+        $followedBlog = Blog::where('id', $blogId)->first();
+        $followedUser = $followedBlog->user()->first();
+        $followedUser->notify(new UserFollowedNotification($followerUser, $followedUser, $followedBlog));
         return $this->generalResponse("", "ok");
     }
 /**
