@@ -4,7 +4,7 @@ composer update
 
 php artisan storage:link
 
-php artisan migrate:fresh #--seed
+php artisan migrate #--seed
 
 php artisan db:seed
 
