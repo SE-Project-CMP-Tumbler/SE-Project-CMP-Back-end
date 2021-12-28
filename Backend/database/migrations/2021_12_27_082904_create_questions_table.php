@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRepliesTable extends Migration
+class CreateQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateRepliesTable extends Migration
      */
     public function up()
     {
-        Schema::create('replies', function (Blueprint $table) {
-            $table->id('id');
-            $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('blog_id');
-            $table->longText('description');
+        Schema::create('questions', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('ask_sender_blog_id');
+            $table->unsignedBigInteger('ask_reciever_blog_id');
+            $table->longText('body');
+            $table->boolean('anonymous_flag');
             $table->timestamps();
 
-            $table->foreign('post_id')
+            $table->foreign('ask_sender_blog_id')
                 ->references('id')
-                ->on('posts')
+                ->on('blogs')
                 ->onDelete('cascade');
 
-            $table->foreign('blog_id')
+            $table->foreign('ask_reciever_blog_id')
                 ->references('id')
                 ->on('blogs')
                 ->onDelete('cascade');
@@ -39,6 +40,6 @@ class CreateRepliesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('replies');
+        Schema::dropIfExists('questions');
     }
 }

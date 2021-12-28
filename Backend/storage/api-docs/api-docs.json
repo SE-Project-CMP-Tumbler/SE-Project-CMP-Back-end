@@ -991,39 +991,6 @@
                                                 "status": "200",
                                                 "msg": "ok"
                                             }
-                                        },
-                                        "response": {
-                                            "properties": {
-                                                "blog_avatar": {
-                                                    "type": "string",
-                                                    "example": "/storage/imgname2.extension"
-                                                },
-                                                "blog_avatar_shape": {
-                                                    "type": "string",
-                                                    "example": "circle"
-                                                },
-                                                "blog_username": {
-                                                    "type": "string",
-                                                    "example": "radwa-ahmed213"
-                                                },
-                                                "blog_id": {
-                                                    "type": "integer",
-                                                    "example": 1032
-                                                },
-                                                "question_body": {
-                                                    "type": "string",
-                                                    "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
-                                                },
-                                                "question_flag": {
-                                                    "type": "boolean",
-                                                    "example": false
-                                                },
-                                                "question_id": {
-                                                    "type": "integer",
-                                                    "example": 3
-                                                }
-                                            },
-                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -1116,7 +1083,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post/Answer Request has different types depeneds on answer type :\r\n *     \r\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "description": "Post/Answer Request has different types depeneds on answer type :\n *\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -1133,6 +1100,10 @@
                                     "post_type": {
                                         "type": "string",
                                         "example": "answer"
+                                    },
+                                    "post_time": {
+                                        "type": "string",
+                                        "example": "2021-12-31"
                                     },
                                     "post_body": {
                                         "type": "string",
@@ -1184,7 +1155,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response",
+                        "description": "Successful response\n *      if the ask was (anonymous) the value of ( question_flag = false) and those values will equal an empty string: blog_username_asking -  blog_avatar_asking - blog_avatar_shape_asking - blog_title_asking - blog_id_asking\n *      but u will still get this value : ( question_body ) ",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1202,6 +1173,14 @@
                                                     "type": "integer",
                                                     "example": 5
                                                 },
+                                                "post_status": {
+                                                    "type": "string",
+                                                    "example": "published"
+                                                },
+                                                "pinned": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
                                                 "post_time": {
                                                     "type": "date-time",
                                                     "example": "02-02-2012"
@@ -1213,14 +1192,6 @@
                                                 "post_body": {
                                                     "type": "string",
                                                     "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
-                                                },
-                                                "question_body": {
-                                                    "type": "string",
-                                                    "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
-                                                },
-                                                "question_flag": {
-                                                    "type": "boolean",
-                                                    "example": false
                                                 },
                                                 "blog_id": {
                                                     "type": "integer",
@@ -1238,6 +1209,18 @@
                                                     "type": "string",
                                                     "example": "radwa-ahmed213"
                                                 },
+                                                "blog_title": {
+                                                    "type": "string",
+                                                    "example": "student"
+                                                },
+                                                "question_body": {
+                                                    "type": "string",
+                                                    "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
+                                                },
+                                                "question_flag": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
                                                 "blog_avatar_asking": {
                                                     "type": "string",
                                                     "example": "/storage/imgname2.png"
@@ -1250,13 +1233,21 @@
                                                     "type": "string",
                                                     "example": "radwa-ahmed213"
                                                 },
+                                                "blog_title_asking": {
+                                                    "type": "string",
+                                                    "example": "dr."
+                                                },
                                                 "blog_id_asking": {
                                                     "type": "integer",
                                                     "example": 1032
                                                 },
-                                                "question_id": {
+                                                "notes_count": {
                                                     "type": "integer",
                                                     "example": 5
+                                                },
+                                                "is_liked": {
+                                                    "type": "boolean",
+                                                    "example": false
                                                 }
                                             },
                                             "type": "object"
@@ -1294,7 +1285,7 @@
                 ]
             }
         },
-        "/ask/{ask_id}": {
+        "/ask/{question_id}": {
             "delete": {
                 "tags": [
                     "Ask Blogs"
@@ -1304,9 +1295,9 @@
                 "operationId": "deleteaskblog",
                 "parameters": [
                     {
-                        "name": "ask_id",
+                        "name": "question_id",
                         "in": "path",
-                        "description": "ask_id of asking blog ",
+                        "description": "question_id of asking blog ",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1398,14 +1389,507 @@
                 ]
             }
         },
-        "/ask": {
+        "/messages/{blog_id}": {
+            "get": {
+                "tags": [
+                    "Ask Blogs"
+                ],
+                "summary": "get messages for a specific blog",
+                "description": " get messages for a specific blog (submissions + asks)",
+                "operationId": "getMessagesForBlog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "blog_id ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_type argument \n *                      either (post_type = submission) or (post_type = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "messages": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "post_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "post_status": {
+                                                                "type": "string",
+                                                                "example": "submission"
+                                                            },
+                                                            "pinned": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "post_time": {
+                                                                "type": "date-time",
+                                                                "example": "02-02-2012"
+                                                            },
+                                                            "post_type": {
+                                                                "type": "string",
+                                                                "example": "submission"
+                                                            },
+                                                            "post_body": {
+                                                                "type": "string",
+                                                                "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.png"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": "student"
+                                                            },
+                                                            "question_body": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "question_flag": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "blog_avatar_asking": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_shape_asking": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_username_asking": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_title_asking": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_id_asking": {
+                                                                "type": "integer",
+                                                                "example": ""
+                                                            },
+                                                            "notes_count": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "is_liked": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
             "delete": {
                 "tags": [
                     "Ask Blogs"
                 ],
-                "summary": "all asks recieved",
-                "description": "deleting all the recieved asks",
-                "operationId": "deleteAllAsks",
+                "summary": "delete all blog messages",
+                "description": " delete all blog messages (submissions = asks)",
+                "operationId": "deleteaskblog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "blog_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful  response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "ok"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "not found question"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/all_messages": {
+            "get": {
+                "tags": [
+                    "Ask Blogs"
+                ],
+                "summary": "get all messages for a user",
+                "description": " get all messages for a user (submissions + asks)",
+                "operationId": "getMessages",
+                "responses": {
+                    "500": {
+                        "description": "Internal Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "500",
+                                                "msg": "Internal Server error"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_type argument \n *                      either (post_type = submission) or (post_type = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "messages": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "question_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "ask_time": {
+                                                                "type": "date-time",
+                                                                "example": "02-02-2012"
+                                                            },
+                                                            "post_type": {
+                                                                "type": "string",
+                                                                "example": "ask"
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "example": "/storage/imgname2.png"
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "radwa-ahmed213"
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": "student"
+                                                            },
+                                                            "question_body": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "question_flag": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Ask Blogs"
+                ],
+                "summary": "delete all user messages",
+                "description": " delete all user messages (submissions = asks) for all of his blogs",
+                "operationId": "deleteaskblog",
                 "responses": {
                     "200": {
                         "description": "Successful  response",
@@ -3080,6 +3564,10 @@
                                                 "description": {
                                                     "type": "string",
                                                     "example": "This blog is a sketch of thoughts"
+                                                },
+                                                "followed": {
+                                                    "type": "boolean",
+                                                    "example": true
                                                 }
                                             },
                                             "type": "object"
