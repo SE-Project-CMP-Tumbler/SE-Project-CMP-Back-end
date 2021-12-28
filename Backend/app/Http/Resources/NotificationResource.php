@@ -15,7 +15,7 @@ class NotificationResource extends JsonResource
     public function toArray($request)
     {
         $data = $this->data;
-        $res = ["notification_id" => $this->id, "timestamp" => $this->created_at];
+        $res = ["notification_id" => $this->id, "timestamp" => $this->created_at, "read_at" => $this->read_at];
         $res += $data;
         return $res;
     }
