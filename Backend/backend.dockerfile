@@ -37,6 +37,9 @@ RUN php artisan config:clear    # Optimizing Configuration loading
 RUN php artisan cache:clear     # Optimizing Route loading
 RUN php artisan view:cache      # RUN php artisan passport:install
 
+# this one contains a patch for some non-working functionality in the original one
+COPY ./BroadcastNotificationCreated.php /backend/vendor/laravel/framework/src/Illuminate/Notifications/Events/BroadcastNotificationCreated.php
+
 RUN chmod +x backend_start.sh
 
 CMD ./backend_start.sh

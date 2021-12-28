@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Models\FollowBlog;
 use App\Http\Misc\Helpers\Config;
+use App\Notifications\UserFollowedNotification;
 use App\Services\BlogService;
 use App\Http\Resources\BlogCollection;
 use App\Http\Resources\FollowBlogCollection;
@@ -239,8 +240,9 @@ class FollowBlogController extends Controller
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
+        $followerUser = $request->user();
         $blogService = new BlogService();
-        $primaryBlog =  $blogService->getPrimaryBlog($request->user());
+        $primaryBlog =  $blogService->getPrimaryBlog($followerUser);
         if ($primaryBlog->id == $blogId) {
             return $this->generalResponse("", "You can't follow your self", "422");
         }
@@ -249,6 +251,11 @@ class FollowBlogController extends Controller
             return $this->generalResponse("", "You already follow this blog", "422");
         }
         $blogService->creatFollowBlog($primaryBlog->id, $blogId);
+
+        // add the notifications
+        $followedBlog = Blog::where('id', $blogId)->first();
+        $followedUser = $followedBlog->user()->first();
+        $followedUser->notify(new UserFollowedNotification($followerUser, $followedUser, $followedBlog));
         return $this->generalResponse("", "ok");
     }
 /**

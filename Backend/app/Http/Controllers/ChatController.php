@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Misc\Helpers\Config;
+use App\Services\ChatService;
 use App\Http\Resources\ChatMessageResource;
-use App\Http\Resources\LastChatMessageResource;
-use App\Http\Resources\BlogResource;
+use App\Http\Resources\LastChatMessageCollection;
+use App\Http\Resources\ChatSearchCollection;
+use App\Http\Resources\ChatMessageCollection;
 use App\Http\Requests\ChatMessageRequest;
 use App\Http\Requests\ChatRoomRequest;
 use App\Http\Requests\AllChatsRequest;
 use App\Http\Requests\ChatSearchRequest;
 use App\Http\Requests\NewChatMessageRequest;
 use App\Models\Blog;
-use App\Models\ChatRoom;
-use App\Models\ChatMessage;
-use App\Events\ChatMessageEvent;
-use App\Models\ChatRoomGID;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ChatController extends Controller
 {
@@ -44,11 +41,11 @@ class ChatController extends Controller
      *      @OA\Property(property="response", type="object",
      *       @OA\Property(property="blogs", type="array",
      *          @OA\Items(
-     *           @OA\Property(property="blog_id", type="integer", example=5),
-     *           @OA\Property(property="blog_username", type="string", example="helloEveryWhere"),
-     *           @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
-     *           @OA\Property(property="blog_avatar_shape", type="string", example=""),
-     *           @OA\Property(property="blog_title", type="string", example=""),),
+     *           @OA\Property(property="friend_id", type="integer", example=5),
+     *           @OA\Property(property="friend_username", type="string", example="helloEveryWhere"),
+     *           @OA\Property(property="friend_avatar", type="string", format="byte", example=""),
+     *           @OA\Property(property="friend_avatar_shape", type="string", example=""),
+     *           @OA\Property(property="friend_title", type="string", example=""),),
      *        ),
      *       ),
      *     ),
@@ -89,12 +86,7 @@ class ChatController extends Controller
         $otherBlogs = Blog::where('username', 'like', '%' . $request->blog_username . '%')
           ->Where('id', '!=', $request->from_blog_id)->get();
 
-        $res = ["blogs" => []];
-        foreach ($otherBlogs as $blog) {
-            array_push($res["blogs"], new BlogResource($blog));
-        }
-
-        return $this->generalResponse($res, "ok", "200");
+        return $this->generalResponse(new ChatSearchCollection($otherBlogs), "ok", "200");
     }
 
     /**
@@ -119,7 +111,7 @@ class ChatController extends Controller
      *    @OA\JsonContent(
      *     @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
      *      @OA\Property(property="response", type="object",
-     *       @OA\Property(property="chat_room_id", type="string", example="1452"),
+     *       @OA\Property(property="chat_room_id", type="int", example="1452"),
      *        ),
      *       ),
      *     ),
@@ -161,39 +153,8 @@ class ChatController extends Controller
         // 2. if the from_blog_username belongs to the current auth user
         $request->validated();
 
-        // then get the chat_room_id if it exists already
-        // and return the chat_room_gid that this chat_room belongs to
-        $chatRoomOne = ChatRoom::whereIn('from_blog_id', [$request->from_blog_id, $request->to_blog_id])
-        ->whereIn('to_blog_id', [$request->from_blog_id, $request->to_blog_id])->first();
-        if ($chatRoomOne) {
-            $chatRoomGID = ChatRoomGID::where('chat_room_one_id', $chatRoomOne->id)
-            ->orWhere('chat_room_two_id', $chatRoomOne->id)->first()->id;
-            return $this->generalResponse(["chat_room_id" => $chatRoomGID], "ok", "200");
-        }
-
-        // if we get to this point means that those two users is chatting for the first time
-        // then create from->to room one
-        $chatRoomOne = ChatRoom::create([
-        "from_blog_id" => $request->from_blog_id,
-        "to_blog_id" => $request->to_blog_id,
-        "last_cleared_id" => 0,
-        "last_sent_id" => 0,
-        ]);
-
-        // and create to->from room two
-        $chatRoomTwo = ChatRoom::create([
-        "from_blog_id" => $request->to_blog_id,
-        "to_blog_id" => $request->from_blog_id,
-        "last_cleared_id" => 0,
-        "last_sent_id" => 0,
-        ]);
-
-        // and finally link them in the chatRoomGID
-        $chatRoomGID = ChatRoomGID::create([
-        "chat_room_one_id" => $chatRoomOne->id,
-        "chat_room_two_id" => $chatRoomTwo->id,
-        ]);
-
+        // other important checks are done in the service
+        $chatRoomGID = (new ChatService())->chatRoomGIDService($request->from_blog_id, $request->to_blog_id);
         return $this->generalResponse(["chat_room_id" => $chatRoomGID->id], "ok", "200");
     }
 
@@ -276,23 +237,10 @@ class ChatController extends Controller
         // validates that the entered {from_blog_username} belongs to the current user
         $request->validated();
 
-        // select the user primary key unless the user provides one else
-        $curUserBlogID = Blog::where('user_id', $request->user()->id)->pluck('id')->toArray()[0];
-        if ($request->filled('from_blog_id')) {
-            $curUserBlogID = [$request->from_blog_id];
-        }
-
-        // get all the user chatrooms {from->to, to->from} ids
-        $userBlogChatRooms = ChatRoom::where('from_blog_id', $curUserBlogID)->get();
-
-        $res = ["chat_messages" => []];
-        foreach ($userBlogChatRooms as $chatRoom) {
-            $lastchatRoomMessage = ChatMessage::where('id', $chatRoom->last_sent_id)->first();
-            if ($lastchatRoomMessage) {
-                array_push($res["chat_messages"], new LastChatMessageResource($lastchatRoomMessage));
-            }
-        }
-        return $this->generalResponse($res, "ok", "200");
+        $lastMessages = (new ChatService())
+            ->lastMessagesService($request->from_blog_id)
+            ->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new LastChatMessageCollection($lastMessages), "ok", "200");
     }
 
     /**
@@ -364,42 +312,15 @@ class ChatController extends Controller
     public function getAllMessages(ChatMessageRequest $request)
     {
         $request->validated();
-
-        // check if this id is in the table first -- done in the ChatMessageRequest
-        // get the chatRooms which this id links
-        $chatRooms = ChatRoomGID::where('id', $request->chat_room_id)->first();
-
-        // check if the current auth user is one of the users in any of these chatRooms
-        $chatRoomOne = $chatRooms->chatRoomOne()->first();
-        $chatRoomTwo = $chatRooms->chatRoomTwo()->first();
-
-        $curUserBlogsIDs = Blog::where('user_id', $request->user()->id)->pluck('id')->toArray();
-        if ($request->filled('from_blog_id')) {
-            $curUserBlogsIDs = [$request->from_blog_id];
-        }
-
-        $oneSender = $chatRoomOne->sender()->first()->id;
-        $twoSender = $chatRoomTwo->sender()->first()->id;
-
-        if (in_array($oneSender, $curUserBlogsIDs)) {
-            $messages = ChatMessage::whereIn('chat_room_id', [$chatRoomOne->id, $chatRoomTwo->id])
-            ->where('id', '>', $chatRoomOne->last_cleared_id)->get();
-        } elseif (in_array($twoSender, $curUserBlogsIDs)) {
-            $messages = ChatMessage::whereIn('chat_room_id', [$chatRoomOne->id, $chatRoomTwo->id])
-            ->where('id', '>', $chatRoomTwo->last_cleared_id)->get();
+        $messages = (new ChatService())->allMessagesService($request->chat_room_id, $request->from_blog_id);
+        if ($messages) {
+            // returned pagination link is broken :(
+            // $messages = $messages->paginate(Config::PAGINATION_LIMIT);
+            $messages = $messages->get();
+            return $this->generalResponse(new ChatMessageCollection($messages), "ok", "200");
         } else {
-            return $this->errorResponse("Forbidden", "403");
+            return $this->errorResponse("Forbidden", 403);
         }
-
-        $arr = ["chat_messages" => []];
-        foreach ($messages as $item) {
-            array_push($arr["chat_messages"], new ChatMessageResource($item));
-        }
-
-        // returned pagination link is broken :(
-        // ->paginate(Config::PAGINATION_LIMIT);
-        // return $this->generalResponse(new ChatMessageCollection($res), "ok", "200");
-        return $this->generalResponse($arr, "ok", "200");
     }
 
     /**
@@ -476,61 +397,21 @@ class ChatController extends Controller
     {
         $request->validated();
 
-        // check if this id is in the table first -- done in the ChatMessageRequest
-        // get the chatRooms which this id links
-        $chatRooms = ChatRoomGID::where('id', $request->chat_room_id)->first();
-
-        // check if the current auth user is one of the users in any of these chatRooms
-        $chatRoomOne = $chatRooms->chatRoomOne()->first();
-        $chatRoomTwo = $chatRooms->chatRoomTwo()->first();
-
-        $curUserBlogID = Blog::where('user_id', $request->user()->id)->first()->id;
-        if ($request->filled('from_blog_id')) {
-            $curUserBlogID = $request->from_blog_id;
-        }
-
-        $oneSender = $chatRoomOne->sender()->first()->id;
-        $twoSender = $chatRoomTwo->sender()->first()->id;
-
-        // this means that the user can't create new chat_room_gid, chat_room record
-        // in the table with this newMessage request
-        if ($curUserBlogID == $oneSender) {
-            $roomID = $chatRoomOne->id;
-        } elseif ($curUserBlogID == $twoSender) {
-            $roomID = $chatRoomTwo->id;
+        // this will return the error,code,null,
+        // or either the null,null,message
+        list($error, $code, $chatMessage) = (new ChatService())->sendMessageService(
+            $request->chat_room_id,
+            $request->from_blog_id,
+            $request->text,
+            $request->photo,
+            $request->gif
+        );
+        if ($chatMessage) {
+            $res = ["chat_messages" => [new ChatMessageResource($chatMessage)]];
+            return $this->generalResponse($res, "ok");
         } else {
-            return $this->errorResponse("Forbidden", "403");
+            return $this->errorResponse($error, $code);
         }
-
-        $hasText = $request->filled('text');
-        $hasImageUrl = $request->filled('photo');
-        $hasGifUrl = $request->filled('gif');
-
-        // sending empty message
-        if (!$hasText && !$hasImageUrl && !$hasGifUrl) {
-            return $this->errorResponse("Can't send empty message.");
-        }
-
-        // sending both image and gif and this covers the 3-types at once also
-        if ($hasImageUrl && $hasGifUrl) {
-            return $this->errorResponse("Can't send image and gif at once.");
-        }
-
-        $chatMessage = ChatMessage::create([
-        "chat_room_id" => $roomID,
-        "text" => $request->text,
-        "image_url" => $request->photo,
-        "gif_url" => $request->gif,
-        "read" => false,
-        ]);
-
-        ChatRoom::whereIn('id', [$chatRoomOne->id, $chatRoomTwo->id])->update([
-        'last_sent_id' => $chatMessage->id,
-        ]);
-
-        broadcast(new ChatMessageEvent($chatMessage, $request->chat_room_id))->toOthers();
-        $res = ["chat_messages" => [new ChatMessageResource($chatMessage)]];
-        return $this->generalResponse($res, "ok");
     }
 
     /**
@@ -589,42 +470,11 @@ class ChatController extends Controller
     {
         $request->validated();
 
-        // check if this id is in the table first -- done in the ChatMessageRequest
-        // get the chatRooms which this id links
-        $chatRooms = ChatRoomGID::where('id', $request->chat_room_id)->first();
-
-        // check if the current auth user is one of the users in any of these chatRooms
-        $chatRoomOne = $chatRooms->chatRoomOne()->first();
-        $chatRoomTwo = $chatRooms->chatRoomTwo()->first();
-
-        $curUserBlogID = Blog::where('user_id', $request->user()->id)->first()->id;
-        if ($request->filled('from_blog_id')) {
-            $curUserBlogID = $request->from_blog_id;
-        }
-
-        $oneSender = $chatRoomOne->sender()->first()->id;
-        $twoSender = $chatRoomTwo->sender()->first()->id;
-
-        // check which of these chat_room should we update its last_cleared_id value
-        if ($curUserBlogID == $oneSender) {
-            $roomID = $chatRoomOne->id;
-        } elseif ($curUserBlogID == $twoSender) {
-            $roomID = $chatRoomTwo->id;
+        $clearedState = (new ChatService())->clearChatService($request->chat_room_id, $request->from_blog_id);
+        if ($clearedState) {
+            return $this->generalResponse("chat cleared", "ok");
         } else {
-            return $this->errorResponse("Forbidden", "403");
+            return $this->errorResponse('Forbidden', 404);
         }
-
-        // get the last chat_message_id between those two users
-        $lastMessage = ChatMessage::whereIn('chat_room_id', [$chatRoomOne->id, $chatRoomTwo->id])
-            ->orderBy('id', 'desc')->first();
-
-        if ($lastMessage) {
-            // update the last cleared id of the $roomID
-            ChatRoom::where('id', $roomID)->update([
-                'last_cleared_id' => $lastMessage->id,
-                'last_sent_id' => 0,
-            ]);
-        }
-        return $this->generalResponse("chat cleared", "ok");
     }
 }

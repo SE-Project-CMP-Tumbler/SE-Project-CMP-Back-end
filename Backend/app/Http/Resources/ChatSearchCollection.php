@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ChatMessageCollection extends ResourceCollection
+class ChatSearchCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,7 +15,7 @@ class ChatMessageCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'chat_messages' => ChatMessageResource::Collection($this->collection),
+            'blogs' => ChatSearchResource::Collection($this->collection),
             // 'pagination' => [
             //     'total' => $this->total(),
             //     'count' => $this->count(),

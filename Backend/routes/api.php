@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlockBlogController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UploadFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
@@ -18,7 +19,6 @@ use App\Http\Controllers\PostActionController;
 use App\Http\Controllers\PostNoteController;
 use App\Http\Controllers\AskController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,7 +185,6 @@ Route::delete('/post/like/{post_id}', [PostActionController::class,'deleteLike']
 Route::delete('/post/reply/{reply_id}', [PostActionController::class,'deletereply'])->middleware('auth:api');
 Route::get('/post_notes/{post_id}', [PostNoteController::class,'getNotes'])->middleware('auth:api');
 
-
 /*
 | Asks Routes
 */
@@ -196,3 +195,8 @@ Route::get('/messages/{blog_id}', [AskController::class,'getMessagesForBlog'])->
 Route::get('/all_messages', [AskController::class,'getMessages'])->middleware('auth:api');
 Route::delete('/messages/{blog_id}', [AskController::class,'deleteMessagesForBlog'])->middleware('auth:api');
 Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middleware('auth:api');
+
+/*
+| Notifications Routes
+*/
+Route::get('notifications', [NotificationController::class, 'notificaions'])->middleware('auth:api')->middleware('notification_read');

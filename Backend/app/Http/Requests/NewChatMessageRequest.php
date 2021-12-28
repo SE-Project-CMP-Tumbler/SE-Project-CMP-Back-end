@@ -49,7 +49,7 @@ class NewChatMessageRequest extends FormRequest
              // to set specificlly which of the logged in user blogs to be the sender else primary is used
             'from_blog_id' => [
                 "sometimes",
-                "string",
+                "integer",
                 // this rule ensures that this blog belongs to the current loged in user
                 Rule::exists('blogs', 'id')->where(function ($query) {
                     $query->where('user_id', Auth::user()->id)

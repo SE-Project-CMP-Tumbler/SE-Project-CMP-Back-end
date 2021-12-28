@@ -2,14 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Misc\Helpers\Config;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class ChatMessageRequest extends FormRequest
+class NotificationRequest extends FormRequest
 {
-    protected $stopOnFirstFailure = true;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,7 +27,12 @@ class ChatMessageRequest extends FormRequest
     public function all($keys = null)
     {
         $data = parent::all($keys);
-        $data['chat_room_id'] = $this->route('chat_room_id');
+        if ($this->route('type')) {
+            $data['type'] = $this->route('type');
+        }
+        if ($this->route('for_blog_id')) {
+            $data['for_blog_id'] = $this->route('for_blog_id');
+        }
 
         return $data;
     }
@@ -41,21 +45,20 @@ class ChatMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'chat_room_id' => [
-                "required",
-                "integer",
-                'exists:chat_room_gids,id'
-             ],
-             // to set specificlly which of the logged in user blogs to be the sender else primary is used
-            'from_blog_id' => [
+            "type" => [
+                "sometimes",
+                "string",
+                Rule::in(Config::NOTIFICATIONS_TYPES),
+            ],
+            "for_blog_id" => [
                 "sometimes",
                 "integer",
                 // this rule ensures that this blog belongs to the current loged in user
                 Rule::exists('blogs', 'id')->where(function ($query) {
                     $query->where('user_id', Auth::user()->id)
-                        ->where('id', request()->from_blog_id);
+                        ->where('id', request()->for_blog_id);
                 })
-            ],
+            ]
         ];
     }
 }

@@ -2,187 +2,104 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Misc\Helpers\Config;
+use App\Http\Requests\NotificationRequest;
+use App\Http\Resources\NotificationCollection;
 
 class NotificationController extends Controller
 {
-/** 
+/**
  *  @OA\Get(
- *  path="/blog/{blog_id}/notifications",
+ *  path="/blog/notifications?type={type}&from_blog_id={from_blog_id}",
  *  operationId="getNotifications",
- *  tags={"Notifications","Ask Blogs"},
+ *  tags={"Notifications"},
  *  security={ {"bearer": {} }},
  *  summary="retrieve blog's activity feed",
  *  description="Retrieve the activity items for a specific blog.",
  *  @OA\Parameter(
- *    in="path",
- *    name="blog_id",
- *    description="Any blog identifier.",
- *    required=true,
+ *    in="query",
+ *    name="type",
+ *    description="
+ *        type: is optional to indicate which of these notificaions to get its and default is all
+ *        like: a like on your post
+ *        reply: a reply on your post
+ *        follow: a new follower
+ *        reblog: a reblog of your post
+ *        ask: a new ask recieved
+ *        answer: an answered ask that you had sent
+ *        mentions_posts: get mentions in posts
+ *        mentions_replies: get mentions in replies
+ *        all: get all types of notifications",
+ *    required=false,
+ *    example="follow",
+ *    @OA\Schema(
+ *       type="string",
+ *    )
+ *  ),
+ *  @OA\Parameter(
+ *    in="query",
+ *    name="for_blog_id",
+ *    description="
+ *        is optional to retreive the notificaion for specific one of your blogs, default is you primary blog",
+ *    required=false,
  *    example="123456789",
  *    @OA\Schema(
  *       type="int",
  *    )
  *  ),
- *  @OA\RequestBody(
- *     description="type: is a string parameter indicates which notification type to be recieved:
- *     like: a like on your post
- *     reply: a reply on your post
- *     follow: a new follower
- *     reblog: a reblog of your post
- *     ask: a new ask recieved
- *     answer: an answered ask that you had sent
- *     mentions_posts: get mentions in posts
- *     mentions_replies: get mentions in replies
- *     all: to get all type of notifications",
- *   @OA\JsonContent(
- *         @OA\Property(property="type",type="string", example="all")
- *     ),
- *  ),
  *  @OA\Response(
  *    response=200,
- *    description="Successful Operation",
+ *    description="
+ *      Successful Operation,
+ *      notificaion_id: is a unique id for each notificaion
+ *      type: is the notification type { follow | mention | like | reply | reblog }
+ *      timestamp: is when that action happened,
+ *
+ *      target_blog_id: is one of the users receiving these notificaions blog ids to know
+ *      each of there blogs has been { followed | mentioned | got a like | got a reply | got a reblog }
+ *
+ *      if the notificaion is of type { follow }, there will be the { follower_id }
+ *      which is the id of the user made the follow,
+ *
+ *      if that notification is of type { mention | like | reply | rebolg }, the response will
+ *      have { target_post_id, target_post_type, target_post_summary }
+ *
+ *      { from_blog_id | from_blog_username | from_blog_avatar_shape | from_blog_avatar }
+ *      those attributes belong to the blog that made the action,
+ *
+ *      follow: this checks if you follow the other user which his blog made that action",
  *    @OA\JsonContent(
  *     @OA\Property(property="meta",type="object",example={"status":"200", "msg":"ok"}),
  *      @OA\Property(property="response",type="object",
- *        @OA\Property(property="notifications",type="array",
+ *        @OA\Property(property="notificatoins",type="array",
  *          @OA\Items(
- *              @OA\Property(property="answers",type="array",
- *                 @OA\Items(
- *                      @OA\Property(property="blog_avatar",type="string",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape",type="string",example="circle"),
- *                      @OA\Property(property="blog_username",type="string",example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_title",type="string",example="Positive Quotes"),
- *                      @OA\Property(property="blog_id",type="integer",example=1032),
- *                      @OA\Property(property="answer_time",type="date-time",example="2012-02-20 00:22"),
- *                      @OA\Property(property="post_id",type="integer",example=5),
- *                      @OA\Property(property="post_body",type="general",example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *                      @OA\Property(property="post_type",type="string",example="text"),
- *
- *               )
- *              ),
- *               @OA\Property(property="reblogs",type="array",
- *                 @OA\Items(
- *                      @OA\Property(property="blog_avatar",type="string",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape",type="string",example="circle"),
- *                      @OA\Property(property="blog_username",type="string",example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_title",type="string",example="Positive Quotes"),
- *                      @OA\Property(property="blog_id",type="integer",example=1032),
- *                      @OA\Property(property="post_time",type="date-time",example=""),
- *                      @OA\Property(property="post_id",type="integer",example=5),
- *                      @OA\Property(property="post_body",type="general",example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *                      @OA\Property(property="post_type",type="string",example="text"),
- *
- *               )
- *              ),
- *              @OA\Property(property="asks",type="array",
- *                    @OA\Items(
- *                      @OA\Property(property="question_body",type="string",example="How are you?"),
- *                      @OA\Property(property="question_id",type="integer", example=5),
- *                      @OA\Property(property="flag",type="boolean", example=false),
- *                      @OA\Property(property="ask_time", type="date-time", example="2012-02-20 00:22"),
- *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
- *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                )
- *               ),
- *              @OA\Property(property="follows",type="array",
- *                @OA\Items(
- *                      @OA\Property(property="follow_time", type="date-time", example=""),
- *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
- *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                )
- *              ),
- *              @OA\Property(property="mentions_posts",type="array",
- *                @OA\Items(
- *                      @OA\Property(property="mention_time", type="date-time", example=""),
- *                      @OA\Property(property="blog_avatar_mentioning", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape_mentioning", type="string", example="circle"),
- *                      @OA\Property(property="blog_username_mentioning", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id_mentioning", type="integer", example=1032),
- *                      @OA\Property(property="blog_avatar",type="string",example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
- *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="post_id",type="integer",example=5),
- *                      @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *                      @OA\Property(property="post_type ", type="string", example="text"),
- *                )
- *              ),
- *               @OA\Property(property="mentions_replies",type="array",
- *                 @OA\Items(
- *                      @OA\Property(property="mention_time", type="date-time", example=""),
- *                      @OA\Property(property="blog_avatar_mentioning", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape_mentioning", type="string", example="circle"),
- *                      @OA\Property(property="blog_username_mentioning", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id_mentioning", type="integer", example=1032),
- *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
- *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="reply_id",type="integer",example=5),
- *                      @OA\Property(property="reply_text", type="general", example="Hello "),
- *                   ),
- *                )
- *              ),
- *              @OA\Property(property="likes",type="array",
- *                 @OA\Items(
- *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
- *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="followed", type="boolean", example=false),
- *                      @OA\Property(property="like_time", type="date-time", example=""),
- *                      @OA\Property(property="post_id",type="integer",example=5),
- *                      @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *                      @OA\Property(property="post_type ", type="string", example="text"),
- *                       ),
- *                       ),
- *
- *                   ),
- *                   ),
- *               ),
- *              @OA\Property(property="replies",type="array",
- *                @OA\Items(
- *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
- *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="followed", type="boolean", example=false),
- *                      @OA\Property(property="reply_text", type="string", example="this is my last reply"),
- *                      @OA\Property(property="reply_id", type="integer", example=5),
- *                      @OA\Property(property="reply_time", type="date-time", example=""),
- *                      @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *                      @OA\Property(property="post_type ", type="string", example="text"),
- *
- *                   ),
- *             ),
- *            @OA\Property(property="reblogs",type="array",
- *                @OA\Items(
- *                      @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *                      @OA\Property(property="post_id ", type="integer", example=5),
- *                      @OA\Property(property="post_type ", type="string", example="text"),
- *                      @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.extension"),
- *                      @OA\Property(property="blog_avatar_shape", type="string", example="circle"),
- *                      @OA\Property(property="blog_username", type="string", example="radwa-ahmed213"),
- *                      @OA\Property(property="blog_title", type="string", example="Positive Quotes"),
- *                      @OA\Property(property="blog_id", type="integer", example=1032),
- *                      @OA\Property(property="followed", type="boolean", example=false),
- *                      @OA\Property(property="reblog_time", type="date-time", example=""),
- *                      @OA\Property(property="traced_back_posts",type="object",
- *                           @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *                           @OA\Property(property="post_id ", type="integer", example=5),
- *                           @OA\Property(property="post_type ", type="string", example="text"),
- *                          ),),
- *                       ),
- *
- *                   ),
- *             ),
+ *             @OA\Property(property="type",type="string",example="mention"),
+ *             @OA\Property(property="notification_id", type="string",example="ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3"),
+ *             @OA\Property(property="timestamp", type="date-time", example="/storage/imgname2.extension"),
+ *             @OA\Property(property="target_blog_id",type="integer",example="39"),
+ *             @OA\Property(property="follower_id",type="integer",example="39"),
+ *             @OA\Property(property="target_post_id",type="integer",example="1523"),
+ *             @OA\Property(property="target_post_type",type="string",example="text"),
+ *             @OA\Property(property="target_post_summary",type="string",example="<p> this is post summary </p>"),
+ *             @OA\Property(property="from_blog_id",type="integer",example="84"),
+ *             @OA\Property(property="from_blog_username",type="string",example="helloBLog"),
+ *             @OA\Property(property="from_blog_avatar",type="url",example="/storage/imagename.ext"),
+ *             @OA\Property(property="from_blog_avatar_shape",type="string",example="circle"),
+ *             @OA\Property(property="follow", type="boolean", example="false"),
+ *         )
+ *        ),
+ *         @OA\property(property="pagination",type="object",
+ *             @OA\property(property="total",type="int",example=17),
+ *             @OA\property(property="count",type="int",example=7),
+ *             @OA\property(property="per_page",type="int",example=10),
+ *             @OA\property(property="current_page",type="int",example=2),
+ *             @OA\property(property="total_pages",type="int",example=2),
+ *             @OA\property(property="first_page_url",type="boolean",example=false),
+ *             @OA\property(property="next_page_url",type="string",example=null),
+ *             @OA\property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/notificaions?page=1"),),
+ *      ),
+ *    ),
+ *  ),
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
@@ -206,4 +123,27 @@ class NotificationController extends Controller
  * ),
  * ),
  */
+
+
+    /**
+     * get all the notificaions for the current logged in user
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
+    public function notificaions(NotificationRequest $request)
+    {
+        $request->validated();
+        $curUser = $request->user();
+        $curUnreadUserNotification = $curUser->unreadNotifications();
+        if ($request->filled('type') && $request->type !== 'all') {
+            $curUnreadUserNotification->whereJsonContains("data", ["type" => $request->type]);
+        }
+        if ($request->filled('for_blog_id')) {
+            $curUnreadUserNotification->whereJsonContains("data", ["target_blog_id" => (int) $request->for_blog_id]);
+        }
+        $curUnreadUserNotification = $curUnreadUserNotification->paginate(Config::PAGINATION_LIMIT);
+        return $this->generalResponse(new NotificationCollection($curUnreadUserNotification), "ok", "200");
+    }
 }
