@@ -66,6 +66,7 @@ class ChatMessageEvent implements ShouldBroadcast
         // );
         // sort($arr);
         // return new PrivateChannel('channel-' . $arr[0]  . '-' . $arr[1]);
-        return new PrivateChannel('channel-' . $this->chatRoomGID);
+        // return new PrivateChannel('channel-' . $this->chatRoomGID);
+        return new Channel('channel-' . $this->chatRoomGID);
     }
 }
