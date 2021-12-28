@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
@@ -22,7 +23,8 @@ class PostFactory extends Factory
          "<div><h1>What's Artificial @intellegence? </h1> <p>#AI #humanity #freedom</p></div>",
           "<div><h1> Please work properly</h1><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag.</video></div>"
         ];
-        $blog = Blog::factory()->create();
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(['user_id' => $user->id ]);
         return [
             'body' => $arr[ rand(0, 6)] ,
             'blog_id' => $blog->id,
