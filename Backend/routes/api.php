@@ -200,3 +200,10 @@ Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middlew
 | Notifications Routes
 */
 Route::get('notifications', [NotificationController::class, 'notificaions'])->middleware('auth:api')->middleware('notification_read');
+
+/*
+| Graph Routes
+*/
+Route::get('graph/notes/{blog_id}', [ActivityController::class, 'getNotesGraphData'])->middleware('auth:api');
+Route::get('graph/new_followers/{blog_id}', [ActivityController::class, 'getNewFollwersGraphData'])->middleware('auth:api');
+Route::get('graph/total_followers/{blog_id}', [ActivityController::class, 'getTotalFollwersGraphData'])->middleware('auth:api');

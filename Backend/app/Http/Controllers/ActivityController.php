@@ -2,373 +2,359 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Blog;
-use App\Models\Like;
-use App\Http\Resources\BlogResource;
-use App\Http\Resources\BlogCollection;
-use App\Http\Resources\PostCollection;
-use App\Http\Requests\BlogRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests\GraphRequest;
 use App\Services\BlogService;
+use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
-/**
- * @OA\Get(
- * path="/graph/notes/{period}/{rate}",
- * summary="get the notes",
- * description="get the notes for the activity graph",
- * tags={"Activity"},
- * operationId="getNotesActivityGraph",
- * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *          name="period",
- *          description="the time period that you want to retrieve the data for.
- *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\Parameter(
- *          name="rate",
- *          description="the time rate that you want to retrieve the data with.
- *  ( 0 -> hourly) , (1 -> daily),
- *  note: if the period=1, then the rate must equal 0.",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- * @OA\Response(
- *    response=200,
- *    description="Successful response",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response",type="object",
- *       @OA\Property(property="notes_count", type="integer", example=16),
- *       @OA\Property(property="new_followers_count", type="integer", example=6),
- *       @OA\Property(property="total_followers_count", type="integer", example=326),
- *       @OA\Property(property="data", type="array",
- *           @OA\Items(
- *               @OA\Property(property="0", type="object",
- *                @OA\Property(property="timestamp", type="string", example="2021-11-03 01:13:39"),
- *                @OA\Property(property="notes", type="integer", example=5),
- *                @OA\Property(property="top_post", type="string", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),),
- *              @OA\Property(property="1", type="object",
- *                @OA\Property(property="timestamp", type="string", example="2021-11-04 01:13:39"),
- *                @OA\Property(property="notes", type="integer", example=7),
- *                @OA\Property(property="top_post", type="string", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),),
- *           @OA\Property(property="2", type="object",
- *              @OA\Property(property="timestamp", type="string", example="2021-11-05 01:13:39"),
- *              @OA\Property(property="notes", type="integer", example=2),
- *              @OA\Property(property="top_post", type="string", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),),
- *          )),
- *       @OA\Property(property="top_post", type="object",
- *              @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *              @OA\Property(property="total_notes_count", type="integer", example=14),
- *              @OA\Property(property="notes_count", type="integer", example=2),
- *              ),
- *       @OA\Property(property="biggest_fan", type="array",
- *          @OA\Items(
- *
- *               @OA\Property(property="name", type="string", example="mycppblog"),
- *               @OA\Property(property="blog_id", type="int", example="123456789"),
- *               @OA\Property(property="blog_username", type="int", example="123456789"),
- *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),
- *              @OA\Property(property="blog_avatar_shape", type="string", example="square"),
- *               @OA\Property(property="followed", type="bool", example=true),
- *               @OA\Property(property="theme_id", type="int", example="123456789"),
- *               @OA\Property(property="title", type="array",
- *                   @OA\Items(
- *                       @OA\Property(property="text", type="string", example="CPP Programming"),
- *                       @OA\Property(property="show", type="boolean", example="true"),
- *                      @OA\Property(property="color", type="string", example="#000000"),
- *                       @OA\Property(property="font", type="string", example="Gibson"),
- *                       @OA\Property(property="font_weight", type="string", example="bold"),
- *                                        ))
- *                                   ),
- *              ),
- *         ),
- *        )
- *     ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=500,
- *    description="Internal Server error",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
- *        )
- *     )
- * ),
- *
- */
-/**
- * @OA\Get(
- * path="/graph/new_followers/{period}/{rate}",
- * summary="get the number of the new followers",
- * description="get the number of the new followers for the activity graph",
- * tags={"Activity"},
- * operationId="getNewFollwersActivityGraph",
- * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *          name="period",
- *          description="the time period that you want to retrieve the data for.
- *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\Parameter(
- *          name="rate",
- *          description="the time rate that you want to retrieve the data with.
- *  ( 0 -> hourly) , (1 -> daily),
- *  note: if the period=1, then the rate must equal 0.",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- * @OA\Response(
- *    response=200,
- *    description="Successful response",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response",type="object",
- *       @OA\Property(property="notes_count", type="integer", example=16),
- *       @OA\Property(property="new_followers_count", type="integer", example=6),
- *       @OA\Property(property="total_followers_count", type="integer", example=326),
- *       @OA\Property(property="data", type="array",
- *           @OA\Items(
- *               @OA\Property(property="0", type="object",
- *                @OA\Property(property="timestamp", type="string", example="2021-11-03 01:13:39"),
- *                @OA\Property(property="new_followers", type="integer", example=5),),
- *              @OA\Property(property="1", type="object",
- *                @OA\Property(property="timestamp", type="string", example="2021-11-04 01:13:39"),
- *                @OA\Property(property="new_followers", type="integer", example=7),),
- *           @OA\Property(property="2", type="object",
- *              @OA\Property(property="timestamp", type="string", example="2021-11-05 01:13:39"),
- *              @OA\Property(property="new_followers", type="integer", example=2),),
- *          )),
- *       @OA\Property(property="top_post", type="object",
- *              @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *              @OA\Property(property="total_notes_count", type="integer", example=14),
- *              @OA\Property(property="notes_count", type="integer", example=2),
- *              ),
- *       @OA\Property(property="biggest_fan", type="array",
- *          @OA\Items(
- *
- *               @OA\Property(property="name", type="string", example="mycppblog"),
- *               @OA\Property(property="blog_id", type="int", example="123456789"),
- *               @OA\Property(property="blog_username", type="int", example="123456789"),
- *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),
- *              @OA\Property(property="blog_avatar_shape", type="string", example="square"),
- *               @OA\Property(property="followed", type="bool", example=true),
- *               @OA\Property(property="theme_id", type="int", example="123456789"),
- *               @OA\Property(property="title", type="array",
- *                   @OA\Items(
- *                       @OA\Property(property="text", type="string", example="CPP Programming"),
- *                       @OA\Property(property="show", type="boolean", example="true"),
- *                      @OA\Property(property="color", type="string", example="#000000"),
- *                       @OA\Property(property="font", type="string", example="Gibson"),
- *                       @OA\Property(property="font_weight", type="string", example="bold"),
- *                                        ))
- *                                   ),
- *              ),
- *         ),
- *        )
- *     ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=500,
- *    description="Internal Server error",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
- *        )
- *     )
- * ),
- *
- */
-/**
- * @OA\Get(
- * path="/graph/total_followers/{period}/{rate}",
- * summary="get the total number of followers",
- * description="get the total number of followers for the activity graph",
- * tags={"Activity"},
- * operationId="getTotalFollwersActivityGraph",
- * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *          name="period",
- *          description="the time period that you want to retrieve the data for.
- *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *  @OA\Parameter(
- *          name="rate",
- *          description="the time rate that you want to retrieve the data with.
- *  ( 0 -> hourly) , (1 -> daily),
- *  note: if the period=1, then the rate must equal 0.",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- * @OA\Response(
- *    response=200,
- *    description="Successful response",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response",type="object",
- *       @OA\Property(property="notes_count", type="integer", example=16),
- *       @OA\Property(property="new_followers_count", type="integer", example=6),
- *       @OA\Property(property="total_followers_count", type="integer", example=326),
- *       @OA\Property(property="data", type="array",
- *           @OA\Items(
- *               @OA\Property(property="0", type="object",
- *                @OA\Property(property="timestamp", type="string", example="2021-11-03 01:13:39"),
- *                @OA\Property(property="total_followers", type="integer", example=100),),
- *              @OA\Property(property="1", type="object",
- *                @OA\Property(property="timestamp", type="string", example="2021-11-04 01:13:39"),
- *                @OA\Property(property="total_followers", type="integer", example=156),),
- *           @OA\Property(property="2", type="object",
- *              @OA\Property(property="timestamp", type="string", example="2021-11-05 01:13:39"),
- *              @OA\Property(property="total_followers", type="integer", example=304),),
- *          )),
- *       @OA\Property(property="top_post", type="object",
- *              @OA\Property(property="post_body", type="general", example="<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"),
- *              @OA\Property(property="total_notes_count", type="integer", example=14),
- *              @OA\Property(property="notes_count", type="integer", example=2),
- *              ),
- *       @OA\Property(property="biggest_fan", type="array",
- *          @OA\Items(
- *
- *               @OA\Property(property="name", type="string", example="mycppblog"),
- *               @OA\Property(property="blog_id", type="int", example="123456789"),
- *               @OA\Property(property="blog_username", type="int", example="123456789"),
- *              @OA\Property(property="blog_avatar", type="string", example="storage/blogs/avatar2125"),
- *              @OA\Property(property="blog_avatar_shape", type="string", example="square"),
- *               @OA\Property(property="followed", type="bool", example=true),
- *               @OA\Property(property="theme_id", type="int", example="123456789"),
- *               @OA\Property(property="title", type="array",
- *                   @OA\Items(
- *                       @OA\Property(property="text", type="string", example="CPP Programming"),
- *                       @OA\Property(property="show", type="boolean", example="true"),
- *                      @OA\Property(property="color", type="string", example="#000000"),
- *                       @OA\Property(property="font", type="string", example="Gibson"),
- *                       @OA\Property(property="font_weight", type="string", example="bold"),
- *                                        ))
- *                                   ),
- *              ),
- *         ),
- *        )
- *     ),
- *  @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=500,
- *    description="Internal Server error",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
- *        )
- *     )
- * ),
- *
- */
-/**
- * @OA\Get(
- * path="/blog_activity/{blog_id}",
- * summary="get number of likes ,posts, drafts ",
- * description=" return total_followings number, followings , likes of blog",
- * operationId="get blog activity",
- * tags={"Activity"},
- * security={ {"bearer": {} }},
- * @OA\Parameter(
- *          name="blog_id",
- *          description="The id of current blog",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer")),
- *
- * @OA\Response(
- *    response=200,
- *    description="Successful response",
- *    @OA\JsonContent(
- *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *         @OA\Property(property="response", type="object",
- *               @OA\Property(property="followers",type="integer",example=5),
- *               @OA\Property(property="followings",type="integer",example=5),
- *               @OA\Property(property="likes",type="integer",example=5),
- *                @OA\Property(property="posts",type="integer",example=5),
- *                @OA\Property(property="drafts",type="integer",example=5),
- *              ),
- *       )
- *     ),
- * @OA\Response(
- *    response=401,
- *    description="Unauthorized",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
- *        )
- *     ),
- *   *  @OA\Response(
- *    response=404,
- *    description="Not found",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
- *        )
- *     ),
- *  @OA\Response(
- *    response=403,
- *    description="Forbidden",
- *    @OA\JsonContent(
- *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
- *        )
- *     )
- * )
- */
- /**
-  *get activity numbers of blog
-  * @param \Request $request
-   * @param  $blogId
-  * @return \json
- */
+    /**
+     * @OA\Get(
+     * path="/graph/notes/{blog_id}",
+     * summary="get the notes",
+     * description="get the notes for the activity graph",
+     * tags={"Activity"},
+     * operationId="getNotesActivityGraph",
+     * security={ {"bearer": {} }},
+     *  @OA\Parameter(
+     *     name="blog_id",
+     *     description="the blog id which this graph data belongs to",
+     *     required=true,
+     *     in="path",
+     *     @OA\Schema(
+     *         type="integer")),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+     *       @OA\Property(property="response",type="object",
+     *       @OA\Property(property="total_notes_count", type="integer", example=16),
+     *       @OA\Property(property="total_followers_count", type="integer", example=326),
+     *       @OA\Property(property="data", type="object",
+     *           example={
+     *              {
+     *               "timestamp": "2021-11-03 01:13:39",
+     *               "count": 5,
+     *               "post_id": 51,
+     *             },
+     *             {
+     *               "timestamp": "2021-17-03 01:13:39",
+     *               "count": 51,
+     *               "post_id": 81,
+     *             },
+     *             {
+     *               "timestamp": "2021-19-03 01:13:39",
+     *               "count": 9,
+     *               "post_id": 123,
+     *             },
+     *           }),
+     *    ),
+     *   ),
+     *  ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=500,
+     *    description="Internal Server error",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+     *        )
+     *     )
+     * ),
+     *
+     */
+
+    /**
+    * get the new notes data for a blog for drawing the graph
+    *
+    * @param \GraphRequest $request
+    * @return \json
+    */
+    public function getNotesGraphData(GraphRequest $request)
+    {
+        $request->validated();
+        $blog = Blog::where('id', $request->blog_id)->first();
+
+        $data = DB::select('select tmp.post_id, count(*), tmp.created_at::date from 
+            (select replies.post_id, replies.created_at, replies.blog_id from replies 
+            union (select post_id, created_at, blog_id from likes)) 
+            as tmp where tmp.blog_id = ' . $request->blog_id .
+            'group by date(created_at), post_id order by count(*) desc;');
+
+        $followers = $blog->followers()->count();
+        $replies = $blog->replies()->count();
+
+        $res = [
+            "data" => $data,
+            "total_followers_count" => $followers,
+            "notes_counts" => $replies,
+        ];
+
+        return $this->generalResponse($res, "ok", 200);
+    }
+
+    /**
+     * @OA\Get(
+     * path="/graph/new_followers/{blog_id}",
+     * summary="get the number of the new followers",
+     * description="get the number of the new followers for the activity graph",
+     * tags={"Activity"},
+     * operationId="getNewFollwersActivityGraph",
+     * security={ {"bearer": {} }},
+     *  @OA\Parameter(
+     *     name="blog_id",
+     *     description="the blog id which this graph data belongs to",
+     *     required=true,
+     *     in="path",
+     *     @OA\Schema(
+     *         type="integer")),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+     *       @OA\Property(property="response",type="object",
+     *       @OA\Property(property="total_notes_count", type="integer", example=16),
+     *       @OA\Property(property="total_followers_count", type="integer", example=326),
+     *       @OA\Property(property="data", type="object",
+     *           example={
+     *              {
+     *               "timestamp": "2021-11-03 01:13:39",
+     *               "count": 5,
+     *             },
+     *             {
+     *               "timestamp": "2021-17-03 01:13:39",
+     *               "count": 51,
+     *             },
+     *             {
+     *               "timestamp": "2021-19-03 01:13:39",
+     *               "count": 9,
+     *             },
+     *           }),
+     *    ),
+     *   ),
+     *  ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=500,
+     *    description="Internal Server error",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+     *        )
+     *     )
+     * ),
+     *
+     */
+    /**
+    * get the new followers for a blog
+    *
+    * @param \Request $request
+    * @return \json
+    */
+    public function getNewFollwersGraphData(GraphRequest $request)
+    {
+        $request->validated();
+        $data = DB::select('select count(*), created_at::date from follow_blog where followed_id = '
+            . $request->blog_id . ' group by date(created_at) order by count(*) desc;');
+
+        $blog = Blog::where('id', $request->blog_id)->first();
+        $followers = $blog->followers()->count();
+        $replies = $blog->replies()->count();
+
+        $res = [
+            "data" => $data,
+            "total_followers_count" => $followers,
+            "notes_counts" => $replies,
+        ];
+
+        return $this->generalResponse($res, "ok", 200);
+    }
+
+    /**
+     * @OA\Get(
+     * path="/graph/total_followers/{blog_id}",
+     * summary="get the total number of followers",
+     * description="get the total number of followers for the activity graph",
+     * tags={"Activity"},
+     * operationId="getTotalFollwersActivityGraph",
+     * security={ {"bearer": {} }},
+     *  @OA\Parameter(
+     *     name="blog_id",
+     *     description="the blog id which this graph data belongs to",
+     *     required=true,
+     *     in="path",
+     *     @OA\Schema(
+     *         type="integer")),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+     *       @OA\Property(property="response",type="object",
+     *       @OA\Property(property="total_notes_count", type="integer", example=16),
+     *       @OA\Property(property="total_followers_count", type="integer", example=326),
+     *       @OA\Property(property="data", type="object",
+     *           example={
+     *              {
+     *               "timestamp": "2021-11-03 01:13:39",
+     *               "count": 5,
+     *             },
+     *             {
+     *               "timestamp": "2021-17-03 01:13:39",
+     *               "count": 51,
+     *             },
+     *             {
+     *               "timestamp": "2021-19-03 01:13:39",
+     *               "count": 9,
+     *             },
+     *           }),
+     *    ),
+     *   ),
+     *  ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"not found"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=500,
+     *    description="Internal Server error",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "500", "msg":"Internal Server error"})
+     *        )
+     *     )
+     * ),
+     *
+     */
+
+    /**
+    * get the new followers for a blog
+    *
+    * @param \GraphRequest $request
+    * @return \json
+    */
+    public function getTotalFollwersGraphData(GraphRequest $request)
+    {
+        $request->validated();
+        $data = DB::select('select count(*), created_at::date from follow_blog where followed_id = '
+            . $request->blog_id . ' group by date(created_at) order by count(*) desc;');
+
+        if ($data) {
+            for ($i = 1; $i < count($data); $i++) {
+                $data[$i]->count += $data[$i - 1]->count;
+            }
+        }
+
+        $blog = Blog::where('id', $request->blog_id)->first();
+        $followers = $blog->followers()->count();
+        $replies = $blog->replies()->count();
+
+        $res = [
+            "data" => $data,
+            "total_followers_count" => $followers,
+            "notes_counts" => $replies,
+        ];
+
+        return $this->generalResponse($res, "ok", 200);
+    }
+
+    /**
+     * @OA\Get(
+     * path="/blog_activity/{blog_id}",
+     * summary="get number of likes ,posts, drafts ",
+     * description=" return total_followings number, followings , likes of blog",
+     * operationId="get blog activity",
+     * tags={"Activity"},
+     * security={ {"bearer": {} }},
+     * @OA\Parameter(
+     *          name="blog_id",
+     *          description="The id of current blog",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
+     *
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful response",
+     *    @OA\JsonContent(
+     *        @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
+     *         @OA\Property(property="response", type="object",
+     *               @OA\Property(property="followers",type="integer",example=5),
+     *               @OA\Property(property="followings",type="integer",example=5),
+     *               @OA\Property(property="likes",type="integer",example=5),
+     *                @OA\Property(property="posts",type="integer",example=5),
+     *                @OA\Property(property="drafts",type="integer",example=5),
+     *              ),
+     *       )
+     *     ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *        )
+     *     ),
+     *   *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"Not found"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=403,
+     *    description="Forbidden",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+     *        )
+     *     )
+     * )
+     */
+
+    /**
+    * get activity numbers of blog
+    * @param \Request $request
+    * @param  $blogId
+    * @return \json
+    */
 
     public function getActivityBlog(Request $request, $blogId)
     {
@@ -377,10 +363,10 @@ class ActivityController extends Controller
         }
         $blogService = new BlogService();
         $blog = $blogService->findBlog($blogId);
-        $this->authorize('view', $blog);
         if ($blog == null) {
             return $this->generalResponse("", "Not Found blog", "404");
         }
+        $this->authorize('view', $blog);
         $followers = $blog->followers()->count();
         $followings =  $blog->followings()->count();
         $posts = $blog->posts()->where('status', 'published')->count();
