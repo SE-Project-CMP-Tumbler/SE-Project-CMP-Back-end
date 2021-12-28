@@ -134,6 +134,24 @@ class Blog extends Model
         return $this->belongsToMany(Post::class, 'submissions', 'reciever_id', 'post_id');
     }
     /**
+     * Retrieve list of Questions requested to my blog.
+     *
+     * @return \Question[]
+     */
+    public function askedQuestions()
+    {
+        return $this->hasMany(Question::class, 'ask_reciever_blog_id', 'id');
+    }
+    /**
+     * Retrieve list of answers to the previously asked questions I asked to other blogs (used in notification).
+     *
+     * @return \Answer[]
+     */
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'ask_sender_blog_id', 'id');
+    }
+    /**
      * Retrieve list of submissions posts that have been approved by the blog.
      *
      * @return \Post[]

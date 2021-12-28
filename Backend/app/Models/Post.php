@@ -82,4 +82,11 @@ class Post extends Model
     {
         return $this->hasMany(Reply::class, 'post_id', 'id');
     }
+    /**
+    * the relation between post and replies
+    */
+    public function answer()
+    {
+        return $this->hasOne(Answer::class, 'post_id', 'id');
+    }
 }

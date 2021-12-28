@@ -16,6 +16,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PostActionController;
 use App\Http\Controllers\PostNoteController;
+use App\Http\Controllers\AskController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -183,3 +184,15 @@ Route::get('/post/like/{blog_id}/{post_id}', [PostActionController::class,'check
 Route::delete('/post/like/{post_id}', [PostActionController::class,'deleteLike'])->middleware('auth:api');
 Route::delete('/post/reply/{reply_id}', [PostActionController::class,'deletereply'])->middleware('auth:api');
 Route::get('/post_notes/{post_id}', [PostNoteController::class,'getNotes'])->middleware('auth:api');
+
+
+/*
+| Asks Routes
+*/
+Route::post('/ask/{blog_id}', [AskController::class,'ask'])->middleware('auth:api');
+Route::post('/answer/{question_id}', [AskController::class,'answer'])->middleware('auth:api');
+Route::delete('/ask/{question_id}', [AskController::class,'deleteAsk'])->middleware('auth:api');
+Route::get('/messages/{blog_id}', [AskController::class,'getMessagesForBlog'])->middleware('auth:api');
+Route::get('/all_messages', [AskController::class,'getMessages'])->middleware('auth:api');
+Route::delete('/messages/{blog_id}', [AskController::class,'deleteMessagesForBlog'])->middleware('auth:api');
+Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middleware('auth:api');

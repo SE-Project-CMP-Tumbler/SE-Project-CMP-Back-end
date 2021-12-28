@@ -17,8 +17,8 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
-        // $question = Question::where(['answer_id' => $this->id])
-        // $quesion->sender->username
+        $answer = ($this->type == 'answer') ? $this->answer()->first() : null;
+        $askingBlog = ($answer && !$answer->anonymous_flag) ? Blog::find($answer->ask_sender_blog_id) : null;
         $like_status = false;
         $user = Auth('api')->user();
         if ($user) {
@@ -38,11 +38,13 @@ class PostResource extends JsonResource
             "blog_avatar" => $blog->avatar,
             "blog_avatar_shape" => $blog->avatar_shape,
             "blog_title" => $blog->title,
-            "blog_username_asking" => "",
-            "blog_avatar_asking" => "",
-            "blog_avatar_shape_asking" => "",
-            "blog_title_asking" => "",
-            "approving_blog_id" => $this->approving_blog_id,
+            "question_flag" => ($askingBlog) ? false : true,
+            "blog_username_asking" => ($askingBlog) ? $askingBlog->username : "",
+            "blog_avatar_asking" => ($askingBlog) ? $askingBlog->avatar : "",
+            "blog_avatar_shape_asking" => ($askingBlog) ? $askingBlog->avatar_shape : "",
+            "blog_title_asking" => ($askingBlog) ? $askingBlog->title : "",
+            "blog_id_asking" => ($askingBlog) ? $askingBlog->id : "",
+            "question_body" => ($answer) ? $answer->ask_body : "",
             "notes_count" => (Reply::where('post_id', $this->id)->count() + Like::where('post_id', $this->id)->count()),
             "is_liked" => $like_status
         ];
