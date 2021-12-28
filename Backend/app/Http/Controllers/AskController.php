@@ -316,8 +316,8 @@ class AskController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful response
- *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_type argument 
- *                      either (post_type = submission) or (post_type = ask)
+ *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument 
+ *                      either (post_status = submission) or (post_status = ask)
  *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={ "status":"200","msg":"OK"}),
@@ -420,8 +420,8 @@ class AskController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful response
- *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_type argument 
- *                      either (post_type = submission) or (post_type = ask)
+ *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument 
+ *                      either (post_status = submission) or (post_status = ask)
  *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={ "status":"200","msg":"OK"}),
@@ -436,7 +436,7 @@ class AskController extends Controller
  *          @OA\Items(
  *                        @OA\Property(property="question_id", type="integer", example=5),
  *                          @OA\Property(property="ask_time", type="date-time", example="02-02-2012"),
- *                       @OA\Property(property="post_type", type="string", example="ask"),
+ *                       @OA\Property(property="post_status", type="string", example="ask"),
  *                       @OA\Property(property="blog_id", type="integer", example=5),
  *                     @OA\Property(property="blog_avatar", type="string", example="/storage/imgname2.png"),
  *                     @OA\Property(property="blog_avatar_shape", type="string", example="circle"),

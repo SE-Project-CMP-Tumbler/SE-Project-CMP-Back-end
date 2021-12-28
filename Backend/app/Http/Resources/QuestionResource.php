@@ -26,7 +26,7 @@ class QuestionResource extends JsonResource
             "question_id" => $this->id,
             "question_flag" => $this->anonymous_flag,
             "ask_time" => $this->created_at,
-            "post_type" => "ask"
+            "post_status" => "ask"
         ];
     }
 }

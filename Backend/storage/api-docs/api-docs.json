@@ -1448,7 +1448,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_type argument \n *                      either (post_type = submission) or (post_type = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
+                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \n *                      either (post_status = submission) or (post_status = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1761,7 +1761,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_type argument \n *                      either (post_type = submission) or (post_type = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
+                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \n *                      either (post_status = submission) or (post_status = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1812,7 +1812,7 @@
                                                                 "type": "date-time",
                                                                 "example": "02-02-2012"
                                                             },
-                                                            "post_type": {
+                                                            "post_status": {
                                                                 "type": "string",
                                                                 "example": "ask"
                                                             },
@@ -4056,24 +4056,24 @@
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
-                                                            "blog_id": {
+                                                            "friend_id": {
                                                                 "type": "integer",
                                                                 "example": 5
                                                             },
-                                                            "blog_username": {
+                                                            "friend_username": {
                                                                 "type": "string",
                                                                 "example": "helloEveryWhere"
                                                             },
-                                                            "blog_avatar": {
+                                                            "friend_avatar": {
                                                                 "type": "string",
                                                                 "format": "byte",
                                                                 "example": ""
                                                             },
-                                                            "blog_avatar_shape": {
+                                                            "friend_avatar_shape": {
                                                                 "type": "string",
                                                                 "example": ""
                                                             },
-                                                            "blog_title": {
+                                                            "friend_title": {
                                                                 "type": "string",
                                                                 "example": ""
                                                             }
@@ -4142,7 +4142,7 @@
                                         "response": {
                                             "properties": {
                                                 "chat_room_id": {
-                                                    "type": "string",
+                                                    "type": "int",
                                                     "example": "1452"
                                                 }
                                             },
@@ -6421,46 +6421,39 @@
                 ]
             }
         },
-        "/blog/{blog_id}/notifications": {
+        "/blog/notifications?type={type}&from_blog_id={from_blog_id}": {
             "get": {
                 "tags": [
-                    "Notifications",
-                    "Ask Blogs"
+                    "Notifications"
                 ],
                 "summary": "retrieve blog's activity feed",
                 "description": "Retrieve the activity items for a specific blog.",
                 "operationId": "getNotifications",
                 "parameters": [
                     {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "Any blog identifier.",
-                        "required": true,
+                        "name": "type",
+                        "in": "query",
+                        "description": "\r\n *        type: is optional to indicate which of these notificaions to get its and default is all\r\n *        like: a like on your post\r\n *        reply: a reply on your post\r\n *        follow: a new follower\r\n *        reblog: a reblog of your post\r\n *        ask: a new ask recieved\r\n *        answer: an answered ask that you had sent\r\n *        mentions_posts: get mentions in posts\r\n *        mentions_replies: get mentions in replies\r\n *        all: get all types of notifications",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "follow"
+                    },
+                    {
+                        "name": "for_blog_id",
+                        "in": "query",
+                        "description": "\r\n *        is optional to retreive the notificaion for specific one of your blogs, default is you primary blog",
+                        "required": false,
                         "schema": {
                             "type": "int"
                         },
                         "example": "123456789"
                     }
                 ],
-                "requestBody": {
-                    "description": "type: is a string parameter indicates which notification type to be recieved:\r\n *     like: a like on your post\r\n *     reply: a reply on your post\r\n *     follow: a new follower\r\n *     reblog: a reblog of your post\r\n *     ask: a new ask recieved\r\n *     answer: an answered ask that you had sent\r\n *     mentions_posts: get mentions in posts\r\n *     mentions_replies: get mentions in replies\r\n *     all: to get all type of notifications",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "type": {
-                                        "type": "string",
-                                        "example": "all"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
-                        "description": "Successful Operation",
+                        "description": "\r\n *      Successful Operation,\r\n *      notificaion_id: is a unique id for each notificaion\r\n *      type: is the notification type { follow | mention | like | reply | reblog }\r\n *      timestamp: is when that action happened,\r\n *\r\n *      target_blog_id: is one of the users receiving these notificaions blog ids to know\r\n *      each of there blogs has been { followed | mentioned | got a like | got a reply | got a reblog }\r\n *\r\n *      if the notificaion is of type { follow }, there will be the { follower_id }\r\n *      which is the id of the user made the follow,\r\n *\r\n *      if that notification is of type { mention | like | reply | rebolg }, the response will\r\n *      have { target_post_id, target_post_type, target_post_summary }\r\n *\r\n *      { from_blog_id | from_blog_username | from_blog_avatar_shape | from_blog_avatar }\r\n *      those attributes belong to the blog that made the action,\r\n *\r\n *      follow: this checks if you follow the other user which his blog made that action",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6474,330 +6467,162 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "notifications": {
-                                                    "properties": {
-                                                        "likes": {
-                                                            "type": "array",
-                                                            "items": {
-                                                                "properties": {
-                                                                    "blog_avatar": {
-                                                                        "type": "string",
-                                                                        "example": "/storage/imgname2.extension"
-                                                                    },
-                                                                    "blog_avatar_shape": {
-                                                                        "type": "string",
-                                                                        "example": "circle"
-                                                                    },
-                                                                    "blog_username": {
-                                                                        "type": "string",
-                                                                        "example": "radwa-ahmed213"
-                                                                    },
-                                                                    "blog_title": {
-                                                                        "type": "string",
-                                                                        "example": "Positive Quotes"
-                                                                    },
-                                                                    "blog_id": {
-                                                                        "type": "integer",
-                                                                        "example": 1032
-                                                                    },
-                                                                    "followed": {
-                                                                        "type": "boolean",
-                                                                        "example": false
-                                                                    },
-                                                                    "like_time": {
-                                                                        "type": "date-time",
-                                                                        "example": ""
-                                                                    },
-                                                                    "post_id": {
-                                                                        "type": "integer",
-                                                                        "example": 5
-                                                                    },
-                                                                    "post_body": {
-                                                                        "type": "general",
-                                                                        "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
-                                                                    },
-                                                                    "post_type ": {
-                                                                        "type": "string",
-                                                                        "example": "text"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
-                                                        }
-                                                    },
+                                                "notificatoins": {
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
-                                                            "answers": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "blog_avatar": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_title": {
-                                                                            "type": "string",
-                                                                            "example": "Positive Quotes"
-                                                                        },
-                                                                        "blog_id": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        },
-                                                                        "answer_time": {
-                                                                            "type": "date-time",
-                                                                            "example": "2012-02-20 00:22"
-                                                                        },
-                                                                        "post_id": {
-                                                                            "type": "integer",
-                                                                            "example": 5
-                                                                        },
-                                                                        "post_body": {
-                                                                            "type": "general",
-                                                                            "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
-                                                                        },
-                                                                        "post_type": {
-                                                                            "type": "string",
-                                                                            "example": "text"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "type": {
+                                                                "type": "string",
+                                                                "example": "mention"
                                                             },
-                                                            "reblogs": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "blog_avatar": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_title": {
-                                                                            "type": "string",
-                                                                            "example": "Positive Quotes"
-                                                                        },
-                                                                        "blog_id": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        },
-                                                                        "post_time": {
-                                                                            "type": "date-time",
-                                                                            "example": ""
-                                                                        },
-                                                                        "post_id": {
-                                                                            "type": "integer",
-                                                                            "example": 5
-                                                                        },
-                                                                        "post_body": {
-                                                                            "type": "general",
-                                                                            "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
-                                                                        },
-                                                                        "post_type": {
-                                                                            "type": "string",
-                                                                            "example": "text"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "notification_id": {
+                                                                "type": "string",
+                                                                "example": "ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3"
                                                             },
-                                                            "asks": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "question_body": {
-                                                                            "type": "string",
-                                                                            "example": "How are you?"
-                                                                        },
-                                                                        "question_id": {
-                                                                            "type": "integer",
-                                                                            "example": 5
-                                                                        },
-                                                                        "flag": {
-                                                                            "type": "boolean",
-                                                                            "example": false
-                                                                        },
-                                                                        "ask_time": {
-                                                                            "type": "date-time",
-                                                                            "example": "2012-02-20 00:22"
-                                                                        },
-                                                                        "blog_avatar": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_id": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "timestamp": {
+                                                                "type": "date-time",
+                                                                "example": "/storage/imgname2.extension"
                                                             },
-                                                            "follows": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "follow_time": {
-                                                                            "type": "date-time",
-                                                                            "example": ""
-                                                                        },
-                                                                        "blog_avatar": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_id": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "target_blog_id": {
+                                                                "type": "integer",
+                                                                "example": "39"
                                                             },
-                                                            "mentions_posts": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "mention_time": {
-                                                                            "type": "date-time",
-                                                                            "example": ""
-                                                                        },
-                                                                        "blog_avatar_mentioning": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape_mentioning": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username_mentioning": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_id_mentioning": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        },
-                                                                        "blog_avatar": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_id": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        },
-                                                                        "post_id": {
-                                                                            "type": "integer",
-                                                                            "example": 5
-                                                                        },
-                                                                        "post_body": {
-                                                                            "type": "general",
-                                                                            "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
-                                                                        },
-                                                                        "post_type ": {
-                                                                            "type": "string",
-                                                                            "example": "text"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "follower_id": {
+                                                                "type": "integer",
+                                                                "example": "39"
                                                             },
-                                                            "mentions_replies": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "mention_time": {
-                                                                            "type": "date-time",
-                                                                            "example": ""
-                                                                        },
-                                                                        "blog_avatar_mentioning": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape_mentioning": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username_mentioning": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_id_mentioning": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        },
-                                                                        "blog_avatar": {
-                                                                            "type": "string",
-                                                                            "example": "/storage/imgname2.extension"
-                                                                        },
-                                                                        "blog_avatar_shape": {
-                                                                            "type": "string",
-                                                                            "example": "circle"
-                                                                        },
-                                                                        "blog_username": {
-                                                                            "type": "string",
-                                                                            "example": "radwa-ahmed213"
-                                                                        },
-                                                                        "blog_id": {
-                                                                            "type": "integer",
-                                                                            "example": 1032
-                                                                        },
-                                                                        "reply_id": {
-                                                                            "type": "integer",
-                                                                            "example": 5
-                                                                        },
-                                                                        "reply_text": {
-                                                                            "type": "general",
-                                                                            "example": "Hello "
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
+                                                            "target_post_id": {
+                                                                "type": "integer",
+                                                                "example": "1523"
+                                                            },
+                                                            "target_post_type": {
+                                                                "type": "string",
+                                                                "example": "text"
+                                                            },
+                                                            "target_post_summary": {
+                                                                "type": "string",
+                                                                "example": "<p> this is post summary </p>"
+                                                            },
+                                                            "from_blog_id": {
+                                                                "type": "integer",
+                                                                "example": "84"
+                                                            },
+                                                            "from_blog_username": {
+                                                                "type": "string",
+                                                                "example": "helloBLog"
+                                                            },
+                                                            "from_blog_avatar": {
+                                                                "type": "url",
+                                                                "example": "/storage/imagename.ext"
+                                                            },
+                                                            "from_blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": "circle"
+                                                            },
+                                                            "follow": {
+                                                                "type": "boolean",
+                                                                "example": "false"
                                                             }
                                                         },
                                                         "type": "object"
                                                     }
+                                                },
+                                                "pagination": {
+                                                    "properties": {
+                                                        "total": {
+                                                            "type": "int",
+                                                            "example": 17
+                                                        },
+                                                        "count": {
+                                                            "type": "int",
+                                                            "example": 7
+                                                        },
+                                                        "per_page": {
+                                                            "type": "int",
+                                                            "example": 10
+                                                        },
+                                                        "current_page": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "total_pages": {
+                                                            "type": "int",
+                                                            "example": 2
+                                                        },
+                                                        "first_page_url": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "next_page_url": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "prev_page_url": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/posts/notificaions?page=1"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "Not found"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -16407,67 +16232,6 @@
                         "bearer": []
                     }
                 ]
-            }
-        }
-    },
-    "components": {
-        "responses": {
-            "401": {
-                "description": "Unauthorized",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "properties": {
-                                "meta": {
-                                    "type": "object",
-                                    "example": {
-                                        "status": "401",
-                                        "msg": "unauthorized"
-                                    }
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "403": {
-                "description": "Forbidden",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "properties": {
-                                "meta": {
-                                    "type": "object",
-                                    "example": {
-                                        "status": "403",
-                                        "msg": "Forbidden"
-                                    }
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "404": {
-                "description": "Not found",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "properties": {
-                                "meta": {
-                                    "type": "object",
-                                    "example": {
-                                        "status": "404",
-                                        "msg": "Not found"
-                                    }
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
             }
         }
     },
