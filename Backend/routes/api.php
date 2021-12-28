@@ -199,4 +199,4 @@ Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middlew
 /*
 | Notifications Routes
 */
-Route::get('notifications', [NotificationController::class, 'notificaions'])->middleware('auth:api');
+Route::get('notifications', [NotificationController::class, 'notificaions'])->middleware('auth:api')->middleware('notification_read');
