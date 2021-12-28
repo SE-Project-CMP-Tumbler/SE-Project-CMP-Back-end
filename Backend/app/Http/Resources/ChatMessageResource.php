@@ -20,11 +20,11 @@ class ChatMessageResource extends JsonResource
             "photo" => $this->image_url,
             "gif" => $this->gif_url,
             "read" => $this->read,
-            "from_blog_username" => $sender->username,
-            "from_blog_id" => $sender->id,
-            "from_blog_avatar" => $sender->avatar,
-            "from_blog_avatar_shape" => $sender->avatar_shape,
-            "from_blog_title" => $sender->title,
+            "blog_username" => $sender->username,
+            "blog_id" => $sender->id,
+            "blog_avatar" => $sender->avatar,
+            "blog_avatar_shape" => $sender->avatar_shape,
+            "blog_title" => $sender->title,
         ];
     }
 }

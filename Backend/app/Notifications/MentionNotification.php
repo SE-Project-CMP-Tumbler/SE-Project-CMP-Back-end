@@ -114,7 +114,9 @@ class MentionNotification extends Notification implements ShouldQueue
         $blogService = new BlogService();
         $check = $blogService->checkIsFollowed($this->mentionedBlog->id, $this->mentioner->id);
         return [
-            'post_id' => $this->post->id,
+            'target_post_id' => $this->post->id,
+            'target_post_type' => $this->post->type,
+            'target_post_summary' => '',
             'type' => $this->type,
             'target_blog_id' => $this->mentionedBlog->id,
             'from_blog_id' => $this->mentioner->id,
