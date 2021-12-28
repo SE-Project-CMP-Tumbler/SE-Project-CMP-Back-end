@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use App\Models\Blog;
+use App\Models\Theme;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Misc\Helpers\Errors;
@@ -49,6 +50,7 @@ class UserService
                 'is_primary' => true,
                 'user_id' => $user->id,
             ]);
+            Theme::create(['blog_id' => $blog->id]);
             DB::commit();
         } catch (\Illuminate\Database\QueryException $ex) {
             DB::rollback();

@@ -48,8 +48,8 @@ class PostController extends Controller
      *     in link type:  link is required
      *     is general : all fields can be given , to be general at least two different field of types should given" ,
      *    @OA\JsonContent(
-     *      required={"post_status","post_type"},
      *      @OA\Property(property="post_status", type="string", example="published"),
+     *      @OA\Property(property="post_time",type="date_time",example="2021-02-17"),
      *      @OA\Property(property="post_type", type="string", example="general"),
      *      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"))),
      * @OA\Response(
@@ -495,14 +495,109 @@ class PostController extends Controller
 
         return $this->generalResponse(new PostResource($post), "ok");
     }
+    /**
+     * @OA\Post(
+     * path="/post/approve/{post_id}",
+     * summary="Approve a specific submission post.",
+     * description="A blog approves a specific post that was submitted to one of the authenticated user's blogs.",
+     * operationId="approveSubmissionPost",
+     * tags={"Submission Posts"},
+     * security={ {"bearer": {} }},
+     *   @OA\Parameter(
+     *          name="post_id",
+     *          description="The id of the post to be approved, that was requested to be submitted to one of the current authenticated users' blogs.",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
+     *   @OA\RequestBody(
+     *    required=true,
+     *    description="
+     *      Can update the submission post content, before approving it.
+     *      Can approve the post to be published or private or draft. Thus can update the post status to be one of those three.
+     *      Can't update the status of the post to submission.
+     *      Can update any attribute of the post by specifying it in the body request as shown in the examples.
+     *      Can choose not to update any attribute in the post by not sending anything in the body request and approve it as it is." ,
+     *    @OA\JsonContent(
+     *      @OA\Property(property="post_status", type="string", example="published"),
+     *      @OA\Property(property="post_time",type="date_time",example="2021-02-17"),
+     *      @OA\Property(property="post_type", type="string", example="general"),
+     *      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"))),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful credentials response",
+     *    @OA\JsonContent(
+     *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+     *     ),
+     * ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *       )
+     *     ),
+     *  @OA\Response(
+     *    response=403,
+     *    description="Forbidden",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"forbidden"})
+     *        )
+     *     ),
+     *  @OA\Response(
+     *    response=404,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The Specified Blog id was not found"})
+     *        )
+     *     )
+     * )
+     */
+    /**
+     * A blog approves a specific post that was submitted to one of the authenticated user's blogs.
+     *
+     * @param integer $postId
+     * @param \UpdatePostRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function approveSubmission($postId, UpdatePostRequest $request)
+    {
+        //check if the post id is numeric
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
+            return $this->generalResponse("", "The post id should be numeric.", "422");
+        }
+        //check if this post id is a submission
+        $submission = Submission::where('post_id', $postId)->first();
+        if (empty($submission)) {
+            return $this->generalResponse("", "The id specified is not a submission post.", "422");
+        }
 
+        $recieverBlog = Blog::where('id', $submission->reciever_id)->first();
+        //check the authorization of the user to accept this submission
+        $this->authorize('approveSubmission', [Post::class, $recieverBlog]);
+
+        //delete the submission relation, because it's no longer a submission pending request
+        $recieverBlog->submissionPosts()->detach($postId);
+
+        //update the post to record the relation that the current blog recieved the submission has now approved the submission post
+        //and is now the approving_blog_id
+        $post = Post::where('id', $postId)->first();
+
+        $post->update([
+            'approving_blog_id' => $recieverBlog->id,
+            'status' => 'published'
+        ]);
+
+        $this->update($postId, $request);
+        return $this->generalResponse("", "OK", "200");
+    }
     /**
      * @OA\Get(
      * path="/post/submission/{blog_id}",
      * summary="Get posts submitted to one of the authenticated user's blogs",
      * description="A blog gets the posts requested from other blogs to be submitted on his/her profile.",
      * operationId="getsubmissionposts",
-     * tags={"Posts"},
+     * tags={"Submission Posts"},
      * security={ {"bearer": {} }},
      *   @OA\Parameter(
      *          name="blog_id",
@@ -513,7 +608,9 @@ class PostController extends Controller
      *              type="integer")),
      * @OA\Response(
      *    response=200,
-     *    description="Successful credentials response",
+     *    description="
+     *        If a post refers to a submission, it will have the approving_blog_id with the same id of the blog to retrieve submissions done on him.
+     *        If a post refers to a submission, all information blog_id, blog_username, blog_avatar, etc. belongs to the submitter (the blog who have submitted the post) will be, not the blog we're calling this route for.",
      *    @OA\JsonContent(
      *      @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
      *      @OA\Property(property="response",type="object",
@@ -525,6 +622,7 @@ class PostController extends Controller
      *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *              @OA\Property(property="blog_title", type="string", example=""),
+     *              @OA\Property(property="approving_blog_id", type="integer", example=70),
      *              @OA\Property(property="post_status", type="string", example="submission"),
      *              @OA\Property(property="post_time",type="date_time",example="2012-02-30"),
      *              @OA\Property(property="post_type", type="string", example="general"),
@@ -587,7 +685,9 @@ class PostController extends Controller
      * @OA\Get(
      * path="/posts/{blogId}/published",
      * summary="Get posts of blog which are published",
-     * description="A blog get blog's posts",
+     * description="
+     *  If the Blog id refers to one of the authenticated user's blogs, Then will retrieve his posts that are published, private, and approved submissions.
+     *  If the Blog id doesn't refers to one of the authenticated user's blogs, Then will retrieve that blog's posts that are published, and approved submissions.",
      * operationId="getposts",
      * tags={"Posts"},
      * @OA\Parameter(
@@ -699,23 +799,11 @@ class PostController extends Controller
         }
 
         $authUser = auth('api')->user();
-        $publishedPosts = [];
-        //If the blog viewing hiself/herself profile
-        if (!empty($authUser) && $authUser->id == $blog->user_id) {
-            $publishedPosts = $blog->posts()
-                ->where('status', 'published')
-                ->orWhere('status', 'private')
-                ->orderBy('published_at', 'desc')
-                ->paginate(Config::PAGINATION_LIMIT);
-        } else {
-            //If a guest or a blog is viewing another blog's profile
-            $publishedPosts = $blog->posts()
-                ->where('status', 'published')
-                ->orderBy('published_at', 'desc')
-                ->paginate(Config::PAGINATION_LIMIT);
-        }
+        $postService = new PostService();
+        $allPosts = $postService->getProfilePosts($blog);
 
-        return $this->generalResponse(new PostCollection($publishedPosts), "OK");
+        // return $this->generalResponse(new PostCollection($publishedPosts), "OK");
+        return $this->generalResponse(new PostCollection($allPosts), "OK");
     }
 
      /**
@@ -1049,7 +1137,7 @@ class PostController extends Controller
      * summary="Sumbit new post to another blog",
      * description="The authenticated user's primary blog requests to submit a post on another's blog profile",
      * operationId="createSubmissionPost",
-     * tags={"Posts"},
+     * tags={"Submission Posts"},
      * security={ {"bearer": {} }},
      *  @OA\Parameter(
      *          name="blog_id",
@@ -1060,13 +1148,7 @@ class PostController extends Controller
      *              type="integer")),
      *   @OA\RequestBody(
      *    required=true,
-     *    description="Post Request has different types depeneds on post type : <br>
-     *     text type :description or title are required, at least one of them ,keep reading is optinal <br>
-     *     image type : at least one uplaoded image <br>
-     *     quote type:  quote_text is required, quote_body is optinal <br>
-     *     video type:  video is required, url_videos are optinal <br>
-     *     link type: link is required <br>
-     *     general type : all fields can be given, to be general at least two different field of types should given <br>",
+     *    description="post_status must be specified as 'submission'",
      *    @OA\JsonContent(
      *       required={"post_status","post_type","post_body"},
      *       @OA\Property(property="post_status", type="string", example="submission"),
@@ -1104,6 +1186,12 @@ class PostController extends Controller
      *     )
      *  ),
      * )
+     */
+    /**
+     * The authenticated user's primary blog requests to submit a post on another's blog profile.
+     *
+     * @param \PostRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function createSubmission(PostRequest $request)
     {
@@ -1144,7 +1232,7 @@ class PostController extends Controller
      * summary="delete submission",
      * description=" A blog deletes a submitted post",
      * operationId="deleteSubmission",
-     * tags={"Posts"},
+     * tags={"Submission Posts"},
      * security={ {"bearer": {} }},
      *  @OA\Parameter(
      *          name="post_id",
@@ -1186,11 +1274,11 @@ class PostController extends Controller
 
     /**
      * @OA\Delete(
-     * path="/post/submission",
+     * path="/posts/submission",
      * summary="delete all submissions",
-     * description="deleting all recieved submission posts",
+     * description="Deleting all submission posts that were submitted to any of the authenticated user's blogs",
      * operationId="deleteAllSubmissions",
-     * tags={"Posts"},
+     * tags={"Submission Posts"},
      * security={ {"bearer": {} }},
      * @OA\Response(
      *    response=200,
@@ -1222,4 +1310,19 @@ class PostController extends Controller
      *     )
      * )
      */
+    /**
+     * Deleting all submission posts that were submitted to any of the authenticated user's blogs.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteAllSubmissions()
+    {
+        //get submissions where revievers are one of the user's blogs.
+        $authUser = auth()->user();
+        $authBlogs = $authUser->blogs;
+        foreach ($authBlogs as $blog) {
+            $blog->submissionPosts()->detach();
+        }
+        return $this->generalResponse("", "ok", "200");
+    }
 }

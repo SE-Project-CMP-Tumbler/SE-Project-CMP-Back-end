@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Http\Misc\Helpers\Config;
+use App\Models\Blog;
 use App\Models\Post;
 
 /**
@@ -147,5 +149,44 @@ class PostService
             'status' => $newStatus,
         ]);
         return true;
+    }
+    /**
+     * Get profile posts of a blog
+     *
+     * @param \Blog $blog The blog to retrieve his profile posts.
+     * @return \Post[]
+     */
+    public function getProfilePosts($blog)
+    {
+        $blogId = $blog->id;
+        $authUser = auth('api')->user();
+        //For guests or blogs that doesn't own the profile to be retrieved
+        if (empty($authUser) || $authUser->id != $blog->user_id) {
+            return Post::where(function ($query) use ($blogId) {
+                $query->where('blog_id', $blogId)
+                    ->where('status', 'published')
+                    ->where('approving_blog_id', null);
+            })->orWhere(function ($query) use ($blogId) {
+                $query->where('approving_blog_id', $blogId)
+                    ->where('status', 'published');
+            })->orderBy('published_at', 'desc')
+                ->paginate(Config::PAGINATION_LIMIT);
+        } else {
+            return Post::where(function ($query) use ($blogId) {
+                $query->where('blog_id', $blogId)
+                    ->where('approving_blog_id', null)
+                    ->where(function ($query) {
+                        $query->where('status', 'published')
+                            ->orWhere('status', 'private');
+                    });
+            })->orWhere(function ($query) use ($blogId) {
+                $query->where('approving_blog_id', $blogId)
+                    ->where(function ($query) {
+                        $query->where('status', 'published')
+                            ->orWhere('status', 'private');
+                    });
+            })->orderBy('published_at', 'desc')
+                ->paginate(Config::PAGINATION_LIMIT);
+        }
     }
 }

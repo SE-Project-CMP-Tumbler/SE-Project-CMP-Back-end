@@ -6247,8 +6247,8 @@
                 "tags": [
                     "Tags"
                 ],
-                "summary": "Get all tags the blog follows",
-                "description": "Returns list of all tags the blog follow",
+                "summary": "Get all tags the primary blog follows",
+                "description": "Returns list of all tags the primary blog follow",
                 "operationId": "getfollowingTags",
                 "responses": {
                     "200": {
@@ -7625,14 +7625,14 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "post_status",
-                                    "post_type"
-                                ],
                                 "properties": {
                                     "post_status": {
                                         "type": "string",
                                         "example": "published"
+                                    },
+                                    "post_time": {
+                                        "type": "date_time",
+                                        "example": "2021-02-17"
                                     },
                                     "post_type": {
                                         "type": "string",
@@ -8194,10 +8194,143 @@
                 ]
             }
         },
+        "/post/approve/{post_id}": {
+            "post": {
+                "tags": [
+                    "Submission Posts"
+                ],
+                "summary": "Approve a specific submission post.",
+                "description": "A blog approves a specific post that was submitted to one of the authenticated user's blogs.",
+                "operationId": "approveSubmissionPost",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "The id of the post to be approved, that was requested to be submitted to one of the current authenticated users' blogs.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "\r\n     *      Can update the submission post content, before approving it.\r\n     *      Can approve the post to be published or private or draft. Thus can update the post status to be one of those three.\r\n     *      Can't update the status of the post to submission.\r\n     *      Can update any attribute of the post by specifying it in the body request as shown in the examples.\r\n     *      Can choose not to update any attribute in the post by not sending anything in the body request and approve it as it is.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "post_status": {
+                                        "type": "string",
+                                        "example": "published"
+                                    },
+                                    "post_time": {
+                                        "type": "date_time",
+                                        "example": "2021-02-17"
+                                    },
+                                    "post_type": {
+                                        "type": "string",
+                                        "example": "general"
+                                    },
+                                    "post_body": {
+                                        "type": "string",
+                                        "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "The Specified Blog id was not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/post/submission/{blog_id}": {
             "get": {
                 "tags": [
-                    "Posts"
+                    "Submission Posts"
                 ],
                 "summary": "Get posts submitted to one of the authenticated user's blogs",
                 "description": "A blog gets the posts requested from other blogs to be submitted on his/her profile.",
@@ -8215,7 +8348,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful credentials response",
+                        "description": "\r\n     *        If a post refers to a submission, it will have the approving_blog_id with the same id of the blog to retrieve submissions done on him.\r\n     *        If a post refers to a submission, all information blog_id, blog_username, blog_avatar, etc. belongs to the submitter (the blog who have submitted the post) will be, not the blog we're calling this route for.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8257,6 +8390,10 @@
                                                             "blog_title": {
                                                                 "type": "string",
                                                                 "example": ""
+                                                            },
+                                                            "approving_blog_id": {
+                                                                "type": "integer",
+                                                                "example": 70
                                                             },
                                                             "post_status": {
                                                                 "type": "string",
@@ -8353,7 +8490,7 @@
             },
             "post": {
                 "tags": [
-                    "Posts"
+                    "Submission Posts"
                 ],
                 "summary": "Sumbit new post to another blog",
                 "description": "The authenticated user's primary blog requests to submit a post on another's blog profile",
@@ -8370,7 +8507,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type : <br>\r\n     *     text type :description or title are required, at least one of them ,keep reading is optinal <br>\r\n     *     image type : at least one uplaoded image <br>\r\n     *     quote type:  quote_text is required, quote_body is optinal <br>\r\n     *     video type:  video is required, url_videos are optinal <br>\r\n     *     link type: link is required <br>\r\n     *     general type : all fields can be given, to be general at least two different field of types should given <br>",
+                    "description": "post_status must be specified as 'submission'",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -8494,7 +8631,7 @@
                     "Posts"
                 ],
                 "summary": "Get posts of blog which are published",
-                "description": "A blog get blog's posts",
+                "description": "\r\n     *  If the Blog id refers to one of the authenticated user's blogs, Then will retrieve his posts that are published, private, and approved submissions.\r\n     *  If the Blog id doesn't refers to one of the authenticated user's blogs, Then will retrieve that blog's posts that are published, and approved submissions.",
                 "operationId": "getposts",
                 "parameters": [
                     {
@@ -9405,7 +9542,7 @@
         "/post/submission/{post_id}": {
             "delete": {
                 "tags": [
-                    "Posts"
+                    "Submission Posts"
                 ],
                 "summary": "delete submission",
                 "description": " A blog deletes a submitted post",
@@ -9506,13 +9643,13 @@
                 ]
             }
         },
-        "/post/submission": {
+        "/posts/submission": {
             "delete": {
                 "tags": [
-                    "Posts"
+                    "Submission Posts"
                 ],
                 "summary": "delete all submissions",
-                "description": "deleting all recieved submission posts",
+                "description": "Deleting all submission posts that were submitted to any of the authenticated user's blogs",
                 "operationId": "deleteAllSubmissions",
                 "responses": {
                     "200": {
@@ -11078,7 +11215,7 @@
                                                         },
                                                         "prev_page_url": {
                                                             "type": "string",
-                                                            "example": "http://127.0.0.1:8000/api/posts/{blog_id}?page=1"
+                                                            "example": "http://127.0.0.1:8000/api/posts/dashboard?page=1"
                                                         }
                                                     },
                                                     "type": "object"
@@ -13042,7 +13179,7 @@
                                                         "type": "object"
                                                     }
                                                 },
-                                                "avater": {
+                                                "avatar": {
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
@@ -13155,14 +13292,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "mycppblog"
-                                    },
-                                    "theme-id": {
-                                        "type": "int",
-                                        "example": "123456789"
-                                    },
                                     "title": {
                                         "type": "array",
                                         "items": {
@@ -13224,7 +13353,7 @@
                                             "type": "object"
                                         }
                                     },
-                                    "avater": {
+                                    "avatar": {
                                         "type": "array",
                                         "items": {
                                             "properties": {
@@ -13327,7 +13456,7 @@
                                                         "type": "object"
                                                     }
                                                 },
-                                                "avater": {
+                                                "avatar": {
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {

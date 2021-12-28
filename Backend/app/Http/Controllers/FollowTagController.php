@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Misc\Helpers\Config;
+use App\Http\Resources\TagCollection;
 use App\Models\BlogFollowTag;
 use App\Models\Tag;
+use App\Services\BlogService;
 use Illuminate\Http\Request;
 
 class FollowTagController extends Controller
@@ -148,8 +151,8 @@ class FollowTagController extends Controller
 /**
  * @OA\Get(
  * path="/follow_tag",
- * summary="Get all tags the blog follows",
- * description="Returns list of all tags the blog follow",
+ * summary="Get all tags the primary blog follows",
+ * description="Returns list of all tags the primary blog follow",
  * operationId="getfollowingTags",
  * tags={"Tags"},
  * security={ {"bearer": {} }},
@@ -176,4 +179,16 @@ class FollowTagController extends Controller
  *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"}))),
  * )
  */
+    /**
+     * Get all tags the primary blog follows.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTagsFollowed()
+    {
+        $blogService = new BlogService();
+        $primaryBlog = $blogService->getPrimaryBlog(auth()->user());
+        $followedTags = $primaryBlog->tags()->paginate(Config::API_PAGINATION_LIMIT);
+        return $this->generalResponse(new TagCollection($followedTags), "OK", "200");
+    }
 }
