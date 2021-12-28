@@ -79,7 +79,7 @@ class CustomVerifyEmail extends Notification
         if (static::$createUrlCallback) {
             return call_user_func(static::$createUrlCallback, $notifiable);
         }
-        return url(sprintf(env('Mail_VERIFICATION_ROUTE'), $notifiable->getKey(), sha1($notifiable->getEmailForVerification())));
+        return url(sprintf(env('MAIL_VERIFICATION_ROUTE'), $notifiable->getKey(), sha1($notifiable->getEmailForVerification())));
     }
 
     /**
