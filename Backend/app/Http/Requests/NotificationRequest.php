@@ -20,6 +20,24 @@ class NotificationRequest extends FormRequest
     }
 
     /**
+     * Include the query parameters in the request body data inorder to apply validation on it
+     *
+     * @return array
+     */
+    public function all($keys = null)
+    {
+        $data = parent::all($keys);
+        if ($this->route('type')) {
+            $data['type'] = $this->route('type');
+        }
+        if ($this->route('for_blog_id')) {
+            $data['for_blog_id'] = $this->route('for_blog_id');
+        }
+
+        return $data;
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
