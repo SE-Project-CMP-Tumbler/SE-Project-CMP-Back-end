@@ -81,15 +81,15 @@ Route::get('block/{blogId}', [BlockBlogController::class, 'getBlockings'])->midd
 /*
 | Post Routes
 */
-Route::get('post/{postId}', [PostController::class,'show']);
+Route::get('post/{post_id}', [PostController::class,'show']);
 Route::post('post/{blog_id}', [PostController::class,'store'])->middleware('auth:api');
-Route::delete('post/{postId}', [PostController::class,'delete'])->middleware('auth:api');
-Route::put('post/{postId}', [PostController::class,'update'])->middleware('auth:api');
+Route::delete('post/{post_id}', [PostController::class,'delete'])->middleware('auth:api');
+Route::put('post/{post_id}', [PostController::class,'update'])->middleware('auth:api');
 
 Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
 Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);
-Route::get('/posts/{blogId}/published', [PostController::class, 'index']);
-Route::get('/post/{blogId}/draft', [PostController::class, 'getDraftPosts'])->middleware('auth:api');
+Route::get('/posts/{blog_id}/published', [PostController::class, 'index']);
+Route::get('/post/{blog_id}/draft', [PostController::class, 'getDraftPosts'])->middleware('auth:api');
 Route::get('/posts/dashboard', [PostFilterController::class, 'getDashboardPosts'])->middleware('auth:api');
 
 Route::get('/posts/text', [PostFilterController::class, 'getTextPosts']);
@@ -205,7 +205,7 @@ Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middlew
 /*
 | Notifications Routes
 */
-Route::get('notifications', [NotificationController::class, 'notificaions'])->middleware('auth:api')->middleware('notification_read');
+Route::get('/blog/notifications', [NotificationController::class, 'notificaions'])->middleware('auth:api')->middleware('notification_read');
 
 /*
 | Graph Routes

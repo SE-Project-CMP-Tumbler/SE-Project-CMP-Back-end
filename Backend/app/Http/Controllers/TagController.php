@@ -262,14 +262,14 @@ class TagController extends Controller
      * Retrieve the posts having a specific tag within them.
      * The posts retrieval is either by the most recent or by the top engaging post.
      *
-     * @var string $tag_description
+     * @var string $tagDescription
      * @var string $sort_type
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getTagPosts(string $tag_description, Request $request)
+    public function getTagPosts(string $tagDescription, Request $request)
     {
         //check the existence of the tag
-        $tag = Tag::where('description', $tag_description)->first();
+        $tag = Tag::where('description', $tagDescription)->first();
         if (empty($tag)) {
             return $this->generalResponse("", "Tag description provided was not found.", "404");
         }
@@ -279,6 +279,7 @@ class TagController extends Controller
                 # return the tag's posts sorted by the most engaging
                 $posts = $tag->posts()
                         ->withCount(['postLikers'])
+                        ->where('status', 'published')
                         ->orderBy('post_likers_count', 'desc')
                         ->paginate(Config::PAGINATION_LIMIT);
                 return $this->generalResponse(new PostCollection($posts), "OK");

@@ -159,6 +159,7 @@ class PostPolicy
         //the blog that wants to ad a reply
         $blog =  $user->blogs()->where('is_primary', true)->first();
         //check if he is the owner
+
         if ($post->blog->id == $blog->id) {
             return true;
         } else {

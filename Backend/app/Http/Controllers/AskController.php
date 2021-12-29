@@ -77,23 +77,23 @@ class AskController extends Controller
     /**
      * add a ask on a post
      *
-     * @param int $blog_id
+     * @param int $blogId
      * @param AskRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ask($blog_id, AskRequest $request)
+    public function ask($blogId, AskRequest $request)
     {
         $senderBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
         $senderBlogID = ($senderBlog) ['id'];
         $ask = Question::create([
             'ask_sender_blog_id' => $senderBlogID,
-            'ask_reciever_blog_id' => $blog_id,
+            'ask_reciever_blog_id' => $blogId,
             'body' =>  $request->question_body,
             'anonymous_flag' => $request->question_flag,
         ]);
 
         // send notification about the ask
-        $recieverBlog = Blog::where('id', $blog_id)->first();
+        $recieverBlog = Blog::where('id', $blogId)->first();
         $notifiedUser = $recieverBlog->user()->first();
         $notifiedUser->notify(new AskNotification($senderBlog, $recieverBlog, $ask));
 
@@ -197,14 +197,14 @@ class AskController extends Controller
     /**
      * answer a question
      *
-     * @param int $blog_id
+     * @param int $blogId
      * @param AnswerRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function answer($question_id, AnswerRequest $request)
+    public function answer($questionId, AnswerRequest $request)
     {
 
-        $question = Question::where('id', $question_id)->first();
+        $question = Question::where('id', $questionId)->first();
         $publishedAt = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
         $post = Post::create([
             'status' => $request->post_status,
@@ -281,17 +281,17 @@ class AskController extends Controller
     /**
      * delete a question
      *
-     * @param int $blog_id
+     * @param int $questionId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteAsk($question_id, Request $request)
+    public function deleteAsk($questionId, Request $request)
     {
-        if (preg_match('(^[0-9]+$)', $question_id) == false) {
+        if (preg_match('(^[0-9]+$)', $questionId) == false) {
             return $this->generalResponse("", "The question id should be numeric.", "422");
         }
 
-        $question = Question::where('id', $question_id)->first();
+        $question = Question::where('id', $questionId)->first();
         if (empty($question)) {
             return $this->generalResponse("", "This question id is not found.", "404");
         }
@@ -387,17 +387,17 @@ class AskController extends Controller
     /**
      * get all asks to a specific blog
      *
-     * @param int $blog_id
+     * @param int $blogId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getMessagesForBlog($blog_id, Request $request)
+    public function getMessagesForBlog($blogId, Request $request)
     {
-        if (preg_match('(^[0-9]+$)', $blog_id) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog Id should be numeric.", "422");
         }
 
-        $blog = Blog::where('id', $blog_id)->first();
+        $blog = Blog::where('id', $blogId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
@@ -482,7 +482,7 @@ class AskController extends Controller
     /**
      * get all asks to a specific User
      *
-     * @param int $blog_id
+     * @param int $blogId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -550,17 +550,17 @@ class AskController extends Controller
         /**
      * delete all asks to a specific blog
      *
-     * @param int $blog_id
+     * @param int $blogId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteMessagesForBlog($blog_id, Request $request)
+    public function deleteMessagesForBlog($blogId, Request $request)
     {
-        if (preg_match('(^[0-9]+$)', $blog_id) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog Id should be numeric.", "422");
         }
 
-        $blog = Blog::where('id', $blog_id)->first();
+        $blog = Blog::where('id', $blogId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
@@ -614,7 +614,7 @@ class AskController extends Controller
     /**
      * get all asks to a specific User
      *
-     * @param int $blog_id
+     * @param int $blogId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
