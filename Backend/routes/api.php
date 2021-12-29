@@ -69,9 +69,8 @@ Route::get('total_followings/{blog_id}', [FollowBlogController::class,'getTotalF
 Route::get('followings', [FollowBlogController::class,'getFollowings'])->middleware('auth:api');
 Route::get('followers', [FollowBlogController::class,'getFollowers'])->middleware('auth:api');
 Route::get('search_follow_blog/{blog_username}', [FollowBlogController::class,'searchFollowBlog'])->middleware('auth:api');
-Route::get('search_follow_blog/{blog_username}', [FollowBlogController::class,'searchFollowBlog'])->middleware('auth:api');
+Route::post('follow_blog_search', [FollowBlogController::class,'followBlog'])->middleware('auth:api');
 Route::get('followings/{blog_id}', [FollowBlogController::class,'getanotherFollowings'])->middleware('auth:api');
-
 /*
 | Block Blog Routes
 */
