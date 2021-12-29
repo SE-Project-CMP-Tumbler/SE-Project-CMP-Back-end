@@ -22,6 +22,7 @@ use App\Http\Requests\UserGoogleRegisterRequest;
 use App\Http\Requests\UserGoogleLoginRequest;
 use App\Http\Requests\UserCheckRegisterCredentials;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ChangeEmailRequest;
 
 class UserController extends Controller
 {
@@ -902,6 +903,24 @@ class UserController extends Controller
  *
  */
 
+/**
+ * change a user's email
+ * @param ChangeEmailRequest $request
+ * @return Json
+*/
+    public function changeEmail(ChangeEmailRequest $request)
+    {
+        $userService = new UserService();
+        $match = $userService->checkLoginCredentials($request->user()->email, $request->password);
+        if ($match) {
+            $request->user()->update([
+            'email' =>  $request->email
+                                    ]);
+            return $this->generalResponse("", "Successful response", '200');
+        }
+
+        return $this->errorResponse(Errors::INVALID_CHANGE_PASSWORD, '422');
+    }
 /** @OA\Delete(
  * path="/delete_user",
  * summary="delete the user",
@@ -960,4 +979,23 @@ class UserController extends Controller
  * ),
  *
  */
+/**
+ * delete a user
+ * @param UserLoginRequest $request
+ * @return Json
+*/
+    public function deleteUser(UserLoginRequest $request)
+    {
+        if ($request->user()->email != $request->email) {
+            return $this->errorResponse(Errors::INVALID_CHANGE_EMAIL, '422');
+        }
+        $userService = new UserService();
+        $match = $userService->checkLoginCredentials($request->email, $request->password);
+        if ($match) {
+            $request->user()->delete();
+            return $this->generalResponse("", "Successful response", '200');
+        }
+
+        return $this->errorResponse(Errors::INVALID_CHANGE_PASSWORD, '422');
+    }
 }

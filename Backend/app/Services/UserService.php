@@ -22,26 +22,26 @@ class UserService
   * @param string $email
   * @param string $password
   * @param int $age
-  * @param bool $is_linked_by_google
+  * @param bool $isLinkedByGoogle
   * @param string $username
-  * @param string $google_id (optional)
+  * @param string $googleId (optional)
   * @return User
  */
-    public function register(string $email, string $password, int $age, bool $is_linked_by_google, string $username, string $google_id = null)
+    public function register(string $email, string $password, int $age, bool $isLinkedByGoogle, string $username, string $googleId = null)
     {
-        if (($is_linked_by_google && !($google_id))   ||    (! $is_linked_by_google && ($google_id))) {
+        if (($isLinkedByGoogle && !($googleId))   ||    (! $isLinkedByGoogle && ($googleId))) {
             return null;
         }
 
-        $password = $is_linked_by_google ? ($email . $google_id . '@tumbler_default_password' . $email) : $password;
+        $password = $isLinkedByGoogle ? ($email . $googleId . '@tumbler_default_password' . $email) : $password;
         DB::beginTransaction();
         try {
             $user = User::create([
             'email' => $email,
             'password' => Hash::make($password),
             'age' => $age,
-            'linked_by_google' => $is_linked_by_google,
-            'google_id' => $google_id
+            'linked_by_google' => $isLinkedByGoogle,
+            'google_id' => $googleId
             ]);
             /* call service create blog */
             $blog = Blog::create([
@@ -57,7 +57,7 @@ class UserService
              return null;
         }
 
-        if ($is_linked_by_google) {
+        if ($isLinkedByGoogle) {
             $user->markEmailAsVerified();
             event(new Verified($user));
         } else {
@@ -199,35 +199,35 @@ class UserService
         return true;
     }
      /**
-  * get the google_id and email of a certain user
+  * get the googleId and email of a certain user
   * @param string $googleAccessToken
   * @return array
  */
 
     public function getGoogleData(string $googleAccessToken)
     {
-        $google_id = "";
+        $googleId = "";
         $email = "";
         try {
             $user = Socialite::driver('google')->userFromToken($googleAccessToken);
-            $google_id = $user->id;
+            $googleId = $user->id;
             $email = $user->email;
         } catch (\Throwable $th) {
             return null;
         }
-        return ["google_id" => $google_id , "email" => $email];
+        return ["google_id" => $googleId , "email" => $email];
     }
  /**
   * check the login with google credentials
   * @param string $email
-  *@param string $google_id
+  *@param string $googleId
   * @return User
  */
-    public function checkGoogleLoginCredentials(string $email, string $google_id)
+    public function checkGoogleLoginCredentials(string $email, string $googleId)
     {
 
         $user = User::where('email', $email)->first();
-        if (!$user || !$user->linked_by_google || $user->google_id != $google_id) {
+        if (!$user || !$user->linked_by_google || $user->google_id != $googleId) {
             $user = null;
         }
         return $user;
