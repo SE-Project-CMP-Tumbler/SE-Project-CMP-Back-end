@@ -18,34 +18,18 @@ class ThemeResource extends JsonResource
         $blog = $this->blog;
         return
         [
-            "theme-id" => $this->id,
-            "title" => [
-                [
-                  "text" => $blog->title,
-                  "color" => $this->color_title,
-                  "font" => $this->font_title,
-                  "font_weight" => $this->font_weight_title
-                ]
-              ],
-              "description" => [
-                [
-                  "text" => $blog->description
-                ]
-              ],
-              "background_color" => $this->background_color,
-              "accent_color" => $this->accent_color,
-              "body_font" => $this->body_font,
-              "header_image"  => [
-                [
-                  "url" => $blog->header_image
-                ]
-              ],
-              "avatar" => [
-                [
-                  "url" => $blog->avatar,
-                  "shape" =>  $blog->avatar_shape
-                ]
-              ]
+
+            "color_title" => $this->color_title ,
+            "font_title" => $this->font_title,
+            "font_weight_title" => $this->font_weight_title,
+            "description" => $blog->description,
+            "title" => $blog->title ,
+            "background_color" => $this->background_color,
+            "accent_color" => $this->accent_color,
+            "body_font" => $this->body_font,
+            "header_image" => $blog->header_image,
+            "avatar" => $blog->avatar,
+            "avatar_shape" => $blog->avatar_shape
 
         ];
     }

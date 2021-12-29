@@ -19,7 +19,8 @@ class Theme extends Model
         'font_weight_title',
         'background_color',
         'body_font',
-        'blog_id'
+        'blog_id',
+        'accent_color'
     ];
      /**
      * @return BelongsTo

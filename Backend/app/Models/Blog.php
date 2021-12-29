@@ -23,6 +23,7 @@ class Blog extends Model
         'description',
         'avatar',
         'header_image',
+        'avatar_shape',
         'title',
         'replies_settings',
         'allow_messages',

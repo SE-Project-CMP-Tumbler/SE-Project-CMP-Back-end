@@ -115,22 +115,8 @@ class ThemeController extends Controller
         }
         $this->authorize('update', $blog);
         $theme = $blog->theme;
-            $theme->update([
-            'color_title' => $request->color_title ?? $theme->color_title,
-            'font_title' => $request->font_title ?? $theme->font_title,
-            'font_weight_title' => $request->font_weight_title ?? $theme->font_weight_title,
-            'background_color' => $request->background_color ?? $theme->background_color,
-            'accent_color' => $request->accent_color ?? $theme->accent_color,
-            'body_font' => $request->body_font ?? $theme->body_font
-            ]);
-
-            $blog->update([
-            'description' => $request->description ?? $blog->description,
-            'title' => $request->title ?? $blog->title,
-            'header_image' => $request->header_image ?? $blog->header_image,
-            'avatar' => $request->avatar ?? $blog->avatar,
-            'avatar_shape' => $request->avatar_shape ?? $blog->avatar_shape
-            ]);
+        $theme->update($request->validated());
+        $blog->update($request->validated());
         return $this->generalResponse(new ThemeResource($theme), "ok");
     }
  /**
