@@ -10,7 +10,7 @@ class NotificationController extends Controller
 {
     /**
      *  @OA\Get(
-     *  path="/blog/notifications?type={type}&for_blog_id={for_blog_id}",
+     *  path="/notifications?type={type}&for_blog_id={for_blog_id}",
      *  operationId="getNotifications",
      *  tags={"Notifications"},
      *  security={ {"bearer": {} }},
