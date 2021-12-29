@@ -54,9 +54,13 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "total_notes_count": {
+                                                "notes_count": {
                                                     "type": "integer",
                                                     "example": 16
+                                                },
+                                                "new_followers_count": {
+                                                    "type": "integer",
+                                                    "example": 326
                                                 },
                                                 "total_followers_count": {
                                                     "type": "integer",
@@ -67,17 +71,17 @@
                                                     "example": [
                                                         {
                                                             "timestamp": "2021-11-03 01:13:39",
-                                                            "count": 5,
+                                                            "notes": 5,
                                                             "post_id": 51
                                                         },
                                                         {
                                                             "timestamp": "2021-17-03 01:13:39",
-                                                            "count": 51,
+                                                            "notes": 51,
                                                             "post_id": 81
                                                         },
                                                         {
                                                             "timestamp": "2021-19-03 01:13:39",
-                                                            "count": 9,
+                                                            "notes": 9,
                                                             "post_id": 123
                                                         }
                                                     ]
@@ -191,9 +195,13 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "total_notes_count": {
+                                                "notes_count": {
                                                     "type": "integer",
                                                     "example": 16
+                                                },
+                                                "new_followers_count": {
+                                                    "type": "integer",
+                                                    "example": 326
                                                 },
                                                 "total_followers_count": {
                                                     "type": "integer",
@@ -204,15 +212,15 @@
                                                     "example": [
                                                         {
                                                             "timestamp": "2021-11-03 01:13:39",
-                                                            "count": 5
+                                                            "new_followers": 5
                                                         },
                                                         {
                                                             "timestamp": "2021-17-03 01:13:39",
-                                                            "count": 51
+                                                            "new_followers": 51
                                                         },
                                                         {
                                                             "timestamp": "2021-19-03 01:13:39",
-                                                            "count": 9
+                                                            "new_followers": 9
                                                         }
                                                     ]
                                                 }
@@ -325,9 +333,13 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "total_notes_count": {
+                                                "notes_count": {
                                                     "type": "integer",
                                                     "example": 16
+                                                },
+                                                "new_followers_count": {
+                                                    "type": "integer",
+                                                    "example": 326
                                                 },
                                                 "total_followers_count": {
                                                     "type": "integer",
@@ -338,15 +350,15 @@
                                                     "example": [
                                                         {
                                                             "timestamp": "2021-11-03 01:13:39",
-                                                            "count": 5
+                                                            "total_followers": 5
                                                         },
                                                         {
                                                             "timestamp": "2021-17-03 01:13:39",
-                                                            "count": 51
+                                                            "total_followers": 51
                                                         },
                                                         {
                                                             "timestamp": "2021-19-03 01:13:39",
-                                                            "count": 9
+                                                            "total_followers": 9
                                                         }
                                                     ]
                                                 }
@@ -1067,7 +1079,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
+                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument\r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1380,7 +1392,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
+                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument\r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6052,7 +6064,7 @@
                     {
                         "name": "type",
                         "in": "query",
-                        "description": "\r\n *        type: is optional to indicate which of these notificaions to get its and default is all\r\n *        like: a like on your post\r\n *        reply: a reply on your post\r\n *        follow: a new follower\r\n *        reblog: a reblog of your post\r\n *        ask: a new ask recieved\r\n *        answer: an answered ask that you had sent\r\n *        mentions_posts: get mentions in posts\r\n *        mentions_replies: get mentions in replies\r\n *        all: get all types of notifications",
+                        "description": "\r\n     *        type: is optional to indicate which of these notificaions to get its and default is all\r\n     *        like: a like on your post\r\n     *        reply: a reply on your post\r\n     *        follow: a new follower\r\n     *        reblog: a reblog of your post\r\n     *        ask: a new ask recieved\r\n     *        answer: an answered ask that you had sent\r\n     *        mentions_posts: get mentions in posts\r\n     *        mentions_replies: get mentions in replies\r\n     *        all: get all types of notifications",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -6062,7 +6074,7 @@
                     {
                         "name": "for_blog_id",
                         "in": "query",
-                        "description": "\r\n *        is optional to retreive the notificaion for specific one of your blogs, default is you primary blog",
+                        "description": "\r\n     *        is optional to retreive the notificaion for specific one of your blogs, default is you primary blog",
                         "required": false,
                         "schema": {
                             "type": "int"
@@ -6072,7 +6084,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "\r\n *      Successful Operation,\r\n *      notificaion_id: is a unique id for each notificaion\r\n *      type: is the notification type { follow | mention | like | reply | reblog }\r\n *      timestamp: is when that action happened,\r\n *\r\n *      target_blog_id: is one of the users receiving these notificaions blog ids to know\r\n *      each of there blogs has been { followed | mentioned | got a like | got a reply | got a reblog }\r\n *\r\n *      if the notificaion is of type { follow }, there will be the { follower_id }\r\n *      which is the id of the user made the follow,\r\n *\r\n *      if that notification is of type { mention | like | reply | rebolg }, the response will\r\n *      have { target_post_id, target_post_type, target_post_summary }\r\n *\r\n *      { from_blog_id | from_blog_username | from_blog_avatar_shape | from_blog_avatar }\r\n *      those attributes belong to the blog that made the action,\r\n *\r\n *      follow: this checks if you follow the other user which his blog made that action",
+                        "description": "\r\n     *      Successful Operation,\r\n     *      notificaion_id: is a unique id for each notificaion\r\n     *      type: is the notification type { follow | mention | like | reply | reblog }\r\n     *      timestamp: is when that action happened,\r\n     *\r\n     *      target_blog_id: is one of the users receiving these notificaions blog ids to know\r\n     *      each of there blogs has been { followed | mentioned | got a like | got a reply | got a reblog }\r\n     *\r\n     *      if the notificaion is of type { follow }, there will be the { follower_id }\r\n     *      which is the id of the user made the follow,\r\n     *\r\n     *      if that notification is of type { mention | like | reply | rebolg }, the response will\r\n     *      have { target_post_id, target_post_type, target_post_summary }\r\n     *\r\n     *      { from_blog_id | from_blog_username | from_blog_avatar_shape | from_blog_avatar }\r\n     *      those attributes belong to the blog that made the action,\r\n     *\r\n     *      follow: this checks if you follow the other user which his blog made that action",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6087,64 +6099,77 @@
                                         "response": {
                                             "properties": {
                                                 "notificatoins": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "type": {
-                                                                "type": "string",
-                                                                "example": "mention"
-                                                            },
-                                                            "notification_id": {
-                                                                "type": "string",
-                                                                "example": "ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3"
-                                                            },
-                                                            "timestamp": {
-                                                                "type": "date-time",
-                                                                "example": "/storage/imgname2.extension"
-                                                            },
-                                                            "target_blog_id": {
-                                                                "type": "integer",
-                                                                "example": "39"
-                                                            },
-                                                            "follower_id": {
-                                                                "type": "integer",
-                                                                "example": "39"
-                                                            },
-                                                            "target_post_id": {
-                                                                "type": "integer",
-                                                                "example": "1523"
-                                                            },
-                                                            "target_post_type": {
-                                                                "type": "string",
-                                                                "example": "text"
-                                                            },
-                                                            "target_post_summary": {
-                                                                "type": "string",
-                                                                "example": "<p> this is post summary </p>"
-                                                            },
-                                                            "from_blog_id": {
-                                                                "type": "integer",
-                                                                "example": "84"
-                                                            },
-                                                            "from_blog_username": {
-                                                                "type": "string",
-                                                                "example": "helloBLog"
-                                                            },
-                                                            "from_blog_avatar": {
-                                                                "type": "url",
-                                                                "example": "/storage/imagename.ext"
-                                                            },
-                                                            "from_blog_avatar_shape": {
-                                                                "type": "string",
-                                                                "example": "circle"
-                                                            },
-                                                            "follow": {
-                                                                "type": "boolean",
-                                                                "example": "false"
-                                                            }
+                                                    "type": "object",
+                                                    "example": [
+                                                        {
+                                                            "type": "mention",
+                                                            "notification_id": "ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3",
+                                                            "timestamp": "2021-12-29T07:33:29.000000Z",
+                                                            "target_blog_id": 39,
+                                                            "target_post_id": 1523,
+                                                            "target_post_type": "text",
+                                                            "target_post_summary": "<p> this is post summary </p>",
+                                                            "from_blog_id": 84,
+                                                            "from_blog_username": "helloBLog",
+                                                            "from_blog_avatar": "/storage/imagename.ext",
+                                                            "from_blog_avatar_shape": "circle",
+                                                            "follow": "false"
                                                         },
-                                                        "type": "object"
-                                                    }
+                                                        {
+                                                            "type": "ask",
+                                                            "notification_id": "ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3",
+                                                            "timestamp": "2021-12-29T07:33:29.000000Z",
+                                                            "target_blog_id": 39,
+                                                            "target_question_id": 1523,
+                                                            "target_question_summary": "<p> this is post summary </p>",
+                                                            "from_blog_id": 84,
+                                                            "from_blog_username": "helloBLog",
+                                                            "from_blog_avatar": "/storage/imagename.ext",
+                                                            "from_blog_avatar_shape": "circle",
+                                                            "follow": "false"
+                                                        },
+                                                        {
+                                                            "type": "like",
+                                                            "notification_id": "ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3",
+                                                            "timestamp": "2021-12-29T07:33:29.000000Z",
+                                                            "target_blog_id": 39,
+                                                            "target_post_id": 1523,
+                                                            "target_post_type": "text",
+                                                            "target_post_summary": "<p> this is post summary </p>",
+                                                            "from_blog_id": 84,
+                                                            "from_blog_username": "helloBLog",
+                                                            "from_blog_avatar": "/storage/imagename.ext",
+                                                            "from_blog_avatar_shape": "circle",
+                                                            "follow": "false"
+                                                        },
+                                                        {
+                                                            "type": "follow",
+                                                            "notification_id": "ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3",
+                                                            "timestamp": "2021-12-29T07:33:29.000000Z",
+                                                            "target_blog_id": 39,
+                                                            "from_blog_id": 84,
+                                                            "from_blog_username": "helloBLog",
+                                                            "from_blog_avatar": "/storage/imagename.ext",
+                                                            "from_blog_avatar_shape": "circle",
+                                                            "follow": "false"
+                                                        },
+                                                        {
+                                                            "type": "reply",
+                                                            "notification_id": "ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3",
+                                                            "timestamp": "2021-12-29T07:33:29.000000Z",
+                                                            "target_blog_id": 39,
+                                                            "target_post_id": 1523,
+                                                            "target_post_type": "text",
+                                                            "target_post_summary": "<p> this is post summary </p>",
+                                                            "reply_id": 1523,
+                                                            "reply_summary": "<p> this is post summary </p>",
+                                                            "from_blog_id": 84,
+                                                            "from_blog_username": "helloBLog",
+                                                            "from_blog_avatar": "/storage/imagename.ext",
+                                                            "from_blog_avatar_shape": "circle",
+                                                            "follow": "false"
+                                                        }
+                                                    ]
                                                 },
                                                 "pagination": {
                                                     "properties": {
@@ -7482,7 +7507,8 @@
                             "schema": {
                                 "required": [
                                     "post_status",
-                                    "post_type"
+                                    "post_type",
+                                    "post_body"
                                 ],
                                 "properties": {
                                     "post_status": {
@@ -8269,7 +8295,7 @@
                     {
                         "name": "blog_id",
                         "in": "path",
-                        "description": "The id of the blog who recieves the submission request.",
+                        "description": "The id of the blog who will recieve the submission request.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -8407,7 +8433,7 @@
                     {
                         "name": "blogId",
                         "in": "path",
-                        "description": "Blog_id ",
+                        "description": "Blog_id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -8473,7 +8499,7 @@
                                                         "properties": {
                                                             "post_id": {
                                                                 "type": "integer",
-                                                                "example": 5
+                                                                "example": 4
                                                             },
                                                             "blog_id": {
                                                                 "type": "integer",
