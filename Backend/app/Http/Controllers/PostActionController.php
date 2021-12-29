@@ -7,7 +7,9 @@ use App\Models\Post;
 use App\Models\Blog;
 use App\Models\Reply;
 use App\Models\Like;
+use App\Models\ReplyMentionBlog;
 use App\Http\Resources\ReplyResource;
+use App\Services\PostService;
 use App\Notifications\ReplyNotification;
 use App\Notifications\LikeNotification;
 
@@ -98,15 +100,25 @@ class PostActionController extends Controller
         if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
-
         // the blog made the reply
         $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
         $actorBlogID = ($actorBlog) ['id'];
+        //$this->authorizeResource(Post::class, 'canReply', [$actorBlog, $post]);
         $reply = Reply::create([
             'post_id' => $post_id,
             'blog_id' => $actorBlogID,
             'description' => $request->reply_text
         ]);
+        $mentionedBlogsUsername = (new PostService())->extractMentionedBlogs($reply->description);
+        foreach ($mentionedBlogsUsername as $blogUsername) {
+            $blog = Blog::where('username', $blogUsername)->first();
+            if ($blog && (ReplyMentionBlog::where([['reply_id',$reply->id],['blog_id',$blog['id']]])->count() == 0)) {
+                ReplyMentionBlog::create([
+                'reply_id' => $reply->id,
+                'blog_id' => $blog['id'],
+                ]);
+            }
+        }
 
         // add the notificaions for the reply on post - don't notify your self
         $recipientBlog = $post->blog()->first();
@@ -272,8 +284,8 @@ class PostActionController extends Controller
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
 
-        $blog = Post::where('id', $post_id)->first();
-        if (empty($blog)) {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
