@@ -12,6 +12,7 @@ use App\Http\Requests\AskRequest;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\QuestionResource;
 use App\Http\Requests\AnswerRequest;
+use App\Notifications\AnswerNotification;
 use App\Notifications\AskNotification;
 use App\Services\AskService;
 
@@ -212,13 +213,20 @@ class AskController extends Controller
             'type' => 'answer',
             'blog_id' => $question->ask_reciever_blog_id
         ]);
-        $Ask = Answer::create([
+        $answer = Answer::create([
             'ask_sender_blog_id' => $question->ask_sender_blog_id,
             'ask_reciever_blog_id' => $question->ask_reciever_blog_id,
             'post_id' =>  $post->id,
             'ask_body' => $question->body,
             'anonymous_flag' => $question->anonymous_flag,
         ]);
+
+        // send notificaton about the answer
+        $actorBlog = Blog::where('id', $answer->ask_sender_blog_id)->first();
+        $recipientBlog = Blog::where('id', $answer->ask_reciever_blog_id)->first();
+        $notifiedUser = $recipientBlog->user()->first();
+        $notifiedUser->notify(new AnswerNotification($actorBlog, $recipientBlog, $question, $answer));
+
         $question->delete();
         return $this->generalResponse(new PostResource($post), "ok", 200);
     }
