@@ -5,7 +5,7 @@ namespace App\Notifications;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Services\BlogService;
-use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -14,16 +14,19 @@ class MentionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $mentioner;
-    protected $mentionedBlog;
+    /** @var Blog $actorBlog the blog made the mention action */
+    protected $actorBlog;
 
-    // the post the current user was mention at
+    /** @var Blog $recipientBlog the blog that was mentioned */
+    protected $recipientBlog;
+
+    /** @var Post $post the post which was replied on */
     protected $post;
 
-    // the type of the notification
+    /** @var string $type the type of this notification */
     protected $type = 'mention';
 
-    // this will store the data for the current notification
+    /** @var array $data this notification data */
     protected $data;
 
     /**
@@ -31,10 +34,10 @@ class MentionNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Blog $mentioner, Blog $mentionedBlog, Post $post)
+    public function __construct(Blog $actorBlog, Blog $recipientBlog, Post $post)
     {
-        $this->mentioner = $mentioner;
-        $this->mentionedBlog = $mentionedBlog;
+        $this->actorBlog = $actorBlog;
+        $this->recipientBlog = $recipientBlog;
         $this->post = $post;
         $this->data = $this->prepareData();
     }
@@ -67,7 +70,7 @@ class MentionNotification extends Notification implements ShouldQueue
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-' . auth()->user()->id);
+        return new Channel('channel-' . auth()->user()->id);
     }
 
     /**
@@ -112,19 +115,25 @@ class MentionNotification extends Notification implements ShouldQueue
     public function prepareData()
     {
         $blogService = new BlogService();
-        $check = $blogService->checkIsFollowed($this->mentionedBlog->id, $this->mentioner->id);
+        $check = $blogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
         return [
+            // notification info
+            'type' => $this->type,
+
+            // post info
             'target_post_id' => $this->post->id,
             'target_post_type' => $this->post->type,
             'target_post_summary' => '',
-            'type' => $this->type,
-            'target_blog_id' => $this->mentionedBlog->id,
-            'from_blog_id' => $this->mentioner->id,
-            'from_blog_username' => $this->mentioner->username,
-            'from_blog_avatar' => $this->mentioner->avatar,
-            'from_blog_avatar_shape' => $this->mentioner->avatar_shape,
-            'from_blog_header_image' => $this->mentioner->header_image,
+
+            // the blog received the notification
+            'target_blog_id' => $this->recipientBlog->id,
             'followed' => $check,
+
+            // the blog made the notifiable action
+            'from_blog_id' => $this->actorBlog->id,
+            'from_blog_username' => $this->actorBlog->username,
+            'from_blog_avatar' => $this->actorBlog->avatar,
+            'from_blog_avatar_shape' => $this->actorBlog->avatar_shape,
         ];
     }
 }
