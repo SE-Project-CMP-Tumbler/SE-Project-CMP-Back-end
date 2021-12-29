@@ -5,7 +5,7 @@ namespace App\Notifications;
 use App\Models\Blog;
 use App\Models\User;
 use App\Services\BlogService;
-use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -14,20 +14,20 @@ class UserFollowedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    // is the user id --
-    // as the user can followe other blogs with only his primary blog
+
+    /** @var User $follower the user made the follow */
     protected $follower;
 
-    // the followed user
+    /** @var User $followed the user that was followed */
     protected $followed;
 
-    // the blog id of the followed user
+    /** @var Blog $blog the blog that had been followed */
     protected $followedBlog;
 
-    // the type of the notification
+    /** @var string $type the type of this notification */
     protected $type = 'follow';
 
-    // this will store the data for the current notification
+    /** @var array $data this notification data */
     protected $data;
 
     /**
@@ -71,7 +71,7 @@ class UserFollowedNotification extends Notification implements ShouldQueue
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-' . $this->followed->id);
+        return new Channel('channel-' . $this->followed->id);
     }
 
     /**
@@ -120,15 +120,21 @@ class UserFollowedNotification extends Notification implements ShouldQueue
         $blogService = new BlogService();
         $check = $blogService->checkIsFollowed($this->followedBlog->id, $from_blog->id);
         return [
-            'follower_id' => $this->follower->id,
+            // notification info
             'type' => $this->type,
+
+            // the follower/user info
+            'follower_id' => $this->follower->id,
+
+            // the blog received the notification
             'target_blog_id' => $this->followedBlog->id,
+            'followed' => $check,
+
+            // the blog made the notifiable action
             'from_blog_id' => $from_blog->id,
             'from_blog_username' => $from_blog->username,
             'from_blog_avatar' => $from_blog->avatar,
             'from_blog_avatar_shape' => $from_blog->avatar_shape,
-            'from_blog_header_image' => $from_blog->header_image,
-            'followed' => $check,
         ];
     }
 }

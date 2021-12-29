@@ -4,27 +4,31 @@ namespace App\Notifications;
 
 use App\Models\Blog;
 use App\Models\Post;
+use App\Models\Reply;
 use App\Services\BlogService;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class MentionNotification extends Notification implements ShouldQueue
+class ReplyNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /** @var Blog $actorBlog the blog made the mention action */
+    /** @var Blog $actorBlog the recipientBlog made the reply */
     protected $actorBlog;
 
-    /** @var Blog $recipientBlog the blog that was mentioned */
+    /** @var Blog $recipientBlog the recipientBlog that had the post */
     protected $recipientBlog;
 
     /** @var Post $post the post which was replied on */
     protected $post;
 
+    /** @var Reply $reply */
+    protected $reply;
+
     /** @var string $type the type of this notification */
-    protected $type = 'mention';
+    protected $type = 'reply';
 
     /** @var array $data this notification data */
     protected $data;
@@ -34,11 +38,12 @@ class MentionNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Blog $actorBlog, Blog $recipientBlog, Post $post)
+    public function __construct(Blog $actorBlog, Blog $recipientBlog, Post $post, Reply $reply)
     {
         $this->actorBlog = $actorBlog;
         $this->recipientBlog = $recipientBlog;
         $this->post = $post;
+        $this->reply = $reply;
         $this->data = $this->prepareData();
     }
 
@@ -114,8 +119,8 @@ class MentionNotification extends Notification implements ShouldQueue
      **/
     public function prepareData()
     {
-        $blogService = new BlogService();
-        $check = $blogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
+        $recipientBlogService = new BlogService();
+        $check = $recipientBlogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
         return [
             // notification info
             'type' => $this->type,
@@ -125,11 +130,15 @@ class MentionNotification extends Notification implements ShouldQueue
             'target_post_type' => $this->post->type,
             'target_post_summary' => '',
 
-            // the blog received the notification
+            // the recipientBlog received the notification
             'target_blog_id' => $this->recipientBlog->id,
             'followed' => $check,
 
-            // the blog made the notifiable action
+            // reply info
+            'reply_id' => $this->reply->id,
+            'reply_summary' => $this->reply->description,
+
+            // the recipientBlog made the notifiable action
             'from_blog_id' => $this->actorBlog->id,
             'from_blog_username' => $this->actorBlog->username,
             'from_blog_avatar' => $this->actorBlog->avatar,

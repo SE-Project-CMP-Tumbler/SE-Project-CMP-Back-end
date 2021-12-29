@@ -10,21 +10,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class MentionNotification extends Notification implements ShouldQueue
+class LikeNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /** @var Blog $actorBlog the blog made the mention action */
+    /** @var Blog $actorBlog the actorBlog liked the post */
     protected $actorBlog;
 
-    /** @var Blog $recipientBlog the blog that was mentioned */
+    /** @var Blog $LikedactorBlog the actorBlog has the post being liked */
     protected $recipientBlog;
 
-    /** @var Post $post the post which was replied on */
+    /** @var Post $post the post which was liked */
     protected $post;
 
     /** @var string $type the type of this notification */
-    protected $type = 'mention';
+    protected $type = 'like';
 
     /** @var array $data this notification data */
     protected $data;
@@ -114,8 +114,8 @@ class MentionNotification extends Notification implements ShouldQueue
      **/
     public function prepareData()
     {
-        $blogService = new BlogService();
-        $check = $blogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
+        $actorBlogService = new BlogService();
+        $check = $actorBlogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
         return [
             // notification info
             'type' => $this->type,
@@ -125,11 +125,11 @@ class MentionNotification extends Notification implements ShouldQueue
             'target_post_type' => $this->post->type,
             'target_post_summary' => '',
 
-            // the blog received the notification
+            // the actorBlog received the notification
             'target_blog_id' => $this->recipientBlog->id,
             'followed' => $check,
 
-            // the blog made the notifiable action
+            // the actorBlog made the notifiable action
             'from_blog_id' => $this->actorBlog->id,
             'from_blog_username' => $this->actorBlog->username,
             'from_blog_avatar' => $this->actorBlog->avatar,
