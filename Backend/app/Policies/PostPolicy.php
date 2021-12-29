@@ -154,7 +154,7 @@ class PostPolicy
     public function caReply(User $user, Post $post)
     {
         //check if he is the owner
-        
+
         //check everyone
 
         //check 2-way follow in 1-week
