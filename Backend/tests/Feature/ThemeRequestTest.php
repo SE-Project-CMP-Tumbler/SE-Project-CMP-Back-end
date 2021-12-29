@@ -27,67 +27,24 @@ class ThemeRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
         $request = [
-
-                "title" => [
-                  [
-                    "text" => "rwwdddd",
-                    "color" => "colortitle",
-                    "font" => "fonttitle",
-                    "font_weight" => "fontweighttitle"
-                   ]
-                ],
-                "description" => [
-                  [
-                    "text" => "slll"
-                  ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png"
-                   ]
-                ],
-                "avatar" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png",
-                    "shape" => "circle"
-                  ]
-                ]
+          "color_title" => "#000000"
         ];
         $response = $this
         ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "response" => [
-                "theme-id" => $theme->id,
-                "title" => [
-                    [
-                        "text" => "rwwdddd",
-                        "color" => "colortitle",
-                        "font" => "fonttitle",
-                        "font_weight" => "fontweighttitle"
-                    ]
-                ],
-                "description" => [
-                    [
-                        "text" => "slll"
-                    ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                    [
-                        "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png"
-                    ]
-                ],
-                "avatar" => [
-                    [
-                        "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png",
-                        "shape" => "circle"
-                    ]
-                ]
+              "theme-id" => $theme->id,
+              "color_title" => "#000000",
+              "font_title" => $theme->font_title,
+              "font_weight_title" => $theme->font_weight_title,
+              "description" => $blog->description,
+              "title" => $blog->title,
+              "background_color" => $theme->background_color,
+              "accent_color" => $theme->accent_color,
+              "body_font" => $theme->body_font,
+              "header_image" => $blog->header_image,
+              "avatar" => $blog->avatar,
+              "avatar_shape" => $blog->avatar_shape
             ],
             "meta" => [
                 "status" => "200",
@@ -109,41 +66,14 @@ class ThemeRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
         $request = [
-
-                "title" => [
-                  [
-                    "text" => "rwwdddd",
-                    "color" => "colortitle",
-                    "font" => "fonttitle",
-                    "font_weight" => "fontweighttitle"
-                   ]
-                ],
-                "description" => [
-                  [
-                    "text" => "slll"
-                  ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png"
-                   ]
-                ],
-                "avatar" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png",
-                    "shape" => "suq"
-                  ]
-                ]
+          "avatar_shape" => "circl"
         ];
         $response = $this
         ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The selected avatar.0.shape is invalid."
+                "msg" => "The selected avatar shape is invalid."
             ]
         ]);
     }
@@ -161,41 +91,14 @@ class ThemeRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
         $request = [
-
-                "title" => [
-                  [
-                    "text" => "rwwdddd",
-                    "color" => "colortitle",
-                    "font" => "fonttitle",
-                    "font_weight" => "fontweighttitle"
-                   ]
-                ],
-                "description" => [
-                  [
-                    "text" => ""
-                  ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png"
-                   ]
-                ],
-                "avatar" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png",
-                    "shape" => "sqaure"
-                  ]
-                ]
+          "description" => ""
         ];
         $response = $this
         ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The description.0.text must be a string."
+                "msg" => "The description must be a string."
             ]
         ]);
     }
@@ -213,41 +116,14 @@ class ThemeRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
         $request = [
-
-                "title" => [
-                  [
-                    "text" => "rwwdddd",
-                    "color" => "colortitle",
-                    "font" => "fonttitle #",
-                    "font_weight" => "fontweighttitle"
-                   ]
-                ],
-                "description" => [
-                  [
-                    "text" => ""
-                  ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png"
-                   ]
-                ],
-                "avatar" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png",
-                    "shape" => "sqaure"
-                  ]
-                ]
+          "font_title" => ""
         ];
         $response = $this
         ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The title.0.font format is invalid."
+                "msg" => "The font title must be a string."
             ]
         ]);
     }
@@ -265,41 +141,14 @@ class ThemeRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
         $request = [
-
-                "title" => [
-                  [
-                    "text" => "rwwdddd",
-                    "color" => "colortitle",
-                    "font" => "fonttitle ",
-                    "font_weight" => "fontweighttitle #"
-                   ]
-                ],
-                "description" => [
-                  [
-                    "text" => ""
-                  ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png"
-                   ]
-                ],
-                "avatar" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png",
-                    "shape" => "sqaure"
-                  ]
-                ]
+          "font_weight_title" => "bolde 3#"
         ];
         $response = $this
         ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The title.0.font_weight format is invalid."
+                "msg" => "The font weight title format is invalid."
             ]
         ]);
     }
@@ -317,41 +166,14 @@ class ThemeRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
         $request = [
-
-                "title" => [
-                  [
-                    "text" => "rwwdddd",
-                    "color" => "colortitle",
-                    "font" => "fonttitle ",
-                    "font_weight" => "fontweighttitle"
-                   ]
-                ],
-                "description" => [
-                  [
-                    "text" => "wwww"
-                  ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                  [
-                    "url" => "www"
-                   ]
-                ],
-                "avatar" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png",
-                    "shape" => "sqaure"
-                  ]
-                ]
+          "header_image" => "www.image.com"
         ];
         $response = $this
         ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The header_image.0.url must be a valid URL."
+                "msg" => "The header image must be a valid URL."
             ]
         ]);
     }
@@ -369,41 +191,14 @@ class ThemeRequestTest extends TestCase
         $blog = Blog::factory()->create(['user_id' => $user->id]);
         $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
         $request = [
-
-                "title" => [
-                  [
-                    "text" => "rwwdddd",
-                    "color" => "colortitle",
-                    "font" => "fonttitle ",
-                    "font_weight" => "fontweighttitle"
-                   ]
-                ],
-                "description" => [
-                  [
-                    "text" => "wwww"
-                  ]
-                ],
-                "background_color" => "backgroundcolor",
-                "accent_color" => "#ee55",
-                "body_font" => "bodyfont",
-                "header_image" => [
-                  [
-                    "url" => "https://media.dev.tumbler.social/xXlTveKWWHKZg163eSaDlk19rSo4FlAKP3hTUtL4/7RnFSw6P8GcpipuouNb8zNZ7qxM9MLTTayEb3zhL.png"
-                   ]
-                ],
-                "avatar" => [
-                  [
-                    "url" => "jjx",
-                    "shape" => "sqaure"
-                  ]
-                ]
+          "avatar" => "www.jjj.com"
         ];
         $response = $this
         ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertJson([
             "meta" => [
                 "status" => "422",
-                "msg" => "The avatar.0.url must be a valid URL."
+                "msg" => "The avatar must be a valid URL."
             ]
         ]);
     }

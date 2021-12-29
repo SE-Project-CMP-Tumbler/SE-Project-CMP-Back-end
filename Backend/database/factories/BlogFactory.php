@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Http\Misc\Helpers\Config;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BlogFactory extends Factory
@@ -20,7 +21,10 @@ class BlogFactory extends Factory
             "username" => $this->faker->unique()->name,
             "description" => $this->faker->text(),
             "title" => $this->faker->title(),
-            "user_id" => $user->id
+            "user_id" => $user->id,
+            "header_image" =>  Config::DEFAULT_AVATAR ,
+            "avatar" =>  Config::DEFAULT_HEADER_IMAGE,
+            "avatar_shape" => "square"
 
         ];
     }
