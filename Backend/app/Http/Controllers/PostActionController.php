@@ -7,7 +7,9 @@ use App\Models\Post;
 use App\Models\Blog;
 use App\Models\Reply;
 use App\Models\Like;
+use App\Models\ReplyMentionBlog;
 use App\Http\Resources\ReplyResource;
+use App\Services\PostService;
 
 class PostActionController extends Controller
 {
@@ -51,7 +53,7 @@ class PostActionController extends Controller
  *            @OA\Property(property="followed", type="boolean", example=false),
  *            @OA\Property(property="reply_id", type="integer", example=5),
  *             @OA\Property(property="reply_time", type="date-time", example="02-02-2012"),
- *              @OA\Property(property="reply_text", type="string", example="What an amazing post!"), 
+ *              @OA\Property(property="reply_text", type="string", example="What an amazing post!"),
  *          )
  *       ),
  *    ),
@@ -92,17 +94,29 @@ class PostActionController extends Controller
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $blog = Post::where('id', $post_id)->first();
-        if (empty($blog)) {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
-
-        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
+        // the blog made the reply
+        $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
+        $actorBlogID = ($actorBlog) ['id'];
+        //$this->authorizeResource(Post::class, 'canReply', [$actorBlog, $post]);
         $reply = Reply::create([
             'post_id' => $post_id,
-            'blog_id' => $blog_id,
+            'blog_id' => $actorBlogID,
             'description' => $request->reply_text
         ]);
+        $mentionedBlogsUsername = (new PostService())->extractMentionedBlogs($reply->description);
+        foreach ($mentionedBlogsUsername as $blogUsername) {
+            $blog = Blog::where('username', $blogUsername)->first();
+            if ($blog && (ReplyMentionBlog::where([['reply_id',$reply->id],['blog_id',$blog['id']]])->count() == 0)) {
+                ReplyMentionBlog::create([
+                'reply_id' => $reply->id,
+                'blog_id' => $blog['id'],
+                ]);
+            }
+        }
         return $this->generalResponse(["blog_object" => new ReplyResource($reply)], "ok");
     }
 
@@ -160,19 +174,22 @@ class PostActionController extends Controller
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $blog = Post::where('id', $post_id)->first();
-        if (empty($blog)) {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
-        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
-        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->first();
+        // the blog made the like
+        $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
+        $actorBlogID = ($actorBlog) ['id'];
+
+        $like = Like::where([['blog_id', $actorBlogID] , ['post_id', $post_id]])->first();
         if ($like) {
             return $this->generalResponse("", "Forbidden", "403");
         }
         Like::create([
             'post_id' => $post_id,
-            'blog_id' => $blog_id
+            'blog_id' => $actorBlogID
         ]);
         return $this->generalResponse("", "ok");
     }
@@ -250,8 +267,8 @@ class PostActionController extends Controller
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
 
-        $blog = Post::where('id', $post_id)->first();
-        if (empty($blog)) {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 

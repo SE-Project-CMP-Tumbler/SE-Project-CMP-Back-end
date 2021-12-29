@@ -147,22 +147,30 @@ class PostPolicy
     /**
      *
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Blog  $blog
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function caReply(User $user, Post $post)
-    {
+    public function caReply(Blog $blog, Post $post)
+    {   
         //check if he is the owner
-        
-        //check everyone
-
-        //check 2-way follow in 1-week
-
-        //check he follows me
-
-
-
-        return $post->blog->user_id == $user->id;
+        if ($post->blog['id'] == $blog->id) {
+            return true;
+        } else {
+            //check everyone
+            if ($post->blog->replies_settings == 'Everyone can reply') {
+                return true;
+            } elseif ($post->blog->replies_settings ==  'Only Tumblrs you follow can reply') {
+            //check he follows me
+                return !empty($post->blog->followings()->where('id', $blog->id));
+            } else {
+            //check 2-way follow in 1-week
+                $blogFollowing = $post->blog->followings()->where([['id', $blog->id]]);
+                $blogFollower =  $post->blog->followers()->where([['id', $blog->id]]);
+                if ($blogFollowing) {
+                    dd('lol');
+                }
+            }
+        }
     }
 }
