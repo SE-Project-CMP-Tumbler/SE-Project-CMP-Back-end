@@ -46,7 +46,7 @@ class Config
     public const NOTIFICATIONS_TYPES = [
         "all", "like", "reply", "follow",
         "mention", "reblog",
-        "ask", "answered", "submission",
+        "ask", "answer", "submission",
         "reblog_naked", "reblog_with_content",
         "mention_in_reply", "mention_in_post",
     ];

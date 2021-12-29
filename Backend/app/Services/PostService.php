@@ -232,4 +232,25 @@ class PostService
         }
         return $tracedParentPosts;
     }
+    /**
+     * Get Draft Posts.
+     * Retrieve all draft posts for any blog of the authenticated user blogs.
+     *
+     * @param int $blogId
+     * @return \Post[]
+     */
+    public function getDraftPosts($blogId)
+    {
+        $draftPosts = Post::where(function ($query) use ($blogId) {
+            $query->where('blog_id', $blogId)
+                ->where('approving_blog_id', null)
+                ->where('status', 'draft');
+        })->orWhere(function ($query) use ($blogId) {
+            $query->where('approving_blog_id', $blogId)
+                ->where('status', 'draft');
+        })->orderBy('published_at', 'desc')
+        ->paginate(Config::PAGINATION_LIMIT);
+
+        return $draftPosts;
+    }
 }

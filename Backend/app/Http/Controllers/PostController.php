@@ -16,6 +16,7 @@ use App\Models\Submission;
 use App\Models\Tag;
 use App\Services\BlogService;
 use App\Notifications\MentionNotification;
+use App\Notifications\ReblogNotification;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 
@@ -257,21 +258,24 @@ class PostController extends Controller
      */
 
     /**
-     * Delte a post
+     * Delete a post
      *
      * @param int $postId
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete($postId)
     {
+        //Validate the format of the post id
         if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post id should be numeric.", "422");
         }
+        //Validate the existence of the post
         $post = Post::where('id', $postId)->first();
         if (empty($post)) {
             return $this->generalResponse("", "This post doesn't exist", "404");
         }
 
+        //Validate the authorization to delete the post
         $this->authorize('delete', $post);
 
         //Deleting the have tags relation records upon deleting the post
@@ -366,6 +370,8 @@ class PostController extends Controller
         if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post id should be numeric.", "422");
         }
+
+        //Validate the existence of the post to be retrieved
         $post = Post::where('id', $postId)->first();
         if ($post == null) {
             return $this->generalResponse("", "This post was not found", "404");
@@ -401,7 +407,7 @@ class PostController extends Controller
      *     in link type: link is required
      *     is general: all fields can be given, to be general at least two different field of types should given",
      *    @OA\JsonContent(
-     *      required={"post_status","post_type"},
+     *      required={"post_status","post_type","post_body"},
      *      @OA\Property(property="post_status", type="string", example="published"),
      *      @OA\Property(property="post_time",type="date_time",example="2012-02-30"),
      *      @OA\Property(property="post_type", type="string", example="general"),
@@ -462,6 +468,7 @@ class PostController extends Controller
         $blog = Blog::where('id', $request->blog_id)->first();
         $this->authorize('create', [Post::class, $blog]);
 
+        //creates the post
         $publishedAt = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
         $post = Post::create([
             'status' => $request->post_status,
@@ -470,8 +477,6 @@ class PostController extends Controller
             'type' => $request->post_type,
             'blog_id' => $request->blog_id
         ]);
-
-
 
         $postService = new PostService();
         $tags = $postService->extractTags($post->body);
@@ -572,6 +577,44 @@ class PostController extends Controller
      *     )
      * )
      */
+    /**
+     * A blog approves a specific post that was submitted to one of the authenticated user's blogs.
+     *
+     * @param integer $postId
+     * @param \UpdatePostRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function approveSubmission($postId, UpdatePostRequest $request)
+    {
+        //check if the post id is numeric
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
+            return $this->generalResponse("", "The post id should be numeric.", "422");
+        }
+        //check if this post id is a submission
+        $submission = Submission::where('post_id', $postId)->first();
+        if (empty($submission)) {
+            return $this->generalResponse("", "The id specified is not a submission post.", "422");
+        }
+
+        $recieverBlog = Blog::where('id', $submission->reciever_id)->first();
+        //check the authorization of the user to accept this submission
+        $this->authorize('approveSubmission', [Post::class, $recieverBlog]);
+
+        //delete the submission relation, because it's no longer a submission pending request
+        $recieverBlog->submissionPosts()->detach($postId);
+
+        //update the post to record the relation that the current blog recieved the submission has now approved the submission post
+        //and is now the approving_blog_id
+        $post = Post::where('id', $postId)->first();
+
+        $post->update([
+            'approving_blog_id' => $recieverBlog->id,
+            'status' => 'published'
+        ]);
+
+        $this->update($postId, $request);
+        return $this->generalResponse("", "OK", "200");
+    }
     /**
      * @OA\Post(
      * path="/reblog/{blog_id}/{parent_post_id}",
@@ -694,6 +737,7 @@ class PostController extends Controller
      * )
      *
      */
+
     /**
      * Creates a new post that is a reblog on another existing post
      *
@@ -740,46 +784,14 @@ class PostController extends Controller
         //Update the reblog with values specified by user while reblogging, if any.
         //Extract mentions and tags from the reblog body content
         $updateResposne = $this->update($reblog->id, $request);
+        $reblog = Post::where('id', $reblog->id)->first();
+
+        // notifcation for reblogs
+        $parentPostBlog = $parentPost->blog()->first();
+        $notifiedUser = $parentPostBlog->user()->first();
+        $notifiedUser->notify(new ReblogNotification($blog, $parentPostBlog, $parentPost, $reblog));
 
         return $updateResposne;
-    }
-    /**
-     * A blog approves a specific post that was submitted to one of the authenticated user's blogs.
-     *
-     * @param integer $postId
-     * @param \UpdatePostRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function approveSubmission($postId, UpdatePostRequest $request)
-    {
-        //check if the post id is numeric
-        if (preg_match('(^[0-9]+$)', $postId) == false) {
-            return $this->generalResponse("", "The post id should be numeric.", "422");
-        }
-        //check if this post id is a submission
-        $submission = Submission::where('post_id', $postId)->first();
-        if (empty($submission)) {
-            return $this->generalResponse("", "The id specified is not a submission post.", "422");
-        }
-
-        $recieverBlog = Blog::where('id', $submission->reciever_id)->first();
-        //check the authorization of the user to accept this submission
-        $this->authorize('approveSubmission', [Post::class, $recieverBlog]);
-
-        //delete the submission relation, because it's no longer a submission pending request
-        $recieverBlog->submissionPosts()->detach($postId);
-
-        //update the post to record the relation that the current blog recieved the submission has now approved the submission post
-        //and is now the approving_blog_id
-        $post = Post::where('id', $postId)->first();
-
-        $post->update([
-            'approving_blog_id' => $recieverBlog->id,
-            'status' => 'published'
-        ]);
-
-        $this->update($postId, $request);
-        return $this->generalResponse("", "OK", "200");
     }
     /**
      * @OA\Get(
@@ -882,7 +894,7 @@ class PostController extends Controller
      * tags={"Posts"},
      * @OA\Parameter(
      *          name="blogId",
-     *          description="Blog_id ",
+     *          description="Blog_id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -904,7 +916,7 @@ class PostController extends Controller
      *              @OA\Property(property="prev_page_url",type="string",example="http://127.0.0.1:8000/api/posts/{blog_id}?page=1"),),
      *          @OA\Property(property="posts",type="array",
      *              @OA\Items(
-     *                  @OA\Property(property="post_id", type="integer", example=5),
+     *                  @OA\Property(property="post_id", type="integer", example=4),
      *                  @OA\Property(property="blog_id", type="integer", example=5),
      *                  @OA\Property(property="blog_username", type="string", example=""),
      *                  @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
@@ -979,20 +991,21 @@ class PostController extends Controller
      */
     public function index($blogId)
     {
+        //Check the Validity of format of blog id
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-
+        //Check the Validity of existence of the blog
         $blog = Blog::where('id', $blogId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found", "404");
         }
 
+        //Construct the posts to be retrieved for the specified blog
         $authUser = auth('api')->user();
         $postService = new PostService();
         $allPosts = $postService->getProfilePosts($blog);
 
-        // return $this->generalResponse(new PostCollection($publishedPosts), "OK");
         return $this->generalResponse(new PostCollection($allPosts), "OK");
     }
 
@@ -1098,18 +1111,22 @@ class PostController extends Controller
      */
     public function getDraftPosts($blogId)
     {
+        //Check Validity of blog id format
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog Id should be numeric.", "422");
         }
-
+        //Check existence of that blog
         $blog = Blog::where('id', $blogId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
 
+        //Check authorization of the currently auth user, to view a specific blog's draft posts.
         $this->authorize('viewDraftPosts', [Post::class, $blog]);
 
-        $draftPosts = $blog->posts()->where('status', 'draft')->paginate(Config::PAGINATION_LIMIT);
+        //Get draft posts
+        $postService = new PostService();
+        $draftPosts = $postService->getDraftPosts($blogId);
         return $this->generalResponse(new PostCollection($draftPosts), "OK");
     }
 
@@ -1331,7 +1348,7 @@ class PostController extends Controller
      * security={ {"bearer": {} }},
      *  @OA\Parameter(
      *          name="blog_id",
-     *          description="The id of the blog who recieves the submission request.",
+     *          description="The id of the blog who will recieve the submission request.",
      *          required=true,
      *          in="path",
      *          @OA\Schema(

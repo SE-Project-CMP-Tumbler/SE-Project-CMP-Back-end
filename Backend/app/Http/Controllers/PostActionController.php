@@ -10,6 +10,7 @@ use App\Models\Like;
 use App\Models\ReplyMentionBlog;
 use App\Http\Resources\ReplyResource;
 use App\Services\PostService;
+use App\Notifications\MentionNotification;
 use App\Notifications\ReplyNotification;
 use App\Notifications\LikeNotification;
 
@@ -86,26 +87,26 @@ class PostActionController extends Controller
     /**
      * add a reply on a post
      *
-     * @param int $post_id
+     * @param int $postId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addReply($post_id, Request $request)
+    public function addReply($postId, Request $request)
     {
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $post = Post::where('id', $post_id)->first();
+        $post = Post::where('id', $postId)->first();
         if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
         // the blog made the reply
         $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
         $actorBlogID = ($actorBlog) ['id'];
-        //$this->authorizeResource(Post::class, 'canReply', [$actorBlog, $post]);
+        $this->authorize('canReply', $post);
         $reply = Reply::create([
-            'post_id' => $post_id,
+            'post_id' => $postId,
             'blog_id' => $actorBlogID,
             'description' => $request->reply_text
         ]);
@@ -114,9 +115,17 @@ class PostActionController extends Controller
             $blog = Blog::where('username', $blogUsername)->first();
             if ($blog && (ReplyMentionBlog::where([['reply_id',$reply->id],['blog_id',$blog['id']]])->count() == 0)) {
                 ReplyMentionBlog::create([
-                'reply_id' => $reply->id,
-                'blog_id' => $blog['id'],
+                    'reply_id' => $reply->id,
+                    'blog_id' => $blog['id'],
                 ]);
+
+                // add the notification for reply mentions
+                $mentionedBlogUser = $blog->user()->first();
+                $mentionedBlogUser->notify(new MentionNotification(
+                    actorBlog:$actorBlog,
+                    recipientBlog:$blog,
+                    post:$post
+                ));
             }
         }
 
@@ -173,17 +182,17 @@ class PostActionController extends Controller
     /**
      * add a like on a post
      *
-     * @param int $post_id
+     * @param int $postId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addLike($post_id, Request $request)
+    public function addLike($postId, Request $request)
     {
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $post = Post::where('id', $post_id)->first();
+        $post = Post::where('id', $postId)->first();
         if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
@@ -191,13 +200,9 @@ class PostActionController extends Controller
         // the blog made the like
         $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
         $actorBlogID = ($actorBlog) ['id'];
-
-        $like = Like::where([['blog_id', $actorBlogID] , ['post_id', $post_id]])->first();
-        if ($like) {
-            return $this->generalResponse("", "Forbidden", "403");
-        }
+        $this->authorize('canLike', $post);
         Like::create([
-            'post_id' => $post_id,
+            'post_id' => $postId,
             'blog_id' => $actorBlogID
         ]);
 
@@ -265,31 +270,31 @@ class PostActionController extends Controller
     /**
      * check if a blog likes a post
      *
-     * @param int $blog_id
-     * @param int $post_id
+     * @param int $blogId
+     * @param int $postId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkLiked($blog_id, $post_id)
+    public function checkLiked($blogId, $postId)
     {
-        if (preg_match('(^[0-9]+$)', $blog_id) == false) {
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog Id should be numeric.", "422");
         }
 
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $blog = Blog::where('id', $blog_id)->first();
+        $blog = Blog::where('id', $blogId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
 
-        $post = Post::where('id', $post_id)->first();
+        $post = Post::where('id', $postId)->first();
         if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
-        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->first();
+        $like = Like::where([['blog_id', $blogId] , ['post_id', $postId]])->first();
         if (empty($like)) {
             return $this->generalResponse(["like_status" => false], "ok", "200");
         }
@@ -358,12 +363,9 @@ class PostActionController extends Controller
         if (empty($reply)) {
             return $this->generalResponse("", "This reply id is not found.", "404");
         }
-
-
-        $reply = Reply::find($reply_id)->delete();
-        if (empty($reply)) {
-            return $this->generalResponse("", "not found", "404");
-        }
+        $this->authorize('canDeleteReply', [Post::class, $reply]);
+        //delete
+        $reply->delete();
         return $this->generalResponse("", "ok", "200");
     }
 
@@ -416,26 +418,29 @@ class PostActionController extends Controller
     /**
      * delete a like on a post
      *
-     * @param int $post_id
+     * @param int $postId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteLike($post_id, Request $request)
+    public function deleteLike($postId, Request $request)
     {
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $blog = Post::where('id', $post_id)->first();
+        $blog = Post::where('id', $postId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
-        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
-        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->delete();
+        $blogId = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
+        $like = Like::where([['blog_id', $blogId] , ['post_id', $postId]])->first();
         if (empty($like)) {
             return $this->generalResponse("", "not found", "404");
         }
+
+        $this->authorize('canDeleteLike', [Post::class, $like]);
+        Like::where([['blog_id', $blogId] , ['post_id', $postId]])->delete();
         return $this->generalResponse("", "ok", "200");
     }
 }

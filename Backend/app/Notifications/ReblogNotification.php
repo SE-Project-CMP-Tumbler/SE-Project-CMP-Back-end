@@ -11,21 +11,24 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use App\Http\Misc\Helpers\NotificationHelper;
 
-class LikeNotification extends Notification implements ShouldQueue
+class ReblogNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /** @var Blog $actorBlog the actorBlog liked the post */
+    /** @var Blog $actorBlog the blog made the mention action */
     protected $actorBlog;
 
-    /** @var Blog $LikedactorBlog the actorBlog has the post being liked */
+    /** @var Blog $recipientBlog the blog that was mentioned */
     protected $recipientBlog;
 
-    /** @var Post $post the post which was liked */
+    /** @var Post $post the post which was rebloged */
+    protected $parentPost;
+
+    /** @var Post $post the post */
     protected $post;
 
     /** @var string $type the type of this notification */
-    protected $type = 'like';
+    protected $type = 'reblog';
 
     /** @var array $data this notification data */
     protected $data;
@@ -35,10 +38,11 @@ class LikeNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Blog $actorBlog, Blog $recipientBlog, Post $post)
+    public function __construct(Blog $actorBlog, Blog $recipientBlog, Post $parentPost, Post $post)
     {
         $this->actorBlog = $actorBlog;
         $this->recipientBlog = $recipientBlog;
+        $this->parentPost = $parentPost;
         $this->post = $post;
         $this->data = $this->prepareData();
     }
@@ -115,9 +119,9 @@ class LikeNotification extends Notification implements ShouldQueue
      **/
     public function prepareData()
     {
-        $actorBlogService = new BlogService();
-        $check = $actorBlogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
-        list($firstImageSrc, $lastParagraphText) = (new NotificationHelper())->extractPostSummary($this->post);
+        $blogService = new BlogService();
+        $check = $blogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
+        list($firstImageSrc, $lastParagraphText) = (new NotificationHelper())->extractPostSummary($this->post, $this->parentPost);
 
         return [
             // notification info
@@ -129,11 +133,11 @@ class LikeNotification extends Notification implements ShouldQueue
             'target_post_summary' => $lastParagraphText,
             'target_post_image' => $firstImageSrc,
 
-            // the actorBlog received the notification
+            // the blog received the notification
             'target_blog_id' => $this->recipientBlog->id,
             'followed' => $check,
 
-            // the actorBlog made the notifiable action
+            // the blog made the notifiable action
             'from_blog_id' => $this->actorBlog->id,
             'from_blog_username' => $this->actorBlog->username,
             'from_blog_avatar' => $this->actorBlog->avatar,

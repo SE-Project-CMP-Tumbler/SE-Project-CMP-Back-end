@@ -52,7 +52,7 @@ class NotificationRequest extends FormRequest
             ],
             "for_blog_id" => [
                 "sometimes",
-                "integer",
+                "numeric",
                 // this rule ensures that this blog belongs to the current loged in user
                 Rule::exists('blogs', 'id')->where(function ($query) {
                     $query->where('user_id', Auth::user()->id)

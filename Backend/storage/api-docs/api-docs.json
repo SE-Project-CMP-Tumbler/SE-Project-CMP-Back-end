@@ -7078,7 +7078,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type : at least one uplaoded image,\r\n     *     in chat type : chat_body is required ,chat_title is optional\r\n     *     in quote type:  quote_text is required, quote_body is optinal\r\n     *     in video type:  video is required , url_videos are optinal\r\n     *     in audio type: audio is required\r\n     *     in link type:  link is required\r\n     *     is general : all fields can be given , to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\n     *     in text type :description or title are required, at least one of them ,keep reading is optinal\n     *     in image type : at least one uplaoded image,\n     *     in chat type : chat_body is required ,chat_title is optional\n     *     in quote type:  quote_text is required, quote_body is optinal\n     *     in video type:  video is required , url_videos are optinal\n     *     in audio type: audio is required\n     *     in link type:  link is required\n     *     is general : all fields can be given , to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -7489,14 +7489,15 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post Request has different types depeneds on post type :\r\n     *     in text type:description or title are required, at least one of them ,keep reading is optinal\r\n     *     in image type: at least one uplaoded image,\r\n     *     in chat type: chat_body is required, chat_title is optional\r\n     *     in quote type: quote_text is required, quote_body is optinal\r\n     *     in video type: video is required, url_videos are optinal\r\n     *     in audio type: audio is required\r\n     *     in link type: link is required\r\n     *     is general: all fields can be given, to be general at least two different field of types should given",
+                    "description": "Post Request has different types depeneds on post type :\n     *     in text type:description or title are required, at least one of them ,keep reading is optinal\n     *     in image type: at least one uplaoded image,\n     *     in chat type: chat_body is required, chat_title is optional\n     *     in quote type: quote_text is required, quote_body is optinal\n     *     in video type: video is required, url_videos are optinal\n     *     in audio type: audio is required\n     *     in link type: link is required\n     *     is general: all fields can be given, to be general at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
                                     "post_status",
-                                    "post_type"
+                                    "post_type",
+                                    "post_body"
                                 ],
                                 "properties": {
                                     "post_status": {
@@ -7672,7 +7673,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "\r\n     *      Can update the submission post content, before approving it.\r\n     *      Can approve the post to be published or private or draft. Thus can update the post status to be one of those three.\r\n     *      Can't update the status of the post to submission.\r\n     *      Can update any attribute of the post by specifying it in the body request as shown in the examples.\r\n     *      Can choose not to update any attribute in the post by not sending anything in the body request and approve it as it is.",
+                    "description": "\n     *      Can update the submission post content, before approving it.\n     *      Can approve the post to be published or private or draft. Thus can update the post status to be one of those three.\n     *      Can't update the status of the post to submission.\n     *      Can update any attribute of the post by specifying it in the body request as shown in the examples.\n     *      Can choose not to update any attribute in the post by not sending anything in the body request and approve it as it is.",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -7814,7 +7815,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "\r\n     *      Reblog Request can contain different data types and differet statuses, however, all fields are optional.\r\n     *      Default values for reblogs without any content:\r\n     *          post_time: yyyy-mm-dd (i.e current time)\r\n     *          post_status: 'published'\r\n     *          post_type: 'general'\r\n     *          pinned: false\r\n     *          post_body: ''\r\n     *      A blog can make a reblog without adding any contnent in the reblog.\r\n     *      A blog may add in the currently created reblog any attribute specified in the api examples.\r\n     *      A blog can only reblog from a parent post which is either an approved submission or a published post. i.e parent post must be of status published.\r\n     *      A blog can't reblog from a parent post with status draft or submission or priavte.",
+                    "description": "\n     *      Reblog Request can contain different data types and differet statuses, however, all fields are optional.\n     *      Default values for reblogs without any content:\n     *          post_time: yyyy-mm-dd (i.e current time)\n     *          post_status: 'published'\n     *          post_type: 'general'\n     *          pinned: false\n     *          post_body: ''\n     *      A blog can make a reblog without adding any contnent in the reblog.\n     *      A blog may add in the currently created reblog any attribute specified in the api examples.\n     *      A blog can only reblog from a parent post which is either an approved submission or a published post. i.e parent post must be of status published.\n     *      A blog can't reblog from a parent post with status draft or submission or priavte.",
                     "required": false,
                     "content": {
                         "application/json": {
@@ -8132,7 +8133,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "\r\n     *        If a post refers to a submission, it will have the approving_blog_id with the same id of the blog to retrieve submissions done on him.\r\n     *        If a post refers to a submission, all information blog_id, blog_username, blog_avatar, etc. belongs to the submitter (the blog who have submitted the post) will be, not the blog we're calling this route for.",
+                        "description": "\n     *        If a post refers to a submission, it will have the approving_blog_id with the same id of the blog to retrieve submissions done on him.\n     *        If a post refers to a submission, all information blog_id, blog_username, blog_avatar, etc. belongs to the submitter (the blog who have submitted the post) will be, not the blog we're calling this route for.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8283,7 +8284,7 @@
                     {
                         "name": "blog_id",
                         "in": "path",
-                        "description": "The id of the blog who recieves the submission request.",
+                        "description": "The id of the blog who will recieve the submission request.",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -8415,13 +8416,13 @@
                     "Posts"
                 ],
                 "summary": "Get posts of blog which are published",
-                "description": "\r\n     *  If the Blog id refers to one of the authenticated user's blogs, Then will retrieve his posts that are published, private, and approved submissions.\r\n     *  If the Blog id doesn't refers to one of the authenticated user's blogs, Then will retrieve that blog's posts that are published, and approved submissions.",
+                "description": "\n     *  If the Blog id refers to one of the authenticated user's blogs, Then will retrieve his posts that are published, private, and approved submissions.\n     *  If the Blog id doesn't refers to one of the authenticated user's blogs, Then will retrieve that blog's posts that are published, and approved submissions.",
                 "operationId": "getposts",
                 "parameters": [
                     {
                         "name": "blogId",
                         "in": "path",
-                        "description": "Blog_id ",
+                        "description": "Blog_id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -8487,7 +8488,7 @@
                                                         "properties": {
                                                             "post_id": {
                                                                 "type": "integer",
-                                                                "example": 5
+                                                                "example": 4
                                                             },
                                                             "blog_id": {
                                                                 "type": "integer",
@@ -8986,7 +8987,7 @@
                 "description": "A blog change the post to be pinned",
                 "operationId": "pinPost",
                 "requestBody": {
-                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to pin in that blog",
+                    "description": "\n     *      blog_id: is the one of the logged in user blogs\n     *      post_id: is the post id the logged in user wants to pin in that blog",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -9100,7 +9101,7 @@
                 "description": "A blog change the post to be unpinned",
                 "operationId": "unpinPost",
                 "requestBody": {
-                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to unpin in that blog",
+                    "description": "\n     *      blog_id: is the one of the logged in user blogs\n     *      post_id: is the post id the logged in user wants to unpin in that blog",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -9214,7 +9215,7 @@
                 "description": "A blog delete his/her post",
                 "operationId": "changePostStatus",
                 "requestBody": {
-                    "description": "\r\n     *      blog_id: is the one of the logged in user blogs\r\n     *      post_id: is the post id the logged in user wants to change its status\r\n     *      post_status: is one of three types published, private or draft",
+                    "description": "\n     *      blog_id: is the one of the logged in user blogs\n     *      post_id: is the post id the logged in user wants to change its status\n     *      post_status: is one of three types published, private or draft",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -12288,7 +12289,7 @@
                     {
                         "name": "sort",
                         "in": "query",
-                        "description": "The sort method to retrieve the posts by. Allowed values for sort_type are:\r\n *          recent: the posts are retrieved sorted by the most recently published,\r\n *          top: the posts are retrieved sorted descendingly by the number of engagments and notes they got.\r\n * By default if no sort_type is specified, posts will be retrieved by the most recent order.\r\n * If sort_type took any value other than recent or top, be default the posts will be retrieved by the most recent order",
+                        "description": "The sort method to retrieve the posts by. Allowed values for sort_type are:\n *          recent: the posts are retrieved sorted by the most recently published,\n *          top: the posts are retrieved sorted descendingly by the number of engagments and notes they got.\n * By default if no sort_type is specified, posts will be retrieved by the most recent order.\n * If sort_type took any value other than recent or top, be default the posts will be retrieved by the most recent order",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -15724,16 +15725,6 @@
                                                 "status": "200",
                                                 "msg": "ok"
                                             }
-                                        },
-                                        "response": {
-                                            "properties": {
-                                                "email": {
-                                                    "type": "string",
-                                                    "format": "email",
-                                                    "example": "radwa@gmail.com"
-                                                }
-                                            },
-                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
