@@ -102,13 +102,6 @@ class FollowBlogController extends Controller
  * operationId="followblogby username search",
  * tags={"Follow Blogs"},
  * security={ {"bearer": {} }},
- *  @OA\Parameter(
- *          name="blog username",
- *          description=" ",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="string")),
  *   @OA\RequestBody(
  *    required=true,
  *    description=  " The user can send blog username or  User email to follow another blog
