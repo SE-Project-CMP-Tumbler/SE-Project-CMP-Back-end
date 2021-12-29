@@ -189,4 +189,20 @@ class PostService
                 ->paginate(Config::PAGINATION_LIMIT);
         }
     }
+    /**
+     * Get List of parent posts, ordered from the most direct parent, till the grand that has no parent
+     *
+     * @param \Post $post post to get its parents' posts
+     * @return \Post[] List of parents' posts
+     */
+    public function getTracedbackParentPosts($post)
+    {
+        $tracedParentPosts = [];
+        $currentParent = $post->parentPost;
+        while (!empty($currentParent)) {
+            array_push($tracedParentPosts, $currentParent);
+            $currentParent = $currentParent->parentPost;
+        }
+        return $tracedParentPosts;
+    }
 }

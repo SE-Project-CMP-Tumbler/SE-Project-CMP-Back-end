@@ -1326,13 +1326,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/random_posts",
+							"raw": "{{host}}/posts/random_posts?page=3",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"post",
+								"posts",
 								"random_posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3"
+								}
 							]
 						}
 					},
@@ -1365,13 +1371,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/post/76",
+							"raw": "{{host}}/post/78",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"post",
-								"76"
+								"78"
 							]
 						}
 					},
@@ -2143,6 +2149,50 @@
 							"path": [
 								"posts",
 								"unpin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create reblog",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p> @NoranHany \",\r\n    \"post_type\": \"text\",\r\n    \"post_status\": \"published\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reblog/202/135",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reblog",
+								"202",
+								"135"
 							]
 						}
 					},
