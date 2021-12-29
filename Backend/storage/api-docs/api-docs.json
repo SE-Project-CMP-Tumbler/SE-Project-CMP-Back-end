@@ -12822,7 +12822,7 @@
                                                 },
                                                 "avatar": {
                                                     "type": "string",
-                                                    "example": "jjj"
+                                                    "example": "www.jjj.com"
                                                 },
                                                 "avatar_shape": {
                                                     "type": "string",
@@ -12963,7 +12963,7 @@
                                     },
                                     "avatar": {
                                         "type": "string",
-                                        "example": "jjj"
+                                        "example": "www.jjj.com"
                                     },
                                     "avatar_shape": {
                                         "type": "string",
@@ -13033,7 +13033,7 @@
                                                 },
                                                 "avatar": {
                                                     "type": "string",
-                                                    "example": "jjj"
+                                                    "example": "www.jjj.com"
                                                 },
                                                 "avatar_shape": {
                                                     "type": "string",
