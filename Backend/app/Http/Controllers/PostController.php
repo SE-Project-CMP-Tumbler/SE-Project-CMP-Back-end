@@ -306,7 +306,7 @@ class PostController extends Controller
      *      @OA\Property(property="post_status", type="string", example="published"),
      *      @OA\Property(property="post_id", type="integer", example=5),
      *      @OA\Property(property="blog_id", type="integer", example=5),
-     *      @OA\Property(property="blog_username", type="string", example=""),
+     *      @OA\Property(property="blog_username", type="string", example="sadness"),
      *      @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *      @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *      @OA\Property(property="blog_title", type="string", example=""),
@@ -324,9 +324,9 @@ class PostController extends Controller
      *      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
      *      @OA\Property(property="traced_back_posts", type="array",
      *          @OA\Items(
-     *              @OA\Property(property="post_id", type="integer", example=5),
-     *              @OA\Property(property="blog_id", type="integer", example=5),
-     *              @OA\Property(property="blog_username", type="string", example=""),
+     *              @OA\Property(property="post_id", type="integer", example=4),
+     *              @OA\Property(property="blog_id", type="integer", example=7),
+     *              @OA\Property(property="blog_username", type="string", example="happiness"),
      *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
      *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
      *              @OA\Property(property="blog_title", type="string", example=""),
@@ -572,6 +572,177 @@ class PostController extends Controller
      *     )
      * )
      */
+    /**
+     * @OA\Post(
+     * path="/reblog/{blog_id}/{parent_post_id}",
+     * summary="Creates a new post that is a reblog on another existing post",
+     * description="Create a new reblog whose parent post is the direct post it is reblogged from.",
+     * operationId="createReblog",
+     * tags={"Reblogs"},
+     * security={ {"bearer": {} }},
+     * @OA\Parameter(
+     *      name="blog_id",
+     *      description="Id of the authenticated user's blog who is creating the reblog.",
+     *      required=true,
+     *      in="path",
+     *          @OA\Schema(
+     *              type="integer")),
+     * @OA\Parameter(
+     *      name="parent_post_id",
+     *      description="Post id of the direct post the reblog will be reblogged from",
+     *      required=true,
+     *      in="path",
+     *          @OA\Schema(
+     *              type="integer")),
+     *   @OA\RequestBody(
+     *    required=false,
+     *    description= "
+     *      Reblog Request can contain different data types and differet statuses, however, all fields are optional.
+     *      Default values for reblogs without any content:
+     *          post_time: yyyy-mm-dd (i.e current time)
+     *          post_status: 'published'
+     *          post_type: 'general'
+     *          pinned: false
+     *          post_body: ''
+     *      A blog can make a reblog without adding any contnent in the reblog.
+     *      A blog may add in the currently created reblog any attribute specified in the api examples.
+     *      A blog can only reblog from a parent post which is either an approved submission or a published post. i.e parent post must be of status published.
+     *      A blog can't reblog from a parent post with status draft or submission or priavte." ,
+     *    @OA\JsonContent(
+     *       @OA\Property(property="pinned", type="boolean", example=false),
+     *       @OA\Property(property="post_status", type="string", example="published"),
+     *       @OA\Property(property="post_time",type="date_time",example="2021-02-15"),
+     *       @OA\Property(property="post_type", type="string", example="general"),
+     *       @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+     *   )),
+     *
+     * @OA\Response(
+     *    response=422,
+     *    description="Unprocessable Entity",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "422", "msg":"post_parent_id should be numeric"})
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Not Found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "404", "msg":"The parent post was not found"})
+     *     )
+     * ),
+     *  @OA\Response(
+     *    response=401,
+     *    description="Unauthorized",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "401", "msg":"Unauthorized"})
+     *     )
+     * ),
+     *  @OA\Response(
+     *    response=403,
+     *    description="Forbidden",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="meta", type="object", example={"status": "403", "msg":"Forbidden"})
+     *        )
+     *     ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Successful response",
+     *    @OA\JsonContent(
+     *   @OA\Property(property="meta",type="object",example={ "status": "200","msg": "OK"}),
+     *      @OA\Property(property="response",type="object",
+     *      @OA\Property(property="post_status", type="string", example="published"),
+     *      @OA\Property(property="post_id", type="integer", example=5),
+     *      @OA\Property(property="blog_id", type="integer", example=5),
+     *      @OA\Property(property="blog_username", type="string", example="sadness"),
+     *      @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+     *      @OA\Property(property="blog_avatar_shape", type="string", example=""),
+     *      @OA\Property(property="blog_title", type="string", example=""),
+     *      @OA\Property(property="pinned", type="boolean", example=false),
+     *      @OA\Property(property="post_time",type="date_time",example="2012-02-30"),
+     *      @OA\Property(property="question_body", type="string", example="How are you?"),
+     *      @OA\Property(property="question_id", type="integer", example=3),
+     *      @OA\Property(property="question_flag", type="boolean", example=false),
+     *      @OA\Property(property="blog_id_asking", type="integer", example=""),
+     *      @OA\Property(property="blog_username_asking", type="string", example=""),
+     *      @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+     *      @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+     *      @OA\Property(property="blog_title_asking", type="string", example=""),
+     *      @OA\Property(property="post_type", type="string", example="general"),
+     *      @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+     *      @OA\Property(property="traced_back_posts", type="array",
+     *          @OA\Items(
+     *              @OA\Property(property="post_id", type="integer", example=4),
+     *              @OA\Property(property="blog_id", type="integer", example=8),
+     *              @OA\Property(property="blog_username", type="string", example="happiness"),
+     *              @OA\Property(property="blog_avatar", type="string", format="byte", example=""),
+     *              @OA\Property(property="blog_avatar_shape", type="string", example=""),
+     *              @OA\Property(property="blog_title", type="string", example=""),
+     *              @OA\Property(property="post_time",type="date_time",example="2012-02-30"),
+     *              @OA\Property(property="post_type", type="string", example="general"),
+     *              @OA\Property(property="post_body", type="string", example="<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"),
+     *              @OA\Property(property="question_body", type="string", example="How are you?"),
+     *              @OA\Property(property="question_id", type="integer", example=3),
+     *              @OA\Property(property="question_flag", type="boolean", example=false),
+     *              @OA\Property(property="blog_id_asking", type="integer", example=""),
+     *              @OA\Property(property="blog_username_asking", type="string", example=""),
+     *              @OA\Property(property="blog_avatar_asking", type="string", format="byte", example=""),
+     *              @OA\Property(property="blog_avatar_shape_asking", type="string", example=""),
+     *              @OA\Property(property="blog_title_asking", type="string", example=""),))
+     *     ),
+     * )
+     *   ),
+     * )
+     *
+     */
+    /**
+     * Creates a new post that is a reblog on another existing post
+     *
+     * @param integer $blogId
+     * @param integer $parentPostId
+     * @param \UpdatePostRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createReblog($blogId, $parentPostId, UpdatePostRequest $request)
+    {
+        //Validate the format of parent post id and blog id
+        if (preg_match('(^[0-9]+$)', $parentPostId) == false) {
+            return $this->generalResponse("", "post_parent_id should be numeric", "422");
+        }
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "blog_id should be numeric", "422");
+        }
+
+        //Validate the existence of the parent post
+        $parentPost = Post::where('id', $parentPostId)->first();
+        if (empty($parentPost)) {
+            return $this->generalResponse("", "The parent post was not found", "404");
+        }
+        //Validate the existence of the blog requesting to create a reblog
+        $blog = Blog::where('id', $blogId)->first();
+        if (empty($blog)) {
+            return $this->generalResponse("", "This blog was not found", "404");
+        }
+
+        //Validate User Authority to create a reblog
+        //And authority to reblog this parent post
+        $this->authorize('createReblog', [Post::class, $blog, $parentPost]);
+
+        //Create initially default values for the reblog post, before being updated, if any, by the reblogger (user)
+        $reblog = Post::create([
+            'parent_id' => $parentPost->id,
+            'status' => "published", //initially set the status to published
+            'published_at' => now(),
+            'type' => "general",
+            'body' => "",
+            'blog_id' => $blog->id
+        ]);
+        //Update the reblog with values specified by user while reblogging, if any.
+        //Extract mentions and tags from the reblog body content
+        $updateResposne = $this->update($reblog->id, $request);
+
+        return $updateResposne;
+    }
     /**
      * A blog approves a specific post that was submitted to one of the authenticated user's blogs.
      *

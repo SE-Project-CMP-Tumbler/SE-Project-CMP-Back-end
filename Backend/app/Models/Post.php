@@ -16,7 +16,8 @@ class Post extends Model
         'type',
         'published_at',
         'pinned',
-        'approving_blog_id'
+        'approving_blog_id',
+        'parent_id'
     ];
     /**
      * Get the blog that owns the Post
@@ -88,5 +89,12 @@ class Post extends Model
     public function answer()
     {
         return $this->hasOne(Answer::class, 'post_id', 'id');
+    }
+    /**
+     * Get a post's parent post
+     */
+    public function parentPost()
+    {
+        return $this->belongsTo(Post::class, 'parent_id', 'id');
     }
 }

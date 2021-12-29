@@ -19,7 +19,7 @@
         }
     ],
     "paths": {
-        "/graph/notes/{period}/{rate}": {
+        "/graph/notes/{blog_id}": {
             "get": {
                 "tags": [
                     "Activity"
@@ -29,18 +29,9 @@
                 "operationId": "getNotesActivityGraph",
                 "parameters": [
                     {
-                        "name": "period",
+                        "name": "blog_id",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "rate",
-                        "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the blog id which this graph data belongs to",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -63,157 +54,33 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "notes_count": {
+                                                "total_notes_count": {
                                                     "type": "integer",
                                                     "example": 16
-                                                },
-                                                "new_followers_count": {
-                                                    "type": "integer",
-                                                    "example": 6
                                                 },
                                                 "total_followers_count": {
                                                     "type": "integer",
                                                     "example": 326
                                                 },
                                                 "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "0": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-03 01:13:39"
-                                                                    },
-                                                                    "notes": {
-                                                                        "type": "integer",
-                                                                        "example": 5
-                                                                    },
-                                                                    "top_post": {
-                                                                        "type": "string",
-                                                                        "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "1": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-04 01:13:39"
-                                                                    },
-                                                                    "notes": {
-                                                                        "type": "integer",
-                                                                        "example": 7
-                                                                    },
-                                                                    "top_post": {
-                                                                        "type": "string",
-                                                                        "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "2": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-05 01:13:39"
-                                                                    },
-                                                                    "notes": {
-                                                                        "type": "integer",
-                                                                        "example": 2
-                                                                    },
-                                                                    "top_post": {
-                                                                        "type": "string",
-                                                                        "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
+                                                    "type": "object",
+                                                    "example": [
+                                                        {
+                                                            "timestamp": "2021-11-03 01:13:39",
+                                                            "count": 5,
+                                                            "post_id": 51
                                                         },
-                                                        "type": "object"
-                                                    }
-                                                },
-                                                "top_post": {
-                                                    "properties": {
-                                                        "post_body": {
-                                                            "type": "general",
-                                                            "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
+                                                        {
+                                                            "timestamp": "2021-17-03 01:13:39",
+                                                            "count": 51,
+                                                            "post_id": 81
                                                         },
-                                                        "total_notes_count": {
-                                                            "type": "integer",
-                                                            "example": 14
-                                                        },
-                                                        "notes_count": {
-                                                            "type": "integer",
-                                                            "example": 2
+                                                        {
+                                                            "timestamp": "2021-19-03 01:13:39",
+                                                            "count": 9,
+                                                            "post_id": 123
                                                         }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "biggest_fan": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "mycppblog"
-                                                            },
-                                                            "blog_id": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "blog_username": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "blog_avatar": {
-                                                                "type": "string",
-                                                                "example": "storage/blogs/avatar2125"
-                                                            },
-                                                            "blog_avatar_shape": {
-                                                                "type": "string",
-                                                                "example": "square"
-                                                            },
-                                                            "followed": {
-                                                                "type": "bool",
-                                                                "example": true
-                                                            },
-                                                            "theme_id": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "title": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "text": {
-                                                                            "type": "string",
-                                                                            "example": "CPP Programming"
-                                                                        },
-                                                                        "show": {
-                                                                            "type": "boolean",
-                                                                            "example": "true"
-                                                                        },
-                                                                        "color": {
-                                                                            "type": "string",
-                                                                            "example": "#000000"
-                                                                        },
-                                                                        "font": {
-                                                                            "type": "string",
-                                                                            "example": "Gibson"
-                                                                        },
-                                                                        "font_weight": {
-                                                                            "type": "string",
-                                                                            "example": "bold"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    }
+                                                    ]
                                                 }
                                             },
                                             "type": "object"
@@ -289,7 +156,7 @@
                 ]
             }
         },
-        "/graph/new_followers/{period}/{rate}": {
+        "/graph/new_followers/{blog_id}": {
             "get": {
                 "tags": [
                     "Activity"
@@ -299,18 +166,9 @@
                 "operationId": "getNewFollwersActivityGraph",
                 "parameters": [
                     {
-                        "name": "period",
+                        "name": "blog_id",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "rate",
-                        "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the blog id which this graph data belongs to",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -333,145 +191,30 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "notes_count": {
+                                                "total_notes_count": {
                                                     "type": "integer",
                                                     "example": 16
-                                                },
-                                                "new_followers_count": {
-                                                    "type": "integer",
-                                                    "example": 6
                                                 },
                                                 "total_followers_count": {
                                                     "type": "integer",
                                                     "example": 326
                                                 },
                                                 "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "0": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-03 01:13:39"
-                                                                    },
-                                                                    "new_followers": {
-                                                                        "type": "integer",
-                                                                        "example": 5
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "1": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-04 01:13:39"
-                                                                    },
-                                                                    "new_followers": {
-                                                                        "type": "integer",
-                                                                        "example": 7
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "2": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-05 01:13:39"
-                                                                    },
-                                                                    "new_followers": {
-                                                                        "type": "integer",
-                                                                        "example": 2
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
+                                                    "type": "object",
+                                                    "example": [
+                                                        {
+                                                            "timestamp": "2021-11-03 01:13:39",
+                                                            "count": 5
                                                         },
-                                                        "type": "object"
-                                                    }
-                                                },
-                                                "top_post": {
-                                                    "properties": {
-                                                        "post_body": {
-                                                            "type": "general",
-                                                            "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
+                                                        {
+                                                            "timestamp": "2021-17-03 01:13:39",
+                                                            "count": 51
                                                         },
-                                                        "total_notes_count": {
-                                                            "type": "integer",
-                                                            "example": 14
-                                                        },
-                                                        "notes_count": {
-                                                            "type": "integer",
-                                                            "example": 2
+                                                        {
+                                                            "timestamp": "2021-19-03 01:13:39",
+                                                            "count": 9
                                                         }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "biggest_fan": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "mycppblog"
-                                                            },
-                                                            "blog_id": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "blog_username": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "blog_avatar": {
-                                                                "type": "string",
-                                                                "example": "storage/blogs/avatar2125"
-                                                            },
-                                                            "blog_avatar_shape": {
-                                                                "type": "string",
-                                                                "example": "square"
-                                                            },
-                                                            "followed": {
-                                                                "type": "bool",
-                                                                "example": true
-                                                            },
-                                                            "theme_id": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "title": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "text": {
-                                                                            "type": "string",
-                                                                            "example": "CPP Programming"
-                                                                        },
-                                                                        "show": {
-                                                                            "type": "boolean",
-                                                                            "example": "true"
-                                                                        },
-                                                                        "color": {
-                                                                            "type": "string",
-                                                                            "example": "#000000"
-                                                                        },
-                                                                        "font": {
-                                                                            "type": "string",
-                                                                            "example": "Gibson"
-                                                                        },
-                                                                        "font_weight": {
-                                                                            "type": "string",
-                                                                            "example": "bold"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    }
+                                                    ]
                                                 }
                                             },
                                             "type": "object"
@@ -547,7 +290,7 @@
                 ]
             }
         },
-        "/graph/total_followers/{period}/{rate}": {
+        "/graph/total_followers/{blog_id}": {
             "get": {
                 "tags": [
                     "Activity"
@@ -557,18 +300,9 @@
                 "operationId": "getTotalFollwersActivityGraph",
                 "parameters": [
                     {
-                        "name": "period",
+                        "name": "blog_id",
                         "in": "path",
-                        "description": "the time period that you want to retrieve the data for.\r\n *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "rate",
-                        "in": "path",
-                        "description": "the time rate that you want to retrieve the data with.\r\n *  ( 0 -> hourly) , (1 -> daily),\r\n *  note: if the period=1, then the rate must equal 0.",
+                        "description": "the blog id which this graph data belongs to",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -591,145 +325,30 @@
                                         },
                                         "response": {
                                             "properties": {
-                                                "notes_count": {
+                                                "total_notes_count": {
                                                     "type": "integer",
                                                     "example": 16
-                                                },
-                                                "new_followers_count": {
-                                                    "type": "integer",
-                                                    "example": 6
                                                 },
                                                 "total_followers_count": {
                                                     "type": "integer",
                                                     "example": 326
                                                 },
                                                 "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "0": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-03 01:13:39"
-                                                                    },
-                                                                    "total_followers": {
-                                                                        "type": "integer",
-                                                                        "example": 100
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "1": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-04 01:13:39"
-                                                                    },
-                                                                    "total_followers": {
-                                                                        "type": "integer",
-                                                                        "example": 156
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "2": {
-                                                                "properties": {
-                                                                    "timestamp": {
-                                                                        "type": "string",
-                                                                        "example": "2021-11-05 01:13:39"
-                                                                    },
-                                                                    "total_followers": {
-                                                                        "type": "integer",
-                                                                        "example": 304
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
+                                                    "type": "object",
+                                                    "example": [
+                                                        {
+                                                            "timestamp": "2021-11-03 01:13:39",
+                                                            "count": 5
                                                         },
-                                                        "type": "object"
-                                                    }
-                                                },
-                                                "top_post": {
-                                                    "properties": {
-                                                        "post_body": {
-                                                            "type": "general",
-                                                            "example": "<div><h1>What's Artificial intellegence? </h1><img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''><p>It's the weapon that'd end the humanity!!</p><video width='320' height='240' controls><source src='movie.mp4' type='video/mp4'><source src='movie.ogg' type='video/ogg'>Your browser does not support the video tag.</video><p>#AI #humanity #freedom</p></div>"
+                                                        {
+                                                            "timestamp": "2021-17-03 01:13:39",
+                                                            "count": 51
                                                         },
-                                                        "total_notes_count": {
-                                                            "type": "integer",
-                                                            "example": 14
-                                                        },
-                                                        "notes_count": {
-                                                            "type": "integer",
-                                                            "example": 2
+                                                        {
+                                                            "timestamp": "2021-19-03 01:13:39",
+                                                            "count": 9
                                                         }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "biggest_fan": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "mycppblog"
-                                                            },
-                                                            "blog_id": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "blog_username": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "blog_avatar": {
-                                                                "type": "string",
-                                                                "example": "storage/blogs/avatar2125"
-                                                            },
-                                                            "blog_avatar_shape": {
-                                                                "type": "string",
-                                                                "example": "square"
-                                                            },
-                                                            "followed": {
-                                                                "type": "bool",
-                                                                "example": true
-                                                            },
-                                                            "theme_id": {
-                                                                "type": "int",
-                                                                "example": "123456789"
-                                                            },
-                                                            "title": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "properties": {
-                                                                        "text": {
-                                                                            "type": "string",
-                                                                            "example": "CPP Programming"
-                                                                        },
-                                                                        "show": {
-                                                                            "type": "boolean",
-                                                                            "example": "true"
-                                                                        },
-                                                                        "color": {
-                                                                            "type": "string",
-                                                                            "example": "#000000"
-                                                                        },
-                                                                        "font": {
-                                                                            "type": "string",
-                                                                            "example": "Gibson"
-                                                                        },
-                                                                        "font_weight": {
-                                                                            "type": "string",
-                                                                            "example": "bold"
-                                                                        }
-                                                                    },
-                                                                    "type": "object"
-                                                                }
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    }
+                                                    ]
                                                 }
                                             },
                                             "type": "object"
@@ -1083,7 +702,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post/Answer Request has different types depeneds on answer type :\n *\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "description": "Post/Answer Request has different types depeneds on answer type :\r\n *\r\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -1155,7 +774,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\n *      if the ask was (anonymous) the value of ( question_flag = false) and those values will equal an empty string: blog_username_asking -  blog_avatar_asking - blog_avatar_shape_asking - blog_title_asking - blog_id_asking\n *      but u will still get this value : ( question_body ) ",
+                        "description": "Successful response\r\n *      if the ask was (anonymous) the value of ( question_flag = false) and those values will equal an empty string: blog_username_asking -  blog_avatar_asking - blog_avatar_shape_asking - blog_title_asking - blog_id_asking\r\n *      but u will still get this value : ( question_body ) ",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1448,7 +1067,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \n *                      either (post_status = submission) or (post_status = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
+                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1761,7 +1380,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \n *                      either (post_status = submission) or (post_status = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
+                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7254,7 +6873,7 @@
                                                 },
                                                 "blog_username": {
                                                     "type": "string",
-                                                    "example": ""
+                                                    "example": "sadness"
                                                 },
                                                 "blog_avatar": {
                                                     "type": "string",
@@ -7324,15 +6943,15 @@
                                                         "properties": {
                                                             "post_id": {
                                                                 "type": "integer",
-                                                                "example": 5
+                                                                "example": 4
                                                             },
                                                             "blog_id": {
                                                                 "type": "integer",
-                                                                "example": 5
+                                                                "example": 7
                                                             },
                                                             "blog_username": {
                                                                 "type": "string",
-                                                                "example": ""
+                                                                "example": "happiness"
                                                             },
                                                             "blog_avatar": {
                                                                 "type": "string",
@@ -8137,6 +7756,332 @@
                                                 "status": "404",
                                                 "msg": "The Specified Blog id was not found"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/reblog/{blog_id}/{parent_post_id}": {
+            "post": {
+                "tags": [
+                    "Reblogs"
+                ],
+                "summary": "Creates a new post that is a reblog on another existing post",
+                "description": "Create a new reblog whose parent post is the direct post it is reblogged from.",
+                "operationId": "createReblog",
+                "parameters": [
+                    {
+                        "name": "blog_id",
+                        "in": "path",
+                        "description": "Id of the authenticated user's blog who is creating the reblog.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "parent_post_id",
+                        "in": "path",
+                        "description": "Post id of the direct post the reblog will be reblogged from",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "\r\n     *      Reblog Request can contain different data types and differet statuses, however, all fields are optional.\r\n     *      Default values for reblogs without any content:\r\n     *          post_time: yyyy-mm-dd (i.e current time)\r\n     *          post_status: 'published'\r\n     *          post_type: 'general'\r\n     *          pinned: false\r\n     *          post_body: ''\r\n     *      A blog can make a reblog without adding any contnent in the reblog.\r\n     *      A blog may add in the currently created reblog any attribute specified in the api examples.\r\n     *      A blog can only reblog from a parent post which is either an approved submission or a published post. i.e parent post must be of status published.\r\n     *      A blog can't reblog from a parent post with status draft or submission or priavte.",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pinned": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "post_status": {
+                                        "type": "string",
+                                        "example": "published"
+                                    },
+                                    "post_time": {
+                                        "type": "date_time",
+                                        "example": "2021-02-15"
+                                    },
+                                    "post_type": {
+                                        "type": "string",
+                                        "example": "general"
+                                    },
+                                    "post_body": {
+                                        "type": "string",
+                                        "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "422",
+                                                "msg": "post_parent_id should be numeric"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "404",
+                                                "msg": "The parent post was not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "401",
+                                                "msg": "Unauthorized"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "403",
+                                                "msg": "Forbidden"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "example": {
+                                                "status": "200",
+                                                "msg": "OK"
+                                            }
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "post_status": {
+                                                    "type": "string",
+                                                    "example": "published"
+                                                },
+                                                "post_id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "blog_id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "blog_username": {
+                                                    "type": "string",
+                                                    "example": "sadness"
+                                                },
+                                                "blog_avatar": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": ""
+                                                },
+                                                "blog_avatar_shape": {
+                                                    "type": "string",
+                                                    "example": ""
+                                                },
+                                                "blog_title": {
+                                                    "type": "string",
+                                                    "example": ""
+                                                },
+                                                "pinned": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "post_time": {
+                                                    "type": "date_time",
+                                                    "example": "2012-02-30"
+                                                },
+                                                "question_body": {
+                                                    "type": "string",
+                                                    "example": "How are you?"
+                                                },
+                                                "question_id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "question_flag": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "blog_id_asking": {
+                                                    "type": "integer",
+                                                    "example": ""
+                                                },
+                                                "blog_username_asking": {
+                                                    "type": "string",
+                                                    "example": ""
+                                                },
+                                                "blog_avatar_asking": {
+                                                    "type": "string",
+                                                    "format": "byte",
+                                                    "example": ""
+                                                },
+                                                "blog_avatar_shape_asking": {
+                                                    "type": "string",
+                                                    "example": ""
+                                                },
+                                                "blog_title_asking": {
+                                                    "type": "string",
+                                                    "example": ""
+                                                },
+                                                "post_type": {
+                                                    "type": "string",
+                                                    "example": "general"
+                                                },
+                                                "post_body": {
+                                                    "type": "string",
+                                                    "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
+                                                },
+                                                "traced_back_posts": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "post_id": {
+                                                                "type": "integer",
+                                                                "example": 4
+                                                            },
+                                                            "blog_id": {
+                                                                "type": "integer",
+                                                                "example": 8
+                                                            },
+                                                            "blog_username": {
+                                                                "type": "string",
+                                                                "example": "happiness"
+                                                            },
+                                                            "blog_avatar": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_shape": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_title": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "post_time": {
+                                                                "type": "date_time",
+                                                                "example": "2012-02-30"
+                                                            },
+                                                            "post_type": {
+                                                                "type": "string",
+                                                                "example": "general"
+                                                            },
+                                                            "post_body": {
+                                                                "type": "string",
+                                                                "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
+                                                            },
+                                                            "question_body": {
+                                                                "type": "string",
+                                                                "example": "How are you?"
+                                                            },
+                                                            "question_id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "question_flag": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "blog_id_asking": {
+                                                                "type": "integer",
+                                                                "example": ""
+                                                            },
+                                                            "blog_username_asking": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_asking": {
+                                                                "type": "string",
+                                                                "format": "byte",
+                                                                "example": ""
+                                                            },
+                                                            "blog_avatar_shape_asking": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "blog_title_asking": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -11435,144 +11380,6 @@
                                             "example": {
                                                 "status": "404",
                                                 "msg": "post is not found"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            }
-        },
-        "/reblog/{blog_id}/{parent_post_id}": {
-            "post": {
-                "tags": [
-                    "Reblogs"
-                ],
-                "summary": "Creates a new reblog post",
-                "description": "Create a new reblog whose parent post is the direct post it is reblogged from",
-                "operationId": "createReblog",
-                "parameters": [
-                    {
-                        "name": "blog_id",
-                        "in": "path",
-                        "description": "Blog id of the blog creating the reblog",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "parent_post_id",
-                        "in": "path",
-                        "description": "Post id of the direct post the reblog is reblogged from",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "description": "Reblog Request can contain different data types, however, all fields are optional",
-                    "required": false,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "post_status": {
-                                        "type": "string",
-                                        "example": "published"
-                                    },
-                                    "post_type": {
-                                        "type": "string",
-                                        "example": "general"
-                                    },
-                                    "post_body": {
-                                        "type": "string",
-                                        "example": "<div> <h1>What's Artificial intellegence? </h1> <img src='https://modo3.com/thumbs/fit630x300/84738/1453981470/%D8%A8%D8%AD%D8%AB_%D8%B9%D9%86_Google.jpg' alt=''> <p>It's the weapon that'd end the humanity!!</p> <video width='320' height='240' controls> <source src='movie.mp4' type='video/mp4'> <source src='movie.ogg' type='video/ogg'> Your browser does not support the video tag. </video> <p>#AI #humanity #freedom</p> </div>"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "500": {
-                        "description": "Internal Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "500",
-                                                "msg": "Internal Server error"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "401",
-                                                "msg": "Unauthorized"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "403",
-                                                "msg": "Forbidden"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "type": "object",
-                                            "example": {
-                                                "status": "200",
-                                                "msg": "OK"
                                             }
                                         }
                                     },

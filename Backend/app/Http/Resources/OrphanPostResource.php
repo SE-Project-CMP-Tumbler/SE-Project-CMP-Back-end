@@ -3,12 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Reply;
-use App\Models\Like;
 use App\Models\Blog;
-use App\Services\PostService;
 
-class PostResource extends JsonResource
+class OrphanPostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,21 +17,11 @@ class PostResource extends JsonResource
     {
         $answer = ($this->type == 'answer') ? $this->answer()->first() : null;
         $askingBlog = ($answer && !$answer->anonymous_flag) ? Blog::find($answer->ask_sender_blog_id) : null;
-        $like_status = false;
-        $user = Auth('api')->user();
-        if ($user) {
-            $blog_id =  Blog::where([['user_id',$user->id],['is_primary', true]])->first()->id;
-            $like_status = ((Like::where([['blog_id', $blog_id] , ['post_id', $this->id]])->first()) != null);
-        }
         $blog = $this->blog;
 
-        //Getting parents' posts
-        $postService = new PostService();
-        $parentPosts = $postService->getTracedbackParentPosts($this);
         return [
             "post_id" => $this->id,
             "post_status" => $this->status,
-            "pinned" => $this->pinned,
             "post_time" => $this->published_at,
             "post_type" => $this->type,
             "post_body" => $this->body,
@@ -50,10 +37,6 @@ class PostResource extends JsonResource
             "blog_title_asking" => ($askingBlog) ? $askingBlog->title : "",
             "blog_id_asking" => ($askingBlog) ? $askingBlog->id : "",
             "question_body" => ($answer) ? $answer->ask_body : "",
-            "notes_count" => (Reply::where('post_id', $this->id)->count() + Like::where('post_id', $this->id)->count()),
-            "is_liked" => $like_status,
-            "traced_back_posts" => new OrphanPostCollection($parentPosts) //some extra info unneeded is retrieved?
-            // "traced_back_posts" => new PostResource($this->parentPost) //not the api specified format
         ];
     }
 }

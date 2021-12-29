@@ -59,6 +59,17 @@ class PostPolicy
         return $blog->user_id == $user->id;
     }
     /**
+     * Determine whether the user can create reblog on this parent post.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Blog  $blog
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function createReblog(User $user, Blog $blog, Post $parentPost)
+    {
+        return $blog->user_id == $user->id && $parentPost->status == 'published';
+    }
+    /**
      * Determine whether the user can create submission post request to a specific blog.
      *
      * @param  \App\Models\User  $user
