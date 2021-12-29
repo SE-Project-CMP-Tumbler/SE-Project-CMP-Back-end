@@ -10,6 +10,7 @@ use App\Models\Like;
 use App\Models\ReplyMentionBlog;
 use App\Http\Resources\ReplyResource;
 use App\Services\PostService;
+use App\Notifications\MentionNotification;
 use App\Notifications\ReplyNotification;
 use App\Notifications\LikeNotification;
 
@@ -114,9 +115,17 @@ class PostActionController extends Controller
             $blog = Blog::where('username', $blogUsername)->first();
             if ($blog && (ReplyMentionBlog::where([['reply_id',$reply->id],['blog_id',$blog['id']]])->count() == 0)) {
                 ReplyMentionBlog::create([
-                'reply_id' => $reply->id,
-                'blog_id' => $blog['id'],
+                    'reply_id' => $reply->id,
+                    'blog_id' => $blog['id'],
                 ]);
+
+                // add the notification for reply mentions
+                $mentionedBlogUser = $blog->user()->first();
+                $mentionedBlogUser->notify(new MentionNotification(
+                    actorBlog:$actorBlog,
+                    recipientBlog:$blog,
+                    post:$post
+                ));
             }
         }
 
