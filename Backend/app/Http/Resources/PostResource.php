@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Reply;
 use App\Models\Like;
 use App\Models\Blog;
+use App\Models\Post;
 use App\Services\PostService;
 
 class PostResource extends JsonResource
@@ -50,7 +51,7 @@ class PostResource extends JsonResource
             "blog_title_asking" => ($askingBlog) ? $askingBlog->title : "",
             "blog_id_asking" => ($askingBlog) ? $askingBlog->id : "",
             "question_body" => ($answer) ? $answer->ask_body : "",
-            "notes_count" => (Reply::where('post_id', $this->id)->count() + Like::where('post_id', $this->id)->count()),
+            "notes_count" => (Reply::where('post_id', $this->id)->count() + Like::where('post_id', $this->id)->count() + Post::where('parent_id', $this->id)->count()),
             "is_liked" => $like_status,
             "traced_back_posts" => new OrphanPostCollection($parentPosts)
         ];
