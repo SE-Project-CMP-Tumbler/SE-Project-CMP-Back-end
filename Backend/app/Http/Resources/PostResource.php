@@ -52,8 +52,7 @@ class PostResource extends JsonResource
             "question_body" => ($answer) ? $answer->ask_body : "",
             "notes_count" => (Reply::where('post_id', $this->id)->count() + Like::where('post_id', $this->id)->count()),
             "is_liked" => $like_status,
-            "traced_back_posts" => new OrphanPostCollection($parentPosts) //some extra info unneeded is retrieved?
-            // "traced_back_posts" => new PostResource($this->parentPost) //not the api specified format
+            "traced_back_posts" => new OrphanPostCollection($parentPosts)
         ];
     }
 }
