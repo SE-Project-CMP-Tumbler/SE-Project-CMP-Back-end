@@ -39,7 +39,6 @@ class ThemeController extends Controller
  * @OA\RequestBody(
  *   required=true,
  *    @OA\JsonContent(
- *      @OA\Property(property="text_title", type="string", example="CPP Programming"),
  *      @OA\Property(property="color_title", type="string", example="#000000"),
  *      @OA\Property(property="font_title", type="string", example="Gibson"),
  *      @OA\Property(property="font_weight_title", type="string", example="bold"),
@@ -60,7 +59,6 @@ class ThemeController extends Controller
  *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
- *           @OA\Property(property="text_title", type="string", example="CPP Programming"),
  *           @OA\Property(property="color_title", type="string", example="#000000"),
  *           @OA\Property(property="font_title", type="string", example="Gibson"),
  *           @OA\Property(property="font_weight_title", type="string", example="bold"),
@@ -117,66 +115,22 @@ class ThemeController extends Controller
         }
         $this->authorize('update', $blog);
         $theme = $blog->theme;
-        if ($request->background_color != null) {
-            $theme->background_color = $request->background_color;
-        }
-        if ($request->accent_color != null) {
-            $theme->accent_color = $request->accent_color;
-        }
-        if ($request->body_font != null) {
-            $theme->body_font = $request->body_font;
-        }
-        if ($request-> description != null) {
-            if ($request->description[0]['text'] != null) {
-                $blog->description =  $request->description[0]['text'];
-            }
-        }
-        if ($request->title != null) {
-            if ($request->title[0]['text'] != null) {
-                $blog->title = $request->title[0]['text'];
-            }
-            if ($request->title[0]['color'] != null) {
-                $theme->color_title = $request->title[0]['color'];
-            }
-            if ($request->title[0]['font'] != null) {
-                $theme->font_title =  $request->title[0]['font'] ;
-            }
-            if ($request->title[0]['font_weight'] != null) {
-                $theme->font_weight_title = $request->title[0]['font_weight'];
-            }
-        }
-        if ($request->header_image != null) {
-            if ($request->header_image[0]['url'] != null) {
-                  $blog->header_image = $request->header_image[0]['url'];
-            }
-        }
-        if ($request->avatar != null) {
-            if ($request->avatar[0]['url'] != null) {
-                  $blog->avatar = $request->avatar[0]['url'];
-            }
-            if ($request->avatar[0]['shape'] != null) {
-                 $blog->avatar_shape = $request->avatar[0]['shape'];
-            }
-        }
+            $theme->update([
+            'color_title' => $request->title[0]['color'] ?? $theme->color_title,
+            'font_title' => $request->title[0]['font'] ?? $theme->font_title,
+            'font_weight_title' => $request->title[0]['font_weight'] ?? $theme->font_weight_title,
+            'background_color' => $request->background_color ?? $theme->background_color,
+            'accent_color' => $request->accent_color ?? $theme->accent_color,
+            'body_font' => $request->body_font ?? $theme->body_font
+            ]);
 
-        $theme->save();
-        $blog->save();
-            // $theme->update([
-            // 'color_title' => $request->title[0]['color'] ?? $theme->color_title,
-            // 'font_title' => $request->title[0]['font'] ?? $theme->font_title,
-            // 'font_weight_title' => $request->title[0]['font_weight'] ?? $theme->font_weight_title,
-            // 'background_color' => $request->background_color ?? $theme->background_color,
-            // 'accent_color' => $request->accent_color ?? $theme->accent_color,
-            // 'body_font' => $request->body_font ?? $theme->body_font
-            // ]);
-
-            // $blog->update([
-            // 'description' => $request->description[0]['text'] ?? $blog->description,
-            // 'title' => $request->title[0]['text'] ?? $blog->title,
-            // 'header_image' => $request->header_image[0]['url'] ?? $blog->header_image,
-            // 'avatar' => $request->avatar[0]['url'] ?? $blog->avatar,
-            // 'avatar_shape' => $request->avatar[0]['shape'] ?? $blog->avatar_shape
-            // ]);
+            $blog->update([
+            'description' => $request->description[0]['text'] ?? $blog->description,
+            'title' => $request->title[0]['text'] ?? $blog->title,
+            'header_image' => $request->header_image[0]['url'] ?? $blog->header_image,
+            'avatar' => $request->avatar[0]['url'] ?? $blog->avatar,
+            'avatar_shape' => $request->avatar[0]['shape'] ?? $blog->avatar_shape
+            ]);
         return $this->generalResponse(new ThemeResource($theme), "ok");
     }
  /**
@@ -203,7 +157,6 @@ class ThemeController extends Controller
  *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
- *           @OA\Property(property="text_title", type="string", example="CPP Programming"),
  *           @OA\Property(property="color_title", type="string", example="#000000"),
  *           @OA\Property(property="font_title", type="string", example="Gibson"),
  *           @OA\Property(property="title", type="string",example="dec"),
