@@ -39,35 +39,18 @@ class ThemeController extends Controller
  * @OA\RequestBody(
  *   required=true,
  *    @OA\JsonContent(
- *       @OA\Property(property="title", type="array",
- *         @OA\Items(
- *           @OA\Property(property="text", type="string", example="CPP Programming"),
- *           @OA\Property(property="color", type="string", example="#000000"),
- *           @OA\Property(property="font", type="string", example="Gibson"),
- *           @OA\Property(property="font_weight", type="string", example="bold"),
- *         )
- *       ),
- *       @OA\Property(property="description", type="array",
- *         @OA\Items(
- *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
- *         )
- *       ),
+ *      @OA\Property(property="text_title", type="string", example="CPP Programming"),
+ *      @OA\Property(property="color_title", type="string", example="#000000"),
+ *      @OA\Property(property="font_title", type="string", example="Gibson"),
+ *      @OA\Property(property="font_weight_title", type="string", example="bold"),
+ *       @OA\Property(property="description", type="string",example="dec"),
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
- *       @OA\Property(property="header_image", type="array",
- *         @OA\Items(
- *            @OA\Property(property="url", type="string",format="byte", example="assksineuug"),
- *         )
- *       ),
- *       @OA\Property(property="avatar", type="array",
- *           @OA\Items(
- *              @OA\Property(property="url", type="string",format="byte", example="aksmdnurjrj"),
- *              @OA\Property(property="shape", type="string", example="circle"),
- *           )
- *       ),
- *    )
+ *       @OA\Property(property="header_image", type="string", example="www.image.com"),
+ *       @OA\Property(property="avatar", type="string", example ="jjj"),
  *  ),
+ * ),
  * @OA\Response(
  *    response=200,
  *    description="Successful  response",
@@ -75,35 +58,18 @@ class ThemeController extends Controller
  *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
- *       @OA\Property(property="title", type="array",
- *         @OA\Items(
- *           @OA\Property(property="text", type="string", example="CPP Programming"),
- *           @OA\Property(property="color", type="string", example="#000000"),
- *           @OA\Property(property="font", type="string", example="Gibson"),
- *           @OA\Property(property="font_weight", type="string", example="bold"),
- *         )
- *       ),
- *       @OA\Property(property="description", type="array",
- *         @OA\Items(
- *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
- *         )
- *       ),
+ *           @OA\Property(property="text_title", type="string", example="CPP Programming"),
+ *           @OA\Property(property="color_title", type="string", example="#000000"),
+ *           @OA\Property(property="font_title", type="string", example="Gibson"),
+ *           @OA\Property(property="font_weight_title", type="string", example="bold"),
+ *           @OA\Property(property="description", type="string",example="dec"),
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
- *       @OA\Property(property="header_image", type="array",
- *         @OA\Items(
- *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
- *         )
- *       ),
- *       @OA\Property(property="avatar", type="array",
- *           @OA\Items(
- *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
- *              @OA\Property(property="shape", type="string", example="circle"),
- *           )
- *        )
- *     )
+ *       @OA\Property(property="header_image", type="string", example="www.image.com"),
+ *       @OA\Property(property="avatar", type="string", example ="jjj"),
  *    )
+ * ),
  *  ),
  *  @OA\Response(
  *    response=401,
@@ -229,40 +195,23 @@ class ThemeController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful  response",
- *    @OA\JsonContent(
+ *     @OA\JsonContent(
  *      @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
  *      @OA\Property(property="response", type="object",
  *       @OA\Property(property="theme-id", type="int", example="123456789"),
- *       @OA\Property(property="title", type="array",
- *         @OA\Items(
- *           @OA\Property(property="text", type="string", example="CPP Programming"),
- *           @OA\Property(property="color", type="string", example="#000000"),
- *           @OA\Property(property="font", type="string", example="Gibson"),
- *           @OA\Property(property="font_weight", type="string", example="bold"),
-*          )
- *       ),
- *       @OA\Property(property="description", type="array",
- *         @OA\Items(
- *           @OA\Property(property="text", type="string", example="Just for cpp nurds"),
- *         )
- *       ),
+ *           @OA\Property(property="text_title", type="string", example="CPP Programming"),
+ *           @OA\Property(property="color_title", type="string", example="#000000"),
+ *           @OA\Property(property="font_title", type="string", example="Gibson"),
+ *           @OA\Property(property="font_weight_title", type="string", example="bold"),
+ *           @OA\Property(property="description", type="string",example="dec"),
  *       @OA\Property(property="background_color", type="string", example="#FFFFFF"),
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
- *       @OA\Property(property="header_image", type="array",
- *         @OA\Items(
- *            @OA\Property(property="url", type="url", example="/storage/example_image.jpg"),
- *         )
- *       ),
- *       @OA\Property(property="avatar", type="array",
- *           @OA\Items(
- *              @OA\Property(property="url", type="url", example="/storage/example_image_avatar.jpg"),
- *              @OA\Property(property="shape", type="string", example="circle"),
- *           )
- *        )
- *      )
+ *       @OA\Property(property="header_image", type="string", example="www.image.com"),
+ *       @OA\Property(property="avatar", type="string", example ="jjj"),
  *    )
- *   ),
+ * ),
+ *  ),
  *  @OA\Response(
  *    response=401,
  *    description="Unauthorized",
