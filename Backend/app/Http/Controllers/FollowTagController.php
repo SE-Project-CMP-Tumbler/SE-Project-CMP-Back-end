@@ -49,34 +49,34 @@ class FollowTagController extends Controller
      * Create the follow relation record.
      * The follow relation is between the current authenticated primary blog and the tag description given.
      *
-     * @param string $tag_description
+     * @param string $tagDescription
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store($tag_description)
+    public function store($tagDescription)
     {
         $user = auth()->user();
         $primaryBlog = $user->blogs()->where('is_primary', true)->first();
 
         $tag = Tag::where([
-            'description' => $tag_description
+            'description' => $tagDescription
         ])->first();
 
-        if ($tag == "") {
+        if (empty($tag)) {
             return $this->generalResponse("", "A Tag with the specified id was not found", "404");
         }
 
         $blogFollowTag = BlogFollowTag::where([
             'blog_id' => $primaryBlog->id,
-            'tag_description' => $tag_description
+            'tag_description' => $tagDescription
         ])->first();
 
-        if ($blogFollowTag != "") {
+        if (!empty($blogFollowTag)) {
             return $this->generalResponse("", "The blog already follows this tag!", "422");
         }
 
         BlogFollowTag::create([
             'blog_id' => $primaryBlog->id,
-            'tag_description' => $tag_description
+            'tag_description' => $tagDescription
         ]);
         return $this->generalResponse("", "OK", "200");
     }
@@ -125,27 +125,27 @@ class FollowTagController extends Controller
      * Unfollow a tag.
      * Remove the follow relation between the currenlty authenticated primary blog and a specific tag.
      *
-     * @param string $tag_description
+     * @param string $tagDescription
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($tag_description)
+    public function destroy($tagDescription)
     {
         $user = auth()->user();
         $primaryBlog = $user->blogs()->where('is_primary', true)->first();
 
-        $tag = Tag::where('description', $tag_description)->first();
-        if ($tag == "") {
+        $tag = Tag::where('description', $tagDescription)->first();
+        if (empty($tag)) {
             return $this->generalResponse("", "A Tag with the specified id was not found", "404");
         }
 
-        $followRelation = BlogFollowTag::where('tag_description', $tag_description)
+        $followRelation = BlogFollowTag::where('tag_description', $tagDescription)
             ->where('blog_id', $primaryBlog->id)->first();
 
         if (empty($followRelation)) {
             return $this->generalResponse("", "The Blog isn't already following this tag!", "422");
         }
 
-        $primaryBlog->tags()->detach($tag_description);
+        $primaryBlog->tags()->detach($tagDescription);
         return $this->generalResponse("", "OK", "200");
     }
 /**
