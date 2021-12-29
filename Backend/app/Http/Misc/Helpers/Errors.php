@@ -45,6 +45,9 @@ class Errors
     const INVALID_CHANGE_PASSWORD_CONFORMATION = "Password don't match";
     const MISSING_CHANGE_PASSWORD = 'Password is empty';
 
+    //change password errors
+    const INVALID_CHANGE_EMAIL = "That's not the email address associated with this account. Please try again.";
+
     //records errors
     const EXISTS = "Record already exists!";
     const NOT_EXISTS = "Record not exists!";

@@ -161,6 +161,8 @@ Route::post('/reset_password', [UserController::class,'resetPassword'])->middlew
 Route::post('/register_with_google', [UserController::class,'registerWithGoogle'])->name('register.google');
 Route::post('/login_with_google', [UserController::class,'loginWithGoogle'])->name('login.google');
 Route::put('/change_password', [UserController::class,'changePassword'])->name('password.change')->middleware(['auth:api']);
+Route::put('/change_email', [UserController::class,'changeEmail'])->name('email.change')->middleware(['auth:api']);
+Route::delete('/delete_user', [UserController::class,'deleteUser'])->name('user.delete')->middleware(['auth:api']);
 
 /*
 | Tags Routes
