@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use App\Http\Misc\Helpers\NotificationHelper;
 
 class LikeNotification extends Notification implements ShouldQueue
 {
@@ -116,6 +117,8 @@ class LikeNotification extends Notification implements ShouldQueue
     {
         $actorBlogService = new BlogService();
         $check = $actorBlogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
+        list($firstImageSrc, $lastParagraphText) = (new NotificationHelper())->extractPostSummary($this->post);
+
         return [
             // notification info
             'type' => $this->type,
@@ -123,7 +126,8 @@ class LikeNotification extends Notification implements ShouldQueue
             // post info
             'target_post_id' => $this->post->id,
             'target_post_type' => $this->post->type,
-            'target_post_summary' => '',
+            'target_post_summary' => $lastParagraphText,
+            'target_post_image' => $firstImageSrc,
 
             // the actorBlog received the notification
             'target_blog_id' => $this->recipientBlog->id,

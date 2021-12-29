@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use App\Http\Misc\Helpers\NotificationHelper;
 
 class AskNotification extends Notification implements ShouldQueue
 {
@@ -116,13 +117,15 @@ class AskNotification extends Notification implements ShouldQueue
     {
         $recipientBlogService = new BlogService();
         $check = $recipientBlogService->checkIsFollowed($this->recipientBlog->id, $this->actorBlog->id);
+        list($questionLastParagraph, ) = (new NotificationHelper())->extractQuestionSummary($this->question);
+
         return [
             // notification info
             'type' => $this->type,
 
             // question info
             'target_question_id' => $this->question->id,
-            'target_question_summary' => '',
+            'target_question_summary' => $questionLastParagraph,
 
             // the recipientBlog received the notification
             'target_blog_id' => $this->recipientBlog->id,
