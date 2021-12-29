@@ -160,33 +160,60 @@ class PostService
     {
         $blogId = $blog->id;
         $authUser = auth('api')->user();
+
         //For guests or blogs that doesn't own the profile to be retrieved
         if (empty($authUser) || $authUser->id != $blog->user_id) {
-            return Post::where(function ($query) use ($blogId) {
-                $query->where('blog_id', $blogId)
-                    ->where('status', 'published')
-                    ->where('approving_blog_id', null);
+            $nonPinnedPosts = Post::where(function ($query) use ($blogId) {
+                $query->where([
+                    ['blog_id', $blogId],
+                    ['status', 'published'],
+                    ['approving_blog_id', null],
+                    ['pinned', false]]);
             })->orWhere(function ($query) use ($blogId) {
-                $query->where('approving_blog_id', $blogId)
-                    ->where('status', 'published');
-            })->orderBy('published_at', 'desc')
+                    $query->where([
+                        ['approving_blog_id', $blogId],
+                        ['status', 'published'],
+                        ['pinned', false]]);
+            })->orderBy('published_at', 'desc');
+
+            $pinnedPost = Post::where([
+                    ['blog_id', $blogId],
+                    ['status', 'published'],
+                    ['pinned', true]]);
+
+            $res = $pinnedPost->unionAll($nonPinnedPosts)
                 ->paginate(Config::PAGINATION_LIMIT);
+
+            return $res;
         } else {
-            return Post::where(function ($query) use ($blogId) {
-                $query->where('blog_id', $blogId)
-                    ->where('approving_blog_id', null)
+            $nonPinnedPosts = Post::where(function ($query) use ($blogId) {
+                $query->where([
+                    ['blog_id', $blogId],
+                    ['approving_blog_id', null],
+                    ['pinned', false]])
                     ->where(function ($query) {
                         $query->where('status', 'published')
                             ->orWhere('status', 'private');
                     });
             })->orWhere(function ($query) use ($blogId) {
-                $query->where('approving_blog_id', $blogId)
+                    $query->where([
+                        ['approving_blog_id', $blogId],
+                        ['pinned', false]])
                     ->where(function ($query) {
                         $query->where('status', 'published')
                             ->orWhere('status', 'private');
                     });
-            })->orderBy('published_at', 'desc')
+            })->orderBy('published_at', 'desc');
+
+            $pinnedPost = Post::where([
+                    ['blog_id', $blogId],
+                    ['pinned', true]])
+                    ->whereIn('status', ['published', 'private']);
+
+            $res = $pinnedPost->unionAll($nonPinnedPosts)
                 ->paginate(Config::PAGINATION_LIMIT);
+
+            return $res;
         }
     }
 }
