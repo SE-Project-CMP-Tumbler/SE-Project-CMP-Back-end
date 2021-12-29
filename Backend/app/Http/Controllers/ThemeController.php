@@ -48,7 +48,7 @@ class ThemeController extends Controller
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
  *       @OA\Property(property="header_image", type="string", example="www.image.com"),
- *       @OA\Property(property="avatar", type="string", example ="jjj"),
+ *       @OA\Property(property="avatar", type="string", example ="www.jjj.com"),
  *     @OA\Property(property="avatar_shape", type="string", example ="circle"),
  *  ),
  * ),
@@ -68,7 +68,7 @@ class ThemeController extends Controller
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
  *       @OA\Property(property="header_image", type="string", example="www.image.com"),
- *       @OA\Property(property="avatar", type="string", example ="jjj"),
+ *       @OA\Property(property="avatar", type="string", example ="www.jjj.com"),
  *      @OA\Property(property="avatar_shape", type="string", example ="circle"),
  *    )
  * ),
@@ -116,20 +116,20 @@ class ThemeController extends Controller
         $this->authorize('update', $blog);
         $theme = $blog->theme;
             $theme->update([
-            'color_title' => $request->title[0]['color'] ?? $theme->color_title,
-            'font_title' => $request->title[0]['font'] ?? $theme->font_title,
-            'font_weight_title' => $request->title[0]['font_weight'] ?? $theme->font_weight_title,
+            'color_title' => $request->color_title ?? $theme->color_title,
+            'font_title' => $request->font_title ?? $theme->font_title,
+            'font_weight_title' => $request->font_weight_title ?? $theme->font_weight_title,
             'background_color' => $request->background_color ?? $theme->background_color,
             'accent_color' => $request->accent_color ?? $theme->accent_color,
             'body_font' => $request->body_font ?? $theme->body_font
             ]);
 
             $blog->update([
-            'description' => $request->description[0]['text'] ?? $blog->description,
-            'title' => $request->title[0]['text'] ?? $blog->title,
-            'header_image' => $request->header_image[0]['url'] ?? $blog->header_image,
-            'avatar' => $request->avatar[0]['url'] ?? $blog->avatar,
-            'avatar_shape' => $request->avatar[0]['shape'] ?? $blog->avatar_shape
+            'description' => $request->description ?? $blog->description,
+            'title' => $request->title ?? $blog->title,
+            'header_image' => $request->header_image ?? $blog->header_image,
+            'avatar' => $request->avatar ?? $blog->avatar,
+            'avatar_shape' => $request->avatar_shape ?? $blog->avatar_shape
             ]);
         return $this->generalResponse(new ThemeResource($theme), "ok");
     }
@@ -166,7 +166,7 @@ class ThemeController extends Controller
  *       @OA\Property(property="accent_color", type="string", example="#e17e66"),
  *       @OA\Property(property="body_font", type="string", example="Helvetica Neue"),
  *       @OA\Property(property="header_image", type="string", example="www.image.com"),
- *       @OA\Property(property="avatar", type="string", example ="jjj"),
+ *       @OA\Property(property="avatar", type="string", example ="www.jjj.com"),
  *     @OA\Property(property="avatar_shape", type="string", example ="circle"),
  *    )
  * ),

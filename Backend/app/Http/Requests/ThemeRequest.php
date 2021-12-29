@@ -26,21 +26,17 @@ class ThemeRequest extends FormRequest
     {
         $shapes = array('square' ,'circle');
         return [
-        "title" => 'array',
-        "title.*.text" => 'string|min:1' ,
-        "title.*.color" => 'string|min:3',
-        "title.*.font" => 'string|min:3|regex:/^[a-zA-Z0-9 ]+$/u',
-        "title.*.font_weight" => 'string|min:3|regex:/^[a-zA-Z0-9]+$/u',
-        "description" => 'array' ,
-        "description.*.text" => 'string|min:1',
+        "title" => 'string|min:1' ,
+        "color_title" => 'string|min:3',
+        "font_title" => 'string|min:3|regex:/^[a-zA-Z0-9 ]+$/u',
+        "font_weight_title" => 'string|min:3|regex:/^[a-zA-Z0-9 ]+$/u',
+        "description" => 'string|min:1' ,
         "background_color" => 'string|min:3',
         "accent_color" => 'string|min:3',
-        "body_font" => 'string|min:3|regex:/^[a-zA-Z0-9]+$/u',
-        "header_image" => 'array',
-        "header_image.*.url" => 'string|min:3|url',
-        "avatar" => 'array',
-        "avatar.*.url" => 'string|min:3|url' ,
-        "avatar.*.shape" => ['string',Rule::in($shapes)]
+        "body_font" => 'string|min:3|regex:/^[a-zA-Z0-9 ]+$/u',
+        "header_image" => 'string|min:3|url',
+        "avatar" => 'string|min:3|url',
+        "avatar_shape" => ['string',Rule::in($shapes)]
         ];
     }
 }
