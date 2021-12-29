@@ -16,6 +16,7 @@ use App\Models\Submission;
 use App\Models\Tag;
 use App\Services\BlogService;
 use App\Notifications\MentionNotification;
+use App\Notifications\ReblogNotification;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 
@@ -694,6 +695,7 @@ class PostController extends Controller
      * )
      *
      */
+
     /**
      * Creates a new post that is a reblog on another existing post
      *
@@ -740,6 +742,12 @@ class PostController extends Controller
         //Update the reblog with values specified by user while reblogging, if any.
         //Extract mentions and tags from the reblog body content
         $updateResposne = $this->update($reblog->id, $request);
+        $reblog = Post::where('id', $reblog->id)->first();
+
+        // notifcation for reblogs
+        $parentPostBlog = $parentPost->blog()->first();
+        $notifiedUser = $parentPostBlog->user()->first();
+        $notifiedUser->notify(new ReblogNotification($blog, $parentPostBlog, $parentPost, $reblog));
 
         return $updateResposne;
     }
