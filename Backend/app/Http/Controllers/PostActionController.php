@@ -8,6 +8,8 @@ use App\Models\Blog;
 use App\Models\Reply;
 use App\Models\Like;
 use App\Http\Resources\ReplyResource;
+use App\Notifications\ReplyNotification;
+use App\Notifications\LikeNotification;
 
 class PostActionController extends Controller
 {
@@ -51,7 +53,7 @@ class PostActionController extends Controller
  *            @OA\Property(property="followed", type="boolean", example=false),
  *            @OA\Property(property="reply_id", type="integer", example=5),
  *             @OA\Property(property="reply_time", type="date-time", example="02-02-2012"),
- *              @OA\Property(property="reply_text", type="string", example="What an amazing post!"), 
+ *              @OA\Property(property="reply_text", type="string", example="What an amazing post!"),
  *          )
  *       ),
  *    ),
@@ -92,17 +94,26 @@ class PostActionController extends Controller
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $blog = Post::where('id', $post_id)->first();
-        if (empty($blog)) {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
-        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
+        // the blog made the reply
+        $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
+        $actorBlogID = ($actorBlog) ['id'];
         $reply = Reply::create([
             'post_id' => $post_id,
-            'blog_id' => $blog_id,
+            'blog_id' => $actorBlogID,
             'description' => $request->reply_text
         ]);
+
+        // add the notificaions for the reply on post - don't notify your self
+        $recipientBlog = $post->blog()->first();
+        if ($actorBlog->id !== $recipientBlog->id) {
+            $notifedUser = $recipientBlog->user()->first();
+            $notifedUser->notify(new ReplyNotification($actorBlog, $recipientBlog, $post, $reply));
+        }
         return $this->generalResponse(["blog_object" => new ReplyResource($reply)], "ok");
     }
 
@@ -160,20 +171,31 @@ class PostActionController extends Controller
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $blog = Post::where('id', $post_id)->first();
-        if (empty($blog)) {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
-        $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
-        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->first();
+        // the blog made the like
+        $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
+        $actorBlogID = ($actorBlog) ['id'];
+
+        $like = Like::where([['blog_id', $actorBlogID] , ['post_id', $post_id]])->first();
         if ($like) {
             return $this->generalResponse("", "Forbidden", "403");
         }
         Like::create([
             'post_id' => $post_id,
-            'blog_id' => $blog_id
+            'blog_id' => $actorBlogID
         ]);
+
+        // add the notificaions for the like on post - don't notify your self
+        $recipientBlog = $post->blog()->first();
+        if ($actorBlog->id !== $recipientBlog->id) {
+            $notifedUser = $recipientBlog->user()->first();
+            $notifedUser->notify(new LikeNotification($actorBlog, $recipientBlog, $post));
+        }
+
         return $this->generalResponse("", "ok");
     }
  /**
