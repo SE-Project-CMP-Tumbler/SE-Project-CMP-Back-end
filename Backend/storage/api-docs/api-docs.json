@@ -702,7 +702,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Post/Answer Request has different types depeneds on answer type :\r\n *\r\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
+                    "description": "Post/Answer Request has different types depeneds on answer type :\n *\n *     is genral : all fields can be given , to be genarl at least two different field of types should given",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -774,7 +774,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\r\n *      if the ask was (anonymous) the value of ( question_flag = false) and those values will equal an empty string: blog_username_asking -  blog_avatar_asking - blog_avatar_shape_asking - blog_title_asking - blog_id_asking\r\n *      but u will still get this value : ( question_body ) ",
+                        "description": "Successful response\n *      if the ask was (anonymous) the value of ( question_flag = false) and those values will equal an empty string: blog_username_asking -  blog_avatar_asking - blog_avatar_shape_asking - blog_title_asking - blog_id_asking\n *      but u will still get this value : ( question_body ) ",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1067,7 +1067,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
+                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \n *                      either (post_status = submission) or (post_status = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1380,7 +1380,7 @@
                         }
                     },
                     "200": {
-                        "description": "Successful response\r\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \r\n *                      either (post_status = submission) or (post_status = ask)\r\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
+                        "description": "Successful response\n *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument \n *                      either (post_status = submission) or (post_status = ask)\n *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14467,7 +14467,7 @@
                 "description": " Creating a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user,\r\n *    age : The age of the new user",
+                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user,\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14504,7 +14504,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14557,7 +14557,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14606,7 +14606,7 @@
                 "description": " check if those Credentials are good to create a new user",
                 "operationId": "signupuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The email of the new user ,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    password : The password of the new user",
+                    "description": "\n *    email : The email of the new user ,\n *    blog_username : The blog_username will be used in the primary blog,\n *    password : The password of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14657,7 +14657,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14706,7 +14706,7 @@
                 "description": "user login",
                 "operationId": "loginuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The email of the user ,\r\n *    password : The password of the user",
+                    "description": "\n *    email : The email of the user ,\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14733,7 +14733,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14786,7 +14786,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to login with a wrong email or password",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to login with a wrong email or password",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14835,7 +14835,7 @@
                 "description": " login using google ",
                 "operationId": "loginuserwithgoogle",
                 "requestBody": {
-                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account",
+                    "description": "\n *    google_access_token : The access_token of the user's gmail account",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14856,7 +14856,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14928,7 +14928,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
+                        "description": "Unprocessable Entity\n *    This msg appears when the a user wants to log in with google and his account already exists but not linked by google",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -14958,7 +14958,7 @@
                 "description": "Creating a new user using google",
                 "operationId": "signupuserwithgoogle",
                 "requestBody": {
-                    "description": "\r\n *    google_access_token : The access_token of the user's gmail account,\r\n *    blog_username : The blog_username will be used in the primary blog,\r\n *    age : The age of the new user",
+                    "description": "\n *    google_access_token : The access_token of the user's gmail account,\n *    blog_username : The blog_username will be used in the primary blog,\n *    age : The age of the new user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -14989,7 +14989,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -15042,7 +15042,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: the user wants to register with a used email that's already registered",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: the user wants to register with a used email that's already registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -15347,7 +15347,7 @@
                 "description": "sending an email with a password reset link to the user",
                 "operationId": "emailverification",
                 "requestBody": {
-                    "description": "\r\n *    email : this is the same email that the user used to signup ",
+                    "description": "\n *    email : this is the same email that the user used to signup ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -15534,7 +15534,7 @@
                 "description": "reseting the user's password",
                 "operationId": "resetpassword",
                 "requestBody": {
-                    "description": "\r\n *    token : this is the same password reset token sent in the reset link url\r\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\r\n *    password : this is the new password,\r\n *    password_confirmation : the password of the new password ",
+                    "description": "\n *    token : this is the same password reset token sent in the reset link url\n *    email : this is the same email that the user used to signup and also for recieving the verification email ,\n *    password : this is the new password,\n *    password_confirmation : the password of the new password ",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -15572,7 +15572,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful response,\r\n *    id : is the user's id,\r\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
+                        "description": "Successful response,\n *    id : is the user's id,\n *    blog_id : is the primary blog id which you will use in order to make any action(post/submit/ask/chat...etc) relative to the primary blog",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -15674,7 +15674,7 @@
                 "description": " Change a password of user",
                 "operationId": "changepassword",
                 "requestBody": {
-                    "description": "\r\n *    current_password : The current password of the  user,\r\n *    password : The new password of the  user,\r\n *    password_confirmation : The new password of the user",
+                    "description": "\n *    current_password : The current password of the  user,\n *    password : The new password of the  user,\n *    password_confirmation : The new password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -15727,7 +15727,7 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity\r\n *    The msg in this response depends on the wrong parameters sent in the request\r\n *    For example here: if the current password is invalid",
+                        "description": "Unprocessable Entity\n *    The msg in this response depends on the wrong parameters sent in the request\n *    For example here: if the current password is invalid",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -15781,7 +15781,7 @@
                 "description": " Change a email of user",
                 "operationId": "changeemail",
                 "requestBody": {
-                    "description": "\r\n *    password : The password of the user,\r\n *    email : The  email of the  user",
+                    "description": "\n *    password : The password of the user,\n *    email : The  email of the  user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -15820,16 +15820,6 @@
                                                 "status": "200",
                                                 "msg": "ok"
                                             }
-                                        },
-                                        "response": {
-                                            "properties": {
-                                                "email": {
-                                                    "type": "string",
-                                                    "format": "email",
-                                                    "example": "radwa@gmail.com"
-                                                }
-                                            },
-                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -15911,7 +15901,7 @@
                 "description": " delete the user account",
                 "operationId": "deleteuser",
                 "requestBody": {
-                    "description": "\r\n *    email : The  email of the  user,\r\n *    password : The password of the user",
+                    "description": "\n *    email : The  email of the  user,\n *    password : The password of the user",
                     "required": true,
                     "content": {
                         "application/json": {
