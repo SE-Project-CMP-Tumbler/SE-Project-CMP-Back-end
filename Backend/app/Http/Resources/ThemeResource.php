@@ -18,7 +18,7 @@ class ThemeResource extends JsonResource
         $blog = $this->blog;
         return
         [
-
+            "theme-id" => $this->id ,
             "color_title" => $this->color_title ,
             "font_title" => $this->font_title,
             "font_weight_title" => $this->font_weight_title,
