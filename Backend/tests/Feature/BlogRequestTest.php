@@ -24,7 +24,7 @@ class BlogRequestTest extends TestCase
         $token = $user->createToken('Auth Token')->accessToken;
         $blog = [
             "password" => "123",
-            "title" => "First Blog"
+            "title" => "FirstBlog"
         ];
         $response = $this
         ->json('POST', 'api/blog', $blog, ['Authorization' => 'Bearer ' . $token], Config::JSON)

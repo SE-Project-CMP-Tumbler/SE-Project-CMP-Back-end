@@ -7,7 +7,9 @@ use App\Models\Post;
 use App\Models\Blog;
 use App\Models\Reply;
 use App\Models\Like;
+use App\Models\ReplyMentionBlog;
 use App\Http\Resources\ReplyResource;
+use App\Services\PostService;
 use App\Notifications\ReplyNotification;
 use App\Notifications\LikeNotification;
 
@@ -98,15 +100,25 @@ class PostActionController extends Controller
         if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
-
         // the blog made the reply
         $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
         $actorBlogID = ($actorBlog) ['id'];
+        $this->authorize('canReply', $post);
         $reply = Reply::create([
             'post_id' => $post_id,
             'blog_id' => $actorBlogID,
             'description' => $request->reply_text
         ]);
+        $mentionedBlogsUsername = (new PostService())->extractMentionedBlogs($reply->description);
+        foreach ($mentionedBlogsUsername as $blogUsername) {
+            $blog = Blog::where('username', $blogUsername)->first();
+            if ($blog && (ReplyMentionBlog::where([['reply_id',$reply->id],['blog_id',$blog['id']]])->count() == 0)) {
+                ReplyMentionBlog::create([
+                'reply_id' => $reply->id,
+                'blog_id' => $blog['id'],
+                ]);
+            }
+        }
 
         // add the notificaions for the reply on post - don't notify your self
         $recipientBlog = $post->blog()->first();
@@ -179,11 +191,7 @@ class PostActionController extends Controller
         // the blog made the like
         $actorBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
         $actorBlogID = ($actorBlog) ['id'];
-
-        $like = Like::where([['blog_id', $actorBlogID] , ['post_id', $post_id]])->first();
-        if ($like) {
-            return $this->generalResponse("", "Forbidden", "403");
-        }
+        $this->authorize('canLike', $post);
         Like::create([
             'post_id' => $post_id,
             'blog_id' => $actorBlogID
@@ -272,8 +280,8 @@ class PostActionController extends Controller
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
 
-        $blog = Post::where('id', $post_id)->first();
-        if (empty($blog)) {
+        $post = Post::where('id', $post_id)->first();
+        if (empty($post)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
@@ -346,12 +354,9 @@ class PostActionController extends Controller
         if (empty($reply)) {
             return $this->generalResponse("", "This reply id is not found.", "404");
         }
-
-
-        $reply = Reply::find($reply_id)->delete();
-        if (empty($reply)) {
-            return $this->generalResponse("", "not found", "404");
-        }
+        $this->authorize('canDeleteReply', [Post::class, $reply]);
+        //delete
+        $reply->delete();
         return $this->generalResponse("", "ok", "200");
     }
 
@@ -420,10 +425,13 @@ class PostActionController extends Controller
         }
 
         $blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
-        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->delete();
+        $like = Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->first();
         if (empty($like)) {
             return $this->generalResponse("", "not found", "404");
         }
+
+        $this->authorize('canDeleteLike', [Post::class, $like]);
+        Like::where([['blog_id', $blog_id] , ['post_id', $post_id]])->delete();
         return $this->generalResponse("", "ok", "200");
     }
 }

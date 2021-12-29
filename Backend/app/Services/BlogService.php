@@ -40,7 +40,7 @@ class BlogService
             DB::commit();
         } catch (\Illuminate\Database\QueryException $ex) {
             DB::rollback();
-             return null;
+             return false;
         }
         return true;
     }

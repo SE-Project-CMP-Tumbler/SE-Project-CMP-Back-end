@@ -873,9 +873,6 @@ class UserController extends Controller
  *    description="Successful response",
  *    @OA\JsonContent(
  *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
- *       @OA\Property(property="response", type="object",
- *           @OA\Property(property="email",type="string",format="email",example="radwa@gmail.com"),
- *         ),
  *        )
  *     ),
  *    @OA\Response(

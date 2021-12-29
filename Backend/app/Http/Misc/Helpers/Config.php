@@ -38,8 +38,8 @@ class Config
     public const POST_TYPES = ['ask', 'general', 'text', 'audio', 'video', 'chat', 'link', 'image', 'quote'];
     public const POST_STATUS_TYPES = ['published', 'draft', 'private', 'submission'];
     //
-    public const DEFAULT_AVATAR = "https://cdnb.artstation.com/p/assets/images/images/033/268/113/large/edmerc-d-mercadal-eren-v5.jpg?1609001111";
-    public const DEFAULT_HEADER_IMAGE = "https://cdna.artstation.com/p/assets/images/images/011/360/222/large/moraya-magdy-maro-45-1.jpg?1529180970";
+    public const DEFAULT_AVATAR = "https://media.dev.tumbler.social/oCY881AtTfuuwH2OueHXQiRSIX3Iq0LqUvE88umQ/FGVTr55CcKzuX4lncPZtu8V6CwIV4MB6eQZbDnUS.png";
+    public const DEFAULT_HEADER_IMAGE = "https://media.dev.tumbler.social/DopG7eIUB7bhm2KdmopYhRu4Z34c4EmADixf4ICy/YIhoulUJam9n5NTC4Ymdxf5XIaHAhHvmkdrchUTW.png";
     public const TAG_IMAGE  = "https://cdnb.artstation.com/p/assets/images/images/028/144/455/large/javier-pedreno-dutch-post-9.jpg?1593610613";
 
     // allowed notifications types
