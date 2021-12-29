@@ -18,7 +18,6 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PostActionController;
 use App\Http\Controllers\PostNoteController;
 use App\Http\Controllers\AskController;
-use App\Http\Controllers\ReblogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -121,6 +120,7 @@ Route::delete('posts/submission', [PostController::class, 'deleteAllSubmissions'
 | Reblog Route
 */
 Route::post('/reblog/{blog_id}/{parent_post_id}', [PostController::class, 'createReblog'])->middleware('auth:api');
+
 /*
 | Uploads Routes
 */

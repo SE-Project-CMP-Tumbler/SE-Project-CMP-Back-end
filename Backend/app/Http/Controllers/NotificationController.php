@@ -10,7 +10,7 @@ class NotificationController extends Controller
 {
     /**
      *  @OA\Get(
-     *  path="/blog/notifications?type={type}&from_blog_id={from_blog_id}",
+     *  path="/blog/notifications?type={type}&for_blog_id={for_blog_id}",
      *  operationId="getNotifications",
      *  tags={"Notifications"},
      *  security={ {"bearer": {} }},
@@ -27,8 +27,7 @@ class NotificationController extends Controller
      *        reblog: a reblog of your post
      *        ask: a new ask recieved
      *        answer: an answered ask that you had sent
-     *        mentions_posts: get mentions in posts
-     *        mentions_replies: get mentions in replies
+     *        mention: get all mentions for this blog
      *        all: get all types of notifications",
      *    required=false,
      *    example="follow",
@@ -51,7 +50,7 @@ class NotificationController extends Controller
      *    response=200,
      *    description="
      *      Successful Operation,
-     *      notificaion_id: is a unique id for each notificaion
+     *      notification_id: is a unique id for each notificaion
      *      type: is the notification type { follow | mention | like | reply | reblog }
      *      timestamp: is when that action happened,
      *
@@ -71,7 +70,7 @@ class NotificationController extends Controller
      *    @OA\JsonContent(
      *     @OA\Property(property="meta",type="object",example={"status":"200", "msg":"ok"}),
      *      @OA\Property(property="response",type="object",
-     *        @OA\Property(property="notificatoins",type="object",
+     *        @OA\Property(property="notifications",type="object",
      *         example={
      *             {
      *                 "type":"mention",
@@ -80,7 +79,8 @@ class NotificationController extends Controller
      *                 "target_blog_id":39,
      *                 "target_post_id":1523,
      *                 "target_post_type":"text",
-     *                 "target_post_summary":"<p> this is post summary </p>",
+     *                 "target_post_summary":"this is post summary",
+     *                 "target_post_image":"/src/to/image/in/post/if/any",
      *                 "from_blog_id":84,
      *                 "from_blog_username":"helloBLog",
      *                 "from_blog_avatar":"/storage/imagename.ext",
@@ -93,7 +93,7 @@ class NotificationController extends Controller
      *                 "timestamp":"2021-12-29T07:33:29.000000Z",
      *                 "target_blog_id":39,
      *                 "target_question_id":1523,
-     *                 "target_question_summary":"<p> this is post summary </p>",
+     *                 "target_question_summary":"this is post summary",
      *                 "from_blog_id":84,
      *                 "from_blog_username":"helloBLog",
      *                 "from_blog_avatar":"/storage/imagename.ext",
@@ -107,7 +107,8 @@ class NotificationController extends Controller
      *                 "target_blog_id":39,
      *                 "target_post_id":1523,
      *                 "target_post_type":"text",
-     *                 "target_post_summary":"<p> this is post summary </p>",
+     *                 "target_post_summary":"this is post summary",
+     *                 "target_post_image":"/src/to/image/in/post/if/any",
      *                 "from_blog_id":84,
      *                 "from_blog_username":"helloBLog",
      *                 "from_blog_avatar":"/storage/imagename.ext",
@@ -132,9 +133,25 @@ class NotificationController extends Controller
      *                 "target_blog_id":39,
      *                 "target_post_id":1523,
      *                 "target_post_type":"text",
-     *                 "target_post_summary":"<p> this is post summary </p>",
+     *                 "target_post_summary":"this is post summary",
+     *                 "target_post_image":"/src/to/image/in/post/if/any",
      *                 "reply_id":1523,
-     *                 "reply_summary":"<p> this is post summary </p>",
+     *                 "reply_summary":"this is post summary",
+     *                 "from_blog_id":84,
+     *                 "from_blog_username":"helloBLog",
+     *                 "from_blog_avatar":"/storage/imagename.ext",
+     *                 "from_blog_avatar_shape":"circle",
+     *                 "follow":"false",
+     *             },
+     *             {
+     *                 "type":"reblog",
+     *                 "notification_id":"ec4ec34a-1434-4aad-ae0a-7c8446bcf8d3",
+     *                 "timestamp":"2021-12-29T07:33:29.000000Z",
+     *                 "target_blog_id":39,
+     *                 "target_post_id":1523,
+     *                 "target_post_type":"text",
+     *                 "target_post_summary":"this is post summary",
+     *                 "target_post_image":"/src/to/image/in/post/if/any",
      *                 "from_blog_id":84,
      *                 "from_blog_username":"helloBLog",
      *                 "from_blog_avatar":"/storage/imagename.ext",
