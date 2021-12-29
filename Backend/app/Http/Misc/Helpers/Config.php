@@ -45,9 +45,9 @@ class Config
     // allowed notifications types
     public const NOTIFICATIONS_TYPES = [
         "all", "like", "reply", "follow",
-        "mention_in_reply", "mention_in_post",
+        "mention", "reblog",
+        "ask", "answered", "submission",
         "reblog_naked", "reblog_with_content",
-        "ask", "answered_ask",
-        "mention", "reblog"
+        "mention_in_reply", "mention_in_post",
     ];
 }

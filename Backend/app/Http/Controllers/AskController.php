@@ -12,6 +12,7 @@ use App\Http\Requests\AskRequest;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\QuestionResource;
 use App\Http\Requests\AnswerRequest;
+use App\Notifications\AskNotification;
 use App\Services\AskService;
 
 class AskController extends Controller
@@ -81,13 +82,20 @@ class AskController extends Controller
      */
     public function ask($blog_id, AskRequest $request)
     {
-        $sender_blog_id = (Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()) ['id'];
-        $Ask = Question::create([
-            'ask_sender_blog_id' => $sender_blog_id,
+        $senderBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
+        $senderBlogID = ($senderBlog) ['id'];
+        $ask = Question::create([
+            'ask_sender_blog_id' => $senderBlogID,
             'ask_reciever_blog_id' => $blog_id,
             'body' =>  $request->question_body,
             'anonymous_flag' => $request->question_flag,
         ]);
+
+        // send notification about the ask
+        $recieverBlog = Blog::where('id', $blog_id)->first();
+        $notifiedUser = $recieverBlog->user()->first();
+        $notifiedUser->notify(new AskNotification($senderBlog, $recieverBlog, $ask));
+
         return $this->generalResponse("", "ok", 200);
     }
 /**
@@ -316,7 +324,7 @@ class AskController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful response
- *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument 
+ *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument
  *                      either (post_status = submission) or (post_status = ask)
  *                  alert: as swagger let us only write one instant in the array so, i will write here the submission object response example and in the next route (/all_messages) i will write the ask object response example",
  *    @OA\JsonContent(
@@ -420,7 +428,7 @@ class AskController extends Controller
  * @OA\Response(
  *    response=200,
  *    description="Successful response
- *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument 
+ *                 note: the messages array is a combination of both (asks and submissions) and they are different objects and u can differenciate between them using the post_status argument
  *                      either (post_status = submission) or (post_status = ask)
  *                  alert: as swagger let us only write one instant in the array so, i will write here the ask object response example",
  *    @OA\JsonContent(

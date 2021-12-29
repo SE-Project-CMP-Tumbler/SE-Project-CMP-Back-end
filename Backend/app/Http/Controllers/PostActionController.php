@@ -10,6 +10,8 @@ use App\Models\Like;
 use App\Models\ReplyMentionBlog;
 use App\Http\Resources\ReplyResource;
 use App\Services\PostService;
+use App\Notifications\ReplyNotification;
+use App\Notifications\LikeNotification;
 
 class PostActionController extends Controller
 {
@@ -117,6 +119,13 @@ class PostActionController extends Controller
                 ]);
             }
         }
+
+        // add the notificaions for the reply on post - don't notify your self
+        $recipientBlog = $post->blog()->first();
+        if ($actorBlog->id !== $recipientBlog->id) {
+            $notifedUser = $recipientBlog->user()->first();
+            $notifedUser->notify(new ReplyNotification($actorBlog, $recipientBlog, $post, $reply));
+        }
         return $this->generalResponse(["blog_object" => new ReplyResource($reply)], "ok");
     }
 
@@ -191,6 +200,14 @@ class PostActionController extends Controller
             'post_id' => $post_id,
             'blog_id' => $actorBlogID
         ]);
+
+        // add the notificaions for the like on post - don't notify your self
+        $recipientBlog = $post->blog()->first();
+        if ($actorBlog->id !== $recipientBlog->id) {
+            $notifedUser = $recipientBlog->user()->first();
+            $notifedUser->notify(new LikeNotification($actorBlog, $recipientBlog, $post));
+        }
+
         return $this->generalResponse("", "ok");
     }
  /**

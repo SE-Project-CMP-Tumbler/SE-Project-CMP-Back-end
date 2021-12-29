@@ -31,23 +31,24 @@ class ActivityController extends Controller
      *    @OA\JsonContent(
      *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
      *       @OA\Property(property="response",type="object",
-     *       @OA\Property(property="total_notes_count", type="integer", example=16),
+     *       @OA\Property(property="notes_count", type="integer", example=16),
+     *       @OA\Property(property="new_followers_count", type="integer", example=326),
      *       @OA\Property(property="total_followers_count", type="integer", example=326),
      *       @OA\Property(property="data", type="object",
      *           example={
      *              {
      *               "timestamp": "2021-11-03 01:13:39",
-     *               "count": 5,
+     *               "notes": 5,
      *               "post_id": 51,
      *             },
      *             {
      *               "timestamp": "2021-17-03 01:13:39",
-     *               "count": 51,
+     *               "notes": 51,
      *               "post_id": 81,
      *             },
      *             {
      *               "timestamp": "2021-19-03 01:13:39",
-     *               "count": 9,
+     *               "notes": 9,
      *               "post_id": 123,
      *             },
      *           }),
@@ -90,19 +91,23 @@ class ActivityController extends Controller
         $request->validated();
         $blog = Blog::where('id', $request->blog_id)->first();
 
-        $data = DB::select('select tmp.post_id, count(*), tmp.created_at::date from 
-            (select replies.post_id, replies.created_at, replies.blog_id from replies 
-            union (select post_id, created_at, blog_id from likes)) 
-            as tmp where tmp.blog_id = ' . $request->blog_id .
-            'group by date(created_at), post_id order by count(*) desc;');
+        // the blog id in the replies table referes to the blog made the reply
+        // need to relate each post with its blog id from the posts table
+        $data = DB::select('select t2.post_id, t2.created_at::date as timestamp, count(*) as notes from 
+            (select t1.post_id, t1.created_at from 
+                (select replies.post_id, replies.created_at from replies 
+                union ( select likes.post_id, likes.created_at from likes)) as t1, posts 
+                where t1.post_id = posts.id and posts.blog_id = ' . $request->blog_id . ') as t2 
+            group by date(created_at), post_id order by created_at::date;');
 
         $followers = $blog->followers()->count();
         $replies = $blog->replies()->count();
 
         $res = [
             "data" => $data,
+            "notes_count" => $replies,
+            "new_followers_count" => $followers,
             "total_followers_count" => $followers,
-            "notes_counts" => $replies,
         ];
 
         return $this->generalResponse($res, "ok", 200);
@@ -129,21 +134,22 @@ class ActivityController extends Controller
      *    @OA\JsonContent(
      *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
      *       @OA\Property(property="response",type="object",
-     *       @OA\Property(property="total_notes_count", type="integer", example=16),
+     *       @OA\Property(property="notes_count", type="integer", example=16),
+     *       @OA\Property(property="new_followers_count", type="integer", example=326),
      *       @OA\Property(property="total_followers_count", type="integer", example=326),
      *       @OA\Property(property="data", type="object",
      *           example={
      *              {
      *               "timestamp": "2021-11-03 01:13:39",
-     *               "count": 5,
+     *               "new_followers": 5,
      *             },
      *             {
      *               "timestamp": "2021-17-03 01:13:39",
-     *               "count": 51,
+     *               "new_followers": 51,
      *             },
      *             {
      *               "timestamp": "2021-19-03 01:13:39",
-     *               "count": 9,
+     *               "new_followers": 9,
      *             },
      *           }),
      *    ),
@@ -182,8 +188,10 @@ class ActivityController extends Controller
     public function getNewFollwersGraphData(GraphRequest $request)
     {
         $request->validated();
-        $data = DB::select('select count(*), created_at::date from follow_blog where followed_id = '
-            . $request->blog_id . ' group by date(created_at) order by count(*) desc;');
+        $data = DB::select('select count(*) as new_followers, created_at::date as timestamp 
+            from follow_blog where followed_id = '
+            . $request->blog_id .
+            ' group by date(created_at) order by created_at::date;');
 
         $blog = Blog::where('id', $request->blog_id)->first();
         $followers = $blog->followers()->count();
@@ -191,8 +199,9 @@ class ActivityController extends Controller
 
         $res = [
             "data" => $data,
+            "notes_count" => $replies,
+            "new_followers_count" => $followers,
             "total_followers_count" => $followers,
-            "notes_counts" => $replies,
         ];
 
         return $this->generalResponse($res, "ok", 200);
@@ -219,21 +228,22 @@ class ActivityController extends Controller
      *    @OA\JsonContent(
      *       @OA\Property(property="meta", type="object", example={"status": "200", "msg":"ok"}),
      *       @OA\Property(property="response",type="object",
-     *       @OA\Property(property="total_notes_count", type="integer", example=16),
+     *       @OA\Property(property="notes_count", type="integer", example=16),
+     *       @OA\Property(property="new_followers_count", type="integer", example=326),
      *       @OA\Property(property="total_followers_count", type="integer", example=326),
      *       @OA\Property(property="data", type="object",
      *           example={
      *              {
      *               "timestamp": "2021-11-03 01:13:39",
-     *               "count": 5,
+     *               "total_followers": 5,
      *             },
      *             {
      *               "timestamp": "2021-17-03 01:13:39",
-     *               "count": 51,
+     *               "total_followers": 51,
      *             },
      *             {
      *               "timestamp": "2021-19-03 01:13:39",
-     *               "count": 9,
+     *               "total_followers": 9,
      *             },
      *           }),
      *    ),
@@ -273,12 +283,14 @@ class ActivityController extends Controller
     public function getTotalFollwersGraphData(GraphRequest $request)
     {
         $request->validated();
-        $data = DB::select('select count(*), created_at::date from follow_blog where followed_id = '
-            . $request->blog_id . ' group by date(created_at) order by count(*) desc;');
+        $data = DB::select('select count(*) as total_followers, created_at::date as timestamp 
+            from follow_blog where followed_id = '
+            . $request->blog_id .
+            ' group by date(created_at) order by created_at::date;');
 
         if ($data) {
             for ($i = 1; $i < count($data); $i++) {
-                $data[$i]->count += $data[$i - 1]->count;
+                $data[$i]->total_followers += $data[$i - 1]->total_followers;
             }
         }
 
@@ -288,8 +300,9 @@ class ActivityController extends Controller
 
         $res = [
             "data" => $data,
+            "notes_count" => $replies,
+            "new_followers_count" => $followers,
             "total_followers_count" => $followers,
-            "notes_counts" => $replies,
         ];
 
         return $this->generalResponse($res, "ok", 200);
