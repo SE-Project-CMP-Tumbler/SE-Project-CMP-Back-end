@@ -181,8 +181,8 @@ class PostController extends Controller
                 if ($check->wasRecentlyCreated) {
                     $mentionedBlogUser = $mentionedBlog->user()->first();
                     $mentionedBlogUser->notify(new MentionNotification(
-                        mentioner:$blog,
-                        mentionedBlog:$mentionedBlog,
+                        actorBlog:$blog,
+                        recipientBlog:$mentionedBlog,
                         post:$post
                     ));
                 }
@@ -492,8 +492,8 @@ class PostController extends Controller
                 // add the notification for post create mentions
                 $mentionedBlogUser = $mentionedBlog->user()->first();
                 $mentionedBlogUser->notify(new MentionNotification(
-                    mentioner:$blog,
-                    mentionedBlog:$mentionedBlog,
+                    actorBlog:$blog,
+                    recipientBlog:$mentionedBlog,
                     post:$post
                 ));
             }
