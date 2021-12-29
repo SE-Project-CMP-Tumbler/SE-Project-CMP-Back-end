@@ -107,22 +107,22 @@ class PostNoteController extends Controller
     /**
      * get all notes of a post a post
      *
-     * @param int $post_id
+     * @param int $postId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getNotes($post_id, Request $request)
+    public function getNotes($postId, Request $request)
     {
-        if (preg_match('(^[0-9]+$)', $post_id) == false) {
+        if (preg_match('(^[0-9]+$)', $postId) == false) {
             return $this->generalResponse("", "The post Id should be numeric.", "422");
         }
 
-        $blog = Post::where('id', $post_id)->first();
+        $blog = Post::where('id', $postId)->first();
         if (empty($blog)) {
             return $this->generalResponse("", "This post id is not found.", "404");
         }
 
-        $post = Post::find($post_id);
+        $post = Post::find($postId);
 
         $likes = $post->likes(Config::PAGINATION_LIMIT);
         $replies =  $post->replies()->latest()->paginate(Config::PAGINATION_LIMIT);
