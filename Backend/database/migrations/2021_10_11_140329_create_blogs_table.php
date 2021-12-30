@@ -24,14 +24,14 @@ class CreateBlogsTable extends Migration
             $table->text('avatar')->default(Config::DEFAULT_AVATAR);
             $table->text('header_image')->default(Config::DEFAULT_HEADER_IMAGE);
             $table->string('avatar_shape')->default('circle');
-            $table->boolean('allow_messages')->default(false);
+            $table->boolean('allow_messages')->default(true);
             $table->string('replies_settings')->default('Everyone can reply');
-            $table->boolean('allow_submittions')->default(false);
+            $table->boolean('allow_submittions')->default(true);
             $table->text('submissions_page_title')->default("");
             $table->text('submissions_guidelines')->default("");
-            $table->boolean('allow_ask')->default(false);
+            $table->boolean('allow_ask')->default(true);
             $table->text('ask_page_title')->default("");
-            $table->boolean('allow_anonymous_questions')->default(false);
+            $table->boolean('allow_anonymous_questions')->default(true);
             $table->boolean('share_followings')->default(true);
             $table->boolean('share_likes')->default(true);
             $table->unsignedBigInteger('user_id');

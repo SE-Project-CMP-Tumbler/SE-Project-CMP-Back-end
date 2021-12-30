@@ -18,7 +18,7 @@ class BlogFactory extends Factory
         $user = User::factory()->create();
 
         return [
-            "username" => $this->faker->unique()->name,
+            "username" => $this->faker->unique()->firstName,
             "description" => $this->faker->text(),
             "title" => $this->faker->title(),
             "user_id" => $user->id,

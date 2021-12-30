@@ -1,0 +1,3282 @@
+{
+	"info": {
+		"_postman_id": "8cd359c5-bd5a-4377-8056-62626e623d52",
+		"name": "Backend-Team",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "upload_photo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Lenovo/Pictures/tumblr_3a28ccdf062e25beef2d1a3656c14c24_7261c2b1_2048.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_photo",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_photo"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_audio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audio",
+									"type": "file",
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts.mp3"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_audio",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_audio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/home/ahmed/Music/y2mate.com - ANGRY DEXTER next to me shorts_1080p.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_video",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_video"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_ext_photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageUrl",
+									"value": "http://i.stack.imgur.com/52Ha1.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_ext_photo",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_ext_photo"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_ext_video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoUrl",
+									"value": "https://www.youtube.com/watch?v=N69iZPwRneM",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/upload_ext_video",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"upload_ext_video"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blog",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"my blog\",\r\n \"blog_username\" :\"jjjsl\",\r\n    \"password\": \"123\"\r\n  \r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/blog",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog/32",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get blog_setting",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog_settings/118",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog_settings",
+								"118"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update blog_setting",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"share_likes\" :true,\r\n \"share_followings\" :true,\r\n  \"replies_settings\": \"Everyone can reply\",\r\n    \"allow_ask\": true,\r\n    \"ask_page_title\":\"okk\" ,\r\n    \"allow_anonymous_questions\": true,\r\n    \"allow_submittions\": true,\r\n    \"submissions_page_title\": \"Submit a post\",\r\n    \"submissions_guidelines\": \"To approve a submitted post it should be free of violence.\",\r\n  \"allow_messages\": false\r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/blog_settings/5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog_settings",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_out_blogs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blogs/check_out_blogs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogs",
+								"check_out_blogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blogs-likes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blogs/likes/124",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogs",
+								"likes",
+								"124"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trending",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blogs/trending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogs",
+								"trending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blog-activity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog_activity/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog_activity",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tag/data/3/scrum",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"data",
+								"3",
+								"scrum"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tag/data/scrum",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"data",
+								"scrum"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-trending-tags",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/tag/trending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag",
+								"trending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "follow_tag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Follow Blog",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/follow_blog/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"follow_blog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/follow_blog/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"follow_blog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "followed_by",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/followed_by/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"followed_by",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "total_followings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/total_followings",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"total_followings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "total-followers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/total_followers/5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"total_followers",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "followings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/followings",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"followings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "followers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "search_follow_blog",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/search_follow_blog/jTestggekkkeddyBloqgaaginYrr",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"search_follow_blog",
+								"jTestggekkkeddyBloqgaaginYrr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "follow_blog_search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/follow_blog_search",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"follow_blog_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "followings-another",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/followings/32",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"followings",
+								"32"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"miklaziz122000miklaziz122000@gmail.com\",\r\n  \"password\": \"123\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZmViNmViZDliMDBkMDlmNDBmODhjYmRiYjkzMWVhNmVhMWY0MzFiZjY0M2E2ODJkNjc5ZGUxMjljNTZkMTg0NzkzM2M0MWVhZWI1MmFmMDciLCJpYXQiOjE2MzY5Mzk4MzksIm5iZiI6MTYzNjkzOTgzOSwiZXhwIjoxNjY4NDc1ODM5LCJzdWIiOiIxOCIsInNjb3BlcyI6W119.hZ6CjusW6J3y4Z-xtjfg4Dgyy36B_jvHJOSeNPhn9KH4Ekf-JGqkmD4MRQZqQ3EH-y6RE8F_F-rla7MB5_FIXsB0kwnwmO9w-qfdCFn1Oh3hnPqHRjgiJRVIdZh-DKUkSvA8P_uForcXyqMd7QL2zxpxqhXjLRZPs9TghHyVuL8aCcKvrd_lV9qGWIZBuPN-QH6mcBi__-orHdE49GPXYBzxZeyA6dvPRQFnOjHhiiCvB-H40Iq1kneLOmroHSzetHWIzgRgY4uO8zlsFQd_Tv3HldHI9AuCg_sH2oG0nTdU0Ckk5YiOhwouvZ9caexAltSIAqLgnse7MPtGlk43ah7SBe_3JOXLWbPNd2vl0GdoQZnry9NIqGXFbZgMlnSCvrWrS7O4LTXgzNC0hqqhmKt9oV7VsW7lVqJXm5wM-EhDJWN-vy2EA1mt2wpQ0uqaczwUr7r4ywbvU1w-9SlfU0ipeuZ_UPw2DYCElt8qa55aNKivWlY3ii0KCJVI-ca2R7cyVY97Y1VVIURb7Ur_i1zRrCJih34VIMnKGzRRsxzOjIwBbZB49ZgfqzWFW5pV3DWmX7nnMAZGQ901yjqSZf0t2GtKPakzJTwsMPOLw1dJs7MAzaaUPp2IxUeSavJh-h9lP_I58tmmtJj95CxKYES4Dj3RRQzPh-MfF3hazzU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resend_verification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZmViNmViZDliMDBkMDlmNDBmODhjYmRiYjkzMWVhNmVhMWY0MzFiZjY0M2E2ODJkNjc5ZGUxMjljNTZkMTg0NzkzM2M0MWVhZWI1MmFmMDciLCJpYXQiOjE2MzY5Mzk4MzksIm5iZiI6MTYzNjkzOTgzOSwiZXhwIjoxNjY4NDc1ODM5LCJzdWIiOiIxOCIsInNjb3BlcyI6W119.hZ6CjusW6J3y4Z-xtjfg4Dgyy36B_jvHJOSeNPhn9KH4Ekf-JGqkmD4MRQZqQ3EH-y6RE8F_F-rla7MB5_FIXsB0kwnwmO9w-qfdCFn1Oh3hnPqHRjgiJRVIdZh-DKUkSvA8P_uForcXyqMd7QL2zxpxqhXjLRZPs9TghHyVuL8aCcKvrd_lV9qGWIZBuPN-QH6mcBi__-orHdE49GPXYBzxZeyA6dvPRQFnOjHhiiCvB-H40Iq1kneLOmroHSzetHWIzgRgY4uO8zlsFQd_Tv3HldHI9AuCg_sH2oG0nTdU0Ckk5YiOhwouvZ9caexAltSIAqLgnse7MPtGlk43ah7SBe_3JOXLWbPNd2vl0GdoQZnry9NIqGXFbZgMlnSCvrWrS7O4LTXgzNC0hqqhmKt9oV7VsW7lVqJXm5wM-EhDJWN-vy2EA1mt2wpQ0uqaczwUr7r4ywbvU1w-9SlfU0ipeuZ_UPw2DYCElt8qa55aNKivWlY3ii0KCJVI-ca2R7cyVY97Y1VVIURb7Ur_i1zRrCJih34VIMnKGzRRsxzOjIwBbZB49ZgfqzWFW5pV3DWmX7nnMAZGQ901yjqSZf0t2GtKPakzJTwsMPOLw1dJs7MAzaaUPp2IxUeSavJh-h9lP_I58tmmtJj95CxKYES4Dj3RRQzPh-MfF3hazzU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/email/resend_verification",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"email",
+								"resend_verification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"radwwwjjjaeeewaaww@gmail.com\",\r\n  \"password\" : \"123ASDasd\",\r\n  \"blog_username\" : \"jTestggekkkeddyBloqgaaginYrr\",\r\n  \"age\" : 22\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email_verification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "?Content_t",
+							"query": [
+								{
+									"key": "Content_t",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot_password",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"rorodeana2132000@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/forgot_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"forgot_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"token\" : \"241954596a8e53d8eeb54a925f5b5f838fe1bc6d923437357be8b094df1e9047\",\r\n \"email\": \"rorodeana2132000@gmail.com\",\r\n \"password\" : \"Miisid2125151koko>\",\r\n \"password_confirmation\" : \"Miisid2125151koko>\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reset_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reset_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset_password",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/reset_password/2/241954596a8e53d8eeb54a925f5b5f838fe1bc6d923437357be8b094df1e9047",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reset_password",
+								"2",
+								"241954596a8e53d8eeb54a925f5b5f838fe1bc6d923437357be8b094df1e9047"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_with_google",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"google_access_token\" : \"ya29.A0ARrdaM-FSSPC8y2Y37Z74b_lLMl7N0tN_8lE2h7ecXtE97L7m_NstG1Q73ei19c8HfPKjkAYFHHI4pA-kRQEQneMI93l3GlG8EF_9Ven5wX0mCK7K-4Qbj2l2WfmUgy82z3M5owSQ8Fiff-2gNhYDtTtxQkL\",\r\n  \"blog_username\" : \"aasssxcxcddfddsd\",\r\n  \"age\" : 22\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/register_with_google",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register_with_google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_with_google",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"google_access_token\" : \"ya29.a0ARrdaM-mED0OZY-XsIPGgngix1OtqwPEk7s8soMGFc8fw1XE4TSh47J3eI4wuKWlj263K1Q6O15jG-rm_wLifCJTYH6pPxjMSHZMSr-iRWfuoNnadtnh6ECajcKvcZ8lxs5JZJ5pZTRMIdFbjPdAGYifTrNF\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/login_with_google",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login_with_google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_register_credentials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"rorodeana2132000@gmail.com\",\r\n  \"password\" : \"adfssaisASccAS2121165\",\r\n  \"blog_username\" : \"sddfddsd\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/check_register_credentials",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"check_register_credentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"current_password\": \"Miisid2125151koko>\",\r\n  \"password\": \"123dllllD\",\r\n  \"password_confirmation\": \"123dllllD\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/change_password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"change_password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Get Trending Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/trending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"trending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_random_posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/random_posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"random_posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\":          \"<h1><span just test search danger</span></h1> <p><span ><strong>Eren</strong> is best described as hardheaded, <em>strong-willed</em>, passionate, and impulsive, which are attributes of his strong determination to protect mankind and eventually escape the Walls. As a young child, he was so intent on joining the Scout Regiment that he argued with and shouted at his mother, referring to the people in the village as '<span>silly</span>' and compared them to complacent livestock.</span></p> <p><span >his Friends are:</span></p> <ol> <li><span >Armin</span></li> <li><span >Mikasa</span></li> </ol> <p><img src='https://static.wikia.nocookie.net/villains/images/4/4c/Eren_meets_Yeagerists.png/revision/latest?cb=20210302172340' alt='' /></p> <p><span>As a child, Eren cared deeply for Armin, his best and only friend before he met his adoptive sister, Mikasa, and most importantly, his family, risking harm and even death in order to help them. This quality was most often demonstrated in the form of Eren taking on the larger boys who would bully Armin without hesitation; more tragically when he desperately attempted to lift the rubble crushing his mother during the Titans' assault in Shiganshina .</span></p> #Donia  \",\r\n\r\n    \"post_type\": \"general\",\r\n    \"post_status\": \"published\",\r\n    \"post_time\":\"2021-12-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/post/127",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"127"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/205",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"205"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pinned\": false,\r\n    \"post_time\": \"2020-1-9\",\r\n    \"post_body\": \"<p> #Another #BLANK #A </p>\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/291",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"291"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/32/published?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"32",
+								"published"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "draft posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/79/draft",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"79",
+								"draft"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/dashboard?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "text posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/text",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "quote posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/quote",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"quote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "chat posts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/posts/chat",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/video",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"video"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "radar post",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/posts/radar",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"radar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ask post",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/posts/ask",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"ask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "audio posts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/posts/audio",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"audio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "image post",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/posts/image",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_random_posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/random_posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"random_posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_trending_posts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host}}/posts/trending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"trending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_post_status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"blog_id\": \"12\",\n  \"post_id\": \"12\",\n  \"post_status\": \"draft\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/change_status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"change_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pin_post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"blog_id\": \"12\",\n  \"post_id\": \"11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/pin",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"pin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unpin_post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"blog_id\": \"12\",\n  \"post_id\": \"11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/unpin",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"unpin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "search-blog",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/search/Donia",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"search",
+								"Donia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search-auto-complete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Theme",
+			"item": [
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/blog/71/theme",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"71",
+								"theme"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"color_title\": \"#000000\",\r\n  \"font_title\": \"Gibson\",\r\n  \"font_weight_title\": \"bolde 3\",\r\n  \"description\": \" \",\r\n  \"title\": \"dec\",\r\n  \"background_color\": \"#FFFFFF\",\r\n  \"accent_color\": \"#e17e66\",\r\n  \"body_font\": \"Helvetica Neue\",\r\n \r\n  \"avatar_shape\": \"circle\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/blog/1/theme",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blog",
+								"1",
+								"theme"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Submissions",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p> first Submission! </p> #radwa #eman\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"submission\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/submission/202",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"submission",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/submission/202",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"submission",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_body\": \"<p> This post is published </p>\",\r\n    \"post_type\": \"quote\",\r\n    \"post_status\": \"private\",\r\n    \"post_time\": \"2021-3-7\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/approve/82",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"approve",
+								"82"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/post/submission/106",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"submission",
+								"106"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/posts/submission",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"submission"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post Notes",
+			"item": [
+				{
+					"name": "addReply",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"reply_text\": \"hjhj\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/post/reply/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"reply",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addLike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/post/like/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"like",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/post/like/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"like",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteReply",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/post/reply/36",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"reply",
+								"36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkLiked",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/post/like/9/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post",
+								"like",
+								"9",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getNotes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/post_notes/1?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"post_notes",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ask",
+			"item": [
+				{
+					"name": "ask",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"question_body\": \"<p>lol</p>\",\r\n  \"question_flag\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/ask/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"ask",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "answer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"post_status\": \"published\",\r\n  \"post_type\": \"answer\",\r\n  \"post_body\": \"<p>hahahhahahah</p>\",\r\n  \"post_time\" : \"2021-12-31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/answer/47",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"answer",
+								"47"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_blog_messages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/messages/1?page=151",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"messages",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "151"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_blog_messages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/messages/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"messages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_all_messages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/all_messages?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"all_messages"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_all_messages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/all_messages",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"all_messages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
