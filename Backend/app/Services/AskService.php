@@ -2,19 +2,20 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Hash;
-use App\Models\Blog;
-use App\Models\User;
-use App\Models\FollowBlog;
-use Illuminate\Support\Facades\DB;
-use App\Http\Misc\Helpers\Errors;
 use App\Models\Post;
-use App\Models\BlogFollowTag;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\QuestionResource;
 
 class AskService
 {
+
+     /**
+    * merge 2 different collections and paginate over the result
+    * @param Question $askedQuestions
+    * @param Submission $submissionPosts
+    *@param integer $currentPage
+    * @return Array
+    */
     public function mergeAndPaginate($askedQuestions, $submissionPosts, $currentPage)
     {
 

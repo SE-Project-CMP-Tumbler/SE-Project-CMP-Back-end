@@ -115,4 +115,48 @@ class BlogPolicy
     {
         //
     }
+    /**
+     * Determine whether other users can ask this blog.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Blog  $blog
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function canAsk(User $user, Blog $blog)
+    {
+        return $blog->allow_ask;
+    }
+    /**
+     * Determine whether other users can ask this blog.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Blog  $blog
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function canAskAnonymous(User $user, Blog $blog)
+    {
+        return $blog->allow_anonymous_questions;
+    }
+    /**
+     * Determine whether the user can view the messages of a blog.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Question  $question
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewMessages(User $user, Blog $blog)
+    {
+        return $blog->user->id == $user->id;
+    }
+    /**
+     * Determine whether the user can delete the messages of a blog.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Question  $question
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function deleteMessages(User $user, Blog $blog)
+    {
+        return $blog->user->id == $user->id;
+    }
 }
