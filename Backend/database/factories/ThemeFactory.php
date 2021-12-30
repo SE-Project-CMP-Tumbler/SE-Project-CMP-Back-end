@@ -16,8 +16,8 @@ class ThemeFactory extends Factory
      */
     public function definition()
     {
-        $user = User::factory()->create();
-        $blog = Blog::factory()->create(['user_id' => $user->id]);
+        // $user = User::factory()->create();
+        $blog = Blog::factory()->create();
         return [
             'blog_id' => $blog->id,
             "color_title" => "#000000",

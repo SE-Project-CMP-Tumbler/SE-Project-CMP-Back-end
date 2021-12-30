@@ -14,6 +14,7 @@ use Illuminate\Database\QueryException;
 use  Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -76,6 +77,8 @@ class Handler extends ExceptionHandler
                 return $this->errorResponse(Errors::NOTALLOWED, "405");
             } elseif ($exception instanceof ThrottleRequestsException) {
                 return $this->errorResponse(Errors::TIME_LIMIT, "429");
+            } elseif ($exception instanceof HttpException) {
+                return $this-> errorResponse(Errors::EMAIL_VERIFIED, "422");
             }
             // } elseif ($exception instanceof QueryException) {
             //       return $this->error_response(Errors::TESTING, "404");

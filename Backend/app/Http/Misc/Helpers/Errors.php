@@ -60,6 +60,7 @@ class Errors
     const NOTALLOWED = "Method Not Allowed";
     const INVALID_EMAIL_VERIFICATION_URL = "that email is invalid to verification";
     const EMAIL_ALREADY_VERIFIED = 'api.email_already_verified';
+    const EMAIL_VERIFIED = "Your email address is not verified";
     const TIME_LIMIT = "Limit Exceeded";
 
     //sent email
