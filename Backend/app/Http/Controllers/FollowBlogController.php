@@ -235,6 +235,10 @@ class FollowBlogController extends Controller
         }
         $followerUser = $request->user();
         $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
         $primaryBlog =  $blogService->getPrimaryBlog($followerUser);
         if ($primaryBlog->id == $blogId) {
             return $this->generalResponse("", "You can't follow your self", "422");
@@ -308,6 +312,10 @@ class FollowBlogController extends Controller
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
         $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
         $primaryBlog = $blogService->getPrimaryBlog($request->user());
         if ($primaryBlog->id == $blogId) {
             return $this->generalResponse("", "You can't unfollow your self", "422");
@@ -511,9 +519,13 @@ class FollowBlogController extends Controller
         if (preg_match('(^[0-9]+$)', $blogId) == false) {
             return $this->generalResponse("", "The blog id should be numeric.", "422");
         }
-        $BlogService = new BlogService();
-        $primaryBlog = $BlogService->getPrimaryBlog($request->user());
-        $check = $BlogService->checkIsFollowed($primaryBlog->id, $blogId);
+        $blogService = new BlogService();
+        $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
+        $primaryBlog = $blogService->getPrimaryBlog($request->user());
+        $check = $blogService->checkIsFollowed($primaryBlog->id, $blogId);
       // check this line with TAs====>
         return $this->generalResponse(["followed" => $check], "ok");
     }
@@ -579,6 +591,9 @@ class FollowBlogController extends Controller
         }
         $blogService = new BlogService();
         $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
         $this->authorize('view', $blog);
         $followers = $blog->followers()->count();
         return $this->generalResponse(["followers" => $followers], "ok");
@@ -645,6 +660,9 @@ class FollowBlogController extends Controller
         }
         $blogService = new BlogService();
         $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
         $this->authorize('view', $blog);
         $followings = $blog->followings()->count();
         return $this->generalResponse(["followings" => $followings], "ok");
@@ -718,7 +736,13 @@ class FollowBlogController extends Controller
     public function getanotherFollowings(Request $request, $blogId)
     {
         $blogService = new BlogService();
+        if (preg_match('(^[0-9]+$)', $blogId) == false) {
+            return $this->generalResponse("", "The blog id should be numeric.", "422");
+        }
         $blog = $blogService->findBlog($blogId);
+        if ($blog == null) {
+            return $this->generalResponse("", "Not Found blog", "404");
+        }
         $this->authorize('shareFollowings', $blog);
         $followings = $blog->followings()->paginate(Config::PAGINATION_LIMIT);
         $primaryBlog = $blogService->getPrimaryBlog($request->user());
