@@ -34,11 +34,11 @@ class AnswerRequest extends FormRequest
         $types = array('answer');
         $statuses = array('published', 'draft', 'private', 'submission');
         return [
+            'question_id' => 'required|numeric|exists:questions,id', //must be a questions id that exists in database
             'post_body' => ['required'],
             'post_type' => ['required', Rule::in($types)],
             'post_time' => ['nullable', 'date'],
             'post_status' => ['required', Rule::in($statuses)], //we should specify these specific values to the front
-            'question_id' => 'required|numeric|exists:questions,id' //must be a questions id that exists in database
         ];
     }
 }
