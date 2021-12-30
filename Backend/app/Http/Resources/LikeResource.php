@@ -34,14 +34,15 @@ class LikeResource extends JsonResource
      */
     public function toArray($request)
     {
-        if ($request->user()) {
-            $primaryBlogId = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first()->id;
-        } else {
-            $primaryBlogId = false;
-        }
         $blogService = new BlogService();
-        if ($this->blog_id && $primaryBlogId) {
-            $check = $blogService->checkIsFollowed($this->blog_id, $primaryBlogId);
+        if (Auth('api')->user() != null) {
+            $primaryBlog = $blogService->getPrimaryBlog(Auth('api')->user());
+        } else {
+            $primaryBlog = null;
+        }
+
+        if ($primaryBlog != null) {
+            $check = $blogService->checkIsFollowed($this->blog_id, $primaryBlog->id);
         } else {
             $check = false;
         }
