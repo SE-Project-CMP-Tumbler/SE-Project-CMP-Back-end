@@ -40,6 +40,7 @@ class ChangeEmailRequest extends FormRequest
         'email.required_without' => Errors::MISSING_BOTH_EMAIL_PASSWORD,
         'email.required' => Errors::MISSING_EMAIL,
         'email.unique' => Errors::EMAIL_TAKEN,
+        'email.email' => Errors::NOT_VALID_EMAIL,
         'password.required_with' => Errors::MISSING_PASSWORD,
         ];
     }
