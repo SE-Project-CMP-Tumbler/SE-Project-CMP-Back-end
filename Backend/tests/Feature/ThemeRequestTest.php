@@ -77,31 +77,31 @@ class ThemeRequestTest extends TestCase
             ]
         ]);
     }
-     /**
-     *  test Invalid  description Theme  of blog
-     *
-     * @return void
-     */
+    //  /**
+    //  *  test Invalid  description Theme  of blog
+    //  *
+    //  * @return void
+    //  */
 
-    public function testInvalidThemeDescription()
-    {
+    // public function testInvalidThemeDescription()
+    // {
 
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
-        $blog = Blog::factory()->create(['user_id' => $user->id]);
-        $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
-        $request = [
-          "description" => ""
-        ];
-        $response = $this
-        ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
-        ->assertJson([
-            "meta" => [
-                "status" => "422",
-                "msg" => "The description must be a string."
-            ]
-        ]);
-    }
+    //     $user = User::factory()->create();
+    //     $token = $user->createToken('Auth Token')->accessToken;
+    //     $blog = Blog::factory()->create(['user_id' => $user->id]);
+    //     $theme = Theme::factory()->create(['blog_id' => $blog->id ]);
+    //     $request = [
+    //       "description" => ""
+    //     ];
+    //     $response = $this
+    //     ->json('PUT', 'api/blog/' . $blog->id . '/theme', $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
+    //     ->assertJson([
+    //         "meta" => [
+    //             "status" => "422",
+    //             "msg" => "The description must be a string."
+    //         ]
+    //     ]);
+    // }
      /**
      *  test Invalid  font Theme  of blog
      *
