@@ -57,17 +57,14 @@ class ActivityController extends Controller
      *              {
      *               "timestamp": "2021-11-03 01:13:39",
      *               "notes": 5,
-     *               "post_id": 51,
      *             },
      *             {
      *               "timestamp": "2021-17-03 01:13:39",
      *               "notes": 51,
-     *               "post_id": 81,
      *             },
      *             {
      *               "timestamp": "2021-19-03 01:13:39",
      *               "notes": 9,
-     *               "post_id": 123,
      *             },
      *           }),
      *    ),

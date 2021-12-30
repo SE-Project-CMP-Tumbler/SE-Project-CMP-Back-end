@@ -28,7 +28,7 @@ class ActivityService
                 (select replies.post_id, replies.created_at from replies 
                 union ( select likes.post_id, likes.created_at from likes)) as t1, posts 
                 where t1.post_id = posts.id and posts.blog_id = ' . $blog_id . ') as t2 
-             where created_at <= current_date and created_at >= current_date - interval \'' . $period . ' day\'
+             where created_at::date <= current_date and created_at::date >= current_date - interval \'' . $period . ' day\'
             group by date_trunc(\'' . $rate . '\', created_at)
             order by date_trunc(\'' . $rate . '\', created_at);';
 
@@ -51,7 +51,7 @@ class ActivityService
             date_trunc(\'' . $rate . '\', created_at) as timestamp
             from follow_blog where followed_id = '
             . $blog_id .
-            ' and created_at <= current_date and created_at >= current_date - interval \'' . $period . ' day\'
+            ' and created_at::date <= current_date and created_at::date >= current_date - interval \'' . $period . ' day\'
             group by date_trunc(\'' . $rate . '\', created_at)
             order by date_trunc(\'' . $rate . '\', created_at);';
 
@@ -74,7 +74,7 @@ class ActivityService
             date_trunc(\'' . $rate . '\', created_at) as timestamp
             from follow_blog where followed_id = '
             . $blog_id .
-            ' and created_at <= current_date and created_at >= current_date - interval \'' . $period . ' day\'
+            ' and created_at::date <= current_date and created_at::date >= current_date - interval \'' . $period . ' day\'
             group by date_trunc(\'' . $rate . '\', created_at)
             order by date_trunc(\'' . $rate . '\', created_at);';
 
