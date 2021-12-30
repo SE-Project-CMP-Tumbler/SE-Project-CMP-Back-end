@@ -40,15 +40,15 @@ Route::get('search_auto_complete/{word}', [SearchController::class,'recommendedW
 | Theme Routes
  */
 Route::get('/blog/{blog_id}/theme', [ThemeController::class,'show'])->middleware('auth:api');
-Route::put('/blog/{blog_id}/theme', [ThemeController::class,'update'])->middleware('auth:api');
+Route::put('/blog/{blog_id}/theme', [ThemeController::class,'update'])->middleware('auth:api', 'verified');
 
 /*
 | Blog Routes
 */
 Route::get('blog', [BlogController::class,'index'])->middleware('auth:api');
-Route::post('blog', [BlogController::class,'store'])->middleware('auth:api');
+Route::post('blog', [BlogController::class,'store'])->middleware('auth:api', 'verified');
 Route::get('blog/{blog_id}', [BlogController::class,'show'])->middleware('auth:api');
-Route::delete('blog/{blog_id}', [BlogController::class,'delete'])->middleware('auth:api');
+Route::delete('blog/{blog_id}', [BlogController::class,'delete'])->middleware('auth:api', 'verified');
 Route::get('blogs/likes/{blog_id}', [BlogController::class,'getLikeBlog'])->middleware('auth:api');
 Route::get('blogs/check_out_blogs', [BlogController::class,'checkOutOtherBlog'])->middleware('auth:api');
 Route::get('blogs/trending', [BlogController::class,'getTrendingBlog'])->middleware('auth:api');
@@ -73,8 +73,8 @@ Route::get('followings/{blog_id}', [FollowBlogController::class,'getanotherFollo
 /*
 | Block Blog Routes
 */
-Route::post('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'block'])->middleware('auth:api');
-Route::delete('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'unblock'])->middleware('auth:api');
+Route::post('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'block'])->middleware('auth:api', 'verified');
+Route::delete('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'unblock'])->middleware('auth:api', 'verified');
 Route::get('block/{blockerId}/{blockedId}', [BlockBlogController::class, 'checkIsBlocking'])->middleware('auth:api');
 Route::get('block/{blogId}', [BlockBlogController::class, 'getBlockings'])->middleware('auth:api');
 
@@ -84,7 +84,6 @@ Route::get('block/{blogId}', [BlockBlogController::class, 'getBlockings'])->midd
 Route::get('post/{post_id}', [PostController::class,'show']);
 Route::post('post/{blog_id}', [PostController::class,'store'])->middleware('auth:api');
 Route::delete('post/{post_id}', [PostController::class,'delete'])->middleware('auth:api');
-Route::put('post/{post_id}', [PostController::class,'update'])->middleware('auth:api');
 
 Route::get('/posts/random_posts', [PostFilterController::class, 'getRandomPosts']);
 Route::get('/posts/trending', [PostFilterController::class, 'getTrendingPosts']);
@@ -109,17 +108,17 @@ Route::put('posts/change_status', [PostController::class, 'changePostStatus'])->
 /*
 | Submissions Routes
 */
-Route::post('post/submission/{blog_id}', [PostController::class, 'createSubmission'])->middleware('auth:api');
+Route::post('post/submission/{blog_id}', [PostController::class, 'createSubmission'])->middleware('auth:api', 'verified');
 Route::get('post/submission/{blog_id}', [PostController::class, 'getSubmissions'])->middleware('auth:api');
-Route::post('post/approve/{post_id}', [PostController::class, 'approveSubmission'])->middleware('auth:api');
-Route::delete('post/submission/{post_id}', [PostController::class, 'delete'])->middleware('auth:api');
+Route::post('post/approve/{post_id}', [PostController::class, 'approveSubmission'])->middleware('auth:api', 'verified');
+Route::delete('post/submission/{post_id}', [PostController::class, 'delete'])->middleware('auth:api', 'verified');
 
-Route::delete('posts/submission', [PostController::class, 'deleteAllSubmissions'])->middleware('auth:api');
+Route::delete('posts/submission', [PostController::class, 'deleteAllSubmissions'])->middleware('auth:api', 'verified');
 
 /*
 | Reblog Route
 */
-Route::post('/reblog/{blog_id}/{parent_post_id}', [PostController::class, 'createReblog'])->middleware('auth:api');
+Route::post('/reblog/{blog_id}/{parent_post_id}', [PostController::class, 'createReblog'])->middleware('auth:api', 'verified');
 
 /*
 | Uploads Routes
@@ -137,13 +136,13 @@ Route::post("/upload_base64_video", [UploadFileController::class, 'uploadBase64V
 /*
 | Chat Routes
 */
-Route::post("/chat/messages/{chat_room_id}", [ChatController::class, 'getAllMessages'])->middleware('auth:api');
-Route::post("/chat/new_message/{chat_room_id}", [ChatController::class, 'sendMessage'])->middleware('auth:api');
-Route::delete("/chat/clear_chat/{chat_room_id}", [ChatController::class, 'clearChat'])->middleware('auth:api');
+Route::post("/chat/messages/{chat_room_id}", [ChatController::class, 'getAllMessages'])->middleware('auth:api', 'verified');
+Route::post("/chat/new_message/{chat_room_id}", [ChatController::class, 'sendMessage'])->middleware('auth:api', 'verified');
+Route::delete("/chat/clear_chat/{chat_room_id}", [ChatController::class, 'clearChat'])->middleware('auth:api', 'verified');
 
-Route::post("/chat/chat_search", [ChatController::class, 'chatSearch'])->middleware('auth:api');
-Route::post("/chat/chat_id", [ChatController::class, 'getChatRoomGID'])->middleware('auth:api');
-Route::post("/chat/all_chats", [ChatController::class, 'getLastMessages'])->middleware('auth:api');
+Route::post("/chat/chat_search", [ChatController::class, 'chatSearch'])->middleware('auth:api', 'verified');
+Route::post("/chat/chat_id", [ChatController::class, 'getChatRoomGID'])->middleware('auth:api', 'verified');
+Route::post("/chat/all_chats", [ChatController::class, 'getLastMessages'])->middleware('auth:api', 'verified');
 
 /*
 | User Routes
@@ -184,23 +183,23 @@ Route::get('/follow_tag', [FollowTagController::class, 'getTagsFollowed'])->midd
 /*
 | Post Notes Routes
 */
-Route::post('/post/reply/{post_id}', [PostActionController::class,'addReply'])->middleware('auth:api');
+Route::post('/post/reply/{post_id}', [PostActionController::class,'addReply'])->middleware('auth:api', 'verified');
 Route::post('/post/like/{post_id}', [PostActionController::class,'addLike'])->middleware('auth:api');
 Route::get('/post/like/{blog_id}/{post_id}', [PostActionController::class,'checkLiked'])->middleware('auth:api');
 Route::delete('/post/like/{post_id}', [PostActionController::class,'deleteLike'])->middleware('auth:api');
-Route::delete('/post/reply/{reply_id}', [PostActionController::class,'deletereply'])->middleware('auth:api');
+Route::delete('/post/reply/{reply_id}', [PostActionController::class,'deletereply'])->middleware('auth:api', 'verified');
 Route::get('/post_notes/{post_id}', [PostNoteController::class,'getNotes'])->middleware('auth:api');
 
 /*
 | Asks Routes
 */
 Route::post('/ask/{blog_id}', [AskController::class,'ask'])->middleware('auth:api');
-Route::post('/answer/{question_id}', [AskController::class,'answer'])->middleware('auth:api');
-Route::delete('/ask/{question_id}', [AskController::class,'deleteAsk'])->middleware('auth:api');
-Route::get('/messages/{blog_id}', [AskController::class,'getMessagesForBlog'])->middleware('auth:api');
+Route::post('/answer/{question_id}', [AskController::class,'answer'])->middleware('auth:api', 'verified');
+Route::delete('/ask/{question_id}', [AskController::class,'deleteAsk'])->middleware('auth:api', 'verified');
+Route::get('/messages/{blog_id}', [AskController::class,'getMessagesForBlog'])->middleware('auth:api', 'verified');
 Route::get('/all_messages', [AskController::class,'getMessages'])->middleware('auth:api');
-Route::delete('/messages/{blog_id}', [AskController::class,'deleteMessagesForBlog'])->middleware('auth:api');
-Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middleware('auth:api');
+Route::delete('/messages/{blog_id}', [AskController::class,'deleteMessagesForBlog'])->middleware('auth:api', 'verified');
+Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middleware('auth:api', 'verified');
 
 /*
 | Notifications Routes
