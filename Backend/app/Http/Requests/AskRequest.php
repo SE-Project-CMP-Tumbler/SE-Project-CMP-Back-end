@@ -32,9 +32,9 @@ class AskRequest extends FormRequest
     public function rules()
     {
         return [
+                'blog_id' => 'required|numeric|exists:blogs,id', //must be a blog id that exists in database
                 'question_body' => 'required|string',
                 'question_flag' => 'required|boolean',
-                'blog_id' => 'required|numeric|exists:blogs,id' //must be a blog id that exists in database
         ];
     }
 }
