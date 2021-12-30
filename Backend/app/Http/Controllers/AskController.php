@@ -7,14 +7,13 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Blog;
 use App\Models\Post;
-use App\Http\Misc\Helpers\Config;
 use App\Http\Requests\AskRequest;
 use App\Http\Resources\PostResource;
-use App\Http\Resources\QuestionResource;
 use App\Http\Requests\AnswerRequest;
 use App\Notifications\AnswerNotification;
 use App\Notifications\AskNotification;
 use App\Services\AskService;
+use Illuminate\Database\Eloquent\Model;
 
 class AskController extends Controller
 {
@@ -85,6 +84,10 @@ class AskController extends Controller
     {
         $senderBlog = Blog::where([['user_id',$request->user()->id],['is_primary', true]])->first();
         $senderBlogID = ($senderBlog) ['id'];
+        $this->authorize('canAsk', Blog::find($blogId));
+        if ($request->question_flag) {
+              $this->authorize('canAskAnonymous', Blog::find($blogId));
+        }
         $ask = Question::create([
             'ask_sender_blog_id' => $senderBlogID,
             'ask_reciever_blog_id' => $blogId,
@@ -206,6 +209,7 @@ class AskController extends Controller
 
         $question = Question::where('id', $questionId)->first();
         $publishedAt = ($request->post_time == null && ($request->post_status == 'published' || $request->post_status == 'private')) ? now() : $request->post_time;
+        $this->authorize('canAnswer', [Question::class,$question]);
         $post = Post::create([
             'status' => $request->post_status,
             'published_at' => $publishedAt,
@@ -295,6 +299,7 @@ class AskController extends Controller
         if (empty($question)) {
             return $this->generalResponse("", "This question id is not found.", "404");
         }
+        $this->authorize('canDeleteAsk', [Question::class,$question]);
         $question->delete();
         return $this->generalResponse("", "ok", 200);
     }
@@ -401,7 +406,7 @@ class AskController extends Controller
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
-
+        $this->authorize('viewMessages', $blog);
         $askedQuestions = $blog->askedQuestions()->get();
         $submissionPosts = $blog->submissionPosts()->get();
         $currentPage = $request->input('page');
@@ -564,7 +569,7 @@ class AskController extends Controller
         if (empty($blog)) {
             return $this->generalResponse("", "This blog id is not found.", "404");
         }
-
+        $this->authorize('deleteMessages', $blog);
         $askedQuestions = $blog->askedQuestions()->delete();
         $submissionPosts = $blog->submissionPosts()->detach();
 
