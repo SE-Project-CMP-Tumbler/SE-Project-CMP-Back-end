@@ -193,13 +193,13 @@ Route::get('/post_notes/{post_id}', [PostNoteController::class,'getNotes'])->mid
 /*
 | Asks Routes
 */
-Route::post('/ask/{blog_id}', [AskController::class,'ask'])->middleware('auth:api');
-Route::post('/answer/{question_id}', [AskController::class,'answer'])->middleware('auth:api', 'verified');
-Route::delete('/ask/{question_id}', [AskController::class,'deleteAsk'])->middleware('auth:api', 'verified');
-Route::get('/messages/{blog_id}', [AskController::class,'getMessagesForBlog'])->middleware('auth:api', 'verified');
+Route::post('/ask/{blog_id}', [AskController::class,'ask'])->middleware('auth:api', 'verified');
+Route::post('/answer/{question_id}', [AskController::class,'answer'])->middleware('auth:api');
+Route::delete('/ask/{question_id}', [AskController::class,'deleteAsk'])->middleware('auth:api');
+Route::get('/messages/{blog_id}', [AskController::class,'getMessagesForBlog'])->middleware('auth:api');
 Route::get('/all_messages', [AskController::class,'getMessages'])->middleware('auth:api');
-Route::delete('/messages/{blog_id}', [AskController::class,'deleteMessagesForBlog'])->middleware('auth:api', 'verified');
-Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middleware('auth:api', 'verified');
+Route::delete('/messages/{blog_id}', [AskController::class,'deleteMessagesForBlog'])->middleware('auth:api');
+Route::delete('/all_messages', [AskController::class,'deleteMessages'])->middleware('auth:api');
 
 /*
 | Notifications Routes
