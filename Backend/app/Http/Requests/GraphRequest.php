@@ -28,6 +28,8 @@ class GraphRequest extends FormRequest
     {
         $data = parent::all($keys);
         $data['blog_id'] = $this->route('blog_id');
+        $data['period'] = $this->route('period');
+        $data['rate'] = $this->route('rate');
         return $data;
     }
 
@@ -38,6 +40,12 @@ class GraphRequest extends FormRequest
      */
     public function rules()
     {
+        // last: day, 3 days, week, month
+        $allowedPeriods = [1, 3, 7, 30];
+
+        // hourly, daily
+        $allowedRates = [0, 1];
+
         return [
             "blog_id" => [
                 "required",
@@ -47,6 +55,16 @@ class GraphRequest extends FormRequest
                     $query->where('user_id', Auth::user()->id)
                         ->where('id', request()->blog_id);
                 })
+            ],
+            "period" => [
+                "required",
+                "integer",
+                Rule::in($allowedPeriods),
+            ],
+            "rate" => [
+                "required",
+                "integer",
+                Rule::in($allowedRates),
             ]
         ];
     }

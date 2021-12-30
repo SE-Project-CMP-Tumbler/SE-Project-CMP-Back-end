@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\GraphRequest;
 use App\Services\BlogService;
 use Illuminate\Support\Facades\DB;
+use App\Services\ActivityService;
 
 class ActivityController extends Controller
 {
     /**
      * @OA\Get(
-     * path="/graph/notes/{blog_id}",
+     * path="/graph/notes/{blog_id}/{period}/{rate}",
      * summary="get the notes",
      * description="get the notes for the activity graph",
      * tags={"Activity"},
@@ -25,6 +26,23 @@ class ActivityController extends Controller
      *     in="path",
      *     @OA\Schema(
      *         type="integer")),
+     *  @OA\Parameter(
+     *          name="period",
+     *          description="the time period that you want to retrieve the data for.
+     *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
+     *  @OA\Parameter(
+     *          name="rate",
+     *          description="the time rate that you want to retrieve the data with.
+     *  ( 0 -> hourly) , (1 -> daily),
+     *  note: if the period=1, then the rate must equal 0.",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
      * @OA\Response(
      *    response=200,
      *    description="Successful response",
@@ -89,25 +107,30 @@ class ActivityController extends Controller
     public function getNotesGraphData(GraphRequest $request)
     {
         $request->validated();
-        $blog = Blog::where('id', $request->blog_id)->first();
+        $activityService = new ActivityService();
+        $data = $activityService->getNotesService($request->blog_id, $request->period, $request->rate);
 
-        // the blog id in the replies table referes to the blog made the reply
-        // need to relate each post with its blog id from the posts table
-        $data = DB::select('select t2.post_id, t2.created_at::date as timestamp, count(*) as notes from 
-            (select t1.post_id, t1.created_at from 
-                (select replies.post_id, replies.created_at from replies 
-                union ( select likes.post_id, likes.created_at from likes)) as t1, posts 
-                where t1.post_id = posts.id and posts.blog_id = ' . $request->blog_id . ') as t2 
-            group by date(created_at), post_id order by created_at::date;');
-
-        $followers = $blog->followers()->count();
-        $replies = $blog->replies()->count();
+        $newFollowersCount = $activityService->countNewFollowersService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
+        $TotalFollowersCount = $activityService->countTotalFollowersService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
+        $notesCount = $activityService->countNotesService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
 
         $res = [
             "data" => $data,
-            "notes_count" => $replies,
-            "new_followers_count" => $followers,
-            "total_followers_count" => $followers,
+            "notes_count" => $notesCount,
+            "new_followers_count" => $newFollowersCount,
+            "total_followers_count" => $TotalFollowersCount,
         ];
 
         return $this->generalResponse($res, "ok", 200);
@@ -115,7 +138,7 @@ class ActivityController extends Controller
 
     /**
      * @OA\Get(
-     * path="/graph/new_followers/{blog_id}",
+     * path="/graph/new_followers/{blog_id}/{period}/{rate}",
      * summary="get the number of the new followers",
      * description="get the number of the new followers for the activity graph",
      * tags={"Activity"},
@@ -128,6 +151,23 @@ class ActivityController extends Controller
      *     in="path",
      *     @OA\Schema(
      *         type="integer")),
+     *  @OA\Parameter(
+     *          name="period",
+     *          description="the time period that you want to retrieve the data for.
+     *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
+     *  @OA\Parameter(
+     *          name="rate",
+     *          description="the time rate that you want to retrieve the data with.
+     *  ( 0 -> hourly) , (1 -> daily),
+     *  note: if the period=1, then the rate must equal 0.",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
      * @OA\Response(
      *    response=200,
      *    description="Successful response",
@@ -188,20 +228,30 @@ class ActivityController extends Controller
     public function getNewFollwersGraphData(GraphRequest $request)
     {
         $request->validated();
-        $data = DB::select('select count(*) as new_followers, created_at::date as timestamp 
-            from follow_blog where followed_id = '
-            . $request->blog_id .
-            ' group by date(created_at) order by created_at::date;');
+        $activityService = new ActivityService();
+        $data = $activityService->getNewFollowersService($request->blog_id, $request->period, $request->rate);
 
-        $blog = Blog::where('id', $request->blog_id)->first();
-        $followers = $blog->followers()->count();
-        $replies = $blog->replies()->count();
+        $newFollowersCount = $activityService->countNewFollowersService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
+        $TotalFollowersCount = $activityService->countTotalFollowersService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
+        $notesCount = $activityService->countNotesService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
 
         $res = [
             "data" => $data,
-            "notes_count" => $replies,
-            "new_followers_count" => $followers,
-            "total_followers_count" => $followers,
+            "notes_count" => $notesCount,
+            "new_followers_count" => $newFollowersCount,
+            "total_followers_count" => $TotalFollowersCount,
         ];
 
         return $this->generalResponse($res, "ok", 200);
@@ -209,7 +259,7 @@ class ActivityController extends Controller
 
     /**
      * @OA\Get(
-     * path="/graph/total_followers/{blog_id}",
+     * path="/graph/total_followers/{blog_id}/{period}/{rate}",
      * summary="get the total number of followers",
      * description="get the total number of followers for the activity graph",
      * tags={"Activity"},
@@ -222,6 +272,23 @@ class ActivityController extends Controller
      *     in="path",
      *     @OA\Schema(
      *         type="integer")),
+     *  @OA\Parameter(
+     *          name="period",
+     *          description="the time period that you want to retrieve the data for.
+     *  ( 1 -> last day) , (3 -> last 3  days) , (7 -> last week) , (30 -> last month)",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
+     *  @OA\Parameter(
+     *          name="rate",
+     *          description="the time rate that you want to retrieve the data with.
+     *  ( 0 -> hourly) , (1 -> daily),
+     *  note: if the period=1, then the rate must equal 0.",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer")),
      * @OA\Response(
      *    response=200,
      *    description="Successful response",
@@ -283,26 +350,30 @@ class ActivityController extends Controller
     public function getTotalFollwersGraphData(GraphRequest $request)
     {
         $request->validated();
-        $data = DB::select('select count(*) as total_followers, created_at::date as timestamp 
-            from follow_blog where followed_id = '
-            . $request->blog_id .
-            ' group by date(created_at) order by created_at::date;');
+        $activityService = new ActivityService();
+        $data = $activityService->getTotalFollowersService($request->blog_id, $request->period, $request->rate);
 
-        if ($data) {
-            for ($i = 1; $i < count($data); $i++) {
-                $data[$i]->total_followers += $data[$i - 1]->total_followers;
-            }
-        }
-
-        $blog = Blog::where('id', $request->blog_id)->first();
-        $followers = $blog->followers()->count();
-        $replies = $blog->replies()->count();
+        $newFollowersCount = $activityService->countNewFollowersService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
+        $TotalFollowersCount = $activityService->countTotalFollowersService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
+        $notesCount = $activityService->countNotesService(
+            $request->blog_id,
+            $request->period,
+            $request->rate
+        );
 
         $res = [
             "data" => $data,
-            "notes_count" => $replies,
-            "new_followers_count" => $followers,
-            "total_followers_count" => $followers,
+            "notes_count" => $notesCount,
+            "new_followers_count" => $newFollowersCount,
+            "total_followers_count" => $TotalFollowersCount,
         ];
 
         return $this->generalResponse($res, "ok", 200);

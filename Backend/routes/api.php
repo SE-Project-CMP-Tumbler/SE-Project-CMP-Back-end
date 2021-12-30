@@ -210,6 +210,6 @@ Route::get('/notifications', [NotificationController::class, 'notificaions'])->m
 /*
 | Graph Routes
 */
-Route::get('graph/notes/{blog_id}', [ActivityController::class, 'getNotesGraphData'])->middleware('auth:api');
-Route::get('graph/new_followers/{blog_id}', [ActivityController::class, 'getNewFollwersGraphData'])->middleware('auth:api');
-Route::get('graph/total_followers/{blog_id}', [ActivityController::class, 'getTotalFollwersGraphData'])->middleware('auth:api');
+Route::get('graph/notes/{blog_id}/{period}/{rate}', [ActivityController::class, 'getNotesGraphData'])->middleware('auth:api');
+Route::get('graph/new_followers/{blog_id}/{period}/{rate}', [ActivityController::class, 'getNewFollwersGraphData'])->middleware('auth:api');
+Route::get('graph/total_followers/{blog_id}/{period}/{rate}', [ActivityController::class, 'getTotalFollwersGraphData'])->middleware('auth:api');
