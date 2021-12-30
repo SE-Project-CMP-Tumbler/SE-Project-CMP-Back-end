@@ -30,7 +30,7 @@ class ThemeRequest extends FormRequest
         "color_title" => 'string|min:3',
         "font_title" => 'string|min:3|regex:/^[a-zA-Z0-9 ]+$/u',
         "font_weight_title" => 'string|min:3|regex:/^[a-zA-Z0-9 ]+$/u',
-        "description" => 'string|min:1' ,
+        "description" => 'string|nullable' ,
         "background_color" => 'string|min:3',
         "accent_color" => 'string|min:3',
         "body_font" => 'string|min:3|regex:/^[a-zA-Z0-9 ]+$/u',
