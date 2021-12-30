@@ -115,8 +115,14 @@ class ThemeController extends Controller
         }
         $this->authorize('update', $blog);
         $theme = $blog->theme;
+        $arr = $request->validated();
+        if ($request->has('description')) {
+            if ($request->description == null) {
+                $arr['description'] = " ";
+            }
+        }
         $theme->update($request->validated());
-        $blog->update($request->validated());
+        $blog->update($arr);
         return $this->generalResponse(new ThemeResource($theme), "ok");
     }
  /**
