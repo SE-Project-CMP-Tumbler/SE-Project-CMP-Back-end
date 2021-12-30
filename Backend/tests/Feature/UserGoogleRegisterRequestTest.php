@@ -21,7 +21,7 @@ class UserGoogleRegisterRequestTest extends TestCase
     public function testRequiredGoogleAccessToken()
     {
         $request = [
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "age" => 22
         ];
         $response = $this
@@ -64,7 +64,7 @@ class UserGoogleRegisterRequestTest extends TestCase
     {
         $request = [
             "google_access_token" => $this->faker->unique()->regexify('[0-9][A-Z][a-z]{60}') ,
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
         ];
         $response = $this
         ->json('POST', 'api/register_with_google', $request, Config::JSON)
@@ -85,7 +85,7 @@ class UserGoogleRegisterRequestTest extends TestCase
     {
         $request = [
             "google_access_token" => $this->faker->unique()->regexify('[0-9][A-Z][a-z]{60}') ,
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "age" => 22
         ];
         $response = $this
@@ -101,7 +101,7 @@ class UserGoogleRegisterRequestTest extends TestCase
     {
         $request = [
             "google_access_token" => $this->faker->unique()->regexify('[0-9][A-Z][a-z]{60}') ,
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "age" => 500
         ];
         $response = $this
@@ -123,7 +123,7 @@ class UserGoogleRegisterRequestTest extends TestCase
     {
         $request = [
             "google_access_token" => $this->faker->unique()->regexify('[0-9][A-Z][a-z]{60}') ,
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "age" => 12
         ];
         $response = $this
@@ -132,6 +132,28 @@ class UserGoogleRegisterRequestTest extends TestCase
             "meta" => [
                 "status" => "422",
                 "msg" => Errors::MIN_AGE,
+            ]
+        ]);
+    }
+    /**
+     *  test wrong username format
+     *
+     * @return void
+     */
+
+    public function testWrongFormatUsername()
+    {
+        $request = [
+            "google_access_token" => $this->faker->unique()->regexify('[0-9][A-Z][a-z]{60}') ,
+            "blog_username" => $this->faker->name(),
+            "age" => 12
+        ];
+        $response = $this
+        ->json('POST', 'api/register_with_google', $request, Config::JSON)
+        ->assertJson([
+            "meta" => [
+                "status" => "422",
+                "msg" => Errors::EMAIL_INVALID_FORMAT,
             ]
         ]);
     }
