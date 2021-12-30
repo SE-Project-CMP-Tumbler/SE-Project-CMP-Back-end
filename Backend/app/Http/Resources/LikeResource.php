@@ -42,7 +42,7 @@ class LikeResource extends JsonResource
         }
 
         if ($primaryBlog != null) {
-            $check = $blogService->checkIsFollowed($this->blog_id, $primaryBlog->id);
+            $check = $blogService->checkIsFollowed($primaryBlog->id, $this->blog_id);
         } else {
             $check = false;
         }
