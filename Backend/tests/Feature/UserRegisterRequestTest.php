@@ -21,7 +21,7 @@ class UserRegisterRequestTest extends TestCase
     public function testRequiredEmail()
     {
         $request = [
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 22
         ];
@@ -44,7 +44,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "age" => 22
         ];
         $response = $this
@@ -88,7 +88,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
         ];
         $response = $this
@@ -110,7 +110,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => "test.com",
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 22
         ];
@@ -135,7 +135,7 @@ class UserRegisterRequestTest extends TestCase
         $user = User::factory()->create(['email' => $email]);
         $request = [
             "email" => $email,
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 22
         ];
@@ -149,6 +149,29 @@ class UserRegisterRequestTest extends TestCase
         ]);
     }
     /**
+     *  test wrong username format
+     *
+     * @return void
+     */
+
+    public function testWrongFormatUsername()
+    {
+        $request = [
+            "email" => $this->faker->safeEmail(),
+            "blog_username" => $this->faker->name(),
+            "password" => "Mm123sdsd455",
+            "age" => 22
+        ];
+        $response = $this
+        ->json('POST', 'api/register', $request, Config::JSON)
+        ->assertJson([
+            "meta" => [
+                "status" => "422",
+                "msg" => Errors::EMAIL_INVALID_FORMAT,
+            ]
+        ]);
+    }
+    /**
      *  test invalid age (above 130)
      *
      * @return void
@@ -158,7 +181,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 500
         ];
@@ -181,7 +204,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 12
         ];
@@ -204,7 +227,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "123",
             "age" => 14
         ];
@@ -227,7 +250,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "kmkKMKMKCSNJN",
             "age" => 14
         ];
@@ -250,7 +273,7 @@ class UserRegisterRequestTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "asasasas12121",
             "age" => 14
         ];

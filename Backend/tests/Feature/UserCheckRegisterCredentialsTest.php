@@ -21,7 +21,7 @@ class UserCheckRegisterCredentialsTest extends TestCase
     public function testRequiredEmail()
     {
         $request = [
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 22
         ];
@@ -44,7 +44,7 @@ class UserCheckRegisterCredentialsTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "age" => 22
         ];
         $response = $this
@@ -88,7 +88,7 @@ class UserCheckRegisterCredentialsTest extends TestCase
     {
         $request = [
             "email" => "test.com",
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 22
         ];
@@ -113,7 +113,7 @@ class UserCheckRegisterCredentialsTest extends TestCase
         $user = User::factory()->create(['email' => $email]);
         $request = [
             "email" => $email,
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "Mm123sdsd455",
             "age" => 22
         ];
@@ -127,6 +127,29 @@ class UserCheckRegisterCredentialsTest extends TestCase
         ]);
     }
     /**
+     *  test wrong username format
+     *
+     * @return void
+     */
+
+    public function testWrongFormatUsername()
+    {
+        $request = [
+            "email" => $this->faker->safeEmail(),
+            "blog_username" => $this->faker->name(),
+            "password" => "Mm123sdsd455",
+            "age" => 22
+        ];
+        $response = $this
+        ->json('POST', 'api/check_register_credentials', $request, Config::JSON)
+        ->assertJson([
+            "meta" => [
+                "status" => "422",
+                "msg" => Errors::EMAIL_INVALID_FORMAT,
+            ]
+        ]);
+    }
+    /**
      *  test short password
      *
      * @return void
@@ -136,7 +159,7 @@ class UserCheckRegisterCredentialsTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "123",
             "age" => 14
         ];
@@ -159,7 +182,7 @@ class UserCheckRegisterCredentialsTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "kmkKMKMKCSNJN",
             "age" => 14
         ];
@@ -182,7 +205,7 @@ class UserCheckRegisterCredentialsTest extends TestCase
     {
         $request = [
             "email" => $this->faker->safeEmail(),
-            "blog_username" => $this->faker->name(),
+            "blog_username" => $this->faker->firstName(),
             "password" => "asasasas12121",
             "age" => 14
         ];
