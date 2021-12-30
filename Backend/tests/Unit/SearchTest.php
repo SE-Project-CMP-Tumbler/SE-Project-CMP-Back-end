@@ -13,20 +13,20 @@ use Tests\TestCase;
 
 class SearchTest extends TestCase
 {
-    // /** test function which  search about word in posts or tags of posts
-    //  * @return void
-    //  */
-    // public function testsSearch()
-    // {
-    //     $user = User::factory()->create();
-    //     $blog = Blog::factory()->create(["user_id" => $user->id]);
-    //     $post = Post::factory()->create(["blog_id" => $blog->id , "body" =>  "<div><h1>What's Artificial @intellegence? </h1> <p>#AI #humanity #freedom</p></div>"]);
-    //     $searchService = new SearchService();
-    //     $word = "artificial";
-    //     $result = $searchService->search($post, $word);
-    //     $this->assertNotEmpty($result);
+    /** test function which  search about word in posts or tags of posts
+     * @return void
+     */
+    public function testsSearch()
+    {
+        $user = User::factory()->create();
+        $blog = Blog::factory()->create(["user_id" => $user->id]);
+        $post = Post::factory(10)->create(["blog_id" => $blog->id , "body" =>  "<div><h1>What's Artificial @intellegence? </h1> <p> ok </p></div>"]);
+        $searchService = new SearchService();
+        $word = "Artificial";
+        $result = $searchService->search($post, $word);
+        $this->assertNotEmpty($result);
 
-    // }
+    }
     /** test function which  search about word  in tags 
      * @return void
      */

@@ -39,7 +39,7 @@ class SearchService
                 $resultWithSame = $tags->where('description', 'like', '%' . $wordNeed . '%');
                 $resultCaptial = $tags->where('description', 'like', '%' . $captialWord . '%');
             }
-            if (sizeof($result) > 0 || sizeof($resultCaptial) > 0 || !empty($foundWord) || !empty($foundwithSame) || sizeof($resultWithSame) > 0 || !empty($foundCaptial)) {
+            if (!empty($result) || !empty($resultCaptial) || !empty($foundWord) || !empty($foundwithSame) || !empty($resultWithSame) || !empty($foundCaptial)) {
                 array_push($matchedResult, $post->id);
             }
         }
