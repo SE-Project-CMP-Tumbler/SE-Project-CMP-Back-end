@@ -199,7 +199,23 @@ class BlogSettingController extends Controller
             return $this->generalResponse("", "Not Found blog", "404");
         }
         $this->authorize('update', $blog);
-        $blog->update($request->validated());
+        $arr = $request->validated();
+        if ($request->has('submissions_page_title')) {
+            if ($request->submissions_page_title == null) {
+                $arr['submissions_page_title'] = " ";
+            }
+        }
+        if ($request->has('submissions_guidelines')) {
+            if ($request->submissions_guidelines == null) {
+                $arr['submissions_guidelines'] = " ";
+            }
+        }
+        if ($request->has('ask_page_title')) {
+            if ($request->ask_page_title == null) {
+                $arr['ask_page_title'] = " ";
+            }
+        }
+        $blog->update($arr);
         return  $this->generalResponse(new BlogSettingResource($blog), "ok");
     }
 }

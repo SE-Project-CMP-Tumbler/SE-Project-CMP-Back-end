@@ -30,11 +30,11 @@ class BlogSettingRequest extends FormRequest
             'allow_messages' => 'boolean',
             'replies_settings' => ['string',Rule::in($replies)],
             'allow_submittions' => 'boolean',
-            'submissions_page_title' => 'string|min:3',
-            'submissions_guidelines' => 'string|min:3',
+            'submissions_page_title' => 'string|nullable',
+            'submissions_guidelines' => 'string|nullable',
             'allow_ask' => 'boolean',
             'allow_anonymous_questions' => 'boolean',
-            'ask_page_title' => 'string|min:3',
+            'ask_page_title' => 'string|nullable',
             'share_likes' => 'boolean',
             'share_followings' => 'boolean'
         ];
