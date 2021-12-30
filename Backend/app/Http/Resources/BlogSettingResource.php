@@ -24,7 +24,7 @@ class BlogSettingResource extends JsonResource
             "allow_anonymous_questions" => $this->allow_anonymous_questions
          ],
          "submissions_settings" => [
-            "allow_submittions" => $this->submissions_page_title,
+            "allow_submittions" => $this->allow_submittions,
             "submissions_page_title" => $this->submissions_page_title,
             "submissions_guidelines" => $this->submissions_guidelines
          ],
