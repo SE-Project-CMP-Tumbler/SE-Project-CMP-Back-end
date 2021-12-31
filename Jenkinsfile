@@ -96,6 +96,8 @@ docker-compose up -d --build;
         sh 'whoami;hostname;uptime'
         sh '''cd Backend;
 az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p backend.env --dest .env;
+az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p oauth-private.key --dest storage/oauth-private.key;
+az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p oauth-public.key --dest storage/oauth-public.key;
 docker-compose up -d --build;'''
       }
       post {
