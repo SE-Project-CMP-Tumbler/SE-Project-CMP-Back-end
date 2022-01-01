@@ -4,7 +4,6 @@ namespace Illuminate\Foundation\Testing;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\Traits\CanConfigureMigrationCommands;
-use Illuminate\Foundation\Testing\RefreshDatabaseState;
 
 trait RefreshDatabase
 {
@@ -20,8 +19,6 @@ trait RefreshDatabase
         $this->usingInMemoryDatabase()
                         ? $this->refreshInMemoryDatabase()
                         : $this->refreshTestDatabase();
-
-        $this->afterRefreshingDatabase();
     }
 
     /**
@@ -103,7 +100,7 @@ trait RefreshDatabase
                 $dispatcher = $connection->getEventDispatcher();
 
                 $connection->unsetEventDispatcher();
-                $connection->rollBack();
+                $connection->rollback();
                 $connection->setEventDispatcher($dispatcher);
                 $connection->disconnect();
             }
@@ -119,15 +116,5 @@ trait RefreshDatabase
     {
         return property_exists($this, 'connectionsToTransact')
                             ? $this->connectionsToTransact : [null];
-    }
-
-    /**
-     * Perform any work that should take place once the database has finished refreshing.
-     *
-     * @return void
-     */
-    protected function afterRefreshingDatabase()
-    {
-        // ...
     }
 }

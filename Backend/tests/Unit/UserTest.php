@@ -7,9 +7,12 @@ use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      *register Without Google But Sending a GoogleId
      *

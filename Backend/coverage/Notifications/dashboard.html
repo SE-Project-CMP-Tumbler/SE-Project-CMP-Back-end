@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /home/ahmed/workspace/tumblr/Backend/app/Notifications</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">/home/ahmed/workspace/tumblr/Backend/app</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Notifications</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="LikeNotification.php.html#14">App\Notifications\LikeNotification</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#14">App\Notifications\MentionNotification</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#14">App\Notifications\ReblogNotification</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#15">App\Notifications\ReplyNotification</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#12">APP\Notifications\CustomVerifyEmail</a></td><td class="text-right">64%</td></tr>
+       <tr><td><a href="UserFollowedNotification.php.html#13">App\Notifications\UserFollowedNotification</a></td><td class="text-right">70%</td></tr>
+       <tr><td><a href="CustomResetPassword.php.html#10">App\Notifications\CustomResetPassword</a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="AskNotification.php.html#14">App\Notifications\AskNotification</a></td><td class="text-right">72%</td></tr>
+       <tr><td><a href="AnswerNotification.php.html#16">App\Notifications\AnswerNotification</a></td><td class="text-right">77%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="CustomResetPassword.php.html#10">App\Notifications\CustomResetPassword</a></td><td class="text-right">10</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#12">APP\Notifications\CustomVerifyEmail</a></td><td class="text-right">10</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="AnswerNotification.php.html#69"><abbr title="App\Notifications\AnswerNotification::broadcastAs">broadcastAs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AnswerNotification.php.html#79"><abbr title="App\Notifications\AnswerNotification::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AnswerNotification.php.html#89"><abbr title="App\Notifications\AnswerNotification::broadcastType">broadcastType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AnswerNotification.php.html#100"><abbr title="App\Notifications\AnswerNotification::toDatabase">toDatabase</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AnswerNotification.php.html#111"><abbr title="App\Notifications\AnswerNotification::toArray">toArray</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AskNotification.php.html#62"><abbr title="App\Notifications\AskNotification::broadcastAs">broadcastAs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AskNotification.php.html#72"><abbr title="App\Notifications\AskNotification::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AskNotification.php.html#82"><abbr title="App\Notifications\AskNotification::broadcastType">broadcastType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AskNotification.php.html#93"><abbr title="App\Notifications\AskNotification::toDatabase">toDatabase</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AskNotification.php.html#104"><abbr title="App\Notifications\AskNotification::toArray">toArray</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomResetPassword.php.html#108"><abbr title="App\Notifications\CustomResetPassword::createUrlUsing">createUrlUsing</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomResetPassword.php.html#119"><abbr title="App\Notifications\CustomResetPassword::toMailUsing">toMailUsing</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#91"><abbr title="APP\Notifications\CustomVerifyEmail::createUrlUsing">createUrlUsing</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#102"><abbr title="APP\Notifications\CustomVerifyEmail::toMailUsing">toMailUsing</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#38"><abbr title="App\Notifications\LikeNotification::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#52"><abbr title="App\Notifications\LikeNotification::via">via</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#62"><abbr title="App\Notifications\LikeNotification::broadcastAs">broadcastAs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#72"><abbr title="App\Notifications\LikeNotification::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#82"><abbr title="App\Notifications\LikeNotification::broadcastType">broadcastType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#93"><abbr title="App\Notifications\LikeNotification::toDatabase">toDatabase</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#104"><abbr title="App\Notifications\LikeNotification::toArray">toArray</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LikeNotification.php.html#116"><abbr title="App\Notifications\LikeNotification::prepareData">prepareData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#38"><abbr title="App\Notifications\MentionNotification::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#52"><abbr title="App\Notifications\MentionNotification::via">via</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#62"><abbr title="App\Notifications\MentionNotification::broadcastAs">broadcastAs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#72"><abbr title="App\Notifications\MentionNotification::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#82"><abbr title="App\Notifications\MentionNotification::broadcastType">broadcastType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#93"><abbr title="App\Notifications\MentionNotification::toDatabase">toDatabase</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#104"><abbr title="App\Notifications\MentionNotification::toArray">toArray</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MentionNotification.php.html#116"><abbr title="App\Notifications\MentionNotification::prepareData">prepareData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#41"><abbr title="App\Notifications\ReblogNotification::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#56"><abbr title="App\Notifications\ReblogNotification::via">via</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#66"><abbr title="App\Notifications\ReblogNotification::broadcastAs">broadcastAs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#76"><abbr title="App\Notifications\ReblogNotification::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#86"><abbr title="App\Notifications\ReblogNotification::broadcastType">broadcastType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#97"><abbr title="App\Notifications\ReblogNotification::toDatabase">toDatabase</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#108"><abbr title="App\Notifications\ReblogNotification::toArray">toArray</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReblogNotification.php.html#120"><abbr title="App\Notifications\ReblogNotification::prepareData">prepareData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#42"><abbr title="App\Notifications\ReplyNotification::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#57"><abbr title="App\Notifications\ReplyNotification::via">via</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#67"><abbr title="App\Notifications\ReplyNotification::broadcastAs">broadcastAs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#77"><abbr title="App\Notifications\ReplyNotification::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#87"><abbr title="App\Notifications\ReplyNotification::broadcastType">broadcastType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#98"><abbr title="App\Notifications\ReplyNotification::toDatabase">toDatabase</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#109"><abbr title="App\Notifications\ReplyNotification::toArray">toArray</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReplyNotification.php.html#121"><abbr title="App\Notifications\ReplyNotification::prepareData">prepareData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserFollowedNotification.php.html#62"><abbr title="App\Notifications\UserFollowedNotification::broadcastAs">broadcastAs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserFollowedNotification.php.html#72"><abbr title="App\Notifications\UserFollowedNotification::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserFollowedNotification.php.html#82"><abbr title="App\Notifications\UserFollowedNotification::broadcastType">broadcastType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserFollowedNotification.php.html#93"><abbr title="App\Notifications\UserFollowedNotification::toDatabase">toDatabase</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserFollowedNotification.php.html#104"><abbr title="App\Notifications\UserFollowedNotification::toArray">toArray</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomResetPassword.php.html#61"><abbr title="App\Notifications\CustomResetPassword::toMail">toMail</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#77"><abbr title="APP\Notifications\CustomVerifyEmail::verificationUrl">verificationUrl</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#45"><abbr title="APP\Notifications\CustomVerifyEmail::toMail">toMail</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="CustomResetPassword.php.html#92"><abbr title="App\Notifications\CustomResetPassword::resetUrl">resetUrl</abbr></a></td><td class="text-right">80%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="CustomResetPassword.php.html#61"><abbr title="App\Notifications\CustomResetPassword::toMail">toMail</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#77"><abbr title="APP\Notifications\CustomVerifyEmail::verificationUrl">verificationUrl</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="CustomVerifyEmail.php.html#45"><abbr title="APP\Notifications\CustomVerifyEmail::toMail">toMail</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="CustomResetPassword.php.html#92"><abbr title="App\Notifications\CustomResetPassword::resetUrl">resetUrl</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.9</a> using <a href="https://secure.php.net/" target="_top">PHP 8.0.13</a> and <a href="https://phpunit.de/">PHPUnit 9.5.10</a> at Sat Jan 1 21:20:09 UTC 2022.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js" type="text/javascript"></script>
+  <script src="../_js/d3.min.js" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([4,0,0,0,0,0,0,1,4,0,0,0], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([51,0,0,0,0,0,0,2,1,1,0,15], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[77.41935483870968,9,"<a href=\"AnswerNotification.php.html#16\">App\\Notifications\\AnswerNotification<\/a>"],[72,8,"<a href=\"AskNotification.php.html#14\">App\\Notifications\\AskNotification<\/a>"],[71.42857142857143,9,"<a href=\"CustomResetPassword.php.html#10\">App\\Notifications\\CustomResetPassword<\/a>"],[64.70588235294117,8,"<a href=\"CustomVerifyEmail.php.html#12\">APP\\Notifications\\CustomVerifyEmail<\/a>"],[0,8,"<a href=\"LikeNotification.php.html#14\">App\\Notifications\\LikeNotification<\/a>"],[0,8,"<a href=\"MentionNotification.php.html#14\">App\\Notifications\\MentionNotification<\/a>"],[0,8,"<a href=\"ReblogNotification.php.html#14\">App\\Notifications\\ReblogNotification<\/a>"],[0,8,"<a href=\"ReplyNotification.php.html#15\">App\\Notifications\\ReplyNotification<\/a>"],[70.83333333333334,8,"<a href=\"UserFollowedNotification.php.html#13\">App\\Notifications\\UserFollowedNotification<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"AnswerNotification.php.html#43\">App\\Notifications\\AnswerNotification::__construct<\/a>"],[100,1,"<a href=\"AnswerNotification.php.html#59\">App\\Notifications\\AnswerNotification::via<\/a>"],[0,1,"<a href=\"AnswerNotification.php.html#69\">App\\Notifications\\AnswerNotification::broadcastAs<\/a>"],[0,1,"<a href=\"AnswerNotification.php.html#79\">App\\Notifications\\AnswerNotification::broadcastOn<\/a>"],[0,1,"<a href=\"AnswerNotification.php.html#89\">App\\Notifications\\AnswerNotification::broadcastType<\/a>"],[0,1,"<a href=\"AnswerNotification.php.html#100\">App\\Notifications\\AnswerNotification::toDatabase<\/a>"],[0,1,"<a href=\"AnswerNotification.php.html#111\">App\\Notifications\\AnswerNotification::toArray<\/a>"],[100,1,"<a href=\"AnswerNotification.php.html#123\">App\\Notifications\\AnswerNotification::prepareData<\/a>"],[100,1,"<a href=\"AnswerNotification.php.html#153\">App\\Notifications\\AnswerNotification::deleteAskNotification<\/a>"],[100,1,"<a href=\"AskNotification.php.html#38\">App\\Notifications\\AskNotification::__construct<\/a>"],[100,1,"<a href=\"AskNotification.php.html#52\">App\\Notifications\\AskNotification::via<\/a>"],[0,1,"<a href=\"AskNotification.php.html#62\">App\\Notifications\\AskNotification::broadcastAs<\/a>"],[0,1,"<a href=\"AskNotification.php.html#72\">App\\Notifications\\AskNotification::broadcastOn<\/a>"],[0,1,"<a href=\"AskNotification.php.html#82\">App\\Notifications\\AskNotification::broadcastType<\/a>"],[0,1,"<a href=\"AskNotification.php.html#93\">App\\Notifications\\AskNotification::toDatabase<\/a>"],[0,1,"<a href=\"AskNotification.php.html#104\">App\\Notifications\\AskNotification::toArray<\/a>"],[100,1,"<a href=\"AskNotification.php.html#116\">App\\Notifications\\AskNotification::prepareData<\/a>"],[100,1,"<a href=\"CustomResetPassword.php.html#39\">App\\Notifications\\CustomResetPassword::__construct<\/a>"],[100,1,"<a href=\"CustomResetPassword.php.html#50\">App\\Notifications\\CustomResetPassword::via<\/a>"],[66.66666666666666,2,"<a href=\"CustomResetPassword.php.html#61\">App\\Notifications\\CustomResetPassword::toMail<\/a>"],[100,1,"<a href=\"CustomResetPassword.php.html#76\">App\\Notifications\\CustomResetPassword::buildMailMessage<\/a>"],[80,2,"<a href=\"CustomResetPassword.php.html#92\">App\\Notifications\\CustomResetPassword::resetUrl<\/a>"],[0,1,"<a href=\"CustomResetPassword.php.html#108\">App\\Notifications\\CustomResetPassword::createUrlUsing<\/a>"],[0,1,"<a href=\"CustomResetPassword.php.html#119\">App\\Notifications\\CustomResetPassword::toMailUsing<\/a>"],[100,1,"<a href=\"CustomVerifyEmail.php.html#34\">APP\\Notifications\\CustomVerifyEmail::via<\/a>"],[75,2,"<a href=\"CustomVerifyEmail.php.html#45\">APP\\Notifications\\CustomVerifyEmail::toMail<\/a>"],[100,1,"<a href=\"CustomVerifyEmail.php.html#62\">APP\\Notifications\\CustomVerifyEmail::buildMailMessage<\/a>"],[66.66666666666666,2,"<a href=\"CustomVerifyEmail.php.html#77\">APP\\Notifications\\CustomVerifyEmail::verificationUrl<\/a>"],[0,1,"<a href=\"CustomVerifyEmail.php.html#91\">APP\\Notifications\\CustomVerifyEmail::createUrlUsing<\/a>"],[0,1,"<a href=\"CustomVerifyEmail.php.html#102\">APP\\Notifications\\CustomVerifyEmail::toMailUsing<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#38\">App\\Notifications\\LikeNotification::__construct<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#52\">App\\Notifications\\LikeNotification::via<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#62\">App\\Notifications\\LikeNotification::broadcastAs<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#72\">App\\Notifications\\LikeNotification::broadcastOn<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#82\">App\\Notifications\\LikeNotification::broadcastType<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#93\">App\\Notifications\\LikeNotification::toDatabase<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#104\">App\\Notifications\\LikeNotification::toArray<\/a>"],[0,1,"<a href=\"LikeNotification.php.html#116\">App\\Notifications\\LikeNotification::prepareData<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#38\">App\\Notifications\\MentionNotification::__construct<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#52\">App\\Notifications\\MentionNotification::via<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#62\">App\\Notifications\\MentionNotification::broadcastAs<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#72\">App\\Notifications\\MentionNotification::broadcastOn<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#82\">App\\Notifications\\MentionNotification::broadcastType<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#93\">App\\Notifications\\MentionNotification::toDatabase<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#104\">App\\Notifications\\MentionNotification::toArray<\/a>"],[0,1,"<a href=\"MentionNotification.php.html#116\">App\\Notifications\\MentionNotification::prepareData<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#41\">App\\Notifications\\ReblogNotification::__construct<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#56\">App\\Notifications\\ReblogNotification::via<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#66\">App\\Notifications\\ReblogNotification::broadcastAs<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#76\">App\\Notifications\\ReblogNotification::broadcastOn<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#86\">App\\Notifications\\ReblogNotification::broadcastType<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#97\">App\\Notifications\\ReblogNotification::toDatabase<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#108\">App\\Notifications\\ReblogNotification::toArray<\/a>"],[0,1,"<a href=\"ReblogNotification.php.html#120\">App\\Notifications\\ReblogNotification::prepareData<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#42\">App\\Notifications\\ReplyNotification::__construct<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#57\">App\\Notifications\\ReplyNotification::via<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#67\">App\\Notifications\\ReplyNotification::broadcastAs<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#77\">App\\Notifications\\ReplyNotification::broadcastOn<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#87\">App\\Notifications\\ReplyNotification::broadcastType<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#98\">App\\Notifications\\ReplyNotification::toDatabase<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#109\">App\\Notifications\\ReplyNotification::toArray<\/a>"],[0,1,"<a href=\"ReplyNotification.php.html#121\">App\\Notifications\\ReplyNotification::prepareData<\/a>"],[100,1,"<a href=\"UserFollowedNotification.php.html#38\">App\\Notifications\\UserFollowedNotification::__construct<\/a>"],[100,1,"<a href=\"UserFollowedNotification.php.html#52\">App\\Notifications\\UserFollowedNotification::via<\/a>"],[0,1,"<a href=\"UserFollowedNotification.php.html#62\">App\\Notifications\\UserFollowedNotification::broadcastAs<\/a>"],[0,1,"<a href=\"UserFollowedNotification.php.html#72\">App\\Notifications\\UserFollowedNotification::broadcastOn<\/a>"],[0,1,"<a href=\"UserFollowedNotification.php.html#82\">App\\Notifications\\UserFollowedNotification::broadcastType<\/a>"],[0,1,"<a href=\"UserFollowedNotification.php.html#93\">App\\Notifications\\UserFollowedNotification::toDatabase<\/a>"],[0,1,"<a href=\"UserFollowedNotification.php.html#104\">App\\Notifications\\UserFollowedNotification::toArray<\/a>"],[100,1,"<a href=\"UserFollowedNotification.php.html#117\">App\\Notifications\\UserFollowedNotification::prepareData<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

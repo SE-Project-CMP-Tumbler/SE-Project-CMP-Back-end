@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class UploadExtVideoTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * The access token of the authenticated user that would do testing operations
