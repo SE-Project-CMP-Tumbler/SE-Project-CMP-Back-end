@@ -10,9 +10,13 @@ use App\Models\User;
 use App\Http\Misc\Helpers\Config;
 use App\Models\Blog;
 use App\Models\Question;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AnswerNotification;
 
 class AnswerRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
    /**
      * A basic feature test missing post body.
      *
@@ -20,6 +24,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testRequiredPostBody()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create();
         $question = Question::factory()->create([
@@ -41,6 +46,7 @@ class AnswerRequestTest extends TestCase
                 "msg" => "The post body field is required.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test missing post type.
@@ -49,6 +55,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testRequiredPostType()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create();
         $question = Question::factory()->create([
@@ -70,6 +77,7 @@ class AnswerRequestTest extends TestCase
                 "msg" => "The post type field is required.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test invalid post type.
@@ -78,6 +86,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testInvalidPostType()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create();
         $question = Question::factory()->create([
@@ -100,6 +109,7 @@ class AnswerRequestTest extends TestCase
                 "msg" => "The selected post type is invalid.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
         /**
      * A basic feature test missing post status.
@@ -108,6 +118,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testRequiredPostStatus()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create();
         $question = Question::factory()->create([
@@ -129,6 +140,7 @@ class AnswerRequestTest extends TestCase
                 "msg" => "The post status field is required.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test invalid post status.
@@ -137,6 +149,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testInvalidPostStatus()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create();
         $question = Question::factory()->create([
@@ -159,6 +172,7 @@ class AnswerRequestTest extends TestCase
                 "msg" => "The selected post status is invalid.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test invalid question id sent in the url.
@@ -167,6 +181,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testInvalidQuestionId()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create();
         $question = Question::factory()->create([
@@ -189,6 +204,7 @@ class AnswerRequestTest extends TestCase
                 "msg" => "The question id must be a number.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test question does not exist  id sent in the url.
@@ -197,6 +213,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testNotExistQuestionId()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create();
         $question = Question::factory()->create([
@@ -221,6 +238,7 @@ class AnswerRequestTest extends TestCase
                 "msg" => "The selected question id is invalid.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
    /**
      * test success answer question.
@@ -229,6 +247,7 @@ class AnswerRequestTest extends TestCase
      */
     public function testAnswerRequest()
     {
+        Notification::fake();
         $blogSender = Blog::factory()->create();
         $blogReciever = Blog::factory()->create(['is_primary' => true]);
         $question = Question::factory()->create([
@@ -246,5 +265,9 @@ class AnswerRequestTest extends TestCase
         $response = $this
         ->json('POST', 'api/answer/' . ($question->id), $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertStatus(200);
+        Notification::assertSentTo(
+            [$blogReciever->user()->first()],
+            AnswerNotification::class
+        );
     }
 }

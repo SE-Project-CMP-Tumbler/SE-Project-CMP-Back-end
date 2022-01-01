@@ -14,6 +14,35 @@ class UploadVideoTest extends TestCase
 {
     // use RefreshDatabase;
 
+    protected $storageDriver = 'public';
+
+    /**
+     * The access token of the authenticated user that would do testing operations
+     *
+     * @var string
+     */
+    protected $accessToken;
+
+    /**
+     * Require the access token for the testing user before running each testcase
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $user = User::factory()->create();
+        $this->accessToken = $user->createToken('Auth Token')->accessToken;
+    }
+
+    public function testUnauthorizedRequest()
+    {
+        $response = $this->postJson('/api/upload_video', [
+            'video' => null,
+        ], Config::JSON);
+        $response->assertUnauthorized();
+    }
+
     /**
      * unti test for uploading an video
      * testing giving uploading null
@@ -22,16 +51,12 @@ class UploadVideoTest extends TestCase
      */
     public function testUploadNullVideo()
     {
-        Storage::fake('videos');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $response = $this->postJson('/api/upload_video', [
             'video' => null,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -50,9 +75,7 @@ class UploadVideoTest extends TestCase
      */
     public function testUploadVideoNotSupportedType()
     {
-        Storage::fake('videos');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         // get the first elements beceasue they're the ones that can be faked !
         $notValidTypes = array_slice(Config::NOT_VALID_VIDEO_TYPES, 0, Config::NOT_VALID_FAKE_LEN, true);
         $randType = array_rand($notValidTypes, 1);
@@ -63,11 +86,9 @@ class UploadVideoTest extends TestCase
             );
         $response = $this->postJson('/api/upload_video', [
             'video' => $videoFile,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -75,7 +96,7 @@ class UploadVideoTest extends TestCase
                 'msg' => 'Not supported video type',
             ]
         ]);
-        Storage::disk('videos')->assertMissing($videoFile->hashName());
+        Storage::disk($this->storageDriver)->assertMissing($videoFile->hashName());
     }
 
     /**
@@ -86,9 +107,7 @@ class UploadVideoTest extends TestCase
      */
     public function testUploadvideoBiggerSize()
     {
-        Storage::fake('videos');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $validTypes = array_slice(Config::VALID_VIDEO_TYPES, 0, Config::VALID_FAKE_LEN, true);
         $randType = array_rand($validTypes, 1);
         $videoFile = UploadedFile::fake()
@@ -98,11 +117,9 @@ class UploadVideoTest extends TestCase
             );
         $response = $this->postJson('/api/upload_video', [
             'video' => $videoFile,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -110,7 +127,7 @@ class UploadVideoTest extends TestCase
                 'msg' => 'Allowed video max size is ' . Config::FILE_UPLOAD_MAX_SIZE / 1024 . "MB"
             ]
         ]);
-        Storage::disk('videos')->assertMissing($videoFile->hashName());
+        Storage::disk($this->storageDriver)->assertMissing($videoFile->hashName());
     }
 
     /**
@@ -123,9 +140,7 @@ class UploadVideoTest extends TestCase
      */
     public function testUploadValidvideoArray()
     {
-        Storage::fake('videos');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $validTypes = array_slice(Config::VALID_VIDEO_TYPES, 0, Config::VALID_FAKE_LEN, true);
         $randType = array_rand($validTypes, 1);
         $numberOfvideos = mt_rand(1, 10);
@@ -140,11 +155,9 @@ class UploadVideoTest extends TestCase
         }
         $response = $this->postJson('/api/upload_video', [
             'video' => $videoArray,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -152,7 +165,7 @@ class UploadVideoTest extends TestCase
                 'msg' => 'Not supported video type'
             ]
         ]);
-        Storage::disk('videos')->assertMissing($videoArray[0]->hashName());
+        Storage::disk($this->storageDriver)->assertMissing($videoArray[0]->hashName());
     }
 
     /**
@@ -163,20 +176,23 @@ class UploadVideoTest extends TestCase
      */
     // public function testUploadValidvideo()
     // {
-    //     Storage::fake('videos');
-    //     $user = User::factory()->create();
-    //     $token = $user->createToken('Auth Token')->accessToken;
+    //     Storage::fake($this->storageDriver);
     //     $validTypes = array_slice(Config::VALID_VIDEO_TYPES, 0, Config::VALID_FAKE_LEN, true);
     //     $randType = array_rand($validTypes, 1);
     //     $videoFile = new UploadedFile("/home/ahmed/Videos/anger.mp4", 'anger.mp4', null, null, true);
     //     $response = $this->postJson('/api/upload_video', [
     //         'video' => $videoFile,
-    //     ], [
-    //         'Content-Type' => 'application/json',
-    //         'Accept' => 'application/json',
-    //         'Authorization' => 'Bearer ' . $token
-    //     ]);
+    //     ], array_merge(Config::JSON, [
+    //         'Authorization' => 'Bearer ' . $this->accessToken,
+    //     ]));
     //     $response->assertStatus(200);
-    //     Storage::disk('videos')->assertExists($videoFile->hashName());
+    //     $uploadedVideoPath = explode('/', $response->getOriginalContent()["response"]["url"]);
+    //     $len = count($uploadedVideoPath);
+
+    //     $uploadedVideoName = '';
+    //     if ($len > 2) {
+    //         $uploadedVideoName = $uploadedVideoPath[$len - 2] . '/' . $uploadedVideoPath[$len - 1];
+    //     }
+    //     Storage::disk($this->storageDriver)->assertExists($uploadedVideoName);
     // }
 }
