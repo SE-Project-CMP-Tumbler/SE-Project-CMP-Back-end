@@ -7,9 +7,12 @@ use App\Models\User;
 use App\Http\Misc\Helpers\Config;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserLoginRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      *  test email is required
      *

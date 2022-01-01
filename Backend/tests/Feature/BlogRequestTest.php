@@ -11,6 +11,8 @@ use Tests\TestCase;
 
 class BlogRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      *  test Blog username is required
      *

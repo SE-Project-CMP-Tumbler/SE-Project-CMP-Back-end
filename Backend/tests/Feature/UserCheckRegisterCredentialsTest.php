@@ -7,9 +7,11 @@ use App\Models\User;
 use App\Http\Misc\Helpers\Config;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserCheckRegisterCredentialsTest extends TestCase
 {
+    use RefreshDatabase;
     use WithFaker;
 
     /**

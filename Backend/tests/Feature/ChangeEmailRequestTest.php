@@ -11,6 +11,8 @@ use App\Models\User;
 
 class ChangeEmailRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      *  test email is required
      *

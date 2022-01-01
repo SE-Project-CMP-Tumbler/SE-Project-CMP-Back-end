@@ -14,6 +14,8 @@ use App\Models\Reply;
 
 class PostPolicyNotesTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * test true 1 can reply on post
      * replying on a 'Everyone can reply' blog's post

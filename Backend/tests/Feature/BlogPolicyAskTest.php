@@ -11,6 +11,8 @@ use App\Models\Question;
 
 class BlogPolicyAskTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * test true can ask blog
      *
