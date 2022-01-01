@@ -8,9 +8,13 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Http\Misc\Helpers\Config;
 use App\Models\Blog;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AskNotification;
 
 class AskRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test missing question body.
      *
@@ -18,6 +22,7 @@ class AskRequestTest extends TestCase
      */
     public function testRequiredQuestionBody()
     {
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create([
             'allow_ask' => true,
@@ -35,6 +40,7 @@ class AskRequestTest extends TestCase
                 "msg" => "The question body field is required.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test missing question flag.
@@ -43,6 +49,7 @@ class AskRequestTest extends TestCase
      */
     public function testRequiredQuestionFlag()
     {
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create([
             'allow_ask' => true,
@@ -60,6 +67,7 @@ class AskRequestTest extends TestCase
                 "msg" => "The question flag field is required.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test wrong question body.
@@ -68,6 +76,7 @@ class AskRequestTest extends TestCase
      */
     public function testWrongQuestionBody()
     {
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create([
             'allow_ask' => true,
@@ -86,6 +95,7 @@ class AskRequestTest extends TestCase
                 "msg" => "The question body must be a string.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
 
     /**
@@ -95,6 +105,7 @@ class AskRequestTest extends TestCase
      */
     public function testWrongQuestionFlag()
     {
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create([
             'allow_ask' => true,
@@ -113,6 +124,7 @@ class AskRequestTest extends TestCase
                 "msg" => "The question flag field must be true or false.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test non numeric blog id sent in the url.
@@ -121,6 +133,7 @@ class AskRequestTest extends TestCase
      */
     public function testWrongBlogId()
     {
+        Notification::fake();
         $user = User::factory()->create();
         $token = $user->createToken('Auth Token')->accessToken;
         $request = [
@@ -135,6 +148,7 @@ class AskRequestTest extends TestCase
                 "msg" => "The blog id must be a number.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test the blog id doesn't exist.
@@ -143,6 +157,7 @@ class AskRequestTest extends TestCase
      */
     public function testNotExistBlogId()
     {
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create();
         $blogId = $blog->id;
@@ -160,6 +175,7 @@ class AskRequestTest extends TestCase
                 "msg" => "The selected blog id is invalid.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      * A basic feature test success ask request.
@@ -168,6 +184,7 @@ class AskRequestTest extends TestCase
      */
     public function testAskRequest()
     {
+        Notification::fake();
         $user = User::factory()->create();
         Blog::factory()->create(['user_id' => $user->id , 'is_primary' => true]);
         $blog = Blog::factory()->create([
@@ -182,5 +199,9 @@ class AskRequestTest extends TestCase
         $response = $this
         ->json('POST', 'api/ask/' . ($blog->id), $request, ['Authorization' => 'Bearer ' . $token], Config::JSON)
         ->assertstatus(200);
+        Notification::assertSentTo(
+            [$blog->user()->first()],
+            AskNotification::class
+        );
     }
 }

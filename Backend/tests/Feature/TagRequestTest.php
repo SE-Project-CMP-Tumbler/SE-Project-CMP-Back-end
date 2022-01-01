@@ -5,18 +5,22 @@ namespace Tests\Feature;
 use App\Http\Misc\Helpers\Config;
 use App\Models\Blog;
 use App\Models\Post;
+use App\Models\User;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class TagRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @var array $tag
      */
     protected $tag;
     /**
-     * Set up the $tag data before running each testcase
+     * Set up the post has tag relationship data before running each testcase
      *
      * @return void
      */
@@ -25,16 +29,9 @@ class TagRequestTest extends TestCase
         parent::setUp();
 
         $faker = Factory::create(1);
-        $request_body = [
-            "email" => $faker->email(),
-            "blog_username" => $faker->text(),
-            "password" => "testTest1234",
-            "age" => "22"
-        ];
-        $response = $this->json('POST', 'api/register', $request_body, Config::JSON);
-        $user_id = $response['response']['id'];
-        $blog = Blog::factory()->create(['user_id' => $user_id]);
-        $this->access_token = $response['response']['access_token'];
+        $user = User::factory()->create();
+        Passport::actingAs($user);
+        $blog = Blog::factory()->create(['user_id' => $user->id]);
 
         $post = Post::factory()->create(['blog_id' => $blog->id]);
         $this->tag = [
@@ -52,9 +49,8 @@ class TagRequestTest extends TestCase
     {
         $url = 'api/tag/data/' . $this->tag['post_id'] . '/' . $this->tag['tag_description'];
         $body = [];
-        $response = $this
-        ->json('POST', $url, $body, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON);
-        $this->assertTrue($response->json()["meta"]["status"] === "200");
+        $response = $this->json('POST', $url, $body, Config::JSON)
+            ->assertStatus(200);
     }
     /**
      * Test the reponse message when post id is not numeric
@@ -67,13 +63,12 @@ class TagRequestTest extends TestCase
         $this->tag['post_id'] = "somestring";
         $url = 'api/tag/data/' . $this->tag['post_id'] . '/' . $this->tag['tag_description'];
         $body = [];
-        $response = $this
-        ->json('POST', $url, $body, ['Authorization' => 'Bearer ' . $this->access_token], Config::JSON)
-        ->assertJson([
-            "meta" => [
-                "status" => "422",
-                "msg" => 'The post id must be a number.'
-            ]
-        ]);
+        $response = $this->json('POST', $url, $body, Config::JSON)
+            ->assertJson([
+                "meta" => [
+                    "status" => "422",
+                    "msg" => 'The post id must be a number.'
+                ]
+            ]);
     }
 }
