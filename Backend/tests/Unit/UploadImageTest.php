@@ -14,6 +14,35 @@ class UploadImageTest extends TestCase
 {
     // use RefreshDatabase;
 
+    protected $storageDriver = 'public';
+
+    /**
+     * The access token of the authenticated user that would do testing operations
+     *
+     * @var string
+     */
+    protected $accessToken;
+
+    /**
+     * Require the access token for the testing user before running each testcase
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $user = User::factory()->create();
+        $this->accessToken = $user->createToken('Auth Token')->accessToken;
+    }
+
+    public function testUnauthorizedRequest()
+    {
+        $response = $this->postJson('/api/upload_photo', [
+            'image' => null,
+        ], Config::JSON);
+        $response->assertUnauthorized();
+    }
+
     /**
      * unti test for uploading an image
      * testing giving uploading null
@@ -22,16 +51,12 @@ class UploadImageTest extends TestCase
      */
     public function testUploadNullImage()
     {
-        Storage::fake('images');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $response = $this->postJson('/api/upload_photo', [
             'image' => null,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -50,9 +75,7 @@ class UploadImageTest extends TestCase
      */
     public function testUploadImageNotSupportedType()
     {
-        Storage::fake('images');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $notValidTypes = Config::NOT_VALID_IMAGE_TYPES;
         $randType = array_rand($notValidTypes, 1);
         $imageFile = UploadedFile::fake()
@@ -63,11 +86,9 @@ class UploadImageTest extends TestCase
             )->size(mt_rand(10, Config::FILE_UPLOAD_MAX_SIZE));
         $response = $this->postJson('/api/upload_photo', [
             'image' => $imageFile,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -75,7 +96,7 @@ class UploadImageTest extends TestCase
                 'msg' => 'Not supported image type',
             ]
         ]);
-        Storage::disk('images')->assertMissing($imageFile->hashName());
+        Storage::disk($this->storageDriver)->assertMissing($imageFile->hashName());
     }
 
     /**
@@ -87,9 +108,7 @@ class UploadImageTest extends TestCase
 
     public function testUploadImageBiggerSize()
     {
-        Storage::fake('images');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $validTypes = Config::VALID_IMAGE_TYPES;
         $randType = array_rand($validTypes, 1);
         $imageFile = UploadedFile::fake()
@@ -100,11 +119,9 @@ class UploadImageTest extends TestCase
             )->size(mt_rand(Config::FILE_UPLOAD_MAX_SIZE + 1, 2 * Config::FILE_UPLOAD_MAX_SIZE));
         $response = $this->postJson('/api/upload_photo', [
             'image' => $imageFile,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -112,7 +129,7 @@ class UploadImageTest extends TestCase
                 'msg' => 'Allowed image max size is ' . Config::FILE_UPLOAD_MAX_SIZE / 1024 . "MB"
             ]
         ]);
-        Storage::disk('images')->assertMissing($imageFile->hashName());
+        Storage::disk($this->storageDriver)->assertMissing($imageFile->hashName());
     }
     /**
      * unti test for uploading an image
@@ -124,9 +141,7 @@ class UploadImageTest extends TestCase
      */
     public function testUploadValidImageArray()
     {
-        Storage::fake('images');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $validTypes = Config::VALID_IMAGE_TYPES;
         $randType = array_rand($validTypes, 1);
         $numberOfImages = mt_rand(1, 10);
@@ -142,11 +157,9 @@ class UploadImageTest extends TestCase
         }
         $response = $this->postJson('/api/upload_photo', [
             'image' => $imageArray,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(422);
         $response->assertJson([
             'meta' => [
@@ -154,7 +167,7 @@ class UploadImageTest extends TestCase
                 'msg' => 'Not supported image type'
             ]
         ]);
-        Storage::disk('images')->assertMissing($imageArray[0]->hashName());
+        Storage::disk($this->storageDriver)->assertMissing($imageArray[0]->hashName());
     }
 
     /**
@@ -165,9 +178,7 @@ class UploadImageTest extends TestCase
      */
     public function testUploadValidImage()
     {
-        Storage::fake('images');
-        $user = User::factory()->create();
-        $token = $user->createToken('Auth Token')->accessToken;
+        Storage::fake($this->storageDriver);
         $validTypes = Config::VALID_IMAGE_TYPES;
         $randType = array_rand($validTypes, 1);
         $imageFile = UploadedFile::fake()
@@ -178,12 +189,17 @@ class UploadImageTest extends TestCase
             )->size(mt_rand(10, Config::FILE_UPLOAD_MAX_SIZE));
         $response = $this->postJson('/api/upload_photo', [
             'image' => $imageFile,
-        ], [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
+        ], array_merge(Config::JSON, [
+            'Authorization' => 'Bearer ' . $this->accessToken,
+        ]));
         $response->assertStatus(200);
-        Storage::disk('images')->assertExists($imageFile->hashName());
+        $uploadedImagePath = explode('/', $response->getOriginalContent()["response"]["url"]);
+        $len = count($uploadedImagePath);
+
+        $uploadedImageName = '';
+        if ($len > 2) {
+            $uploadedImageName = $uploadedImagePath[$len - 2] . '/' . $uploadedImagePath[$len - 1];
+        }
+        Storage::disk($this->storageDriver)->assertExists($uploadedImageName);
     }
 }
