@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class UploadImageTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     protected $storageDriver = 'public';
 

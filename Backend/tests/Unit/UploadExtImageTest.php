@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class UploadExtImageTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     protected $storageDriver = 'public';
 

@@ -113,30 +113,6 @@ class BlogSettingRequestTest extends TestCase
         $blog->delete();
     }
     /**
-     *  test Blog ask_page_title has at least 3 chars
-     *
-     * @return void
-     */
-    public function testAskPageTitle()
-    {
-        $user = User::factory()->create();
-        $blog = Blog::factory()->create(['user_id' => $user->id]);
-        $token = $user->createToken('Auth Token')->accessToken;
-        $setting = [
-            "ask_page_title" => "Ra"
-        ];
-        $response = $this
-        ->json('PUT', 'api/blog_settings/' . $blog->id, $setting, ['Authorization' => 'Bearer ' . $token], Config::JSON)
-        ->assertJson([
-            "meta" => [
-                "status" => "422",
-                "msg" => "The ask page title must be at least 3 characters.",
-            ]
-        ]);
-        $user->delete();
-        $blog->delete();
-    }
-    /**
      *  test Blog allow_anonymous_questions must be boolean
      *
      * @return void
@@ -244,9 +220,9 @@ class BlogSettingRequestTest extends TestCase
             "allow_anonymous_questions" => true
                 ],
                 "submissions_settings" => [
-                "allow_submittions" => $blog->allow_submittions,
-                "submissions_page_title" => $blog->submissions_page_title,
-                "submissions_guidelines" => $blog->submissions_guidelines
+                "allow_submittions" => true,
+                "submissions_page_title" => '',
+                "submissions_guidelines" => '',
                 ],
                 "allow_messages" => true
             ]

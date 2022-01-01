@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class PostFillterTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * unti test for getting random posts

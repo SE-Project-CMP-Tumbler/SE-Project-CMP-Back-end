@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class UploadAudioTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     protected $storageDriver = 'public';
 

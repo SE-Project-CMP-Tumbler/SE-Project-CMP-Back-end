@@ -13,6 +13,8 @@ use Tests\TestCase;
 
 class SearchTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** test function which  search about word in posts or tags of posts
      * @return void
      */
