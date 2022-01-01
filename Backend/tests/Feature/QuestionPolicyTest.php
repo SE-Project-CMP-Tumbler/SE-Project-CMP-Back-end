@@ -11,6 +11,8 @@ use Tests\TestCase;
 
 class QuestionPolicyTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * test answering questions asked to my blog
      *

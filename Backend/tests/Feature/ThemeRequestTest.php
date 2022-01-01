@@ -13,6 +13,8 @@ use Tests\TestCase;
 
 class ThemeRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
      /**
      *  test True Theme of blog
      *
