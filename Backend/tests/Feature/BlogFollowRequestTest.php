@@ -9,9 +9,13 @@ use App\Models\FollowBlog;
 use App\Models\User;
 use App\Http\Misc\Helpers\Config;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserFollowedNotification;
 
 class BlogFollowRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
      /**
      *  test Blog value is required
      *
@@ -20,7 +24,7 @@ class BlogFollowRequestTest extends TestCase
 
     public function testRequiredBlogValue()
     {
-
+        Notification::fake();
         $user = User::factory()->create();
         $token = $user->createToken('Auth Token')->accessToken;
         $blog = [];
@@ -32,6 +36,7 @@ class BlogFollowRequestTest extends TestCase
                 "msg" => "The blog value field is required.",
             ]
         ]);
+        Notification::assertNothingSent();
     }
     /**
      *  test Blog value and follow him self
@@ -41,7 +46,7 @@ class BlogFollowRequestTest extends TestCase
 
     public function testTrueBlogValue()
     {
-
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id ,'is_primary' => true]);
         $token = $user->createToken('Auth Token')->accessToken;
@@ -57,6 +62,7 @@ class BlogFollowRequestTest extends TestCase
                 "msg" => "You can not follow your self"
             ]
         ]);
+        Notification::assertNothingSent();
     }
      /**
      *  follow another blog by search
@@ -66,7 +72,7 @@ class BlogFollowRequestTest extends TestCase
 
     public function testFolowBlogValue()
     {
-
+        // Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id ,'is_primary' => true]);
         $anotherBlog = Blog::factory()->create(['user_id' => $user->id ]);
@@ -83,6 +89,10 @@ class BlogFollowRequestTest extends TestCase
                 "msg" => "ok"
             ]
         ]);
+        // Notification::assertSentTo(
+        //     [$anotherBlog->user()->first()],
+        //     UserFollowedNotification::class
+        // );
     }
      /**
      * test true follow another blog
@@ -92,7 +102,7 @@ class BlogFollowRequestTest extends TestCase
 
     public function testTrueFolowBlog()
     {
-
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id ,'is_primary' => true]);
         $anotherBlog = Blog::factory()->create(['user_id' => $user->id ]);
@@ -106,6 +116,10 @@ class BlogFollowRequestTest extends TestCase
                 "msg" => "ok"
             ]
         ]);
+        Notification::assertSentTo(
+            [$anotherBlog->user()->first()],
+            UserFollowedNotification::class
+        );
     }
      /**
      * test unfollow another blog
@@ -115,7 +129,7 @@ class BlogFollowRequestTest extends TestCase
 
     public function testTrueUnfolowBlog()
     {
-
+        Notification::fake();
         $user = User::factory()->create();
         $blog = Blog::factory()->create(['user_id' => $user->id ,'is_primary' => true]);
         $anotherBlog = Blog::factory()->create(['user_id' => $user->id ]);
@@ -133,6 +147,7 @@ class BlogFollowRequestTest extends TestCase
                 "msg" => "ok"
             ]
         ]);
+        Notification::assertNothingSent();
     }
      /**
      * test check is followed by 
