@@ -15,7 +15,7 @@ class UploadAudioBase64Test extends TestCase
 {
     use RefreshDatabase;
 
-    protected $storageDriver = 'public';
+    protected $storageDriver = 'ftp';
 
     /**
      * The access token of the authenticated user that would do testing operations
