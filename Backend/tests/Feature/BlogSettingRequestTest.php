@@ -11,6 +11,8 @@ use Tests\TestCase;
 
 class BlogSettingRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
    /**
      *  test Blog allow_message is boolean
      *

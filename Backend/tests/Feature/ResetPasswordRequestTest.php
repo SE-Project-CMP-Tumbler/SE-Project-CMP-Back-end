@@ -9,9 +9,11 @@ use App\Http\Misc\Helpers\Config;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ResetPasswordRequestTest extends TestCase
 {
+    use RefreshDatabase;
     use WithFaker;
 
     /**

@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class BlogPolicyTest extends TestCase
 {
+    use RefreshDatabase;
 
     /**
      * A  test update true policy of blog
