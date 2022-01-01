@@ -1429,7 +1429,7 @@ class PostController extends Controller
             'reciever_id' => $recieverBlog->id,
             'post_id' => $post->id,
         ]);
-        //TODO: There should be a niotification sent here
+        #TODO: There should be a niotification sent here
 
         return $this->generalResponse("", "OK", "200");
     }

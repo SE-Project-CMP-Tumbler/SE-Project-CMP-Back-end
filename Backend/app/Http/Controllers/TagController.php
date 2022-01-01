@@ -53,7 +53,7 @@ class TagController extends Controller
      * Check whether the primary blog follows a specific tag.
      *
      * @param string $tagDescription tag to check if the primary blog follows
-     * @return @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function checkIsFollowing($tagDescription)
     {
