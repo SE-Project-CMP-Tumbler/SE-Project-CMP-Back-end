@@ -12,9 +12,9 @@ use Tests\TestCase;
 
 class UploadAudioTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
-    protected $storageDriver = 'public';
+    protected $storageDriver = 'ftp';
 
     /**
      * The access token of the authenticated user that would do testing operations

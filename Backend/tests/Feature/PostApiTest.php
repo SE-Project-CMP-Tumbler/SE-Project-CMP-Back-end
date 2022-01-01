@@ -175,7 +175,10 @@ class PostApiTest extends TestCase
      */
     public function testCreateReblogOnNonExistingParent()
     {
-        $url = '/api/reblog/' . $this->blogId . '/' . 10;
+        $newPost = Post::factory()->create();
+        $newPostID = $newPost->id;
+        $newPost->delete();
+        $url = '/api/reblog/' . $this->blogId . '/' . $newPostID;
         $response = $this->post($url, [], Config::JSON)
             ->assertStatus(404)
             ->assertJson([

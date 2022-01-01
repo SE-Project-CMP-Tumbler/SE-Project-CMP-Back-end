@@ -10,6 +10,8 @@ use Tests\TestCase;
 
 class BlogTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** test function which check unique username blog
      * @return void
      */

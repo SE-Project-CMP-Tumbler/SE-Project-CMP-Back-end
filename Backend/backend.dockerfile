@@ -39,6 +39,7 @@ RUN php artisan view:cache      # RUN php artisan passport:install
 
 # this one contains a patch for some non-working functionality in the original one
 COPY ./BroadcastNotificationCreated.php /backend/vendor/laravel/framework/src/Illuminate/Notifications/Events/BroadcastNotificationCreated.php
+COPY ./RefreshDatabase.php /backend/vendor/laravel/framework/src/Illuminate/Foundation/Testing/RefreshDatabase.php
 
 RUN chmod +x backend_start.sh
 
