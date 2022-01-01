@@ -7,44 +7,14 @@ use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
 use App\Services\PostService;
-use Faker\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class PostTest extends TestCase
 {
-    /**
-     * The access token of the authenticated user that would do testing operations
-     *
-     * @var string
-     */
-    protected $accessToken;
-    /**
-     * The blog id of the currently authenticated user
-     *
-     * @var int
-     */
-    protected $blogId;
-    /**
-     * Require the access token for the testing user before running each testcase
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $faker = Factory::create(1);
-        $requestBody = [
-            'email' => $faker->email(),
-            'blog_username' => $faker->name(),
-            'password' => 'testTest123',
-            'age' => 77
-        ];
-        $response = $this->json('POST', '/api/register', $requestBody, Config::JSON);
-        $this->accessToken = ($response->json())['response']['access_token'];
-        $userId = ($response->json())['response']['id'];
-        $blog = Blog::factory()->create(['user_id' => $userId]);
-        $this->blogId = $blog->id;
-    }
+    use RefreshDatabase;
+
     /**
      * Testting the correctness of extracting tags from a post content.
      *
@@ -58,7 +28,19 @@ class PostTest extends TestCase
         $extractedTags = $postService->extractTags($postBody);
         $this->assertEqualsCanonicalizing($expectedTags, $extractedTags);
     }
-
+    /**
+     * Testting the correctness of extracting mentions from a post content.
+     *
+     * @return void
+     */
+    public function testSuccessExtractedMentions()
+    {
+        $postService = new PostService();
+        $postBody = '<h1>Hello</h1><p> my new friends: @david @august @december<p>';
+        $expectedMentions = ['david', 'august', 'december'];
+        $extractedMentions = $postService->extractMentionedBlogs($postBody);
+        $this->assertEqualsCanonicalizing($expectedMentions, $extractedMentions);
+    }
     /**
      * Testting the failure of extracting tags from a post content.
      *
@@ -80,16 +62,26 @@ class PostTest extends TestCase
      */
     public function testPostTagRelationCreation()
     {
-        $postBody = '<h1>Laravel is awesome</h1><p> This framework rocks! #piko #pako #pakapiko<p>';
-        $uri = '/api/post/' . $this->blogId;
+        $user = User::factory()->create();
+        Passport::actingAs($user);
+        $blog = Blog::factory()->create([
+            'user_id' => $user->id,
+            'is_primary' => true
+        ]);
+        //Creating the post
+        $postBody = '<h1>#Hello</h1><p> This framework rocks! #piko #pako #pakapiko #maybe&nbsp<p>';
+        $uri = '/api/post/' . $blog->id;
         $requestBody = [
             "post_body" => $postBody,
             "post_type" => "text",
             "post_status" => "published"
         ];
-        $response = $this
-        ->json('POST', $uri, $requestBody, ['Authorization' => 'Bearer ' . $this->accessToken], Config::JSON);
-        $expectedTags = ['piko', 'pako', 'pakapiko'];
+
+        $response = $this->json('POST', $uri, $requestBody, Config::JSON);
+        $response->assertStatus(200);
+
+        //Testing the creation of relation records in db        
+        $expectedTags = ['Hello', 'piko', 'pako', 'pakapiko', 'maybe'];
         foreach ($expectedTags as $tag) {
             $this->assertDatabaseHas('post_tag', [
                 'tag_description' => $tag,
