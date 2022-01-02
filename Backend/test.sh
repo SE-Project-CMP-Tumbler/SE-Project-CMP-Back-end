@@ -4,4 +4,5 @@
 # You may need to start the server before testing.
 
 # test ./tests
-exit 0
+#exit 0
+php artisan test
