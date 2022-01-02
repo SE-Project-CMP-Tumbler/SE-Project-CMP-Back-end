@@ -68,7 +68,7 @@ az storage file download --account-name tumblerstorageaccount -s tumbler-secrets
 #Key files for passport
 az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p oauth-private.dev.key --dest storage/oauth-private.key;
 az storage file download --account-name tumblerstorageaccount -s tumbler-secrets -p oauth-public.dev.key --dest storage/oauth-public.key;
-php artisan test;
+docker exec -t php-apache bash -c 'php artisan test';
 docker-compose up -d --build;
 #docker system prune -f;'''
       }
