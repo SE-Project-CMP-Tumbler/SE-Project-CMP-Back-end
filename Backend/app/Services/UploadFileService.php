@@ -24,7 +24,12 @@ use Throwable;
 class UploadFileService
 {
 
-    protected $storageDriver = 'ftp';
+    protected $storageDriver;
+
+    public function __construct()
+    {
+        $this->storageDriver = env('STORAGE_DRIVE', 'public');
+    }
 
     /**
      * upload image service

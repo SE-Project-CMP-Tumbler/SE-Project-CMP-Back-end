@@ -14,7 +14,7 @@ class UploadVideoTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $storageDriver = 'ftp';
+    protected $storageDriver;
 
     /**
      * The access token of the authenticated user that would do testing operations
@@ -33,6 +33,7 @@ class UploadVideoTest extends TestCase
         parent::setUp();
         $user = User::factory()->create();
         $this->accessToken = $user->createToken('Auth Token')->accessToken;
+        $this->storageDriver = env('STORAGE_DRIVE', 'public');
     }
 
     public function testUnauthorizedRequest()
