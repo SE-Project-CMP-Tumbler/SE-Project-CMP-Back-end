@@ -21,7 +21,7 @@
 
 ## Table Content
 - [About](#About)
-- [Technologies and Tools used](#Technologies-used)
+- [Technologies and Tools used](#Technologies-and-Tools-used)
 - [Database Schema](#Database-Schema)
 - [How to use the project](#How-to-use-the-project)
 - [Supported Docker Containers](#Supported-Docker-Containers)
