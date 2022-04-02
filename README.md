@@ -210,18 +210,31 @@ Note: The blog can request any of this data within a certain period - such as la
 
 ## Contributors
 ### This masterpiece was designed, and implemented by
-<p align="center">
-  <a style="text-decoration:none" href="https://github.com/BigFish2086" >
-    <img src="https://avatars.githubusercontent.com/u/63132227?v=4" alt="image" width="100px"/>
-  </a>
-  <a style="text-decoration:none" href="https://github.com/radwaahmed2132000" >
-    <img src="https://avatars.githubusercontent.com/u/56734728?v=4" alt="image" width="100px" />
-  </a>
-  <a style="text-decoration:none" href="https://github.com/Makrion">
-    <img src="https://avatars.githubusercontent.com/u/62072554?v=4" alt="image" width="100px" />
-  </a>
-  <a style="text-decoration:none" href="https://github.com/NouranHany" >
-    <img src="https://avatars.githubusercontent.com/u/59095993?v=4" alt="image" width="100px" />
-  </a>
-</p>
-
+<table align="center">
+  <tr>
+    <td align="center">
+    <a href="https://github.com/BigFish2086" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/63132227?v=4" width="100px;" alt="Ahmed Ibrahim"/>
+    <br />
+    <sub><b>Ahmed Ibrahim</b></sub></a>
+    </td>
+    <td align="center">
+    <a href="https://github.com/radwaahmed2132000" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/56734728?v=4" width="100px;" alt="Radwa Ahmed"/>
+    <br />
+    <sub><b>Radwa Ahmed</b></sub></a>
+    </td>
+    <td align="center">
+    <a href="https://github.com/Makrion" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/62072554?v=4" width="100px;" alt="Michael"/>
+    <br />
+    <sub><b>Michael</b></sub></a>
+    </td>
+    <td align="center">
+    <a href="https://github.com/NouranHany" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/59095993?v=4" width="100px;" alt="Noran Hany"/>
+    <br />
+    <sub><b>Noran Hany</b></sub></a>
+    </td>
+  </tr>
+ </table>
